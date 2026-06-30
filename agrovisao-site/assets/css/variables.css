@@ -60,4 +60,25 @@
   --transition-fast:   0.20s ease;
   --transition-base:   0.25s ease;
   --transition-nav:    0.45s ease;
+
+  /* ── Header fixo — altura real por breakpoint ───────────────────────
+     Usada por qualquer página/seção que precise empurrar seu primeiro
+     bloco para fora da área do header fixo. Não alterar individualmente
+     por página — ajustar aqui propaga para todas. ───────────────────── */
+  --header-height-desktop: 95px;
+  --header-height-tablet:  79px;
+  --header-height-mobile:  79px;
+
+  /* Offset realmente aplicado ao primeiro bloco da página.
+     Desktop fica em 0 de propósito: o header é transparente e o Hero
+     deve continuar se estendendo por baixo dele (comportamento atual,
+     preservado). Em tablet/mobile o header passa a precisar de espaço
+     reservado, então o offset assume a altura real do header. */
+  --header-offset: 0px;
+
+  /* ── Hero: área segura inferior (mobile) ────────────────────────────
+     Padding inferior comum para todos os Heroes no mobile.
+     Respeita: respiro visual + onda + proximidade com WhatsApp FAB.
+     Alterado apenas aqui, propaga para todas as páginas via CSS global. */
+  --hero-safe-area-bottom: 120px;
 }

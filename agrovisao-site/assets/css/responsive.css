@@ -257,10 +257,43 @@ body.drawer-open {
   /* NAV — logotipo */
   .nav-logo {}
 
-  /* HERO */
-  .hero {}
-  .hero-content {}
-  .hero-inner {}
+  /* HERO — header passa a ocupar espaço real do fluxo (drawer mode) */
+  :root {
+    --header-offset: var(--header-height-tablet);
+  }
+
+  /* HERO — Sprint Hero 2: pequenos refinamentos de tablet.
+     Mobile (≤768px) carrega a padronização completa; aqui só ajustamos
+     o que o espaço reduzido exige, sem alterar a composição do desktop. */
+  .hero {
+    height: 78vh !important;
+    min-height: 560px !important;
+  }
+
+  .hero-content {
+    padding: 0 48px 88px !important;
+  }
+
+  .hero-inner {
+    max-width: 620px !important;
+    margin-top: 0 !important;
+  }
+
+  .hero-inner h1 {
+    font-size: clamp(38px, 5.6vw, 58px) !important;
+    margin-bottom: 22px !important;
+  }
+
+  .hero-inner p {
+    font-size: 14.5px !important;
+    margin-bottom: 32px !important;
+  }
+
+  .hero-inner a {
+    padding: 14px 28px !important;
+    font-size: 11px !important;
+  }
+
   .hero-wave {}
 
   /* LAYOUT */
@@ -328,9 +361,99 @@ body.drawer-open {
   .nav-links {}
 
   /* HERO */
-  .hero {}
-  .hero-content {}
-  .hero-inner {}
+  :root {
+    --header-offset: var(--header-height-mobile);
+  }
+
+  /* HERO — Sprint Hero 2: padrão único mobile-first, válido para
+     index/sobre/servicos/projetos/contato. Toda regra abaixo usa apenas
+     as classes já existentes no markup (.hero, .hero-content,
+     .hero-inner, .hero-wave) e seletores descendentes sobre elas — sem
+     classes novas e sem CSS específico por página. !important é
+     necessário porque o HTML define os valores originais inline. */
+
+  /* 6. Altura — ocupa a primeira dobra sem exagero, igual em todas as
+        páginas, independente do vh/min-height definido inline por Hero. */
+  .hero {
+    height: 100vh !important;
+    height: 100svh !important;
+    min-height: 560px !important;
+    max-height: 740px !important;
+  }
+
+  /* 1 + 2 + 3. Espaçamento, alinhamento e reposicionamento vertical.
+        O conteúdo agora é distribuído no centro da altura útil (45–75%),
+        não mais encostado na base. Padding inferior reserva espaço para
+        onda + respiro + proximidade com WhatsApp FAB em qualquer página. */
+  .hero-content {
+    padding: 0 24px var(--hero-safe-area-bottom) !important;
+    justify-content: space-around !important;
+    align-items: stretch !important;
+  }
+
+  .hero-inner {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-top: 0 !important;
+  }
+
+  /* 3. Tipografia — hierarquia consistente badge → título → descrição. */
+  .hero-inner > div:first-child span {
+    font-size: 10px !important;
+    letter-spacing: 0.22em !important;
+  }
+
+  .hero-inner > div:first-child {
+    margin-bottom: 18px !important;
+  }
+
+  .hero-inner h1 {
+    font-size: clamp(30px, 8.6vw, 42px) !important;
+    line-height: 1.16 !important;
+    letter-spacing: -0.01em !important;
+    margin-bottom: 16px !important;
+  }
+
+  .hero-inner p {
+    font-size: 14px !important;
+    line-height: 1.62 !important;
+    max-width: 100% !important;
+    margin-bottom: 26px !important;
+  }
+
+  /* 4. Botões — mesma altura, largura confortável, empilhados com
+        espaçamento consistente, independente do wrapper de cada página. */
+  .hero-inner a {
+    display: flex !important;
+    width: 100% !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 16px 24px !important;
+    font-size: 11.5px !important;
+    box-sizing: border-box !important;
+  }
+
+  .hero-inner a + a {
+    margin-top: 12px !important;
+  }
+
+  /* 1. Ocultar elementos decorativos inferiores no mobile.
+        Badges, indicadores e chips informativos ocupam espaço precioso
+        e ficam muito próximos da onda. Continuam visíveis em desktop/tablet. */
+  .hero-badges {
+    display: none !important;
+  }
+
+  .hero-badges span {
+    font-size: 10.5px !important;
+  }
+
+  /* 5. Imagem — mesmo ponto focal em todas as páginas no mobile,
+        mantendo object-fit: cover já definido inline. */
+  .hero > img {
+    object-position: center 38% !important;
+  }
+
   .hero-wave {}
 
   /* LAYOUT */
@@ -402,10 +525,29 @@ body.drawer-open {
   .nav-logo {}
   .nav-links {}
 
-  /* HERO */
-  .hero {}
-  .hero-content {}
-  .hero-inner {}
+  /* HERO — pequenos ajustes finais para telas muito estreitas,
+     mesmas regras/seletores do bloco mobile, apenas reduzindo escala. */
+  .hero {
+    min-height: 520px !important;
+  }
+
+  .hero-content {
+    padding: 0 18px var(--hero-safe-area-bottom) !important;
+  }
+
+  .hero-inner h1 {
+    font-size: clamp(27px, 9.2vw, 34px) !important;
+  }
+
+  .hero-inner p {
+    font-size: 13.5px !important;
+  }
+
+  .hero-inner a {
+    padding: 14px 20px !important;
+    font-size: 11px !important;
+  }
+
   .hero-wave {}
 
   /* LAYOUT */

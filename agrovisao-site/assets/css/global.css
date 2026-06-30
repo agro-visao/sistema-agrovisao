@@ -26,6 +26,17 @@ a {
   color: inherit;
 }
 
+/* ─── Layout global: primeiro bloco abaixo do header fixo ───────────
+   O header é fixed em todas as páginas. Esta regra única garante que o
+   primeiro bloco (Hero) de Home/Sobre/Serviços/Projetos/Contato respeite
+   a altura do header em cada breakpoint, via --header-offset
+   (definida em variables.css e sobrescrita por breakpoint em
+   responsive.css). Não criar ajustes equivalentes por página. ────── */
+
+.hero {
+  margin-top: var(--header-offset);
+}
+
 /* ─── Animação de entrada via scroll ─────────────────────────────── */
 
 [data-animate] {
