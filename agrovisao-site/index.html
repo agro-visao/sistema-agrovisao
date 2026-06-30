@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&amp;family=Manrope:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { background: #FFFFFF; color: #1a1a18; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    ::selection { background: rgba(49,91,44,0.12); color: #315B2C; }
+    @keyframes mFadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes wa-ring { 0%, 80%, 100% { transform: scale(1); opacity: 0; } 84% { transform: scale(1); opacity: 0.65; } 97% { transform: scale(1.75); opacity: 0; } }
+    @keyframes scrollLeft { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    @keyframes scrollRight { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+    [data-animate] { opacity: 0; transform: translateY(24px); transition: opacity 0.85s ease, transform 0.85s ease; }
+    [data-animate].in { opacity: 1; transform: translateY(0); }
+    [data-animate][data-d="1"] { transition-delay: 0.12s; }
+    [data-animate][data-d="2"] { transition-delay: 0.24s; }
+    [data-animate][data-d="3"] { transition-delay: 0.36s; }
+    [data-animate][data-d="4"] { transition-delay: 0.48s; }
+    .svc-card { background: #FFFFFF; border: 1px solid rgba(49,91,44,0.10); border-radius: 16px; padding: 32px 24px; flex: 1; min-width: 0; transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease; cursor: default; }
+    .svc-card:hover { transform: translateY(-5px); box-shadow: 0 12px 40px rgba(49,91,44,0.10); border-color: rgba(49,91,44,0.22); }
+    .diff-card { background: #FFFFFF; border: 1px solid rgba(49,91,44,0.09); border-radius: 14px; padding: 28px 24px; transition: transform 0.25s ease, box-shadow 0.25s ease; }
+    .diff-card:hover { transform: translateY(-4px); box-shadow: 0 10px 36px rgba(49,91,44,0.09); }
+    .mq-chip { display: flex; align-items: center; gap: 12px; padding: 10px 18px; background: #FFFFFF; border: 1px solid rgba(49,91,44,0.10); border-radius: 12px; height: 76px; flex-shrink: 0; min-width: 210px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); transition: box-shadow 0.2s; }
+    .mq-chip:hover { box-shadow: 0 6px 20px rgba(49,91,44,0.12); }
+    .mq-logo { width: 46px; height: 46px; flex-shrink: 0; background: rgba(49,91,44,0.05); border-radius: 8px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .mq-logo img { width: 100%; height: 100%; object-fit: contain; }
+    .mq-name { font-family: 'Manrope', sans-serif; font-size: 12px; font-weight: 600; color: #1a1a18; line-height: 1.3; }
+    .mq-cat { font-family: 'Manrope', sans-serif; font-size: 10px; font-weight: 400; color: #888882; margin-top: 3px; }
+    .mq-track { display: flex; gap: 12px; width: max-content; }
+    .mq-row:hover .mq-track { animation-play-state: paused; }
+    .social-icon { display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 12px; border: 1.5px solid rgba(49,91,44,0.15); color: #315B2C; text-decoration: none; transition: background 0.22s, border-color 0.22s, transform 0.22s; }
+    .social-icon:hover { background: rgba(49,91,44,0.07); border-color: rgba(49,91,44,0.32); transform: translateY(-2px); }
+    a { color: inherit; }
+  </style>
+</helmet>
+
+<!-- ─── NAV ────────────────────────────────────────────────────────── -->
+<nav style="position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 20px 64px; display: flex; align-items: center; justify-content: space-between; background: {{ navBg }}; border-bottom: {{ navBorder }}; box-shadow: {{ navShadow }}; transition: background 0.45s, box-shadow 0.45s;">
+  <div style="{{ navEntryStyle }}">
+    <a href="./index.html" style="display: flex; align-items: center; gap: 12px; text-decoration: none; color: {{ logoColor }}; transition: color 0.45s;">
+      <img src="./assets/logos/agrovisao/logo-agro-visao-v1.png" alt="AgroVisão" style="height: 55px; width: 130px; display: block; object-fit: cover;">
+    </a>
+  </div>
+  <div style="{{ navLinksStyle }}; display: flex; align-items: center; gap: 36px;">
+    <a href="./index.html" style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; color: {{ navColor }}; text-decoration: none; letter-spacing: 0.12em; text-transform: uppercase; text-shadow: {{ navTextShadow }}; border-bottom: 1px solid currentColor; padding-bottom: 2px;">Home</a>
+    <a href="./Sobre.dc.html" style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; color: {{ navColor }}; text-decoration: none; letter-spacing: 0.12em; text-transform: uppercase; text-shadow: {{ navTextShadow }}; transition: opacity 0.2s;" style-hover="opacity: 0.7;">Sobre</a>
+    <a href="./Servicos.dc.html" style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; color: {{ navColor }}; text-decoration: none; letter-spacing: 0.12em; text-transform: uppercase; text-shadow: {{ navTextShadow }}; transition: opacity 0.2s;" style-hover="opacity: 0.7;">Serviços</a>
+    <a href="./Projetos.dc.html" style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; color: {{ navColor }}; text-decoration: none; letter-spacing: 0.12em; text-transform: uppercase; text-shadow: {{ navTextShadow }}; transition: opacity 0.2s;" style-hover="opacity: 0.7;">Projetos</a>
+    <a href="./Contato.dc.html" style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; color: {{ navColor }}; text-decoration: none; letter-spacing: 0.12em; text-transform: uppercase; text-shadow: {{ navTextShadow }}; transition: opacity 0.2s;" style-hover="opacity: 0.7;">Contato</a>
+    <a href="#" onClick="{{ openModal }}" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 22px; background: #315B2C; color: #F6F4EF; font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; border-radius: 8px; transition: background 0.22s;" style-hover="background: #254822;">Fale Conosco</a>
+  </div>
+</nav>
+
+<!-- ─── HERO ───────────────────────────────────────────────────────── -->
+<section style="position: relative; width: 100%; height: 100vh; min-height: 720px; overflow: hidden;">
+  <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1920&amp;q=85&amp;fm=jpg&amp;fit=crop" alt="Consultoria estratégica agrícola" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 30%; display: block;">
+  <div style="position: absolute; inset: 0; background: linear-gradient(105deg, rgba(4,12,3,0.88) 0%, rgba(4,12,3,0.70) 45%, rgba(4,12,3,0.32) 100%);"></div>
+  <div style="position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; justify-content: center; padding: 0 84px 0;">
+    <div style="max-width: 700px; margin-top: 40px;">
+      <div style="{{ heroEyebrowStyle }}">
+        <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 28px;">
+          <div style="width: 32px; height: 2px; background: #B8D48A;"></div>
+          <span style="font-family: 'Manrope', sans-serif; font-size: 10px; font-weight: 600; color: #B8D48A; letter-spacing: 0.32em; text-transform: uppercase;">Consultoria Agrícola Estratégica</span>
+        </div>
+      </div>
+      <div style="{{ heroTitleStyle }}">
+        <h1 style="font-family: 'Cormorant Garamond', serif; font-size: clamp(40px, 5.2vw, 70px); font-weight: 300; color: #F6F4EF; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 26px; text-wrap: pretty;">Planejamento que<br>transforma o presente,<br><em style="font-style: italic; color: #B8D48A;">resultados que constroem<br>o futuro.</em></h1>
+      </div>
+      <div style="{{ heroDescStyle }}">
+        <p style="font-family: 'Manrope', sans-serif; font-size: 15.5px; font-weight: 400; color: rgba(246,244,239,0.80); line-height: 1.78; max-width: 520px; margin-bottom: 40px;">Consultoria especializada em projetos que geram impacto real na Amazônia e no Brasil.</p>
+      </div>
+      <div style="{{ heroCTAStyle }}">
+        <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-bottom: 44px;">
+          <a href="#" onClick="{{ openModal }}" style="display: inline-flex; align-items: center; gap: 8px; padding: 14px 32px; background: #315B2C; color: #F6F4EF; font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; border-radius: 8px; transition: background 0.22s;" style-hover="background: #254822;">Solicitar Consultoria</a>
+          <a href="./Servicos.dc.html" style="display: inline-flex; align-items: center; gap: 8px; padding: 13px 28px; color: #F6F4EF; font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; border-radius: 8px; border: 1px solid rgba(246,244,239,0.38); transition: border-color 0.22s;" style-hover="border-color: rgba(246,244,239,0.7);">Conheça nossos Serviços <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 6.5H11M8 3.5L11 6.5L8 9.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
+        </div>
+        <div style="display: flex; align-items: center; gap: 24px; flex-wrap: wrap;">
+          <div style="display: flex; align-items: center; gap: 7px;"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#B8D48A" stroke-width="1.2"></circle><path d="M4 7L6 9L10 5" stroke="#B8D48A" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path></svg><span style="font-family: 'Manrope', sans-serif; font-size: 11.5px; font-weight: 500; color: rgba(246,244,239,0.75);">Estratégia</span></div>
+          <div style="display: flex; align-items: center; gap: 7px;"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#B8D48A" stroke-width="1.2"></circle><path d="M4 7L6 9L10 5" stroke="#B8D48A" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path></svg><span style="font-family: 'Manrope', sans-serif; font-size: 11.5px; font-weight: 500; color: rgba(246,244,239,0.75);">Planejamento</span></div>
+          <div style="display: flex; align-items: center; gap: 7px;"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#B8D48A" stroke-width="1.2"></circle><path d="M4 7L6 9L10 5" stroke="#B8D48A" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path></svg><span style="font-family: 'Manrope', sans-serif; font-size: 11.5px; font-weight: 500; color: rgba(246,244,239,0.75);">Gestão</span></div>
+          <div style="display: flex; align-items: center; gap: 7px;"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#B8D48A" stroke-width="1.2"></circle><path d="M4 7L6 9L10 5" stroke="#B8D48A" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path></svg><span style="font-family: 'Manrope', sans-serif; font-size: 11.5px; font-weight: 500; color: rgba(246,244,239,0.75);">Resultados</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="position: absolute; bottom: -1px; left: 0; right: 0; z-index: 3; line-height: 0;">
+    <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="display: block; width: 100%; height: 60px;"><path d="M0,60 L1440,60 L1440,18 Q1080,60 720,28 Q360,0 0,28 Z" fill="#FFFFFF"></path></svg>
+  </div>
+</section>
+
+<!-- ─── SERVICES STRIP ─────────────────────────────────────────────── -->
+<section style="background: #FFFFFF; padding: 100px 0 80px;">
+  <div style="max-width: 1320px; margin: 0 auto; padding: 0 64px;">
+    <div style="text-align: center; margin-bottom: 56px;" data-animate="">
+      <div style="display: flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 18px;"><div style="width: 28px; height: 2px; background: #315B2C;"></div><span style="font-family: 'Manrope', sans-serif; font-size: 10px; font-weight: 600; color: #6F8F3A; letter-spacing: 0.28em; text-transform: uppercase;">Nossas Soluções</span><div style="width: 28px; height: 2px; background: #315B2C;"></div></div>
+      <h2 style="font-family: 'Cormorant Garamond', serif; font-size: clamp(34px, 3.6vw, 50px); font-weight: 400; color: #1a1a18; line-height: 1.1; letter-spacing: -0.015em;">Serviços especializados para<br>o desenvolvimento rural</h2>
+    </div>
+    <div style="display: flex; gap: 16px;" data-animate="" data-d="1">
+      <a href="./Servicos.dc.html#regularizacao-fundiaria" class="svc-card" style="text-decoration: none;">
+        <div style="width: 44px; height: 44px; background: rgba(49,91,44,0.08); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 18px;"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="1.5" stroke="#315B2C" stroke-width="1.3" fill="none"></rect><path d="M2 11H20M11 2V20" stroke="#315B2C" stroke-width="1" stroke-dasharray="2 2"></path><circle cx="11" cy="11" r="2.5" fill="#315B2C" opacity="0.3"></circle></svg></div>
+        <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 500; color: #1a1a18; margin-bottom: 8px; line-height: 1.25;">Regularização Fundiária</h3>
+        <p style="font-family: 'Manrope', sans-serif; font-size: 12.5px; font-weight: 400; color: #777772; line-height: 1.7; margin-bottom: 16px;">Titulação, legalização e regularização de imóveis rurais.</p>
+        <div style="font-family: 'Manrope', sans-serif; font-size: 10.5px; font-weight: 700; color: #315B2C; letter-spacing: 0.1em; text-transform: uppercase;">Saiba mais →</div>
+      </a>
+      <a href="./Servicos.dc.html#licenciamento" class="svc-card" style="text-decoration: none;">
+        <div style="width: 44px; height: 44px; background: rgba(49,91,44,0.08); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 18px;"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M6 20C6 14.477 10.477 10 16 10C16 4.477 20.477 0 26 0" stroke="#315B2C" stroke-width="1.3" stroke-linecap="round" fill="none" transform="scale(0.72) translate(1,1)"></path><path d="M3 18C3 12 7 8 11 7C11 2 15 2 19 3" stroke="#315B2C" stroke-width="1.3" stroke-linecap="round" fill="none"></path><circle cx="11" cy="11" r="8" stroke="#315B2C" stroke-width="1.3" fill="none"></circle><path d="M8 11C8 9.343 9.343 8 11 8C12.657 8 14 9.343 14 11" stroke="#315B2C" stroke-width="1" fill="none"></path></svg></div>
+        <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 500; color: #1a1a18; margin-bottom: 8px; line-height: 1.25;">Licenciamento Ambiental</h3>
+        <p style="font-family: 'Manrope', sans-serif; font-size: 12.5px; font-weight: 400; color: #777772; line-height: 1.7; margin-bottom: 16px;">EIA/RIMA, licenças e acompanhamento junto a SEMAS e IBAMA.</p>
+        <div style="font-family: 'Manrope', sans-serif; font-size: 10.5px; font-weight: 700; color: #315B2C; letter-spacing: 0.1em; text-transform: uppercase;">Saiba mais →</div>
+      </a>
+      <a href="./Servicos.dc.html#pronaf" class="svc-card" style="text-decoration: none;">
+        <div style="width: 44px; height: 44px; background: rgba(49,91,44,0.08); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 18px;"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 3V19M3 11H19" stroke="#315B2C" stroke-width="1.3" stroke-linecap="round"></path><circle cx="11" cy="11" r="9" stroke="#315B2C" stroke-width="1.3" fill="none"></circle></svg></div>
+        <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 500; color: #1a1a18; margin-bottom: 8px; line-height: 1.25;">Projetos Rurais</h3>
+        <p style="font-family: 'Manrope', sans-serif; font-size: 12.5px; font-weight: 400; color: #777772; line-height: 1.7; margin-bottom: 16px;">Elaboração e gestão de projetos agropecuários e sociais.</p>
+        <div style="font-family: 'Manrope', sans-serif; font-size: 10.5px; font-weight: 700; color: #315B2C; letter-spacing: 0.1em; text-transform: uppercase;">Saiba mais →</div>
+      </a>
+      <a href="./Servicos.dc.html#pronaf" class="svc-card" style="text-decoration: none;">
+        <div style="width: 44px; height: 44px; background: rgba(49,91,44,0.08); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 18px;"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 16L7 12L10 15L14 9L19 16" stroke="#315B2C" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none"></path><rect x="2" y="2" width="18" height="18" rx="2" stroke="#315B2C" stroke-width="1.3" fill="none"></rect></svg></div>
+        <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 500; color: #1a1a18; margin-bottom: 8px; line-height: 1.25;">Consultoria PRONAF</h3>
+        <p style="font-family: 'Manrope', sans-serif; font-size: 12.5px; font-weight: 400; color: #777772; line-height: 1.7; margin-bottom: 16px;">Crédito rural, DAP, planos e acompanhamento bancário.</p>
+        <div style="font-family: 'Manrope', sans-serif; font-size: 10.5px; font-weight: 700; color: #315B2C; letter-spacing: 0.1em; text-transform: uppercase;">Saiba mais →</div>
+      </a>
+      <a href="./Servicos.dc.html#georreferenciamento" class="svc-card" style="text-decoration: none;">
+        <div style="width: 44px; height: 44px; background: rgba(49,91,44,0.08); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 18px;"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="9" stroke="#315B2C" stroke-width="1.3" fill="none"></circle><circle cx="11" cy="11" r="2.5" stroke="#315B2C" stroke-width="1.3" fill="none"></circle><path d="M11 2V5M11 17V20M2 11H5M17 11H20" stroke="#315B2C" stroke-width="1.3" stroke-linecap="round"></path></svg></div>
+        <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 500; color: #1a1a18; margin-bottom: 8px; line-height: 1.25;">Georreferenciamento</h3>
+        <p style="font-family: 'Manrope', sans-serif; font-size: 12.5px; font-weight: 400; color: #777772; line-height: 1.7; margin-bottom: 16px;">Levantamento topográfico e certificação INCRA/SIGEF.</p>
+        <div style="font-family: 'Manrope', sans-serif; font-size: 10.5px; font-weight: 700; color: #315B2C; letter-spacing: 0.1em; text-transform: uppercase;">Saiba mais →</div>
+      </a>
+      <a href="./Servicos.dc.html#gestao" class="svc-card" style="text-decoration: none;">
+        <div style="width: 44px; height: 44px; background: rgba(49,91,44,0.08); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 18px;"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M4 18V12M8 18V8M12 18V10M16 18V5M20 18V2" stroke="#315B2C" stroke-width="1.3" stroke-linecap="round"></path></svg></div>
+        <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 500; color: #1a1a18; margin-bottom: 8px; line-height: 1.25;">Gestão de Projetos</h3>
+        <p style="font-family: 'Manrope', sans-serif; font-size: 12.5px; font-weight: 400; color: #777772; line-height: 1.7; margin-bottom: 16px;">Coordenação completa do planejamento à prestação de contas.</p>
+        <div style="font-family: 'Manrope', sans-serif; font-size: 10.5px; font-weight: 700; color: #315B2C; letter-spacing: 0.1em; text-transform: uppercase;">Saiba mais →</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── ABOUT / QUEM SOMOS ─────────────────────────────────────────── -->
+<section style="background: #FAFAF8; padding: 120px 0; border-top: 1px solid rgba(49,91,44,0.06);">
+  <div style="max-width: 1320px; margin: 0 auto; padding: 0 64px;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 96px; align-items: center;">
+      <div data-animate="">
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;"><div style="width: 28px; height: 2px; background: #315B2C;"></div><span style="font-family: 'Manrope', sans-serif; font-size: 10px; font-weight: 600; color: #6F8F3A; letter-spacing: 0.28em; text-transform: uppercase;">Quem Somos</span></div>
+        <h2 style="font-family: 'Cormorant Garamond', serif; font-size: clamp(34px, 3.4vw, 48px); font-weight: 400; color: #1a1a18; line-height: 1.12; letter-spacing: -0.015em; margin-bottom: 22px; text-wrap: pretty;">Consultoria que impulsiona desenvolvimento e oportunidades</h2>
+        <p style="font-family: 'Manrope', sans-serif; font-size: 14.5px; font-weight: 400; color: #4a4a44; line-height: 1.88; margin-bottom: 16px;">A AgroVisão é uma consultoria especializada em planejamento, gestão e execução de projetos que geram valor para pessoas, comunidades e territórios.</p>
+        <p style="font-family: 'Manrope', sans-serif; font-size: 14.5px; font-weight: 400; color: #4a4a44; line-height: 1.88; margin-bottom: 44px;">Atuamos com responsabilidade, inovação e compromisso com um futuro mais próspero e sustentável para a Amazônia Legal.</p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid rgba(49,91,44,0.1); border-radius: 12px; overflow: hidden; margin-bottom: 40px;">
+          <div style="padding: 24px 22px; border-right: 1px solid rgba(49,91,44,0.1);">
+            <div style="font-family: 'Cormorant Garamond', serif; font-size: 44px; font-weight: 300; color: #315B2C; line-height: 1; margin-bottom: 6px;">+<span data-counter="500">500</span></div>
+            <div style="font-family: 'Manrope', sans-serif; font-size: 10px; font-weight: 600; color: #6F8F3A; letter-spacing: 0.18em; text-transform: uppercase;">Projetos</div>
+          </div>
+          <div style="padding: 24px 22px;">
+            <div style="font-family: 'Cormorant Garamond', serif; font-size: 44px; font-weight: 300; color: #315B2C; line-height: 1; margin-bottom: 6px;">+<span data-counter="15">15</span></div>
+            <div style="font-family: 'Manrope', sans-serif; font-size: 10px; font-weight: 600; color: #6F8F3A; letter-spacing: 0.18em; text-transform: uppercase;">Anos</div>
+          </div>
+          <div style="padding: 24px 22px; border-top: 1px solid rgba(49,91,44,0.1); border-right: 1px solid rgba(49,91,44,0.1);">
+            <div style="font-family: 'Cormorant Garamond', serif; font-size: 44px; font-weight: 300; color: #315B2C; line-height: 1; margin-bottom: 6px;"><span data-counter="12">12</span></div>
+            <div style="font-family: 'Manrope', sans-serif; font-size: 10px; font-weight: 600; color: #6F8F3A; letter-spacing: 0.18em; text-transform: uppercase;">Estados</div>
+          </div>
+          <div style="padding: 24px 22px; border-top: 1px solid rgba(49,91,44,0.1);">
+            <div style="font-family: 'Cormorant Garamond', serif; font-size: 44px; font-weight: 300; color: #315B2C; line-height: 1; margin-bottom: 6px;">Multi</div>
+            <div style="font-family: 'Manrope', sans-serif; font-size: 10px; font-weight: 600; color: #6F8F3A; letter-spacing: 0.18em; text-transform: uppercase;">disciplinar</div>
+          </div>
+        </div>
+        <a href="./Sobre.dc.html" style="display: inline-flex; align-items: center; gap: 8px; padding: 13px 28px; background: #315B2C; color: #F6F4EF; font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; border-radius: 8px; transition: background 0.22s;" style-hover="background: #254822;">Saiba Mais sobre Nós <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 6.5H11M8 3.5L11 6.5L8 9.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
+      </div>
+      <div style="position: relative;" data-animate="" data-d="2">
+        <div style="aspect-ratio: 4/5; overflow: hidden; border-radius: 20px; box-shadow: 0 24px 72px rgba(0,0,0,0.12);">
+          <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=900&amp;q=88&amp;fm=jpg&amp;fit=crop" alt="Campo agrícola ao amanhecer" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+        </div>
+        <div style="position: absolute; bottom: -20px; right: -20px; background: #FFFFFF; border-radius: 14px; padding: 20px 24px; box-shadow: 0 12px 40px rgba(0,0,0,0.12); border: 1px solid rgba(49,91,44,0.08);">
+          <div style="font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 300; color: #315B2C; line-height: 1; margin-bottom: 4px;">+500</div>
+          <div style="font-family: 'Manrope', sans-serif; font-size: 9.5px; font-weight: 600; color: #6F8F3A; letter-spacing: 0.18em; text-transform: uppercase;">Projetos<br>Desenvolvidos</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PROJECT MARQUEE ────────────────────────────────────────────── -->
+<section style="background: #FFFFFF; padding: 100px 0; border-top: 1px solid rgba(49,91,44,0.06); overflow: hidden; position: relative;">
+  <!-- Decorative green glow -->
+  <div style="position: absolute; left: -120px; top: 50%; transform: translateY(-50%); width: 380px; height: 380px; background: radial-gradient(circle, rgba(111,143,58,0.08) 0%, transparent 70%); pointer-events: none;"></div>
+  <div style="position: absolute; right: -120px; bottom: 60px; width: 300px; height: 300px; background: radial-gradient(circle, rgba(111,143,58,0.06) 0%, transparent 70%); pointer-events: none;"></div>
+
+  <div style="text-align: center; margin-bottom: 60px; position: relative; z-index: 1;" data-animate="">
+    <div style="display: flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 16px;"><div style="width: 28px; height: 2px; background: #315B2C;"></div><span style="font-family: 'Manrope', sans-serif; font-size: 10px; font-weight: 600; color: #6F8F3A; letter-spacing: 0.28em; text-transform: uppercase;">Projetos que Transformam</span><div style="width: 28px; height: 2px; background: #315B2C;"></div></div>
+    <h2 style="font-family: 'Cormorant Garamond', serif; font-size: clamp(34px, 3.6vw, 52px); font-weight: 400; color: #1a1a18; line-height: 1.1; letter-spacing: -0.015em; margin-bottom: 14px;">Nossos Projetos em <em style="font-style: italic; color: #315B2C;">Movimento</em></h2>
+    <p style="font-family: 'Manrope', sans-serif; font-size: 14.5px; font-weight: 400; color: #666660; line-height: 1.75; max-width: 540px; margin: 0 auto;">Iniciativas que geram impacto real e transformam vidas, comunidades e territórios na Amazônia e além.</p>
+  </div>
+
+  <!-- Row 1: scrolls RIGHT -->
+  <div class="mq-row" style="overflow: hidden; -webkit-mask-image: linear-gradient(to right, transparent 0px, black 80px, black calc(100% - 80px), transparent 100%); mask-image: linear-gradient(to right, transparent 0px, black 80px, black calc(100% - 80px), transparent 100%); margin-bottom: 14px;">
+    <div class="mq-track" style="animation: scrollRight 38s linear infinite;">
+      <div class="mq-chip"><div class="mq-logo"><img src="./assets/logos/projetos/acai-amazonico.png" alt="Açaí Amazônico"></div><div><div class="mq-name">Açaí Amazônico</div><div class="mq-cat">Agricultura Familiar</div></div></div>
+      <div class="mq-chip"><div class="mq-logo"><img src="./assets/logos/projetos/agricultura-para-todos.png" alt="Agricultura Para Todos"></div><div><div class="mq-name">Agricultura Para Todos</div><div class="mq-cat">Agricultura Familiar</div></div></div>
+      <div class="mq-chip"><div class="mq-logo"><img src="./assets/logos/projetos/amazonia-viva.png" alt="Amazônia Viva"></div><div><div class="mq-name">Amazônia Viva</div><div class="mq-cat">Ambiental</div></div></div>
+      <div class="mq-chip"><div class="mq-logo"><img src="./assets/logos/projetos/aurora-sustentavel.png" alt="Aurora Sustentável" style="background: url(&quot;./aurora-sustentavel-mqzxptev.svg&quot;) center / cover no-repeat; object-fit: fill"></div><div><div class="mq-name">Aurora Sustentável</div><div class="mq-cat">Ambiental</div></div></div>
+      <div class="mq-chip"><div class="mq-logo"><img src="./assets/logos/projetos/casa-de-farinha.png" alt="Casa de Farinha"></div><div><div class="mq-name">Casa de Farinha</div><div class="mq-cat">Agricultura Familiar</div></div></div>
+      <div class="mq-chip"><div class="mq-logo"><img src="./assets/logos/projetos/casa-de-farinha-2.png" alt="Casa de Farinha II"></div><div><div class="mq-name">Casa de Farinha II</div><div class="mq-cat">Agricultura Familiar</div></div></div>
+      <div class="mq-chip"><div class="mq-logo"><img src="./assets/logos/projetos/cotijuba-mais-verde.png" alt="Cotijuba Mais Verde"></div><div><div class="mq-name">Cotijuba Mais Verde</div><div class="mq-cat">Ambiental</div></div></div>
+      <div class="mq-chip"><div class="mq-logo"><img src="./assets/logos/projetos/cultura-pela-paz.png" alt="Cultura Pela Paz"></div><div><div class="mq-name">Cultura Pela Paz</div><div class="mq-cat">Cultural</div></div></div>
+      <div class="mq-chip"><div class="mq-logo"><img src="./assets/logos/projetos/de-maos-dadas-com-o-campo.png" alt="De Mãos Dadas com o Campo"></div><div><div class="mq-name">De Mãos Dadas com o Campo</div><div class="mq-cat">Projeto Social</div></div></div>
+      <div class="mq-chip"><div class="mq-logo"><img src="./assets/logos/projetos/eco-vida-plantar.png" alt="Eco Vida Plantar"></div><div><div class="mq-name">Eco Vida Plantar</div><div class="mq-cat">Ambiental</div></div></div>
+      <div class="mq-chip"><div class="mq-logo"><img src="./assets/logos/projetos/acai-amazonico.png" alt="Açaí Amazônico"></div><div><div class="mq-name">Açaí Amazônico</div><div class="mq-cat">Agricultura Familiar</div></div></div>
+      <div class="mq-chip"><div class="mq-logo"><img src="./assets/logos/projetos/agricultura-para-todos.png" alt="Agricultura Para Todos"></div><div><div class="mq-name">Agricultura Para Todos</div><div class="mq-cat">Agricultura Familiar</div></div></div>
+      <div class="mq-chip"><div class="mq-logo"><img src="./assets/logos/projetos/amazonia-viva.png" alt="Amazônia Viva"></div><div><div class="mq-name">Amazônia Viva</div><div class="mq-cat">Ambiental</div></div></div>
+      <div class="mq-chip"><div class="mq-logo"><img src="./assets/logos/projetos/projeto-gerando-sonhos.png" alt="Projeto Gerando Sonhos"></div><div><div class="mq-name">Aurora Sustentável</div><div class="mq-cat">Ambiental</div></div></div>
+      <div class="mq-chip"><div class="mq-logo"><img src="./assets/logos/projetos/empodera-elas-para.png" alt="Empodera Elas Pará"></div><div><div class="mq-name">Casa de Farinha</div><div class="mq-cat">Agricultura Familiar</div></div></div>
+      <div class="mq-chip"><div class="mq-logo"><img src="./assets/logos/projetos/projeto-renda-para.png" alt="Projeto Renda Pará"></div><div><div class="mq-name">Casa de Farinha II</div><div class="mq-cat">Agricultura Familiar</div></div></div>
+      <div class="mq-chip"><div class="mq-logo"><img src="./assets/logos/projetos/cotijuba-mais-verde.png" alt="Cotijuba Mais Verde"></div><div><div class="mq-name">Cotijuba Mais Verde</div><div class="mq-cat">Ambiental</div></div></div>
+      <div class="mq-chip"><div class="mq-logo"><img src="./assets/logos/projetos/cultura-pela-paz.png" alt="Cultura Pela Paz"></div><div><div class="mq-name">Cultura Pela Paz</div><div class="mq-cat">Cultural</div></div></div>
+      <div class="mq-chip"><div class="mq-logo"><img src="./assets/logos/projetos/de-maos-dadas-com-o-campo.png" alt="De Mãos Dadas com o Campo"></div><div><div class="mq-name">De Mãos Dadas com o Campo</div><div class="mq-cat">Projeto Social</div></div></div>
+      <div class="mq-chip"><div class="mq-logo"><img src="./assets/logos/projetos/eco-vida-plantar.png" alt="Eco Vida Plantar"></div><div><div class="mq-name">Eco Vida Plantar</div><div class="mq-cat">Ambiental</div></div></div>
+    </div>
+  </div>
+
+  <!-- Row 2: scrolls LEFT -->
+  <div class="mq-row" style="overflow: hidden; -webkit-mask-image: linear-gradient(to right, transparent 0px, black 80px, black calc(100% - 80px), transparent 100%); mask-image: linear-gradient(to right, transparent 0px, black 80px, black calc(100% - 80px), transparent 100%); margin-bottom: 52px;">
+    <div class="mq-track" style="animation: scrollLeft 42s linear infinite;">
+      <div class="mq-chip"><div class="mq-logo"><img src="./assets/logos/projetos/empodera-elas-para.png" alt="Empodera Elas Pará"></div><div><div class="mq-name">Empodera Elas Pará</div><div class="mq-cat">Feminino</div></div></div>
+      <div class="mq-chip"><div class="mq-logo"><img src="./assets/logos/projetos/expandindo-criacao-de-abelhas.png" alt="Expandindo a Criação de Abelhas"></div><div><div class="mq-name">Expandindo a Criação de Abelhas</div><div class="mq-cat">Agricultura Familiar</div></div></div>
+      <div class="mq-chip"><div class="mq-logo"><img src="./assets/logos/projetos/iaça.png" alt="Iaçá"></div><div><div class="mq-name">Iaçá</div><div class="mq-cat">Cultural</div></div></div>
+      <div class="mq-chip"><div class="mq-logo"><img src="./assets/logos/projetos/ilhas-marajoara-acai-farinha-cuia.png" alt="Ilhas Marajoara"></div><div><div class="mq-name">Ilhas Marajoara</div><div class="mq-cat">Agricultura Familiar</div></div></div>
+      <div class="mq-chip"><div class="mq-logo"><img src="./assets/logos/projetos/maos-de-mulheres.png" alt="Mãos de Mulheres"></div><div><div class="mq-name">Mãos de Mulheres</div><div class="mq-cat">Feminino</div></div></div>
+      <div class="mq-chip"><div class="mq-logo"><img src="./assets/logos/projetos/plantando-esperanca.png" alt="Plantando Esperança"></div><div><div class="mq-name">Plantando Esperança</div><div class="mq-cat">Projeto Social</div></div></div>
+      <div class="mq-chip"><div class="mq-logo"><img src="./assets/logos/projetos/projeto-eco-inovar.png" alt="Projeto Eco Inovar"></div><div><div class="mq-name">Projeto Eco Inovar</div><div class="mq-cat">Ambiental</div></div></div>
+      <div class="mq-chip"><div class="mq-logo"><img src="./assets/logos/projetos/projeto-gerando-sonhos.png" alt="Projeto Gerando Sonhos"></div><div><div class="mq-name">Projeto Gerando Sonhos</div><div class="mq-cat">Projeto Social</div></div></div>
+      <div class="mq-chip"><div class="mq-logo"><img src="./assets/logos/projetos/projeto-renda-para.png" alt="Projeto Renda Pará"></div><div><div class="mq-name">Projeto Renda Pará</div><div class="mq-cat">Agricultura Familiar</div></div></div>
+      <div class="mq-chip"><div class="mq-logo"><img src="./assets/logos/projetos/empodera-elas-para.png" alt="Empodera Elas Pará"></div><div><div class="mq-name">Empodera Elas Pará</div><div class="mq-cat">Feminino</div></div></div>
+      <div class="mq-chip"><div class="mq-logo"><img src="./assets/logos/projetos/expandindo-criacao-de-abelhas.png" alt="Expandindo a Criação de Abelhas"></div><div><div class="mq-name">Expandindo a Criação de Abelhas</div><div class="mq-cat">Agricultura Familiar</div></div></div>
+      <div class="mq-chip"><div class="mq-logo"><img src="./assets/logos/projetos/iaça.png" alt="Iaçá"></div><div><div class="mq-name">Iaçá</div><div class="mq-cat">Cultural</div></div></div>
+      <div class="mq-chip"><div class="mq-logo"><img src="./assets/logos/projetos/ilhas-marajoara-acai-farinha-cuia.png" alt="Ilhas Marajoara"></div><div><div class="mq-name">Ilhas Marajoara</div><div class="mq-cat">Agricultura Familiar</div></div></div>
+      <div class="mq-chip"><div class="mq-logo"><img src="./assets/logos/projetos/maos-de-mulheres.png" alt="Mãos de Mulheres"></div><div><div class="mq-name">Mãos de Mulheres</div><div class="mq-cat">Feminino</div></div></div>
+      <div class="mq-chip"><div class="mq-logo"><img src="./assets/logos/projetos/plantando-esperanca.png" alt="Plantando Esperança"></div><div><div class="mq-name">Plantando Esperança</div><div class="mq-cat">Projeto Social</div></div></div>
+      <div class="mq-chip"><div class="mq-logo"><img src="./assets/logos/projetos/projeto-eco-inovar.png" alt="Projeto Eco Inovar"></div><div><div class="mq-name">Projeto Eco Inovar</div><div class="mq-cat">Ambiental</div></div></div>
+      <div class="mq-chip"><div class="mq-logo"><img src="./assets/logos/projetos/projeto-gerando-sonhos.png" alt="Projeto Gerando Sonhos"></div><div><div class="mq-name">Projeto Gerando Sonhos</div><div class="mq-cat">Projeto Social</div></div></div>
+      <div class="mq-chip"><div class="mq-logo"><img src="./assets/logos/projetos/projeto-renda-para.png" alt="Projeto Renda Pará"></div><div><div class="mq-name">Projeto Renda Pará</div><div class="mq-cat">Agricultura Familiar</div></div></div>
+    </div>
+  </div>
+
+  <div style="text-align: center; position: relative; z-index: 1;">
+    <a href="./Projetos.dc.html" style="display: inline-flex; align-items: center; gap: 10px; padding: 13px 32px; border: 1.5px solid rgba(49,91,44,0.28); color: #315B2C; font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; border-radius: 8px; transition: background 0.22s, border-color 0.22s;" style-hover="background: rgba(49,91,44,0.05); border-color: #315B2C;">Ver Todos os Projetos <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7H11M8 4L11 7L8 10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
+  </div>
+</section>
+
+<!-- ─── PROCESS TIMELINE ───────────────────────────────────────────── -->
+<section style="background: #FAFAF8; padding: 100px 0; border-top: 1px solid rgba(49,91,44,0.06);">
+  <div style="max-width: 1320px; margin: 0 auto; padding: 0 64px;">
+    <div style="text-align: center; margin-bottom: 64px;" data-animate="">
+      <div style="display: flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 16px;"><div style="width: 28px; height: 2px; background: #315B2C;"></div><span style="font-family: 'Manrope', sans-serif; font-size: 10px; font-weight: 600; color: #6F8F3A; letter-spacing: 0.28em; text-transform: uppercase;">Nosso Processo</span><div style="width: 28px; height: 2px; background: #315B2C;"></div></div>
+      <h2 style="font-family: 'Cormorant Garamond', serif; font-size: clamp(34px, 3.4vw, 48px); font-weight: 400; color: #1a1a18; line-height: 1.1; letter-spacing: -0.015em;">Como entregamos<br>cada projeto</h2>
+    </div>
+    <div style="position: relative;" data-animate="" data-d="1">
+      <div style="position: absolute; top: 22px; left: 40px; right: 40px; height: 1px; background: rgba(49,91,44,0.15);"></div>
+      <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 0;">
+        <div style="display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 12px;">
+          <div style="width: 44px; height: 44px; background: #315B2C; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 18px; position: relative; z-index: 1; flex-shrink: 0;"><span style="font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 400; color: #F6F4EF;">1</span></div>
+          <div style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 700; color: #315B2C; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px;">Diagnóstico</div>
+          <div style="font-family: 'Manrope', sans-serif; font-size: 12px; font-weight: 400; color: #888882; line-height: 1.6;">Avaliação técnica inicial</div>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 12px;">
+          <div style="width: 44px; height: 44px; background: #FFFFFF; border: 1.5px solid rgba(49,91,44,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 18px; position: relative; z-index: 1; flex-shrink: 0;"><span style="font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 400; color: #315B2C;">2</span></div>
+          <div style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 700; color: #315B2C; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px;">Planejamento</div>
+          <div style="font-family: 'Manrope', sans-serif; font-size: 12px; font-weight: 400; color: #888882; line-height: 1.6;">Estratégia e metas</div>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 12px;">
+          <div style="width: 44px; height: 44px; background: #FFFFFF; border: 1.5px solid rgba(49,91,44,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 18px; position: relative; z-index: 1; flex-shrink: 0;"><span style="font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 400; color: #315B2C;">3</span></div>
+          <div style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 700; color: #315B2C; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px;">Projeto</div>
+          <div style="font-family: 'Manrope', sans-serif; font-size: 12px; font-weight: 400; color: #888882; line-height: 1.6;">Documentação completa</div>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 12px;">
+          <div style="width: 44px; height: 44px; background: #6F8F3A; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 18px; position: relative; z-index: 1; flex-shrink: 0;"><span style="font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 400; color: #F6F4EF;">4</span></div>
+          <div style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 700; color: #315B2C; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px;">Aprovação</div>
+          <div style="font-family: 'Manrope', sans-serif; font-size: 12px; font-weight: 400; color: #888882; line-height: 1.6;">Captação e liberação</div>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 12px;">
+          <div style="width: 44px; height: 44px; background: #FFFFFF; border: 1.5px solid rgba(49,91,44,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 18px; position: relative; z-index: 1; flex-shrink: 0;"><span style="font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 400; color: #315B2C;">5</span></div>
+          <div style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 700; color: #315B2C; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px;">Execução</div>
+          <div style="font-family: 'Manrope', sans-serif; font-size: 12px; font-weight: 400; color: #888882; line-height: 1.6;">Acompanhamento técnico</div>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 12px;">
+          <div style="width: 44px; height: 44px; background: #FFFFFF; border: 1.5px solid rgba(49,91,44,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 18px; position: relative; z-index: 1; flex-shrink: 0;"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 9L7 13L15 5" stroke="#315B2C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+          <div style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 700; color: #315B2C; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px;">Acompanhamento</div>
+          <div style="font-family: 'Manrope', sans-serif; font-size: 12px; font-weight: 400; color: #888882; line-height: 1.6;">Relatórios e prestação</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── DIFFERENTIALS ─────────────────────────────────────────────── -->
+<section style="background: #FFFFFF; padding: 100px 0; border-top: 1px solid rgba(49,91,44,0.06);">
+  <div style="max-width: 1320px; margin: 0 auto; padding: 0 64px;">
+    <div style="display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 52px;" data-animate="">
+      <div>
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;"><div style="width: 28px; height: 2px; background: #315B2C;"></div><span style="font-family: 'Manrope', sans-serif; font-size: 10px; font-weight: 600; color: #6F8F3A; letter-spacing: 0.28em; text-transform: uppercase;">Diferenciais</span></div>
+        <h2 style="font-family: 'Cormorant Garamond', serif; font-size: clamp(34px, 3.4vw, 48px); font-weight: 400; color: #1a1a18; line-height: 1.1; letter-spacing: -0.015em;">Por que escolher<br>a AgroVisão</h2>
+      </div>
+      <a href="#" onClick="{{ openModal }}" style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 26px; background: #315B2C; color: #F6F4EF; font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; border-radius: 8px; transition: background 0.22s; flex-shrink: 0; margin-bottom: 6px;" style-hover="background: #254822;">Falar com Especialista</a>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;" data-animate="" data-d="1">
+      <div class="diff-card">
+        <div style="width: 44px; height: 44px; background: rgba(49,91,44,0.07); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px;"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 11C3 6.582 6.582 3 11 3C15.418 3 19 6.582 19 11C19 15.418 15.418 19 11 19C6.582 19 3 15.418 3 11Z" stroke="#315B2C" stroke-width="1.3" fill="none"></path><path d="M7 11L10 14L15 8" stroke="#315B2C" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+        <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 500; color: #1a1a18; margin-bottom: 8px;">Equipe especializada</h3>
+        <p style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 400; color: #777772; line-height: 1.72;">Profissionais experientes em diversas áreas do desenvolvimento rural e ambiental.</p>
+      </div>
+      <div class="diff-card">
+        <div style="width: 44px; height: 44px; background: rgba(49,91,44,0.07); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px;"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 3V7M11 15V19M3 11H7M15 11H19" stroke="#315B2C" stroke-width="1.3" stroke-linecap="round"></path><circle cx="11" cy="11" r="4" stroke="#315B2C" stroke-width="1.3" fill="none"></circle></svg></div>
+        <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 500; color: #1a1a18; margin-bottom: 8px;">Atendimento personalizado</h3>
+        <p style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 400; color: #777772; line-height: 1.72;">Soluções sob medida para cada realidade, contexto e necessidade do cliente.</p>
+      </div>
+      <div class="diff-card" style="background: #315B2C; border-color: #315B2C;">
+        <div style="width: 44px; height: 44px; background: rgba(246,244,239,0.12); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px;"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 3L13.5 8.5L19 9.5L15 13.5L16 19L11 16.5L6 19L7 13.5L3 9.5L8.5 8.5L11 3Z" stroke="#B8D48A" stroke-width="1.3" fill="none" stroke-linejoin="round"></path></svg></div>
+        <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 500; color: #F6F4EF; margin-bottom: 8px;">Projetos aprovados</h3>
+        <p style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 400; color: rgba(246,244,239,0.75); line-height: 1.72;">Mais de 100 projetos aprovados e executados com sucesso em toda a Amazônia Legal.</p>
+      </div>
+      <div class="diff-card">
+        <div style="width: 44px; height: 44px; background: rgba(49,91,44,0.07); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px;"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="8" r="4" stroke="#315B2C" stroke-width="1.3" fill="none"></circle><path d="M3 20C3 16.134 6.582 13 11 13C15.418 13 19 16.134 19 20" stroke="#315B2C" stroke-width="1.3" stroke-linecap="round" fill="none"></path></svg></div>
+        <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 500; color: #1a1a18; margin-bottom: 8px;">Resposta rápida</h3>
+        <p style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 400; color: #777772; line-height: 1.72;">Agilidade no atendimento com resposta em até 24 horas úteis para qualquer demanda.</p>
+      </div>
+      <div class="diff-card">
+        <div style="width: 44px; height: 44px; background: rgba(49,91,44,0.07); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px;"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 18L8 12L12 16L16 9L19 18" stroke="#315B2C" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none"></path></svg></div>
+        <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 500; color: #1a1a18; margin-bottom: 8px;">Experiência comprovada</h3>
+        <p style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 400; color: #777772; line-height: 1.72;">Mais de 15 anos de atuação no desenvolvimento rural e ambiental da Amazônia Legal.</p>
+      </div>
+      <div class="diff-card">
+        <div style="width: 44px; height: 44px; background: rgba(49,91,44,0.07); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px;"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M4 11H18M18 11L13 6M18 11L13 16" stroke="#315B2C" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+        <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 500; color: #1a1a18; margin-bottom: 8px;">Acompanhamento completo</h3>
+        <p style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 400; color: #777772; line-height: 1.72;">Do diagnóstico à prestação de contas, entregamos o projeto 100% finalizado.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CTA BLOCK ──────────────────────────────────────────────────── -->
+<section style="background: #EEF6E8; padding: 100px 0; border-top: 1px solid rgba(49,91,44,0.1);" data-animate="">
+  <div style="max-width: 1320px; margin: 0 auto; padding: 0 64px; display: flex; align-items: center; justify-content: space-between; gap: 60px; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 300px;">
+      <h2 style="font-family: 'Cormorant Garamond', serif; font-size: clamp(32px, 3.8vw, 52px); font-weight: 400; color: #1a1a18; line-height: 1.1; letter-spacing: -0.015em; margin-bottom: 16px; text-wrap: pretty;">Vamos transformar sua ideia<br>em um <em style="font-style: italic; color: #315B2C;">grande projeto</em>?</h2>
+      <p style="font-family: 'Manrope', sans-serif; font-size: 14.5px; font-weight: 400; color: #4a4a44; line-height: 1.8; max-width: 440px;">Fale com nossa equipe e descubra como podemos levar sua iniciativa ainda mais longe.</p>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 12px; flex-shrink: 0;">
+      <a href="#" onClick="{{ openModal }}" style="display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 36px; background: #315B2C; color: #F6F4EF; font-family: 'Manrope', sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; border-radius: 8px; transition: background 0.22s;" style-hover="background: #254822;">Solicitar Consultoria</a>
+      <a href="https://api.whatsapp.com/send?phone=5591982064340" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 14px 36px; background: #FFFFFF; color: #1a1a18; font-family: 'Manrope', sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; border-radius: 8px; border: 1.5px solid rgba(49,91,44,0.2); transition: border-color 0.22s, background 0.22s;" style-hover="border-color: #315B2C; background: rgba(49,91,44,0.03);"><svg width="18" height="18" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"></path></svg>Fale Conosco pelo WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─────────────────────────────────────────────────────── -->
+<footer style="background: #FFFFFF; padding: 80px 0 40px; border-top: 1px solid rgba(49,91,44,0.1);">
+  <div style="max-width: 1320px; margin: 0 auto; padding: 0 64px;">
+    <div style="display: grid; grid-template-columns: 2.2fr 1fr 1fr 1.3fr; gap: 56px; padding-bottom: 56px; border-bottom: 1px solid rgba(49,91,44,0.1);">
+      <div>
+        <a href="./index.html" style="display: inline-flex; align-items: center; gap: 12px; margin-bottom: 18px; text-decoration: none; color: #1a1a18;">
+          <svg width="24" height="24" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="13" stroke="#315B2C" stroke-width="1.2"></circle><path d="M14 4V24M4 14H24" stroke="#315B2C" stroke-width="0.8" opacity="0.45"></path><circle cx="14" cy="14" r="3.5" stroke="#315B2C" stroke-width="1.2"></circle></svg>
+          <div>
+            <div style="font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #1a1a18;">AgroVisão</div>
+            <div style="font-family: 'Manrope', sans-serif; font-size: 8.5px; font-weight: 400; letter-spacing: 0.22em; color: #6F8F3A; text-transform: uppercase;">Consultoria Agrícola</div>
+          </div>
+        </a>
+        <p style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 400; color: #666660; line-height: 1.82; max-width: 280px; margin-bottom: 28px;">Consultoria especializada em planejamento, gestão e execução de projetos que geram impacto real na Amazônia e no Brasil.</p>
+        <div style="display: flex; gap: 10px; align-items: center;">
+          <a href="https://www.instagram.com/visaogestaodeprojetos/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="social-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#315B2C" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"></rect><circle cx="12" cy="12" r="5"></circle><circle cx="17.5" cy="6.5" r="1" fill="#315B2C" stroke="none"></circle></svg>
+          </a>
+          <a href="mailto:contato@agrovisaopara.com.br" aria-label="Email" class="social-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#315B2C" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="M2 7L12 13L22 7"></path></svg>
+          </a>
+          <a href="https://api.whatsapp.com/send?phone=5591982064340" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" class="social-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="#315B2C"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"></path></svg>
+          </a>
+          <a href="tel:+5591982064340" aria-label="Telefone" class="social-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#315B2C" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8a19.79 19.79 0 01-3.07-8.63A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z" transform="scale(0.9) translate(1.2,1.2)"></path></svg>
+          </a>
+        </div>
+      </div>
+      <div>
+        <h4 style="font-family: 'Manrope', sans-serif; font-size: 10px; font-weight: 700; color: #315B2C; letter-spacing: 0.24em; text-transform: uppercase; margin-bottom: 22px;">Links Rápidos</h4>
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <a href="./index.html" style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: #555550; text-decoration: none; transition: color 0.2s;" style-hover="color: #315B2C;">Home</a>
+          <a href="./Sobre.dc.html" style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: #555550; text-decoration: none; transition: color 0.2s;" style-hover="color: #315B2C;">Sobre</a>
+          <a href="./Servicos.dc.html" style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: #555550; text-decoration: none; transition: color 0.2s;" style-hover="color: #315B2C;">Serviços</a>
+          <a href="./Projetos.dc.html" style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: #555550; text-decoration: none; transition: color 0.2s;" style-hover="color: #315B2C;">Projetos</a>
+          <a href="./Contato.dc.html" style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: #555550; text-decoration: none; transition: color 0.2s;" style-hover="color: #315B2C;">Contato</a>
+        </div>
+      </div>
+      <div>
+        <h4 style="font-family: 'Manrope', sans-serif; font-size: 10px; font-weight: 700; color: #315B2C; letter-spacing: 0.24em; text-transform: uppercase; margin-bottom: 22px;">Serviços</h4>
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <a href="./Servicos.dc.html#regularizacao-fundiaria" style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: #555550; text-decoration: none; transition: color 0.2s;" style-hover="color: #315B2C;">Gestão de Projetos</a>
+          <a href="./Servicos.dc.html#licenciamento" style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: #555550; text-decoration: none; transition: color 0.2s;" style-hover="color: #315B2C;">Consultoria Estratégica</a>
+          <a href="./Servicos.dc.html#pronaf" style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: #555550; text-decoration: none; transition: color 0.2s;" style-hover="color: #315B2C;">Captação de Recursos</a>
+          <a href="./Servicos.dc.html#gestao" style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: #555550; text-decoration: none; transition: color 0.2s;" style-hover="color: #315B2C;">Monitoramento e Avaliação</a>
+          <a href="./Servicos.dc.html#georreferenciamento" style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: #555550; text-decoration: none; transition: color 0.2s;" style-hover="color: #315B2C;">Treinamentos</a>
+        </div>
+      </div>
+      <div>
+        <h4 style="font-family: 'Manrope', sans-serif; font-size: 10px; font-weight: 700; color: #315B2C; letter-spacing: 0.24em; text-transform: uppercase; margin-bottom: 22px;">Fale Conosco</h4>
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <a href="tel:+5591982064340" style="display: flex; align-items: center; gap: 10px; font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: #555550; text-decoration: none; transition: color 0.2s;" style-hover="color: #315B2C;"><svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M13 10.5v2A1 1 0 0 1 12 13.5a10 10 0 01-8-8A1 1 0 015 4.5h2a1 1 0 011 1c.08.6.224 1.19.43 1.75a1 1 0 01-.23 1.05L7.4 9.1a8 8 0 003.5 3.5l.8-.8a1 1 0 011.05-.23c.56.206 1.15.35 1.75.43A1 1 0 0113 12v-1.5z" stroke="#315B2C" stroke-width="1.2" fill="none" stroke-linecap="round"></path></svg>(91) 98206-4340</a>
+          <a href="tel:+5591987190993" style="display: flex; align-items: center; gap: 10px; font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: #555550; text-decoration: none; transition: color 0.2s;" style-hover="color: #315B2C;"><svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M13 10.5v2A1 1 0 0 1 12 13.5a10 10 0 01-8-8A1 1 0 015 4.5h2a1 1 0 011 1c.08.6.224 1.19.43 1.75a1 1 0 01-.23 1.05L7.4 9.1a8 8 0 003.5 3.5l.8-.8a1 1 0 011.05-.23c.56.206 1.15.35 1.75.43A1 1 0 0113 12v-1.5z" stroke="#315B2C" stroke-width="1.2" fill="none" stroke-linecap="round"></path></svg>(91) 98719-0993</a>
+          <a href="mailto:contato@agrovisaopara.com.br" style="display: flex; align-items: center; gap: 10px; font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: #555550; text-decoration: none; transition: color 0.2s;" style-hover="color: #315B2C;"><svg width="15" height="15" viewBox="0 0 15 15" fill="none"><rect x="1" y="3" width="13" height="9" rx="1.5" stroke="#315B2C" stroke-width="1.2" fill="none"></rect><path d="M1 5L7.5 9L14 5" stroke="#315B2C" stroke-width="1.2" stroke-linecap="round"></path></svg>contato@agrovisaopara.com.br</a>
+          <div style="display: flex; align-items: flex-start; gap: 10px; font-family: 'Manrope', sans-serif; font-size: 12.5px; font-weight: 400; color: #888882; line-height: 1.65;"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" style="flex-shrink: 0; margin-top: 2px;"><path d="M7.5 1.5C5.01 1.5 3 3.51 3 6c0 3.75 4.5 7.5 4.5 7.5S12 9.75 12 6c0-2.49-2.01-4.5-4.5-4.5zm0 6a1.5 1.5 0 110-3 1.5 1.5 0 010 3z" fill="#315B2C" opacity="0.5"></path></svg>Sala 206, Next Office, BR-316,<br>Ananindeua — PA</div>
+        </div>
+      </div>
+    </div>
+    <div style="padding-top: 28px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+      <span style="font-family: 'Manrope', sans-serif; font-size: 11.5px; font-weight: 400; color: #aaa;">© 2025 AgroVisão Consultoria Agrícola · CNPJ 55.818.360/0001-33</span>
+      <span style="font-family: 'Manrope', sans-serif; font-size: 11.5px; font-weight: 400; color: #aaa;">Desenvolvido com ♥ para transformar projetos em realidades.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ─── CONTACT MODAL ──────────────────────────────────────────────── -->
+<sc-if value="{{ mOpen }}" hint-placeholder-val="{{ false }}">
+<div onClick="{{ overlayClick }}" style="position: fixed; inset: 0; z-index: 2000; background: rgba(8,18,6,0.60); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; padding: 24px; animation: mFadeIn 0.22s ease;">
+  <div style="background: #FFFFFF; border-radius: 14px; width: min(720px, 100%); max-height: 88vh; overflow-y: auto; box-shadow: 0 32px 100px rgba(0,0,0,0.25);">
+    <div style="padding: 36px 44px 24px; border-bottom: 1px solid rgba(49,91,44,0.08); display: flex; align-items: flex-start; justify-content: space-between; position: sticky; top: 0; background: #FFFFFF; z-index: 1; border-radius: 14px 14px 0 0;">
+      <div><div style="font-family: 'Manrope', sans-serif; font-size: 10px; font-weight: 600; color: #6F8F3A; letter-spacing: 0.24em; text-transform: uppercase; margin-bottom: 10px;">Consultoria Gratuita</div><h2 style="font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 400; color: #1a1a18; line-height: 1.2;">Solicite um Atendimento</h2></div>
+      <button onClick="{{ closeModal }}" style="background: none; border: none; cursor: pointer; padding: 8px; color: #999994; border-radius: 6px; transition: color 0.2s;" style-hover="color: #1a1a18;"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 4L16 16M16 4L4 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg></button>
+    </div>
+    <sc-if value="{{ mVisible }}" hint-placeholder-val="{{ true }}">
+    <form onSubmit="{{ submitForm }}" style="padding: 32px 44px 44px;">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+        <div><label style="display: block; font-family: 'Manrope', sans-serif; font-size: 10px; font-weight: 600; color: #555550; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;">Nome Completo <span style="color: #DD8758;">*</span></label><input type="text" value="{{ fName }}" onChange="{{ chName }}" placeholder="Seu nome completo" style="width: 100%; padding: 12px 14px; border: 1px solid rgba(49,91,44,0.2); border-radius: 8px; font-family: 'Manrope', sans-serif; font-size: 14px; color: #1a1a18; background: #FAFAF9; outline: none;" style-focus="border-color: #315B2C; background: #FFFFFF; box-shadow: 0 0 0 3px rgba(49,91,44,0.08);"><sc-if value="{{ eName }}" hint-placeholder-val="{{ false }}"><span style="font-family: 'Manrope', sans-serif; font-size: 11.5px; color: #c0392b; margin-top: 5px; display: block;">{{ eName }}</span></sc-if></div>
+        <div><label style="display: block; font-family: 'Manrope', sans-serif; font-size: 10px; font-weight: 600; color: #555550; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;">Empresa</label><input type="text" value="{{ fCompany }}" onChange="{{ chCompany }}" placeholder="Nome da empresa" style="width: 100%; padding: 12px 14px; border: 1px solid rgba(49,91,44,0.2); border-radius: 8px; font-family: 'Manrope', sans-serif; font-size: 14px; color: #1a1a18; background: #FAFAF9; outline: none;" style-focus="border-color: #315B2C; background: #FFFFFF; box-shadow: 0 0 0 3px rgba(49,91,44,0.08);"></div>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+        <div><label style="display: block; font-family: 'Manrope', sans-serif; font-size: 10px; font-weight: 600; color: #555550; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;">Telefone <span style="color: #DD8758;">*</span></label><input type="tel" value="{{ fPhone }}" onChange="{{ chPhone }}" placeholder="(91) 9 9999-9999" style="width: 100%; padding: 12px 14px; border: 1px solid rgba(49,91,44,0.2); border-radius: 8px; font-family: 'Manrope', sans-serif; font-size: 14px; color: #1a1a18; background: #FAFAF9; outline: none;" style-focus="border-color: #315B2C; background: #FFFFFF; box-shadow: 0 0 0 3px rgba(49,91,44,0.08);"><sc-if value="{{ ePhone }}" hint-placeholder-val="{{ false }}"><span style="font-family: 'Manrope', sans-serif; font-size: 11.5px; color: #c0392b; margin-top: 5px; display: block;">{{ ePhone }}</span></sc-if></div>
+        <div><label style="display: block; font-family: 'Manrope', sans-serif; font-size: 10px; font-weight: 600; color: #555550; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;">Email <span style="color: #DD8758;">*</span></label><input type="email" value="{{ fEmail }}" onChange="{{ chEmail }}" placeholder="seu@email.com.br" style="width: 100%; padding: 12px 14px; border: 1px solid rgba(49,91,44,0.2); border-radius: 8px; font-family: 'Manrope', sans-serif; font-size: 14px; color: #1a1a18; background: #FAFAF9; outline: none;" style-focus="border-color: #315B2C; background: #FFFFFF; box-shadow: 0 0 0 3px rgba(49,91,44,0.08);"><sc-if value="{{ eEmail }}" hint-placeholder-val="{{ false }}"><span style="font-family: 'Manrope', sans-serif; font-size: 11.5px; color: #c0392b; margin-top: 5px; display: block;">{{ eEmail }}</span></sc-if></div>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+        <div><label style="display: block; font-family: 'Manrope', sans-serif; font-size: 10px; font-weight: 600; color: #555550; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;">Município</label><input type="text" value="{{ fCity }}" onChange="{{ chCity }}" placeholder="Sua cidade" style="width: 100%; padding: 12px 14px; border: 1px solid rgba(49,91,44,0.2); border-radius: 8px; font-family: 'Manrope', sans-serif; font-size: 14px; color: #1a1a18; background: #FAFAF9; outline: none;" style-focus="border-color: #315B2C; background: #FFFFFF; box-shadow: 0 0 0 3px rgba(49,91,44,0.08);"></div>
+        <div><label style="display: block; font-family: 'Manrope', sans-serif; font-size: 10px; font-weight: 600; color: #555550; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;">Estado</label><select value="{{ fSt }}" onChange="{{ chSt }}" style="width: 100%; padding: 12px 14px; border: 1px solid rgba(49,91,44,0.2); border-radius: 8px; font-family: 'Manrope', sans-serif; font-size: 14px; color: #1a1a18; background: #FAFAF9; outline: none; appearance: none; cursor: pointer;" style-focus="border-color: #315B2C; background: #FFFFFF; box-shadow: 0 0 0 3px rgba(49,91,44,0.08);"><option value="">Selecione</option><option value="AM">Amazonas</option><option value="AP">Amapá</option><option value="MA">Maranhão</option><option value="MT">Mato Grosso</option><option value="PA">Pará</option><option value="RO">Rondônia</option><option value="RR">Roraima</option><option value="TO">Tocantins</option><option value="outro">Outro</option></select></div>
+      </div>
+      <div style="margin-bottom: 20px;"><label style="display: block; font-family: 'Manrope', sans-serif; font-size: 10px; font-weight: 600; color: #555550; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;">Serviço de Interesse</label><select value="{{ fSvc }}" onChange="{{ chSvc }}" style="width: 100%; padding: 12px 14px; border: 1px solid rgba(49,91,44,0.2); border-radius: 8px; font-family: 'Manrope', sans-serif; font-size: 14px; color: #1a1a18; background: #FAFAF9; outline: none; appearance: none; cursor: pointer;" style-focus="border-color: #315B2C; background: #FFFFFF; box-shadow: 0 0 0 3px rgba(49,91,44,0.08);"><option value="">Selecione o serviço</option><option value="regularizacao">Regularização Fundiária</option><option value="licenciamento">Licenciamento Ambiental</option><option value="georreferenciamento">Georreferenciamento</option><option value="car">CAR / CCIR</option><option value="pronaf">Consultoria PRONAF</option><option value="projetos">Projetos Agropecuários</option><option value="gestao">Gestão de Projetos</option><option value="captacao">Captação de Recursos</option><option value="outro">Outro / Não sei</option></select></div>
+      <div style="margin-bottom: 24px;"><label style="display: block; font-family: 'Manrope', sans-serif; font-size: 10px; font-weight: 600; color: #555550; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;">Mensagem <span style="color: #DD8758;">*</span></label><textarea value="{{ fMsg }}" onChange="{{ chMsg }}" rows="4" placeholder="Descreva brevemente seu projeto ou necessidade…" style="width: 100%; padding: 12px 14px; border: 1px solid rgba(49,91,44,0.2); border-radius: 8px; font-family: 'Manrope', sans-serif; font-size: 14px; color: #1a1a18; background: #FAFAF9; outline: none; resize: vertical; min-height: 110px; line-height: 1.65;" style-focus="border-color: #315B2C; background: #FFFFFF; box-shadow: 0 0 0 3px rgba(49,91,44,0.08);"></textarea><sc-if value="{{ eMsg }}" hint-placeholder-val="{{ false }}"><span style="font-family: 'Manrope', sans-serif; font-size: 11.5px; color: #c0392b; margin-top: 5px; display: block;">{{ eMsg }}</span></sc-if></div>
+      <div style="display: flex; align-items: flex-start; gap: 12px; padding: 16px; background: #F8F7F3; border-radius: 8px; margin-bottom: 28px;"><input type="checkbox" id="h-prv" checked="{{ fOk }}" onChange="{{ chOk }}" style="width: 18px; height: 18px; accent-color: #315B2C; margin-top: 2px; cursor: pointer; flex-shrink: 0;"><label for="h-prv" style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 400; color: #555550; line-height: 1.65; cursor: pointer;">Li e concordo com a <a href="#" style="color: #315B2C; text-decoration: underline;">Política de Privacidade</a> da AgroVisão.<sc-if value="{{ eOk }}" hint-placeholder-val="{{ false }}"><span style="display: block; font-size: 11.5px; color: #c0392b; margin-top: 4px;">{{ eOk }}</span></sc-if></label></div>
+      <button type="submit" disabled="{{ mSending }}" style="width: 100%; padding: 16px; background: #315B2C; color: #F6F4EF; font-family: 'Manrope', sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; border: none; border-radius: 8px; cursor: pointer; transition: background 0.22s;" style-hover="background: #254822;">{{ mBtnLabel }}</button>
+    </form>
+    </sc-if>
+    <sc-if value="{{ mSuccess }}" hint-placeholder-val="{{ false }}">
+    <div style="padding: 64px 44px; text-align: center;"><div style="width: 64px; height: 64px; background: #F5F8F3; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; border: 1.5px solid rgba(49,91,44,0.15);"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M5 14L11 20L23 8" stroke="#315B2C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></div><h3 style="font-family: 'Cormorant Garamond', serif; font-size: 34px; font-weight: 400; color: #1a1a18; margin-bottom: 16px;">Solicitação Enviada!</h3><p style="font-family: 'Manrope', sans-serif; font-size: 15px; color: #555550; line-height: 1.75; max-width: 380px; margin: 0 auto 40px;">Nossa equipe entrará em contato em até <strong style="color: #315B2C;">24 horas úteis</strong>.</p><button onClick="{{ closeModal }}" style="padding: 14px 44px; background: #315B2C; color: #F6F4EF; font-family: 'Manrope', sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; border: none; border-radius: 8px; cursor: pointer; transition: background 0.22s;" style-hover="background: #254822;">Fechar</button></div>
+    </sc-if>
+  </div>
+</div>
+</sc-if>
+
+<!-- ─── WHATSAPP FAB ────────────────────────────────────────────────── -->
+<div style="position: fixed; bottom: 32px; right: 32px; z-index: 998; width: 56px; height: 56px;">
+  <div style="position: absolute; inset: -4px; border-radius: 50%; border: 2px solid rgba(37,211,102,0.35); animation: wa-ring 8s ease-in-out infinite; pointer-events: none;"></div>
+  <a href="https://api.whatsapp.com/send?phone=5591982064340" target="_blank" rel="noopener noreferrer" title="WhatsApp" style="position: absolute; inset: 0; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; box-shadow: 0 4px 16px rgba(37,211,102,0.40); transition: transform 0.2s, box-shadow 0.2s;" style-hover="transform: scale(1.1); box-shadow: 0 6px 24px rgba(37,211,102,0.60);"><svg width="26" height="26" viewBox="0 0 24 24" fill="#FFFFFF"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"></path></svg></a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1440, &quot;height&quot;: 900}}">
+class Component extends DCLogic {
+  state = {
+    scrolled: true, entered: false,
+    mOpen: false,
+    mData: { name:'', company:'', phone:'', email:'', city:'', st:'', svc:'', msg:'', ok: false },
+    mErrs: {}, mSts: 'idle',
+  };
+
+  componentDidMount() {
+    setTimeout(() => this.setState({ entered: true }), 80);
+    this._onScroll = () => {
+      const s = true;
+      if (s !== this.state.scrolled) this.setState({ scrolled: s });
+    };
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+
+    this._io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); this._io.unobserve(e.target); } });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('[data-animate]').forEach(el => this._io.observe(el));
+
+    this._cio = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting && !e.target._counted) {
+          e.target._counted = true;
+          const target = parseInt(e.target.dataset.counter, 10);
+          const dur = 1800; const t0 = Date.now();
+          const tick = () => {
+            const p = Math.min((Date.now()-t0)/dur, 1);
+            const v = 1 - Math.pow(1-p, 3);
+            e.target.textContent = Math.round(v * target);
+            if (p < 1) requestAnimationFrame(tick);
+            else e.target.textContent = target;
+          };
+          requestAnimationFrame(tick);
+        }
+      });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('[data-counter]').forEach(el => this._cio.observe(el));
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this._onScroll);
+    if (this._io) this._io.disconnect();
+    if (this._cio) this._cio.disconnect();
+  }
+
+  renderVals() {
+    const { scrolled, entered, mOpen, mData, mErrs, mSts } = this.state;
+    const up = (d) => ({ opacity: entered?1:0, transform: entered?'translateY(0)':'translateY(22px)', transition: `opacity 0.9s ease ${d}s, transform 0.9s ease ${d}s` });
+    const dn = (d) => ({ opacity: entered?1:0, transform: entered?'translateY(0)':'translateY(-10px)', transition: `opacity 0.7s ease ${d}s, transform 0.7s ease ${d}s` });
+    return {
+      navBg: scrolled ? '#FFFFFF' : 'transparent',
+      navBorder: scrolled ? '1px solid rgba(49,91,44,0.08)' : '1px solid transparent',
+      navShadow: scrolled ? '0 2px 20px rgba(0,0,0,0.07)' : 'none',
+      navColor: scrolled ? '#1a1a18' : '#FFFFFF',
+      logoColor: scrolled ? '#315B2C' : '#FFFFFF',
+      navTextShadow: scrolled ? 'none' : '0 1px 6px rgba(0,0,0,0.5)',
+      navEntryStyle: dn(0.15),
+      navLinksStyle: dn(0.28),
+      heroEyebrowStyle: up(0.4),
+      heroTitleStyle: up(0.62),
+      heroDescStyle: up(0.84),
+      heroCTAStyle: up(1.06),
+      mOpen,
+      mVisible: mSts !== 'success',
+      mSuccess: mSts === 'success',
+      mSending: mSts === 'sending',
+      mBtnLabel: mSts === 'sending' ? 'Enviando…' : 'Enviar Solicitação',
+      fName: mData.name, fCompany: mData.company, fPhone: mData.phone,
+      fEmail: mData.email, fCity: mData.city, fSt: mData.st,
+      fSvc: mData.svc, fMsg: mData.msg, fOk: mData.ok,
+      eName: mErrs.name||'', ePhone: mErrs.phone||'', eEmail: mErrs.email||'',
+      eMsg: mErrs.msg||'', eOk: mErrs.ok||'',
+      openModal: (e)=>{ if(e&&e.preventDefault)e.preventDefault(); this.setState({mOpen:true,mSts:'idle',mErrs:{}}); },
+      closeModal: ()=>this.setState({mOpen:false}),
+      overlayClick: (e)=>{ if(e.target===e.currentTarget)this.setState({mOpen:false}); },
+      chName: (e)=>this.setState(s=>({mData:{...s.mData,name:e.target.value}, mErrs:{...s.mErrs,name:''}})),
+      chCompany: (e)=>this.setState(s=>({mData:{...s.mData,company:e.target.value}})),
+      chPhone: (e)=>this.setState(s=>({mData:{...s.mData,phone:e.target.value}, mErrs:{...s.mErrs,phone:''}})),
+      chEmail: (e)=>this.setState(s=>({mData:{...s.mData,email:e.target.value}, mErrs:{...s.mErrs,email:''}})),
+      chCity: (e)=>this.setState(s=>({mData:{...s.mData,city:e.target.value}})),
+      chSt: (e)=>this.setState(s=>({mData:{...s.mData,st:e.target.value}})),
+      chSvc: (e)=>this.setState(s=>({mData:{...s.mData,svc:e.target.value}})),
+      chMsg: (e)=>this.setState(s=>({mData:{...s.mData,msg:e.target.value}, mErrs:{...s.mErrs,msg:''}})),
+      chOk: (e)=>this.setState(s=>({mData:{...s.mData,ok:e.target.checked}, mErrs:{...s.mErrs,ok:''}})),
+      submitForm: (e)=>{
+        e.preventDefault();
+        const d=this.state.mData, errs={};
+        if(!d.name.trim()) errs.name='Campo obrigatório';
+        if(!d.phone.trim()) errs.phone='Campo obrigatório';
+        if(!d.email.trim()) errs.email='Campo obrigatório';
+        else if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)) errs.email='Email inválido';
+        if(!d.msg.trim()) errs.msg='Campo obrigatório';
+        if(!d.ok) errs.ok='Aceite a política de privacidade';
+        if(Object.keys(errs).length){ this.setState({mErrs:errs}); return; }
+        this.setState({mSts:'sending'});
+        setTimeout(()=>this.setState({mSts:'success'}),1200);
+      },
+    };
+  }
+}
+</script>
+</body>
+</html>
