@@ -11,32 +11,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body { background: #FFFFFF; color: #1a1a18; overflow-x: hidden; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
-    ::selection { background: rgba(49,91,44,0.12); color: #315B2C; }
-    @keyframes mFadeIn { from { opacity: 0; } to { opacity: 1; } }
-    @keyframes wa-ring { 0%, 80%, 100% { transform: scale(1); opacity: 0; } 84% { transform: scale(1); opacity: 0.65; } 97% { transform: scale(1.75); opacity: 0; } }
-    [data-animate] { opacity: 0; transform: translateY(28px); transition: opacity 0.85s ease, transform 0.85s ease; }
-    [data-animate].in { opacity: 1; transform: translateY(0); }
-    [data-animate][data-d="1"] { transition-delay: 0.10s; }
-    [data-animate][data-d="2"] { transition-delay: 0.20s; }
-    [data-animate][data-d="3"] { transition-delay: 0.32s; }
-    [data-animate][data-d="4"] { transition-delay: 0.44s; }
-    .logo-card { transition: transform 0.25s ease, box-shadow 0.25s ease; }
-    .logo-card:hover { transform: translateY(-5px); box-shadow: 0 14px 44px rgba(49,91,44,0.13) !important; }
-    .pjt-tab { display: inline-flex; align-items: center; font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 10px 20px; border-radius: 8px; cursor: pointer; transition: background 0.2s, color 0.2s, border-color 0.2s; border: 1px solid rgba(49,91,44,0.18); background: #FFFFFF; color: #555550; }
-    .pjt-tab:hover { border-color: rgba(49,91,44,0.4); }
-    .pjt-tab.active { border-color: #315B2C; background: #315B2C; color: #F6F4EF; }
-    .cat-card { transition: transform 0.25s ease, box-shadow 0.25s ease; cursor: default; }
-    .cat-card:hover { transform: translateY(-4px); box-shadow: 0 14px 44px rgba(0,0,0,0.10) !important; }
-    .gal-item { overflow: hidden; border-radius: 10px; position: relative; }
-    .gal-item img { width: 100%; display: block; object-fit: cover; transition: transform 0.4s ease; }
-    .gal-item:hover img { transform: scale(1.05); }
-    .gal-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(6,14,4,0.6) 0%, transparent 50%); opacity: 0; transition: opacity 0.3s ease; display: flex; align-items: flex-end; padding: 20px; }
-    .gal-item:hover .gal-overlay { opacity: 1; }
-  </style>
+  <link rel="stylesheet" href="./assets/css/reset.css">
+  <link rel="stylesheet" href="./assets/css/variables.css">
+  <link rel="stylesheet" href="./assets/css/global.css">
+  <link rel="stylesheet" href="./assets/css/components.css">
+  <link rel="stylesheet" href="./assets/css/responsive.css">
 </helmet>
 
 <!-- ─── NAV ────────────────────────────────────────────────────────── -->
@@ -48,10 +27,10 @@
   </div>
   <div style="{{ navLinksEntryStyle }}; display: flex; align-items: center; gap: 40px;">
     <a href="./index.html" style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; color: {{ navColor }}; text-decoration: none; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: {{ navTextShadow }}; transition: opacity 0.2s, color 0.5s;" style-hover="opacity: 0.72;">Home</a>
-    <a href="./Sobre.dc.html" style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; color: {{ navColor }}; text-decoration: none; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: {{ navTextShadow }}; transition: opacity 0.2s, color 0.5s;" style-hover="opacity: 0.72;">Sobre</a>
-    <a href="./Servicos.dc.html" style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; color: {{ navColor }}; text-decoration: none; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: {{ navTextShadow }}; transition: opacity 0.2s, color 0.5s;" style-hover="opacity: 0.72;">Serviços</a>
-    <a href="./Projetos.dc.html" style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; color: {{ navColor }}; text-decoration: none; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: {{ navTextShadow }}; border-bottom: 1px solid currentColor; padding-bottom: 2px; transition: color 0.5s;">Projetos</a>
-    <a href="./Contato.dc.html" style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; color: {{ navColor }}; text-decoration: none; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: {{ navTextShadow }}; transition: opacity 0.2s, color 0.5s;" style-hover="opacity: 0.72;">Contato</a>
+    <a href="./sobre.html" style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; color: {{ navColor }}; text-decoration: none; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: {{ navTextShadow }}; transition: opacity 0.2s, color 0.5s;" style-hover="opacity: 0.72;">Sobre</a>
+    <a href="./servicos.html" style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; color: {{ navColor }}; text-decoration: none; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: {{ navTextShadow }}; transition: opacity 0.2s, color 0.5s;" style-hover="opacity: 0.72;">Serviços</a>
+    <a href="./projetos.html" style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; color: {{ navColor }}; text-decoration: none; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: {{ navTextShadow }}; border-bottom: 1px solid currentColor; padding-bottom: 2px; transition: color 0.5s;">Projetos</a>
+    <a href="./contato.html" style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; color: {{ navColor }}; text-decoration: none; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: {{ navTextShadow }}; transition: opacity 0.2s, color 0.5s;" style-hover="opacity: 0.72;">Contato</a>
     <a href="#" onClick="{{ openModal }}" style="display: inline-block; padding: 11px 26px; background: #315B2C; color: #F6F4EF; font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; border-radius: 8px; transition: background 0.25s;" style-hover="background: #254822;">Fale Conosco</a>
   </div>
 </nav>
@@ -544,20 +523,20 @@
         <h4 style="font-family: 'Manrope', sans-serif; font-size: 10px; font-weight: 700; color: #B8D48A; letter-spacing: 0.24em; text-transform: uppercase; margin-bottom: 22px;">Links Rápidos</h4>
         <div style="display: flex; flex-direction: column; gap: 12px;">
           <a href="./index.html" style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: rgba(246,244,239,0.62); text-decoration: none; transition: color 0.2s;" style-hover="color: #F6F4EF;">Home</a>
-          <a href="./Sobre.dc.html" style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: rgba(246,244,239,0.62); text-decoration: none; transition: color 0.2s;" style-hover="color: #F6F4EF;">Sobre</a>
-          <a href="./Servicos.dc.html" style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: rgba(246,244,239,0.62); text-decoration: none; transition: color 0.2s;" style-hover="color: #F6F4EF;">Serviços</a>
-          <a href="./Projetos.dc.html" style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: rgba(246,244,239,0.62); text-decoration: none; transition: color 0.2s;" style-hover="color: #F6F4EF;">Projetos</a>
-          <a href="./Contato.dc.html" style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: rgba(246,244,239,0.62); text-decoration: none; transition: color 0.2s;" style-hover="color: #F6F4EF;">Contato</a>
+          <a href="./sobre.html" style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: rgba(246,244,239,0.62); text-decoration: none; transition: color 0.2s;" style-hover="color: #F6F4EF;">Sobre</a>
+          <a href="./servicos.html" style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: rgba(246,244,239,0.62); text-decoration: none; transition: color 0.2s;" style-hover="color: #F6F4EF;">Serviços</a>
+          <a href="./projetos.html" style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: rgba(246,244,239,0.62); text-decoration: none; transition: color 0.2s;" style-hover="color: #F6F4EF;">Projetos</a>
+          <a href="./contato.html" style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: rgba(246,244,239,0.62); text-decoration: none; transition: color 0.2s;" style-hover="color: #F6F4EF;">Contato</a>
         </div>
       </div>
       <div>
         <h4 style="font-family: 'Manrope', sans-serif; font-size: 10px; font-weight: 700; color: #B8D48A; letter-spacing: 0.24em; text-transform: uppercase; margin-bottom: 22px;">Serviços</h4>
         <div style="display: flex; flex-direction: column; gap: 12px;">
-          <a href="./Servicos.dc.html#regularizacao-fundiaria" style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: rgba(246,244,239,0.62); text-decoration: none; transition: color 0.2s;" style-hover="color: #F6F4EF;">Gestão de Projetos</a>
-          <a href="./Servicos.dc.html#licenciamento" style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: rgba(246,244,239,0.62); text-decoration: none; transition: color 0.2s;" style-hover="color: #F6F4EF;">Consultoria Estratégica</a>
-          <a href="./Servicos.dc.html#pronaf" style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: rgba(246,244,239,0.62); text-decoration: none; transition: color 0.2s;" style-hover="color: #F6F4EF;">Captação de Recursos</a>
-          <a href="./Servicos.dc.html#gestao" style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: rgba(246,244,239,0.62); text-decoration: none; transition: color 0.2s;" style-hover="color: #F6F4EF;">Monitoramento e Avaliação</a>
-          <a href="./Servicos.dc.html#georreferenciamento" style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: rgba(246,244,239,0.62); text-decoration: none; transition: color 0.2s;" style-hover="color: #F6F4EF;">Treinamentos</a>
+          <a href="./servicos.html#regularizacao-fundiaria" style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: rgba(246,244,239,0.62); text-decoration: none; transition: color 0.2s;" style-hover="color: #F6F4EF;">Gestão de Projetos</a>
+          <a href="./servicos.html#licenciamento" style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: rgba(246,244,239,0.62); text-decoration: none; transition: color 0.2s;" style-hover="color: #F6F4EF;">Consultoria Estratégica</a>
+          <a href="./servicos.html#pronaf" style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: rgba(246,244,239,0.62); text-decoration: none; transition: color 0.2s;" style-hover="color: #F6F4EF;">Captação de Recursos</a>
+          <a href="./servicos.html#gestao" style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: rgba(246,244,239,0.62); text-decoration: none; transition: color 0.2s;" style-hover="color: #F6F4EF;">Monitoramento e Avaliação</a>
+          <a href="./servicos.html#georreferenciamento" style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: rgba(246,244,239,0.62); text-decoration: none; transition: color 0.2s;" style-hover="color: #F6F4EF;">Treinamentos</a>
         </div>
       </div>
       <div>

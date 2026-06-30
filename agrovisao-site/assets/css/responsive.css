@@ -1,0 +1,21 @@
+/* ─── Responsive Styles — AgroVisão ─────────────────────────────────
+   Adaptações para dispositivos móveis e tablets.
+   Implementado na Fase 2 (adaptação responsiva).
+   ──────────────────────────────────────────────────────────────────── */
+
+/*
+   Breakpoints definidos:
+   Mobile:  320px –  767px
+   Tablet:  768px – 1023px
+   Desktop: ≥ 1024px (layout atual, sem alterações)
+*/
+
+/* ─── Mobile (≤ 767px) ───────────────────────────────────────────── */
+@media (max-width: 767px) {
+  /* Fase 2 */
+}
+
+/* ─── Tablet (768px – 1023px) ────────────────────────────────────── */
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* Fase 2 */
+}
