@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { background: #FFFFFF; color: #1a1a18; overflow-x: hidden; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+    ::selection { background: rgba(49,91,44,0.12); color: #315B2C; }
+    @keyframes wa-ring { 0%, 80%, 100% { transform: scale(1); opacity: 0; } 84% { transform: scale(1); opacity: 0.65; } 97% { transform: scale(1.75); opacity: 0; } }
+  </style>
+</helmet>
+
+<!-- ─── NAVIGATION ─────────────────────────────────────────────────── -->
+<nav style="position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 22px 64px; display: flex; align-items: center; justify-content: space-between; background: {{ navBg }}; border-bottom: {{ navBorder }}; transition: background 0.5s ease, border-bottom-color 0.5s ease;">
+  <div style="{{ navEntryStyle }}">
+    <a href="./index.html" style="display: flex; align-items: center; gap: 14px; text-decoration: none; color: {{ logoColor }}; transition: color 0.5s ease;">
+      <img src="./uploads/logo-agro-visao.svg" alt="AgroVisão" style="height: 44px; width: auto; display: block; object-fit: contain;">
+    </a>
+  </div>
+  <div style="{{ navLinksEntryStyle }}; display: flex; align-items: center; gap: 40px;">
+    <a href="./index.html" style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; color: {{ navColor }}; text-decoration: none; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: {{ navTextShadow }}; transition: opacity 0.2s, color 0.5s;" style-hover="opacity: 0.72;">Home</a>
+    <a href="./Sobre.dc.html" style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; color: {{ navColor }}; text-decoration: none; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: {{ navTextShadow }}; border-bottom: 1px solid currentColor; padding-bottom: 2px; transition: color 0.5s;">Sobre</a>
+    <a href="./Servicos.dc.html" style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; color: {{ navColor }}; text-decoration: none; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: {{ navTextShadow }}; transition: opacity 0.2s, color 0.5s;" style-hover="opacity: 0.72;">Serviços</a>
+    <a href="./Projetos.dc.html" style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; color: {{ navColor }}; text-decoration: none; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: {{ navTextShadow }}; transition: opacity 0.2s, color 0.5s;" style-hover="opacity: 0.72;">Projetos</a>
+    <a href="./Contato.dc.html" style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; color: {{ navColor }}; text-decoration: none; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: {{ navTextShadow }}; transition: opacity 0.2s, color 0.5s;" style-hover="opacity: 0.72;">Contato</a>
+    <a href="#" onClick="{{ openModal }}" style="display: inline-block; padding: 11px 26px; background: #315B2C; color: #F6F4EF; font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; border-radius: 8px; transition: background 0.25s;" style-hover="background: #254822;">Fale Conosco</a>
+  </div>
+</nav>
+
+<!-- ─── HERO ───────────────────────────────────────────────────────── -->
+<section style="position: relative; width: 100%; height: 88vh; min-height: 640px; overflow: hidden;">
+  <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?w=1920&q=88&fm=jpg&fit=crop" alt="Paisagem amazônica com produção agrícola" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 40%; display: block;">
+  <div style="position: absolute; inset: 0; background: linear-gradient(155deg, rgba(6,14,4,0.20) 0%, rgba(6,14,4,0.48) 45%, rgba(6,14,4,0.88) 100%);"></div>
+  <div style="position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; padding: 0 84px 100px;">
+    <div style="max-width: 780px;">
+      <div style="{{ heroEyebrowStyle }}">
+        <div style="display: flex; align-items: center; gap: 18px; margin-bottom: 28px;">
+          <div style="width: 36px; height: 1px; background: #B8D48A;"></div>
+          <span style="font-family: 'Manrope', sans-serif; font-size: 10.5px; font-weight: 500; color: #B8D48A; letter-spacing: 0.32em; text-transform: uppercase;">A Empresa · Belém, Pará</span>
+        </div>
+      </div>
+      <div style="{{ heroTitleStyle }}">
+        <h1 style="font-family: 'Cormorant Garamond', serif; font-size: clamp(48px, 6vw, 84px); font-weight: 300; color: #F6F4EF; line-height: 1.06; letter-spacing: -0.02em; margin-bottom: 28px;">Sobre a<br>AgroVisão</h1>
+      </div>
+      <div style="{{ heroDescStyle }}">
+        <p style="font-family: 'Manrope', sans-serif; font-size: 17px; font-weight: 400; color: rgba(246,244,239,0.78); line-height: 1.75; max-width: 560px;">Transformando conhecimento técnico em desenvolvimento sustentável para a agricultura amazônica.</p>
+      </div>
+    </div>
+  </div>
+  <div style="position: absolute; bottom: -1px; left: 0; right: 0; z-index: 3; line-height: 0;">
+    <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="display: block; width: 100%; height: 60px;"><path d="M0,60 L1440,60 L1440,18 Q1080,60 720,28 Q360,0 0,28 Z" fill="#FFFFFF"></path></svg>
+  </div>
+</section>
+
+<!-- ─── WHO WE ARE ─────────────────────────────────────────────────── -->
+<section style="background: #FFFFFF; padding: 148px 0;">
+  <div style="max-width: 1280px; margin: 0 auto; padding: 0 84px;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 108px; align-items: center;">
+      <div style="overflow: hidden; background: #d4d0c8;">
+        <div style="aspect-ratio: 4/5; overflow: hidden;">
+          <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=900&q=88&fm=jpg&fit=crop" alt="Vista aérea de área agrícola" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+        </div>
+      </div>
+      <div>
+        <div style="width: 34px; height: 1px; background: #315B2C; margin-bottom: 18px;"></div>
+        <span style="font-family: 'Manrope', sans-serif; font-size: 10.5px; font-weight: 500; color: #6F8F3A; letter-spacing: 0.24em; text-transform: uppercase; display: block; margin-bottom: 30px;">Quem Somos</span>
+        <h2 style="font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 3.6vw, 52px); font-weight: 400; color: #1a1a18; line-height: 1.2; letter-spacing: -0.015em; margin-bottom: 32px; text-wrap: pretty;">Uma consultoria dedicada ao desenvolvimento sustentável da Amazônia</h2>
+        <p style="font-family: 'Manrope', sans-serif; font-size: 15px; font-weight: 400; color: #4a4a44; line-height: 1.92; margin-bottom: 22px;">A AgroVisão é uma consultoria técnica especializada em desenvolvimento rural, regularização fundiária e gestão ambiental na Amazônia Legal. Atuamos ao lado de produtores rurais, associações, cooperativas, ONGs e instituições públicas, oferecendo soluções completas e alinhadas às exigências legais vigentes.</p>
+        <p style="font-family: 'Manrope', sans-serif; font-size: 15px; font-weight: 400; color: #4a4a44; line-height: 1.92; margin-bottom: 48px;">Nossa equipe multidisciplinar combina formação técnica de excelência com profundo conhecimento do território amazônico e das políticas públicas voltadas ao desenvolvimento da agricultura familiar e empresarial.</p>
+        <div style="display: flex; gap: 48px;">
+          <div>
+            <div style="font-family: 'Cormorant Garamond', serif; font-size: 48px; font-weight: 300; color: #315B2C; line-height: 1; margin-bottom: 8px;">15<span style="font-size: 28px; color: #6F8F3A;">+</span></div>
+            <div style="font-family: 'Manrope', sans-serif; font-size: 10.5px; font-weight: 500; color: #6F8F3A; letter-spacing: 0.18em; text-transform: uppercase; line-height: 1.5;">Anos de<br>Experiência</div>
+          </div>
+          <div style="width: 1px; background: rgba(49,91,44,0.12);"></div>
+          <div>
+            <div style="font-family: 'Cormorant Garamond', serif; font-size: 48px; font-weight: 300; color: #315B2C; line-height: 1; margin-bottom: 8px;">500<span style="font-size: 28px; color: #6F8F3A;">+</span></div>
+            <div style="font-family: 'Manrope', sans-serif; font-size: 10.5px; font-weight: 500; color: #6F8F3A; letter-spacing: 0.18em; text-transform: uppercase; line-height: 1.5;">Projetos<br>Concluídos</div>
+          </div>
+          <div style="width: 1px; background: rgba(49,91,44,0.12);"></div>
+          <div>
+            <div style="font-family: 'Cormorant Garamond', serif; font-size: 48px; font-weight: 300; color: #315B2C; line-height: 1; margin-bottom: 8px;">12</div>
+            <div style="font-family: 'Manrope', sans-serif; font-size: 10.5px; font-weight: 500; color: #6F8F3A; letter-spacing: 0.18em; text-transform: uppercase; line-height: 1.5;">Estados<br>Atendidos</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── MISSION ────────────────────────────────────────────────────── -->
+<section style="background: #F5F8F3; padding: 128px 0; border-top: 1px solid rgba(49,91,44,0.08); border-bottom: 1px solid rgba(49,91,44,0.08);">
+  <div style="max-width: 960px; margin: 0 auto; padding: 0 84px; text-align: center;">
+    <div style="width: 34px; height: 1px; background: #315B2C; margin: 0 auto 24px;"></div>
+    <span style="font-family: 'Manrope', sans-serif; font-size: 10.5px; font-weight: 500; color: #6F8F3A; letter-spacing: 0.24em; text-transform: uppercase; display: block; margin-bottom: 48px;">Nossa Missão</span>
+    <div style="font-family: 'Cormorant Garamond', serif; font-size: clamp(32px, 4vw, 54px); font-weight: 300; font-style: italic; color: #1a1a18; line-height: 1.25; letter-spacing: -0.01em; margin-bottom: 40px; text-wrap: pretty;">"Elaborando sonhos no presente,<br>construindo o amanhã<br>a partir da melhor Visão."</div>
+    <div style="width: 40px; height: 1px; background: #6F8F3A; margin: 0 auto 20px;"></div>
+    <span style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 500; color: #6F8F3A; letter-spacing: 0.22em; text-transform: uppercase;">AgroVisão — Consultoria Agrícola</span>
+  </div>
+</section>
+
+<!-- ─── WHAT WE DO ─────────────────────────────────────────────────── -->
+<section style="background: #FFFFFF; padding: 148px 0;">
+  <div style="max-width: 1280px; margin: 0 auto; padding: 0 84px;">
+    <div style="display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 72px;">
+      <div>
+        <span style="font-family: 'Manrope', sans-serif; font-size: 10.5px; font-weight: 500; color: #6F8F3A; letter-spacing: 0.24em; text-transform: uppercase; display: block; margin-bottom: 16px;">Serviços</span>
+        <h2 style="font-family: 'Cormorant Garamond', serif; font-size: clamp(38px, 4.5vw, 60px); font-weight: 400; color: #1a1a18; line-height: 1.08; letter-spacing: -0.02em;">O Que<br>Fazemos</h2>
+      </div>
+      <p style="font-family: 'Manrope', sans-serif; font-size: 14.5px; font-weight: 400; color: #555550; line-height: 1.8; max-width: 380px; margin-bottom: 6px;">Soluções técnicas integradas para o desenvolvimento rural sustentável em toda a Amazônia Legal.</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;">
+
+      <!-- Card 1 -->
+      <div style="background: #FFFFFF; border: 1px solid rgba(49,91,44,0.12); border-radius: 12px; padding: 32px 28px 28px; display: flex; flex-direction: column; gap: 0; transition: border-color 0.25s, box-shadow 0.25s;" style-hover="border-color: rgba(49,91,44,0.28); box-shadow: 0 4px 24px rgba(49,91,44,0.07);">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="margin-bottom: 20px; color: #315B2C;" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16 28V14" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"></path>
+          <path d="M12 22C12 22 13 16 16 14C19 16 20 22 20 22" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none"></path>
+          <path d="M9 26C9 26 11 20 16 19" stroke="currentColor" stroke-width="1" stroke-linecap="round" fill="none"></path>
+          <path d="M23 26C23 26 21 20 16 19" stroke="currentColor" stroke-width="1" stroke-linecap="round" fill="none"></path>
+        </svg>
+        <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 500; color: #1a1a18; line-height: 1.25; margin-bottom: 12px;">Consultoria Agrícola</h3>
+        <p style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 400; color: #666660; line-height: 1.78; flex: 1; margin-bottom: 20px;">Diagnóstico, planejamento e assistência técnica para otimização da produção agropecuária.</p>
+        <a href="./index.html" style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; color: #315B2C; text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 6px; opacity: 0.85; transition: opacity 0.2s;" style-hover="opacity: 1;">
+          Saiba mais
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6H10M7 3L10 6L7 9" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </a>
+      </div>
+
+      <!-- Card 2 -->
+      <div style="background: #FFFFFF; border: 1px solid rgba(49,91,44,0.12); border-radius: 12px; padding: 32px 28px 28px; display: flex; flex-direction: column; transition: border-color 0.25s, box-shadow 0.25s;" style-hover="border-color: rgba(49,91,44,0.28); box-shadow: 0 4px 24px rgba(49,91,44,0.07);">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="margin-bottom: 20px; color: #315B2C;">
+          <line x1="6" y1="10" x2="22" y2="10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"></line>
+          <line x1="6" y1="16" x2="17" y2="16" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"></line>
+          <line x1="6" y1="22" x2="26" y2="22" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"></line>
+          <line x1="6" y1="6" x2="6" y2="26" stroke="currentColor" stroke-width="1" stroke-linecap="round"></line>
+        </svg>
+        <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 500; color: #1a1a18; line-height: 1.25; margin-bottom: 12px;">Gestão de Projetos</h3>
+        <p style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 400; color: #666660; line-height: 1.78; flex: 1; margin-bottom: 20px;">Coordenação completa de projetos rurais do planejamento à entrega, com rastreabilidade e relatórios técnicos.</p>
+        <a href="./index.html" style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; color: #315B2C; text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 6px; opacity: 0.85; transition: opacity 0.2s;" style-hover="opacity: 1;">
+          Saiba mais
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6H10M7 3L10 6L7 9" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </a>
+      </div>
+
+      <!-- Card 3 -->
+      <div style="background: #FFFFFF; border: 1px solid rgba(49,91,44,0.12); border-radius: 12px; padding: 32px 28px 28px; display: flex; flex-direction: column; transition: border-color 0.25s, box-shadow 0.25s;" style-hover="border-color: rgba(49,91,44,0.28); box-shadow: 0 4px 24px rgba(49,91,44,0.07);">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="margin-bottom: 20px; color: #315B2C;">
+          <rect x="4" y="4" width="24" height="24" rx="1" stroke="currentColor" stroke-width="1.3" fill="none"></rect>
+          <line x1="4" y1="16" x2="28" y2="16" stroke="currentColor" stroke-width="1" stroke-dasharray="2.5 2"></line>
+          <line x1="16" y1="4" x2="16" y2="28" stroke="currentColor" stroke-width="1" stroke-dasharray="2.5 2"></line>
+          <circle cx="16" cy="16" r="2.5" fill="currentColor" opacity="0.35"></circle>
+        </svg>
+        <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 500; color: #1a1a18; line-height: 1.25; margin-bottom: 12px;">Regularização Fundiária</h3>
+        <p style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 400; color: #666660; line-height: 1.78; flex: 1; margin-bottom: 20px;">Titulação, legalização e regularização de imóveis rurais conforme legislação agrária federal e estadual.</p>
+        <a href="./index.html" style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; color: #315B2C; text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 6px; opacity: 0.85; transition: opacity 0.2s;" style-hover="opacity: 1;">
+          Saiba mais
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6H10M7 3L10 6L7 9" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </a>
+      </div>
+
+      <!-- Card 4 -->
+      <div style="background: #FFFFFF; border: 1px solid rgba(49,91,44,0.12); border-radius: 12px; padding: 32px 28px 28px; display: flex; flex-direction: column; transition: border-color 0.25s, box-shadow 0.25s;" style-hover="border-color: rgba(49,91,44,0.28); box-shadow: 0 4px 24px rgba(49,91,44,0.07);">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="margin-bottom: 20px; color: #315B2C;">
+          <path d="M6 26C6 26 10 16 26 8C26 22 18 28 6 26Z" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+          <path d="M6 26L16 16" stroke="currentColor" stroke-width="1" stroke-linecap="round"></path>
+        </svg>
+        <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 500; color: #1a1a18; line-height: 1.25; margin-bottom: 12px;">Licenciamento Ambiental</h3>
+        <p style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 400; color: #666660; line-height: 1.78; flex: 1; margin-bottom: 20px;">EIA/RIMA, licenças ambientais e acompanhamento junto à SEMAS-PA, IBAMA e órgãos estaduais.</p>
+        <a href="./index.html" style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; color: #315B2C; text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 6px; opacity: 0.85; transition: opacity 0.2s;" style-hover="opacity: 1;">
+          Saiba mais
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6H10M7 3L10 6L7 9" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </a>
+      </div>
+
+      <!-- Card 5 -->
+      <div style="background: #FFFFFF; border: 1px solid rgba(49,91,44,0.12); border-radius: 12px; padding: 32px 28px 28px; display: flex; flex-direction: column; transition: border-color 0.25s, box-shadow 0.25s;" style-hover="border-color: rgba(49,91,44,0.28); box-shadow: 0 4px 24px rgba(49,91,44,0.07);">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="margin-bottom: 20px; color: #315B2C;">
+          <circle cx="16" cy="16" r="11" stroke="currentColor" stroke-width="1.3" fill="none"></circle>
+          <circle cx="16" cy="16" r="3" stroke="currentColor" stroke-width="1.3" fill="none"></circle>
+          <line x1="16" y1="4" x2="16" y2="10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"></line>
+          <line x1="16" y1="22" x2="16" y2="28" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"></line>
+          <line x1="4" y1="16" x2="10" y2="16" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"></line>
+          <line x1="22" y1="16" x2="28" y2="16" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"></line>
+        </svg>
+        <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 500; color: #1a1a18; line-height: 1.25; margin-bottom: 12px;">Georreferenciamento</h3>
+        <p style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 400; color: #666660; line-height: 1.78; flex: 1; margin-bottom: 20px;">Levantamento topográfico e certificação de imóveis rurais conforme normas do INCRA e SIGEF.</p>
+        <a href="./index.html" style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; color: #315B2C; text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 6px; opacity: 0.85; transition: opacity 0.2s;" style-hover="opacity: 1;">
+          Saiba mais
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6H10M7 3L10 6L7 9" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </a>
+      </div>
+
+      <!-- Card 6 -->
+      <div style="background: #FFFFFF; border: 1px solid rgba(49,91,44,0.12); border-radius: 12px; padding: 32px 28px 28px; display: flex; flex-direction: column; transition: border-color 0.25s, box-shadow 0.25s;" style-hover="border-color: rgba(49,91,44,0.28); box-shadow: 0 4px 24px rgba(49,91,44,0.07);">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="margin-bottom: 20px; color: #315B2C;">
+          <rect x="7" y="3" width="18" height="26" rx="2" stroke="currentColor" stroke-width="1.3" fill="none"></rect>
+          <line x1="11" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"></line>
+          <line x1="11" y1="15" x2="18" y2="15" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"></line>
+          <line x1="11" y1="20" x2="21" y2="20" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"></line>
+        </svg>
+        <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 500; color: #1a1a18; line-height: 1.25; margin-bottom: 12px;">Projetos Rurais</h3>
+        <p style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 400; color: #666660; line-height: 1.78; flex: 1; margin-bottom: 20px;">Elaboração de projetos agropecuários, planos de negócios e sistemas de produção integrados e sustentáveis.</p>
+        <a href="./index.html" style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; color: #315B2C; text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 6px; opacity: 0.85; transition: opacity 0.2s;" style-hover="opacity: 1;">
+          Saiba mais
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6H10M7 3L10 6L7 9" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </a>
+      </div>
+
+      <!-- Card 7 -->
+      <div style="background: #FFFFFF; border: 1px solid rgba(49,91,44,0.12); border-radius: 12px; padding: 32px 28px 28px; display: flex; flex-direction: column; transition: border-color 0.25s, box-shadow 0.25s;" style-hover="border-color: rgba(49,91,44,0.28); box-shadow: 0 4px 24px rgba(49,91,44,0.07);">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="margin-bottom: 20px; color: #315B2C;">
+          <path d="M4 16L16 5L28 16" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none"></path>
+          <path d="M8 16V27H24V16" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none"></path>
+          <path d="M13 27V21H19V27" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" fill="none"></path>
+        </svg>
+        <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 500; color: #1a1a18; line-height: 1.25; margin-bottom: 12px;">Agricultura Familiar</h3>
+        <p style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 400; color: #666660; line-height: 1.78; flex: 1; margin-bottom: 20px;">Assistência técnica especializada para pequenos produtores, assentamentos e comunidades rurais amazônicas.</p>
+        <a href="./index.html" style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; color: #315B2C; text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 6px; opacity: 0.85; transition: opacity 0.2s;" style-hover="opacity: 1;">
+          Saiba mais
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6H10M7 3L10 6L7 9" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </a>
+      </div>
+
+      <!-- Card 8 -->
+      <div style="background: #FFFFFF; border: 1px solid rgba(49,91,44,0.12); border-radius: 12px; padding: 32px 28px 28px; display: flex; flex-direction: column; transition: border-color 0.25s, box-shadow 0.25s;" style-hover="border-color: rgba(49,91,44,0.28); box-shadow: 0 4px 24px rgba(49,91,44,0.07);">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="margin-bottom: 20px; color: #315B2C;">
+          <circle cx="16" cy="13" r="7" stroke="currentColor" stroke-width="1.3" fill="none"></circle>
+          <path d="M16 10V16M13.5 13H18.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"></path>
+          <path d="M9 28C9 24.13 12.13 21 16 21C19.87 21 23 24.13 23 28" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" fill="none"></path>
+        </svg>
+        <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 500; color: #1a1a18; line-height: 1.25; margin-bottom: 12px;">Captação de Recursos</h3>
+        <p style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 400; color: #666660; line-height: 1.78; flex: 1; margin-bottom: 20px;">Acesso a crédito rural, PRONAF, editais públicos e programas de fomento para projetos agropecuários.</p>
+        <a href="./index.html" style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; color: #315B2C; text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 6px; opacity: 0.85; transition: opacity 0.2s;" style-hover="opacity: 1;">
+          Saiba mais
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6H10M7 3L10 6L7 9" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── HOW WE WORK ─────────────────────────────────────────────────── -->
+<section style="background: #F8F7F3; padding: 128px 0; border-top: 1px solid rgba(49,91,44,0.08);">
+  <div style="max-width: 1280px; margin: 0 auto; padding: 0 84px;">
+    <div style="margin-bottom: 80px;">
+      <span style="font-family: 'Manrope', sans-serif; font-size: 10.5px; font-weight: 500; color: #6F8F3A; letter-spacing: 0.24em; text-transform: uppercase; display: block; margin-bottom: 16px;">Metodologia</span>
+      <h2 style="font-family: 'Cormorant Garamond', serif; font-size: clamp(38px, 4.5vw, 60px); font-weight: 400; color: #1a1a18; line-height: 1.08; letter-spacing: -0.02em;">Como Trabalhamos</h2>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 24px;">
+
+      <div style="border-top: 1.5px solid #B8D48A; padding-top: 24px; position: relative;">
+        <div style="position: absolute; top: -5px; left: 0; width: 8px; height: 8px; background: #315B2C; border-radius: 50%;"></div>
+        <div style="font-family: 'Cormorant Garamond', serif; font-size: 40px; font-weight: 300; color: #315B2C; line-height: 1; margin-bottom: 14px;">01</div>
+        <h3 style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 700; color: #1a1a18; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px;">Diagnóstico</h3>
+        <p style="font-family: 'Manrope', sans-serif; font-size: 12.5px; font-weight: 400; color: #666660; line-height: 1.72;">Avaliação técnica completa da propriedade e das necessidades do produtor.</p>
+      </div>
+
+      <div style="border-top: 1.5px solid #B8D48A; padding-top: 24px; position: relative;">
+        <div style="position: absolute; top: -5px; left: 0; width: 8px; height: 8px; background: #315B2C; border-radius: 50%;"></div>
+        <div style="font-family: 'Cormorant Garamond', serif; font-size: 40px; font-weight: 300; color: #315B2C; line-height: 1; margin-bottom: 14px;">02</div>
+        <h3 style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 700; color: #1a1a18; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px;">Planejamento</h3>
+        <p style="font-family: 'Manrope', sans-serif; font-size: 12.5px; font-weight: 400; color: #666660; line-height: 1.72;">Elaboração do plano de ação com metas, prazos e recursos necessários.</p>
+      </div>
+
+      <div style="border-top: 1.5px solid #B8D48A; padding-top: 24px; position: relative;">
+        <div style="position: absolute; top: -5px; left: 0; width: 8px; height: 8px; background: #315B2C; border-radius: 50%;"></div>
+        <div style="font-family: 'Cormorant Garamond', serif; font-size: 40px; font-weight: 300; color: #315B2C; line-height: 1; margin-bottom: 14px;">03</div>
+        <h3 style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 700; color: #1a1a18; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px;">Regularização</h3>
+        <p style="font-family: 'Manrope', sans-serif; font-size: 12.5px; font-weight: 400; color: #666660; line-height: 1.72;">Adequação documental, fundiária e ambiental conforme exigências legais.</p>
+      </div>
+
+      <div style="border-top: 1.5px solid #B8D48A; padding-top: 24px; position: relative;">
+        <div style="position: absolute; top: -5px; left: 0; width: 8px; height: 8px; background: #315B2C; border-radius: 50%;"></div>
+        <div style="font-family: 'Cormorant Garamond', serif; font-size: 40px; font-weight: 300; color: #315B2C; line-height: 1; margin-bottom: 14px;">04</div>
+        <h3 style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 700; color: #1a1a18; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px;">Execução</h3>
+        <p style="font-family: 'Manrope', sans-serif; font-size: 12.5px; font-weight: 400; color: #666660; line-height: 1.72;">Implementação das soluções técnicas com equipe multidisciplinar em campo.</p>
+      </div>
+
+      <div style="border-top: 1.5px solid #B8D48A; padding-top: 24px; position: relative;">
+        <div style="position: absolute; top: -5px; left: 0; width: 8px; height: 8px; background: #315B2C; border-radius: 50%;"></div>
+        <div style="font-family: 'Cormorant Garamond', serif; font-size: 40px; font-weight: 300; color: #315B2C; line-height: 1; margin-bottom: 14px;">05</div>
+        <h3 style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 700; color: #1a1a18; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px;">Acompanhamento</h3>
+        <p style="font-family: 'Manrope', sans-serif; font-size: 12.5px; font-weight: 400; color: #666660; line-height: 1.72;">Monitoramento contínuo, relatórios periódicos e suporte técnico permanente.</p>
+      </div>
+
+      <div style="border-top: 1.5px solid #B8D48A; padding-top: 24px; position: relative;">
+        <div style="position: absolute; top: -5px; left: 0; width: 8px; height: 8px; background: #DD8758; border-radius: 50%;"></div>
+        <div style="font-family: 'Cormorant Garamond', serif; font-size: 40px; font-weight: 300; color: #315B2C; line-height: 1; margin-bottom: 14px;">06</div>
+        <h3 style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 700; color: #1a1a18; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px;">Resultados</h3>
+        <p style="font-family: 'Manrope', sans-serif; font-size: 12.5px; font-weight: 400; color: #666660; line-height: 1.72;">Entrega certificada com documentação completa e impacto mensurável.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── WHY AGROVISÃO ──────────────────────────────────────────────── -->
+<section style="background: #FFFFFF; padding: 148px 0;">
+  <div style="max-width: 1280px; margin: 0 auto; padding: 0 84px;">
+    <div style="display: grid; grid-template-columns: 360px 1fr; gap: 108px; align-items: start;">
+      <div style="position: sticky; top: 120px;">
+        <div style="width: 34px; height: 1px; background: #315B2C; margin-bottom: 18px;"></div>
+        <span style="font-family: 'Manrope', sans-serif; font-size: 10.5px; font-weight: 500; color: #6F8F3A; letter-spacing: 0.24em; text-transform: uppercase; display: block; margin-bottom: 28px;">Nossos Diferenciais</span>
+        <h2 style="font-family: 'Cormorant Garamond', serif; font-size: clamp(38px, 4vw, 56px); font-weight: 400; color: #1a1a18; line-height: 1.12; letter-spacing: -0.015em; margin-bottom: 28px;">Por que escolher a AgroVisão</h2>
+        <p style="font-family: 'Manrope', sans-serif; font-size: 14.5px; font-weight: 400; color: #4a4a44; line-height: 1.88;">Mais de 15 anos consolidando nossa presença no setor agropecuário da Amazônia com resultados técnicos comprovados.</p>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0;">
+
+        <div style="padding: 36px 32px 36px 0; border-bottom: 1px solid rgba(49,91,44,0.1); border-right: 1px solid rgba(49,91,44,0.1);">
+          <div style="font-family: 'Cormorant Garamond', serif; font-size: 13px; font-weight: 500; color: #6F8F3A; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px;">01</div>
+          <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 400; color: #1a1a18; line-height: 1.25; margin-bottom: 12px;">Expertise Técnica Comprovada</h3>
+          <p style="font-family: 'Manrope', sans-serif; font-size: 13.5px; font-weight: 400; color: #666660; line-height: 1.78;">Equipe de engenheiros, geógrafos e advogados especializados em legislação agrária e ambiental amazônica.</p>
+        </div>
+
+        <div style="padding: 36px 0 36px 32px; border-bottom: 1px solid rgba(49,91,44,0.1);">
+          <div style="font-family: 'Cormorant Garamond', serif; font-size: 13px; font-weight: 500; color: #6F8F3A; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px;">02</div>
+          <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 400; color: #1a1a18; line-height: 1.25; margin-bottom: 12px;">Atuação em Políticas Públicas</h3>
+          <p style="font-family: 'Manrope', sans-serif; font-size: 13.5px; font-weight: 400; color: #666660; line-height: 1.78;">Experiência consolidada em projetos junto ao INCRA, SEMAS, BASA, BNDES e programas federais de desenvolvimento rural.</p>
+        </div>
+
+        <div style="padding: 36px 32px 36px 0; border-bottom: 1px solid rgba(49,91,44,0.1); border-right: 1px solid rgba(49,91,44,0.1);">
+          <div style="font-family: 'Cormorant Garamond', serif; font-size: 13px; font-weight: 500; color: #6F8F3A; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px;">03</div>
+          <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 400; color: #1a1a18; line-height: 1.25; margin-bottom: 12px;">Presença na Amazônia Legal</h3>
+          <p style="font-family: 'Manrope', sans-serif; font-size: 13.5px; font-weight: 400; color: #666660; line-height: 1.78;">Conhecimento profundo das particularidades fundiárias, ambientais e sociais da Amazônia brasileira.</p>
+        </div>
+
+        <div style="padding: 36px 0 36px 32px; border-bottom: 1px solid rgba(49,91,44,0.1);">
+          <div style="font-family: 'Cormorant Garamond', serif; font-size: 13px; font-weight: 500; color: #6F8F3A; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px;">04</div>
+          <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 400; color: #1a1a18; line-height: 1.25; margin-bottom: 12px;">Equipe Multidisciplinar</h3>
+          <p style="font-family: 'Manrope', sans-serif; font-size: 13.5px; font-weight: 400; color: #666660; line-height: 1.78;">Profissionais de diferentes áreas trabalhando de forma integrada para soluções completas e consistentes.</p>
+        </div>
+
+        <div style="padding: 36px 32px 0 0; border-right: 1px solid rgba(49,91,44,0.1);">
+          <div style="font-family: 'Cormorant Garamond', serif; font-size: 13px; font-weight: 500; color: #6F8F3A; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px;">05</div>
+          <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 400; color: #1a1a18; line-height: 1.25; margin-bottom: 12px;">Desenvolvimento Sustentável</h3>
+          <p style="font-family: 'Manrope', sans-serif; font-size: 13.5px; font-weight: 400; color: #666660; line-height: 1.78;">Compromisso com práticas que aliam produtividade, preservação ambiental e desenvolvimento das comunidades.</p>
+        </div>
+
+        <div style="padding: 36px 0 0 32px;">
+          <div style="font-family: 'Cormorant Garamond', serif; font-size: 13px; font-weight: 500; color: #6F8F3A; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px;">06</div>
+          <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 400; color: #1a1a18; line-height: 1.25; margin-bottom: 12px;">Parcerias Institucionais</h3>
+          <p style="font-family: 'Manrope', sans-serif; font-size: 13.5px; font-weight: 400; color: #666660; line-height: 1.78;">Rede consolidada de parcerias com associações, cooperativas, prefeituras e instituições de pesquisa agropecuária.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── EXPERIENCE GALLERY ─────────────────────────────────────────── -->
+<section style="background: #F5F8F3; padding: 0 0 0 0; border-top: 1px solid rgba(49,91,44,0.08);">
+  <div style="max-width: 1280px; margin: 0 auto; padding: 128px 84px 0;">
+    <div style="display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 56px;">
+      <div>
+        <span style="font-family: 'Manrope', sans-serif; font-size: 10.5px; font-weight: 500; color: #6F8F3A; letter-spacing: 0.24em; text-transform: uppercase; display: block; margin-bottom: 16px;">Campo</span>
+        <h2 style="font-family: 'Cormorant Garamond', serif; font-size: clamp(38px, 4.5vw, 58px); font-weight: 400; color: #1a1a18; line-height: 1.08; letter-spacing: -0.02em;">Nossa Experiência<br>em Campo</h2>
+      </div>
+      <p style="font-family: 'Manrope', sans-serif; font-size: 14px; font-weight: 400; color: #555550; line-height: 1.8; max-width: 360px; margin-bottom: 8px;">Atuamos em toda a extensão da Amazônia Legal, de comunidades rurais a grandes propriedades agropecuárias.</p>
+    </div>
+  </div>
+  <div style="max-width: 1280px; margin: 0 auto; padding: 0 84px 128px;">
+    <div style="display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 3px; height: 620px;">
+      <div style="overflow: hidden; background: #c8c4bc;">
+        <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=900&q=82&fm=jpg&fit=crop" alt="Vista aérea de área agrícola mapeada" style="width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.7s ease;" style-hover="transform: scale(1.03);">
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 3px;">
+        <div style="overflow: hidden; flex: 1; background: #c0bcb4;">
+          <img src="https://images.unsplash.com/photo-1560493676-04071c5f467b?w=620&q=82&fm=jpg&fit=crop" alt="Atividade técnica em campo" style="width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.7s ease;" style-hover="transform: scale(1.04);">
+        </div>
+        <div style="overflow: hidden; flex: 1; background: #b8c4b0;">
+          <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=620&q=82&fm=jpg&fit=crop" alt="Produção agrícola ao entardecer" style="width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.7s ease;" style-hover="transform: scale(1.04);">
+        </div>
+      </div>
+      <div style="overflow: hidden; background: #b4c0a8;">
+        <img src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=700&q=82&fm=jpg&fit=crop" alt="Vegetação e preservação ambiental" style="width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.7s ease;" style-hover="transform: scale(1.03);">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CTA ────────────────────────────────────────────────────────── -->
+<section style="background: #FFFFFF; padding: 148px 0; border-top: 1px solid rgba(49,91,44,0.08);">
+  <div style="max-width: 1280px; margin: 0 auto; padding: 0 84px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;">
+    <div>
+      <div style="width: 34px; height: 1px; background: #315B2C; margin-bottom: 18px;"></div>
+      <span style="font-family: 'Manrope', sans-serif; font-size: 10.5px; font-weight: 500; color: #6F8F3A; letter-spacing: 0.24em; text-transform: uppercase; display: block; margin-bottom: 32px;">Próximo Passo</span>
+      <h2 style="font-family: 'Cormorant Garamond', serif; font-size: clamp(38px, 4.5vw, 62px); font-weight: 300; color: #1a1a18; line-height: 1.1; letter-spacing: -0.02em; text-wrap: pretty;">Vamos construir seu<br>próximo projeto<br><em style="font-style: italic;">juntos</em>.</h2>
+    </div>
+    <div>
+      <p style="font-family: 'Manrope', sans-serif; font-size: 15px; font-weight: 400; color: #4a4a44; line-height: 1.88; margin-bottom: 48px;">Nossa equipe está pronta para avaliar seu projeto sem custo e indicar o melhor caminho técnico para regularizar, licenciar e desenvolver sua propriedade na Amazônia Legal.</p>
+      <div style="display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 48px;">
+        <a href="./index.html" style="display: inline-block; padding: 16px 42px; background: #315B2C; color: #F6F4EF; font-family: 'Manrope', sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; border-radius: 8px; transition: background 0.25s;" style-hover="background: #254822;">Conheça Nossos Serviços</a>
+        <a href="./index.html" style="display: inline-block; padding: 15px 42px; color: #315B2C; font-family: 'Manrope', sans-serif; font-size: 11.5px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; border-radius: 8px; border: 1px solid rgba(49,91,44,0.3); transition: border-color 0.25s;" style-hover="border-color: rgba(49,91,44,0.7);">Fale com Nossa Equipe</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── WHATSAPP ───────────────────────────────────────────────────── -->
+<div style="position: fixed; bottom: 32px; right: 32px; z-index: 998; width: 56px; height: 56px;">
+  <div style="position: absolute; inset: -4px; border-radius: 50%; border: 2px solid rgba(37,211,102,0.35); animation: wa-ring 8s ease-in-out infinite; pointer-events: none;"></div>
+  <a href="https://wa.me/5591999999999?text=Ol%C3%A1%2C%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es%20sobre%20os%20servi%C3%A7os%20da%20AgroVis%C3%A3o" target="_blank" rel="noopener noreferrer" title="Fale conosco pelo WhatsApp" style="position: absolute; inset: 0; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; box-shadow: 0 4px 16px rgba(37,211,102,0.40); transition: transform 0.2s, box-shadow 0.2s;" style-hover="transform: scale(1.1); box-shadow: 0 6px 24px rgba(37,211,102,0.60);">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="#FFFFFF" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"></path>
+    </svg>
+  </a>
+</div>
+
+<!-- ─── FOOTER ─────────────────────────────────────────────────────── -->
+<footer style="background: #131E11; padding: 80px 0 40px;">
+  <div style="max-width: 1320px; margin: 0 auto; padding: 0 64px;">
+    <div style="display: grid; grid-template-columns: 2.2fr 1fr 1fr 1.3fr; gap: 56px; padding-bottom: 56px; border-bottom: 1px solid rgba(184,212,138,0.14);">
+      <div>
+        <a href="./index.html" style="display: inline-flex; align-items: center; gap: 12px; margin-bottom: 18px; text-decoration: none; color: #F6F4EF;">
+          <svg width="24" height="24" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="13" stroke="#B8D48A" stroke-width="1.2"></circle><path d="M14 4V24M4 14H24" stroke="#B8D48A" stroke-width="0.8" opacity="0.45"></path><circle cx="14" cy="14" r="3.5" stroke="#B8D48A" stroke-width="1.2"></circle></svg>
+          <div>
+            <div style="font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #F6F4EF;">AgroVisão</div>
+            <div style="font-family: 'Manrope', sans-serif; font-size: 8.5px; font-weight: 400; letter-spacing: 0.22em; color: #B8D48A; text-transform: uppercase;">Consultoria Agrícola</div>
+          </div>
+        </a>
+        <p style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 400; color: rgba(246,244,239,0.68); line-height: 1.82; max-width: 280px; margin-bottom: 28px;">Consultoria especializada em planejamento, gestão e execução de projetos que geram impacto real na Amazônia e no Brasil.</p>
+        <div style="display: flex; gap: 10px; align-items: center;">
+          <a href="https://www.instagram.com/visaogestaodeprojetos/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" style="display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 12px; border: 1.5px solid rgba(184,212,138,0.25); color: #B8D48A; text-decoration: none; transition: background 0.22s, border-color 0.22s, transform 0.22s;" style-hover="background: rgba(184,212,138,0.10); border-color: rgba(184,212,138,0.55); transform: translateY(-2px);"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B8D48A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"></rect><circle cx="12" cy="12" r="5"></circle><circle cx="17.5" cy="6.5" r="1" fill="#B8D48A" stroke="none"></circle></svg></a>
+          <a href="mailto:contato@agrovisaopara.com.br" aria-label="Email" style="display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 12px; border: 1.5px solid rgba(184,212,138,0.25); color: #B8D48A; text-decoration: none; transition: background 0.22s, border-color 0.22s, transform 0.22s;" style-hover="background: rgba(184,212,138,0.10); border-color: rgba(184,212,138,0.55); transform: translateY(-2px);"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B8D48A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="M2 7L12 13L22 7"></path></svg></a>
+          <a href="https://api.whatsapp.com/send?phone=5591982064340" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" style="display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 12px; border: 1.5px solid rgba(184,212,138,0.25); color: #B8D48A; text-decoration: none; transition: background 0.22s, border-color 0.22s, transform 0.22s;" style-hover="background: rgba(184,212,138,0.10); border-color: rgba(184,212,138,0.55); transform: translateY(-2px);"><svg width="22" height="22" viewBox="0 0 24 24" fill="#B8D48A"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"></path></svg></a>
+          <a href="tel:+5591982064340" aria-label="Telefone" style="display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 12px; border: 1.5px solid rgba(184,212,138,0.25); color: #B8D48A; text-decoration: none; transition: background 0.22s, border-color 0.22s, transform 0.22s;" style-hover="background: rgba(184,212,138,0.10); border-color: rgba(184,212,138,0.55); transform: translateY(-2px);"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B8D48A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8a19.79 19.79 0 01-3.07-8.63A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z" transform="scale(0.9) translate(1.2,1.2)"></path></svg></a>
+        </div>
+      </div>
+      <div>
+        <h4 style="font-family: 'Manrope', sans-serif; font-size: 10px; font-weight: 700; color: #B8D48A; letter-spacing: 0.24em; text-transform: uppercase; margin-bottom: 22px;">Links Rápidos</h4>
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <a href="./index.html" style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: rgba(246,244,239,0.62); text-decoration: none; transition: color 0.2s;" style-hover="color: #F6F4EF;">Home</a>
+          <a href="./Sobre.dc.html" style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: rgba(246,244,239,0.62); text-decoration: none; transition: color 0.2s;" style-hover="color: #F6F4EF;">Sobre</a>
+          <a href="./Servicos.dc.html" style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: rgba(246,244,239,0.62); text-decoration: none; transition: color 0.2s;" style-hover="color: #F6F4EF;">Serviços</a>
+          <a href="./Projetos.dc.html" style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: rgba(246,244,239,0.62); text-decoration: none; transition: color 0.2s;" style-hover="color: #F6F4EF;">Projetos</a>
+          <a href="./Contato.dc.html" style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: rgba(246,244,239,0.62); text-decoration: none; transition: color 0.2s;" style-hover="color: #F6F4EF;">Contato</a>
+        </div>
+      </div>
+      <div>
+        <h4 style="font-family: 'Manrope', sans-serif; font-size: 10px; font-weight: 700; color: #B8D48A; letter-spacing: 0.24em; text-transform: uppercase; margin-bottom: 22px;">Serviços</h4>
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <a href="./Servicos.dc.html#regularizacao-fundiaria" style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: rgba(246,244,239,0.62); text-decoration: none; transition: color 0.2s;" style-hover="color: #F6F4EF;">Gestão de Projetos</a>
+          <a href="./Servicos.dc.html#licenciamento" style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: rgba(246,244,239,0.62); text-decoration: none; transition: color 0.2s;" style-hover="color: #F6F4EF;">Consultoria Estratégica</a>
+          <a href="./Servicos.dc.html#pronaf" style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: rgba(246,244,239,0.62); text-decoration: none; transition: color 0.2s;" style-hover="color: #F6F4EF;">Captação de Recursos</a>
+          <a href="./Servicos.dc.html#gestao" style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: rgba(246,244,239,0.62); text-decoration: none; transition: color 0.2s;" style-hover="color: #F6F4EF;">Monitoramento e Avaliação</a>
+          <a href="./Servicos.dc.html#georreferenciamento" style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: rgba(246,244,239,0.62); text-decoration: none; transition: color 0.2s;" style-hover="color: #F6F4EF;">Treinamentos</a>
+        </div>
+      </div>
+      <div>
+        <h4 style="font-family: 'Manrope', sans-serif; font-size: 10px; font-weight: 700; color: #B8D48A; letter-spacing: 0.24em; text-transform: uppercase; margin-bottom: 22px;">Fale Conosco</h4>
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <a href="tel:+5591982064340" style="display: flex; align-items: center; gap: 10px; font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: rgba(246,244,239,0.62); text-decoration: none; transition: color 0.2s;" style-hover="color: #F6F4EF;"><svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M13 10.5v2A1 1 0 0 1 12 13.5a10 10 0 01-8-8A1 1 0 015 4.5h2a1 1 0 011 1c.08.6.224 1.19.43 1.75a1 1 0 01-.23 1.05L7.4 9.1a8 8 0 003.5 3.5l.8-.8a1 1 0 011.05-.23c.56.206 1.15.35 1.75.43A1 1 0 0113 12v-1.5z" stroke="#B8D48A" stroke-width="1.2" fill="none" stroke-linecap="round"></path></svg>(91) 98206-4340</a>
+          <a href="tel:+5591987190993" style="display: flex; align-items: center; gap: 10px; font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: rgba(246,244,239,0.62); text-decoration: none; transition: color 0.2s;" style-hover="color: #F6F4EF;"><svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M13 10.5v2A1 1 0 0 1 12 13.5a10 10 0 01-8-8A1 1 0 015 4.5h2a1 1 0 011 1c.08.6.224 1.19.43 1.75a1 1 0 01-.23 1.05L7.4 9.1a8 8 0 003.5 3.5l.8-.8a1 1 0 011.05-.23c.56.206 1.15.35 1.75.43A1 1 0 0113 12v-1.5z" stroke="#B8D48A" stroke-width="1.2" fill="none" stroke-linecap="round"></path></svg>(91) 98719-0993</a>
+          <a href="mailto:contato@agrovisaopara.com.br" style="display: flex; align-items: center; gap: 10px; font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: rgba(246,244,239,0.62); text-decoration: none; transition: color 0.2s;" style-hover="color: #F6F4EF;"><svg width="15" height="15" viewBox="0 0 15 15" fill="none"><rect x="1" y="3" width="13" height="9" rx="1.5" stroke="#B8D48A" stroke-width="1.2" fill="none"></rect><path d="M1 5L7.5 9L14 5" stroke="#B8D48A" stroke-width="1.2" stroke-linecap="round"></path></svg>contato@agrovisaopara.com.br</a>
+          <div style="display: flex; align-items: flex-start; gap: 10px; font-family: 'Manrope', sans-serif; font-size: 12.5px; font-weight: 400; color: rgba(246,244,239,0.5); line-height: 1.65;"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" style="flex-shrink: 0; margin-top: 2px;"><path d="M7.5 1.5C5.01 1.5 3 3.51 3 6c0 3.75 4.5 7.5 4.5 7.5S12 9.75 12 6c0-2.49-2.01-4.5-4.5-4.5zm0 6a1.5 1.5 0 110-3 1.5 1.5 0 010 3z" fill="#B8D48A" opacity="0.6"></path></svg>Sala 206, Next Office, BR-316,<br>Ananindeua — PA</div>
+        </div>
+      </div>
+    </div>
+    <div style="padding-top: 28px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+      <span style="font-family: 'Manrope', sans-serif; font-size: 11.5px; font-weight: 400; color: rgba(246,244,239,0.4);">© 2025 AgroVisão Consultoria Agrícola · CNPJ 55.818.360/0001-33</span>
+      <span style="font-family: 'Manrope', sans-serif; font-size: 11.5px; font-weight: 400; color: rgba(246,244,239,0.4);">Desenvolvido com ♥ para transformar projetos em realidades.</span>
+    </div>
+  </div>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: { &quot;width&quot;: 1440, &quot;height&quot;: 900 }
+}">
+class Component extends DCLogic {
+  state = { scrolled: true, entered: false };
+
+  componentDidMount() {
+    setTimeout(() => this.setState({ entered: true }), 80);
+    this._onScroll = () => {
+      const scrolled = true;
+      if (scrolled !== this.state.scrolled) this.setState({ scrolled });
+    };
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this._onScroll);
+  }
+
+  renderVals() {
+    const { scrolled, entered } = this.state;
+    const fadeUp = (d) => ({
+      opacity: entered ? 1 : 0,
+      transform: entered ? 'translateY(0px)' : 'translateY(20px)',
+      transition: `opacity 0.9s ease ${d}s, transform 0.9s ease ${d}s`,
+    });
+    const fadeDown = (d) => ({
+      opacity: entered ? 1 : 0,
+      transform: entered ? 'translateY(0px)' : 'translateY(-10px)',
+      transition: `opacity 0.7s ease ${d}s, transform 0.7s ease ${d}s`,
+    });
+    return {
+      navBg:         scrolled ? '#FFFFFF' : 'transparent',
+      navBorder:     scrolled ? '1px solid rgba(49,91,44,0.1)' : '1px solid transparent',
+      navColor:      scrolled ? '#1a1a18' : '#FFFFFF',
+      logoColor:     scrolled ? '#315B2C' : '#FFFFFF',
+      navTextShadow: scrolled ? 'none' : '0 1px 6px rgba(0,0,0,0.55)',
+      navEntryStyle:      fadeDown(0.2),
+      navLinksEntryStyle: fadeDown(0.35),
+      heroEyebrowStyle:   fadeUp(0.45),
+      heroTitleStyle:     fadeUp(0.65),
+      heroDescStyle:      fadeUp(0.85),
+    };
+  }
+}
+</script>
+</body>
+</html>
