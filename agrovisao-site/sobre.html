@@ -25,6 +25,9 @@
       <img src="./assets/logos/agrovisao/logo-agro-visao-v1.png" alt="AgroVisão" style="height: 55px; width: 130px; display: block; object-fit: cover;">
     </a>
   </div>
+  <button class="nav-hamburger" aria-label="Abrir menu" aria-expanded="false" aria-controls="drawer" style="color: {{ navColor }};">
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true"><rect y="3" width="22" height="2.5" rx="1.25" fill="currentColor"/><rect y="9.75" width="22" height="2.5" rx="1.25" fill="currentColor"/><rect y="16.5" width="22" height="2.5" rx="1.25" fill="currentColor"/></svg>
+  </button>
   <div class="nav-links" style="{{ navLinksEntryStyle }}; display: flex; align-items: center; gap: 40px;">
     <a href="./index.html" style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; color: {{ navColor }}; text-decoration: none; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: {{ navTextShadow }}; transition: opacity 0.2s, color 0.5s;" style-hover="opacity: 0.72;">Home</a>
     <a href="./sobre.html" style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; color: {{ navColor }}; text-decoration: none; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: {{ navTextShadow }}; border-bottom: 1px solid currentColor; padding-bottom: 2px; transition: color 0.5s;">Sobre</a>
@@ -34,6 +37,26 @@
     <a href="#" onClick="{{ openModal }}" style="display: inline-block; padding: 11px 26px; background: #315B2C; color: #F6F4EF; font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; border-radius: 8px; transition: background 0.25s;" style-hover="background: #254822;">Fale Conosco</a>
   </div>
 </nav>
+<!-- ─── DRAWER ─────────────────────────────────────────────────────── -->
+<div class="drawer-overlay" aria-hidden="true"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Menu de navegação" aria-hidden="true">
+  <div class="drawer-header">
+    <img src="./assets/logos/agrovisao/logo-agro-visao-v1.png" alt="AgroVisão" class="drawer-logo">
+    <button class="drawer-close" aria-label="Fechar menu">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 3l14 14M17 3L3 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <nav class="drawer-nav" aria-label="Menu principal">
+    <a href="./index.html" class="drawer-link">Home</a>
+    <a href="./sobre.html" class="drawer-link drawer-link--active">Sobre</a>
+    <a href="./servicos.html" class="drawer-link">Serviços</a>
+    <a href="./projetos.html" class="drawer-link">Projetos</a>
+    <a href="./contato.html" class="drawer-link">Contato</a>
+  </nav>
+  <div class="drawer-footer">
+    <a href="#" class="drawer-cta" onClick="{{ openModal }}">Fale Conosco</a>
+  </div>
+</aside>
 
 <!-- ─── HERO ───────────────────────────────────────────────────────── -->
 <section class="hero" style="position: relative; width: 100%; height: 88vh; min-height: 640px; overflow: hidden;">
@@ -520,5 +543,6 @@ class Component extends DCLogic {
   }
 }
 </script>
+<script src="./assets/js/drawer.js"></script>
 </body>
 </html>
