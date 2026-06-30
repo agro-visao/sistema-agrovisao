@@ -229,8 +229,32 @@ body.drawer-open {
     display: flex;
   }
 
-  /* NAV — ajustes de espaçamento em tablet */
-  .nav {}
+  /* ── NAV mobile: padding compacto + safe area ── */
+  .nav {
+    padding-top: 12px !important;
+    padding-bottom: 12px !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  /* safe area — iPhone notch / Dynamic Island (requer viewport-fit=cover) */
+  @supports (padding-top: env(safe-area-inset-top)) {
+    .nav {
+      padding-top: max(12px, calc(8px + env(safe-area-inset-top))) !important;
+      padding-left: max(20px, calc(20px + env(safe-area-inset-left))) !important;
+      padding-right: max(20px, calc(20px + env(safe-area-inset-right))) !important;
+    }
+
+    .drawer {
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    .drawer-header {
+      padding-top: max(24px, calc(20px + env(safe-area-inset-top)));
+    }
+  }
+
+  /* NAV — logotipo */
   .nav-logo {}
 
   /* HERO */
