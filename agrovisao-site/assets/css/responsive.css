@@ -1,36 +1,248 @@
 /* ─── Responsive Styles — AgroVisão ─────────────────────────────────
-   Adaptações para dispositivos móveis e tablets.
-   Sprint 1: estrutura de classes preparada (sem alterações visuais).
-   Sprint 2+: regras responsivas implementadas aqui por classe.
+   Sprint 1: classes semânticas preparadas.
+   Sprint 2A: navegação responsiva + Drawer.
+   Sprint 2B+: demais seções.
    ──────────────────────────────────────────────────────────────────── */
 
 /*
    Breakpoints:
-   Tablet small mobile: ≤ 1023px
-   Mobile:              ≤  768px
-   Small mobile:        ≤  480px
+   Desktop:       ≥ 1024px  (sem alterações — layout aprovado)
+   Tablet:     768–1023px   → Drawer
+   Mobile:      até  767px  → Drawer
+   Small mobile: até 480px
 */
 
-/* ─────────────────────────────────────────────────────────────────────
-   TABLET  (≤ 1023px)
-───────────────────────────────────────────────────────────────────── */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   HAMBURGER — oculto no desktop, visível em ≤ 1023px
+═══════════════════════════════════════════════════════════════════════ */
+
+.nav-hamburger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+
+.nav-hamburger:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.nav-hamburger:focus-visible {
+  outline: 2px solid #B8D48A;
+  outline-offset: 2px;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════
+   DRAWER OVERLAY
+═══════════════════════════════════════════════════════════════════════ */
+
+.drawer-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1050;
+  background: rgba(8, 18, 6, 0.62);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.32s ease;
+}
+
+.drawer-overlay.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════
+   DRAWER PANEL
+═══════════════════════════════════════════════════════════════════════ */
+
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 1100;
+  width: 300px;
+  height: 100%;
+  background: #131E11;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  transform: translateX(100%);
+  transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: -8px 0 40px rgba(0, 0, 0, 0.3);
+}
+
+.drawer.is-open {
+  transform: translateX(0);
+}
+
+/* body scroll lock */
+body.drawer-open {
+  overflow: hidden;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════
+   DRAWER INTERIOR
+═══════════════════════════════════════════════════════════════════════ */
+
+.drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 24px 20px;
+  border-bottom: 1px solid rgba(184, 212, 138, 0.12);
+  flex-shrink: 0;
+}
+
+.drawer-logo {
+  height: 42px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.drawer-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: 1px solid rgba(184, 212, 138, 0.2);
+  border-radius: 8px;
+  color: #F6F4EF;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.drawer-close:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(184, 212, 138, 0.4);
+}
+
+.drawer-close:focus-visible {
+  outline: 2px solid #B8D48A;
+  outline-offset: 2px;
+}
+
+.drawer-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 28px 16px 20px;
+  flex: 1;
+}
+
+.drawer-link {
+  display: block;
+  padding: 13px 16px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(246, 244, 239, 0.72);
+  text-decoration: none;
+  border-radius: 8px;
+  transition: background 0.18s, color 0.18s;
+}
+
+.drawer-link:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #F6F4EF;
+}
+
+.drawer-link:focus-visible {
+  outline: 2px solid #B8D48A;
+  outline-offset: 2px;
+}
+
+.drawer-link--active {
+  color: #B8D48A;
+  background: rgba(184, 212, 138, 0.08);
+}
+
+.drawer-link--active:hover {
+  background: rgba(184, 212, 138, 0.12);
+  color: #B8D48A;
+}
+
+.drawer-footer {
+  padding: 16px 16px 32px;
+  border-top: 1px solid rgba(184, 212, 138, 0.12);
+  flex-shrink: 0;
+}
+
+.drawer-cta {
+  display: block;
+  text-align: center;
+  padding: 14px 24px;
+  background: #315B2C;
+  color: #F6F4EF;
+  font-family: 'Manrope', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: background 0.22s;
+}
+
+.drawer-cta:hover {
+  background: #254822;
+}
+
+.drawer-cta:focus-visible {
+  outline: 2px solid #B8D48A;
+  outline-offset: 2px;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════
+   TABLET  (≤ 1023px) — ativa o drawer, oculta nav horizontal
+═══════════════════════════════════════════════════════════════════════ */
+
 @media (max-width: 1023px) {
 
-  /* NAV ──────────────────── */
+  /* esconde o menu horizontal */
+  .nav-links {
+    display: none !important;
+  }
+
+  /* exibe o hamburguer */
+  .nav-hamburger {
+    display: flex;
+  }
+
+  /* NAV — ajustes de espaçamento em tablet */
   .nav {}
   .nav-logo {}
-  .nav-links {}
 
-  /* HERO ─────────────────── */
+  /* HERO */
   .hero {}
   .hero-content {}
   .hero-inner {}
   .hero-wave {}
 
-  /* LAYOUT ───────────────── */
+  /* LAYOUT */
   .container {}
 
-  /* SERVICOS ─────────────── */
+  /* SERVICOS */
   .services-nav {}
   .services-tabs {}
   .service-grid {}
@@ -38,7 +250,7 @@
   .service-panel {}
   .service-panel--white {}
 
-  /* PROJETOS ─────────────── */
+  /* PROJETOS */
   .section-credentials {}
   .stats-grid-4 {}
   .credentials-strip {}
@@ -49,7 +261,7 @@
   .section-logos {}
   .logos-grid {}
 
-  /* CONTATO ──────────────── */
+  /* CONTATO */
   .section-contact {}
   .contact-grid {}
   .section-social {}
@@ -59,29 +271,31 @@
   .section-reasons {}
   .reasons-grid {}
 
-  /* SHARED SECTIONS ──────── */
+  /* SHARED */
   .section-cta-dark {}
 
-  /* MODAL ────────────────── */
+  /* MODAL */
   .modal-overlay {}
   .modal {}
   .form-grid {}
 
-  /* FOOTER ───────────────── */
+  /* FOOTER */
   .footer {}
   .footer--dark {}
   .footer-container {}
   .footer-grid {}
   .footer-bottom {}
 
-  /* FIXED ELEMENTS ───────── */
+  /* FIXED */
   .wa-fab {}
 
 }
 
-/* ─────────────────────────────────────────────────────────────────────
+
+/* ═══════════════════════════════════════════════════════════════════════
    MOBILE  (≤ 768px)
-───────────────────────────────────────────────────────────────────── */
+═══════════════════════════════════════════════════════════════════════ */
+
 @media (max-width: 768px) {
 
   /* NAV */
@@ -127,7 +341,7 @@
   .section-reasons {}
   .reasons-grid {}
 
-  /* SHARED SECTIONS */
+  /* SHARED */
   .section-cta-dark {}
 
   /* MODAL */
@@ -147,10 +361,17 @@
 
 }
 
-/* ─────────────────────────────────────────────────────────────────────
+
+/* ═══════════════════════════════════════════════════════════════════════
    SMALL MOBILE  (≤ 480px)
-───────────────────────────────────────────────────────────────────── */
+═══════════════════════════════════════════════════════════════════════ */
+
 @media (max-width: 480px) {
+
+  /* DRAWER — aumenta largura em telas pequenas */
+  .drawer {
+    width: 100%;
+  }
 
   /* NAV */
   .nav {}
@@ -195,7 +416,7 @@
   .section-reasons {}
   .reasons-grid {}
 
-  /* SHARED SECTIONS */
+  /* SHARED */
   .section-cta-dark {}
 
   /* MODAL */
