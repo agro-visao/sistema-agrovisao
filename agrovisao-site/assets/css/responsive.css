@@ -1,21 +1,216 @@
 /* ─── Responsive Styles — AgroVisão ─────────────────────────────────
    Adaptações para dispositivos móveis e tablets.
-   Implementado na Fase 2 (adaptação responsiva).
+   Sprint 1: estrutura de classes preparada (sem alterações visuais).
+   Sprint 2+: regras responsivas implementadas aqui por classe.
    ──────────────────────────────────────────────────────────────────── */
 
 /*
-   Breakpoints definidos:
-   Mobile:  320px –  767px
-   Tablet:  768px – 1023px
-   Desktop: ≥ 1024px (layout atual, sem alterações)
+   Breakpoints:
+   Tablet small mobile: ≤ 1023px
+   Mobile:              ≤  768px
+   Small mobile:        ≤  480px
 */
 
-/* ─── Mobile (≤ 767px) ───────────────────────────────────────────── */
-@media (max-width: 767px) {
-  /* Fase 2 */
+/* ─────────────────────────────────────────────────────────────────────
+   TABLET  (≤ 1023px)
+───────────────────────────────────────────────────────────────────── */
+@media (max-width: 1023px) {
+
+  /* NAV ──────────────────── */
+  .nav {}
+  .nav-logo {}
+  .nav-links {}
+
+  /* HERO ─────────────────── */
+  .hero {}
+  .hero-content {}
+  .hero-inner {}
+  .hero-wave {}
+
+  /* LAYOUT ───────────────── */
+  .container {}
+
+  /* SERVICOS ─────────────── */
+  .services-nav {}
+  .services-tabs {}
+  .service-grid {}
+  .service-grid--reverse {}
+  .service-panel {}
+  .service-panel--white {}
+
+  /* PROJETOS ─────────────── */
+  .section-credentials {}
+  .stats-grid-4 {}
+  .credentials-strip {}
+  .section-editorial {}
+  .editorial-grid {}
+  .section-categories {}
+  .categories-grid {}
+  .section-logos {}
+  .logos-grid {}
+
+  /* CONTATO ──────────────── */
+  .section-contact {}
+  .contact-grid {}
+  .section-social {}
+  .social-grid {}
+  .section-map {}
+  .map-grid {}
+  .section-reasons {}
+  .reasons-grid {}
+
+  /* SHARED SECTIONS ──────── */
+  .section-cta-dark {}
+
+  /* MODAL ────────────────── */
+  .modal-overlay {}
+  .modal {}
+  .form-grid {}
+
+  /* FOOTER ───────────────── */
+  .footer {}
+  .footer--dark {}
+  .footer-container {}
+  .footer-grid {}
+  .footer-bottom {}
+
+  /* FIXED ELEMENTS ───────── */
+  .wa-fab {}
+
 }
 
-/* ─── Tablet (768px – 1023px) ────────────────────────────────────── */
-@media (min-width: 768px) and (max-width: 1023px) {
-  /* Fase 2 */
+/* ─────────────────────────────────────────────────────────────────────
+   MOBILE  (≤ 768px)
+───────────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+
+  /* NAV */
+  .nav {}
+  .nav-logo {}
+  .nav-links {}
+
+  /* HERO */
+  .hero {}
+  .hero-content {}
+  .hero-inner {}
+  .hero-wave {}
+
+  /* LAYOUT */
+  .container {}
+
+  /* SERVICOS */
+  .services-nav {}
+  .services-tabs {}
+  .service-grid {}
+  .service-grid--reverse {}
+  .service-panel {}
+  .service-panel--white {}
+
+  /* PROJETOS */
+  .section-credentials {}
+  .stats-grid-4 {}
+  .credentials-strip {}
+  .section-editorial {}
+  .editorial-grid {}
+  .section-categories {}
+  .categories-grid {}
+  .section-logos {}
+  .logos-grid {}
+
+  /* CONTATO */
+  .section-contact {}
+  .contact-grid {}
+  .section-social {}
+  .social-grid {}
+  .section-map {}
+  .map-grid {}
+  .section-reasons {}
+  .reasons-grid {}
+
+  /* SHARED SECTIONS */
+  .section-cta-dark {}
+
+  /* MODAL */
+  .modal-overlay {}
+  .modal {}
+  .form-grid {}
+
+  /* FOOTER */
+  .footer {}
+  .footer--dark {}
+  .footer-container {}
+  .footer-grid {}
+  .footer-bottom {}
+
+  /* FIXED */
+  .wa-fab {}
+
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   SMALL MOBILE  (≤ 480px)
+───────────────────────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+
+  /* NAV */
+  .nav {}
+  .nav-logo {}
+  .nav-links {}
+
+  /* HERO */
+  .hero {}
+  .hero-content {}
+  .hero-inner {}
+  .hero-wave {}
+
+  /* LAYOUT */
+  .container {}
+
+  /* SERVICOS */
+  .services-nav {}
+  .services-tabs {}
+  .service-grid {}
+  .service-grid--reverse {}
+  .service-panel {}
+  .service-panel--white {}
+
+  /* PROJETOS */
+  .section-credentials {}
+  .stats-grid-4 {}
+  .credentials-strip {}
+  .section-editorial {}
+  .editorial-grid {}
+  .section-categories {}
+  .categories-grid {}
+  .section-logos {}
+  .logos-grid {}
+
+  /* CONTATO */
+  .section-contact {}
+  .contact-grid {}
+  .section-social {}
+  .social-grid {}
+  .section-map {}
+  .map-grid {}
+  .section-reasons {}
+  .reasons-grid {}
+
+  /* SHARED SECTIONS */
+  .section-cta-dark {}
+
+  /* MODAL */
+  .modal-overlay {}
+  .modal {}
+  .form-grid {}
+
+  /* FOOTER */
+  .footer {}
+  .footer--dark {}
+  .footer-container {}
+  .footer-grid {}
+  .footer-bottom {}
+
+  /* FIXED */
+  .wa-fab {}
+
 }
