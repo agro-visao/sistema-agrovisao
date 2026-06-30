@@ -1,0 +1,210 @@
+/* ─── Components — AgroVisão ─────────────────────────────────────────
+   Classes reutilizáveis extraídas dos estilos inline das páginas.
+   Depende de: variables.css
+   ──────────────────────────────────────────────────────────────────── */
+
+/* ─── Service Cards (index) ──────────────────────────────────────── */
+
+.svc-card {
+  background: #FFFFFF;
+  border: 1px solid rgba(49, 91, 44, 0.10);
+  border-radius: 16px;
+  padding: 32px 24px;
+  flex: 1;
+  min-width: 0;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  cursor: default;
+}
+
+.svc-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(49, 91, 44, 0.10);
+  border-color: rgba(49, 91, 44, 0.22);
+}
+
+/* ─── Differential Cards (index) ────────────────────────────────── */
+
+.diff-card {
+  background: #FFFFFF;
+  border: 1px solid rgba(49, 91, 44, 0.09);
+  border-radius: 14px;
+  padding: 28px 24px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.diff-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 36px rgba(49, 91, 44, 0.09);
+}
+
+/* ─── Project Marquee Chips (index) ─────────────────────────────── */
+
+.mq-chip {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 18px;
+  background: #FFFFFF;
+  border: 1px solid rgba(49, 91, 44, 0.10);
+  border-radius: 12px;
+  height: 76px;
+  flex-shrink: 0;
+  min-width: 210px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: box-shadow 0.2s;
+}
+
+.mq-chip:hover {
+  box-shadow: 0 6px 20px rgba(49, 91, 44, 0.12);
+}
+
+.mq-logo {
+  width: 46px;
+  height: 46px;
+  flex-shrink: 0;
+  background: rgba(49, 91, 44, 0.05);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.mq-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.mq-name {
+  font-family: 'Manrope', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: #1a1a18;
+  line-height: 1.3;
+}
+
+.mq-cat {
+  font-family: 'Manrope', sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  color: #888882;
+  margin-top: 3px;
+}
+
+.mq-track {
+  display: flex;
+  gap: 12px;
+  width: max-content;
+}
+
+.mq-row:hover .mq-track {
+  animation-play-state: paused;
+}
+
+/* ─── Social Icons (footer — todas as páginas) ───────────────────── */
+
+.social-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  border: 1.5px solid rgba(49, 91, 44, 0.15);
+  color: #315B2C;
+  text-decoration: none;
+  transition: background 0.22s, border-color 0.22s, transform 0.22s;
+}
+
+.social-icon:hover {
+  background: rgba(49, 91, 44, 0.07);
+  border-color: rgba(49, 91, 44, 0.32);
+  transform: translateY(-2px);
+}
+
+/* ─── Project Logo Cards (projetos) ─────────────────────────────── */
+
+.logo-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.logo-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 14px 44px rgba(49, 91, 44, 0.13) !important;
+}
+
+/* ─── Project Filter Tabs (projetos) ────────────────────────────── */
+
+.pjt-tab {
+  display: inline-flex;
+  align-items: center;
+  font-family: 'Manrope', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  border: 1px solid rgba(49, 91, 44, 0.18);
+  background: #FFFFFF;
+  color: #555550;
+}
+
+.pjt-tab:hover {
+  border-color: rgba(49, 91, 44, 0.4);
+}
+
+.pjt-tab.active {
+  border-color: #315B2C;
+  background: #315B2C;
+  color: #F6F4EF;
+}
+
+/* ─── Project Category Cards (projetos) ─────────────────────────── */
+
+.cat-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  cursor: default;
+}
+
+.cat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 44px rgba(0, 0, 0, 0.10) !important;
+}
+
+/* ─── Gallery Items (projetos) ───────────────────────────────────── */
+
+.gal-item {
+  overflow: hidden;
+  border-radius: 10px;
+  position: relative;
+}
+
+.gal-item img {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.gal-item:hover img {
+  transform: scale(1.05);
+}
+
+.gal-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(6, 14, 4, 0.6) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  display: flex;
+  align-items: flex-end;
+  padding: 20px;
+}
+
+.gal-item:hover .gal-overlay {
+  opacity: 1;
+}
