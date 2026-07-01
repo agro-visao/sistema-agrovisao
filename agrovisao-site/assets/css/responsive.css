@@ -470,6 +470,7 @@ body.drawer-open {
   .section-about,
   .section-what,
   .section-credentials,
+  .section-process,
   .section-contact,
   .section-cta-dark {
     padding-top: 64px !important;
@@ -700,12 +701,11 @@ body.drawer-open {
     background: transparent !important;
   }
 
-  /* Remover o ponto de posição absoluta do topo e repositionar */
+  /* Remover o ponto de posição absoluta do topo e repositionar (sobre.html) */
   .process-steps > div > div:first-child {
     position: relative !important;
     width: 8px !important;
     height: 8px !important;
-    background: #315B2C !important;
     border-radius: 50% !important;
     margin-bottom: 16px !important;
     left: auto !important;
@@ -729,6 +729,50 @@ body.drawer-open {
     font-size: 13px !important;
     line-height: 1.65 !important;
     margin-bottom: 0 !important;
+  }
+
+  /* ─── HOME SEÇÃO 4: Nosso Processo (Mobile First) ─── */
+
+  /* Linha conectora horizontal — ocultar (exclusiva da Home, inexistente no sobre.html) */
+  .section-process > .container > div > div[style*="height: 1px"] {
+    display: none !important;
+  }
+
+  /* Preservar círculos numerados da Home: impedir que a regra genérica do sobre.html
+     (width/height: 8px) destrua os círculos de 44px. O ponto do sobre.html tem
+     "position: absolute" no atributo style; os círculos da home não têm. */
+  .process-steps > div > div:first-child:not([style*="position: absolute"]) {
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+    margin-bottom: 14px !important;
+    left: auto !important;
+    top: auto !important;
+  }
+
+  /* Impedir que o font-size 36px (destinado ao número do sobre.html) seja aplicado
+     ao título do passo da Home. Os títulos têm text-transform:uppercase; os números
+     do sobre.html não — isso permite diferenciar sem classes novas. */
+  .process-steps > div > div:nth-child(2)[style*="text-transform: uppercase"] {
+    font-size: 11px !important;
+    margin-bottom: 6px !important;
+  }
+
+  /* Descrição do passo — terceiro filho, exclusivo da estrutura da Home
+     (sobre.html usa h3/p, não div:nth-child(3)) */
+  .process-steps > div > div:nth-child(3) {
+    font-size: 12px !important;
+    line-height: 1.65 !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* Remover borda inferior do último passo */
+  .process-steps > div:last-child {
+    border-bottom: none !important;
   }
 
   /* ─── SOBRE SEÇÃO 6: Nossa Experiência em Campo (Mobile First) ─── */
@@ -954,6 +998,7 @@ body.drawer-open {
   .section-about,
   .section-what,
   .section-credentials,
+  .section-process,
   .section-contact,
   .section-cta-dark {
     padding-top: 48px !important;
@@ -1046,6 +1091,31 @@ body.drawer-open {
   .process-steps > div p {
     font-size: 12px !important;
     line-height: 1.6 !important;
+  }
+
+  /* ─── HOME SEÇÃO 4: Nosso Processo (Small Mobile) ─── */
+
+  /* Círculos numerados: reduzir ligeiramente em telas muito pequenas */
+  .process-steps > div > div:first-child:not([style*="position: absolute"]) {
+    width: 36px !important;
+    height: 36px !important;
+    margin-bottom: 12px !important;
+  }
+
+  /* Ícone SVG dentro do círculo (último passo — Acompanhamento) */
+  .process-steps > div > div:first-child:not([style*="position: absolute"]) svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+
+  /* Título do passo */
+  .process-steps > div > div:nth-child(2)[style*="text-transform: uppercase"] {
+    font-size: 10.5px !important;
+  }
+
+  /* Descrição do passo */
+  .process-steps > div > div:nth-child(3) {
+    font-size: 11.5px !important;
   }
 
   /* ─── SOBRE SEÇÃO 6: Nossa Experiência em Campo (Small Mobile) ─── */
