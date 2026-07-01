@@ -775,6 +775,66 @@ body.drawer-open {
     border-bottom: none !important;
   }
 
+  /* ─── HOME SEÇÃO 5: Diferenciais (Mobile First) ─── */
+  .section-diff {
+    padding-top: 64px !important;
+    padding-bottom: 64px !important;
+  }
+
+  .section-diff > .container {
+    padding: 0 18px !important;
+  }
+
+  .section-header-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    margin-bottom: 40px !important;
+    gap: 24px !important;
+  }
+
+  .section-header-row > div:first-child h2 {
+    font-size: clamp(24px, 6.5vw, 34px) !important;
+    margin-bottom: 8px !important;
+  }
+
+  .section-header-row > a {
+    width: 100% !important;
+    padding: 13px 16px !important;
+    font-size: 10px !important;
+    text-align: center !important;
+  }
+
+  .diff-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+
+  .diff-card {
+    padding: 24px 16px !important;
+  }
+
+  .diff-card > div[style*="width: 44px"] {
+    width: 40px !important;
+    height: 40px !important;
+    margin-bottom: 14px !important;
+  }
+
+  .diff-card > div[style*="width: 44px"] svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  .diff-card h3 {
+    font-size: 16px !important;
+    margin-bottom: 6px !important;
+  }
+
+  .diff-card p {
+    font-size: 12px !important;
+    line-height: 1.65 !important;
+  }
+
   /* ─── SOBRE SEÇÃO 6: Nossa Experiência em Campo (Mobile First) ─── */
   /* Cabeçalho — transformar flex horizontal em vertical centralizado */
   .section-gallery > div:first-child {
@@ -1116,6 +1176,56 @@ body.drawer-open {
   /* Descrição do passo */
   .process-steps > div > div:nth-child(3) {
     font-size: 11.5px !important;
+  }
+
+  /* ─── HOME SEÇÃO 5: Diferenciais (Small Mobile) ─── */
+  .section-diff {
+    padding-top: 48px !important;
+    padding-bottom: 48px !important;
+  }
+
+  .section-diff > .container {
+    padding: 0 14px !important;
+  }
+
+  .section-header-row {
+    margin-bottom: 32px !important;
+  }
+
+  .section-header-row > div:first-child h2 {
+    font-size: clamp(18px, 5.5vw, 28px) !important;
+  }
+
+  .section-header-row > a {
+    font-size: 9px !important;
+    padding: 11px 14px !important;
+  }
+
+  .diff-grid {
+    gap: 16px !important;
+  }
+
+  .diff-card {
+    padding: 18px 12px !important;
+  }
+
+  .diff-card > div[style*="width: 44px"] {
+    width: 36px !important;
+    height: 36px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .diff-card > div[style*="width: 44px"] svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+
+  .diff-card h3 {
+    font-size: 14px !important;
+  }
+
+  .diff-card p {
+    font-size: 11px !important;
   }
 
   /* ─── SOBRE SEÇÃO 6: Nossa Experiência em Campo (Small Mobile) ─── */
