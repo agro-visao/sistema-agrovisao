@@ -315,6 +315,12 @@ body.drawer-open {
   .editorial-grid {}
   .section-categories {}
   .categories-grid {}
+
+  /* ─── PROJETOS SEÇÃO 4: Projetos em Destaque (Tablet) ─── */
+  .section-categories + section div[style*="grid-template-columns: 1fr 1fr"][style*="gap: 80px"] {
+    gap: 48px !important;
+  }
+
   .section-logos {}
   .logos-grid {}
 
@@ -979,6 +985,41 @@ body.drawer-open {
     height: 2px !important;
   }
 
+  /* ─── PROJETOS SEÇÃO 4: Projetos em Destaque (Mobile First) ─── */
+  .section-categories + section {
+    padding-top: 64px !important;
+    padding-bottom: 64px !important;
+  }
+
+  .section-categories + section .container > div:first-child {
+    margin-bottom: 40px !important;
+  }
+
+  /* Project rows: single column */
+  .section-categories + section div[style*="grid-template-columns: 1fr 1fr"][style*="gap: 80px"] {
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+    margin-bottom: 56px !important;
+  }
+
+  /* Remove bottom margin from last project row */
+  .section-categories + section .container > div:last-child {
+    margin-bottom: 0 !important;
+  }
+
+  /* Images: full width, proportional */
+  .section-categories + section div[style*="aspect-ratio: 4/3"] {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Institution / CTA footer: stack vertically on narrow screens */
+  .section-categories + section div[style*="justify-content: space-between"][style*="padding-top: 22px"] {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 14px !important;
+  }
+
   .section-logos {}
   .logos-grid {}
 
@@ -1331,6 +1372,21 @@ body.drawer-open {
   .cat-card h3 {
     font-size: 15px !important;
     margin-bottom: 6px !important;
+  }
+
+  /* ─── PROJETOS SEÇÃO 4: refinamentos para small mobile (≤480px) ─── */
+  .section-categories + section {
+    padding-top: 48px !important;
+    padding-bottom: 48px !important;
+  }
+
+  .section-categories + section .container > div:first-child {
+    margin-bottom: 28px !important;
+  }
+
+  .section-categories + section div[style*="grid-template-columns: 1fr 1fr"][style*="gap: 80px"] {
+    gap: 22px !important;
+    margin-bottom: 44px !important;
   }
 
   .section-logos {}
