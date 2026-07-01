@@ -355,6 +355,12 @@ body.drawer-open {
     grid-template-columns: repeat(5, 1fr) !important;
   }
 
+  /* ─── PROJETOS SEÇÃO 8: Diferenciais (Tablet) ─── */
+  /* Desktop: 2 colunas com gap 100px. Tablet: reduzir gap para melhor espaçamento */
+  div[style*="grid-template-columns: 1fr 1fr"][style*="gap: 100px"] {
+    gap: 48px !important;
+  }
+
   /* CONTATO */
   .section-contact {
   }
@@ -1153,6 +1159,82 @@ body.drawer-open {
     line-height: 1.5 !important;
   }
 
+  /* ─── PROJETOS SEÇÃO 8: Diferenciais (Mobile First ≤768px) ─── */
+  /* Transform 2-column layout to single column, cards grid 2x4 to 1x8 */
+
+  /* Main grid: 2 cols → 1 col, reduce gap */
+  div[style*="grid-template-columns: 1fr 1fr"][style*="gap: 100px"] {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
+
+  /* Container padding: 0 84px → 0 20px (consistent with mobile standard) */
+  div[style*="grid-template-columns: 1fr 1fr"][style*="gap: 100px"] {
+    & + div {
+      /* Target parent section container */
+    }
+  }
+
+  /* Section padding: reduce from 140px → 80px */
+  section[style*="background: #FFFFFF"][style*="padding: 140px 0"] {
+    padding: 80px 0 !important;
+  }
+
+  /* Container inside section: adjust padding */
+  section[style*="background: #FFFFFF"][style*="padding: 140px 0"] .container {
+    padding: 0 20px !important;
+  }
+
+  /* Cards grid: 2x2 → 1x8 (single column) */
+  div[style*="grid-template-columns: 1fr 1fr"][style*="gap: 2px"] {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  /* Cards: adjust padding and spacing */
+  div[style*="grid-template-columns: 1fr 1fr"][style*="gap: 2px"] > div {
+    padding: 20px 16px !important;
+  }
+
+  /* Card title (h4): 11px → 10px */
+  div[style*="grid-template-columns: 1fr 1fr"][style*="gap: 2px"] > div h4 {
+    font-size: 10px !important;
+    margin-bottom: 8px !important;
+  }
+
+  /* Card description (p): keep 13px, improve line-height */
+  div[style*="grid-template-columns: 1fr 1fr"][style*="gap: 2px"] > div p {
+    font-size: 13px !important;
+    line-height: 1.55 !important;
+  }
+
+  /* Left column title and content: optimize for mobile */
+  div[style*="grid-template-columns: 1fr 1fr"][style*="gap: 100px"]
+    > div:first-child
+    h2 {
+    font-size: clamp(26px, 6vw, 36px) !important;
+    margin-bottom: 18px !important;
+  }
+
+  /* Left column description: improve readability */
+  div[style*="grid-template-columns: 1fr 1fr"][style*="gap: 100px"]
+    > div:first-child
+    p {
+    font-size: 14px !important;
+    line-height: 1.65 !important;
+    margin-bottom: 32px !important;
+  }
+
+  /* Left column CTA button: full width on mobile */
+  div[style*="grid-template-columns: 1fr 1fr"][style*="gap: 100px"]
+    > div:first-child
+    a {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    padding: 15px 20px !important;
+  }
+
   /* CONTATO */
   .section-contact {
   }
@@ -1615,6 +1697,58 @@ body.drawer-open {
     > div[style*="font-size: 12px"][style*="color: rgba(246,244,239,0.55)"] {
     font-size: 12px !important;
     line-height: 1.4 !important;
+  }
+
+  /* ─── PROJETOS SEÇÃO 8: Diferenciais (Small Mobile ≤480px) ─── */
+  /* Maintain single column with tighter spacing for small screens */
+
+  /* Main grid: keep 1 col, tighten gap further */
+  div[style*="grid-template-columns: 1fr 1fr"][style*="gap: 100px"] {
+    gap: 32px !important;
+  }
+
+  /* Section padding: even more compact */
+  section[style*="background: #FFFFFF"][style*="padding: 140px 0"] {
+    padding: 60px 0 !important;
+  }
+
+  /* Cards grid: keep 1 col, reduce gap */
+  div[style*="grid-template-columns: 1fr 1fr"][style*="gap: 2px"] {
+    gap: 12px !important;
+  }
+
+  /* Cards: compact padding */
+  div[style*="grid-template-columns: 1fr 1fr"][style*="gap: 2px"] > div {
+    padding: 16px 14px !important;
+  }
+
+  /* Card title (h4): 10px → 9px */
+  div[style*="grid-template-columns: 1fr 1fr"][style*="gap: 2px"] > div h4 {
+    font-size: 9px !important;
+    margin-bottom: 6px !important;
+  }
+
+  /* Card description (p): 13px → 12px */
+  div[style*="grid-template-columns: 1fr 1fr"][style*="gap: 2px"] > div p {
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+  }
+
+  /* Left column title: reduce size for small mobile */
+  div[style*="grid-template-columns: 1fr 1fr"][style*="gap: 100px"]
+    > div:first-child
+    h2 {
+    font-size: clamp(22px, 5.2vw, 28px) !important;
+    margin-bottom: 16px !important;
+  }
+
+  /* Left column description: tighter spacing */
+  div[style*="grid-template-columns: 1fr 1fr"][style*="gap: 100px"]
+    > div:first-child
+    p {
+    font-size: 13px !important;
+    line-height: 1.6 !important;
+    margin-bottom: 24px !important;
   }
 
   /* CONTATO */
