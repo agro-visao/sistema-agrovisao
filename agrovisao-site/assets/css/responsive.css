@@ -419,6 +419,14 @@ body.drawer-open {
     grid-template-columns: repeat(4, 1fr) !important;
     gap: 16px !important;
   }
+
+  /* ─── CONTATO SEÇÃO 3: Onde estamos (Tablet ≤1023px) ─── */
+  .section-map {
+  }
+  .map-grid {
+    grid-template-columns: 350px 1fr !important;
+    gap: 48px !important;
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
@@ -1286,8 +1294,77 @@ body.drawer-open {
     font-size: 10.5px !important;
   }
   .section-map {
+    padding: 60px 0 !important;
+  }
+  .section-map > div {
+    padding: 0 20px !important;
   }
   .map-grid {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
+  .map-grid > div:first-child h2 {
+    font-size: clamp(32px, 5vw, 46px) !important;
+    margin-bottom: 16px !important;
+  }
+  .map-grid > div:first-child > div:nth-child(2) {
+    margin-bottom: 32px !important;
+  }
+  .map-grid > div:first-child > div {
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 14px !important;
+    margin-bottom: 20px !important;
+  }
+  .map-grid > div:first-child > div > div:first-child {
+    width: 40px !important;
+    height: 40px !important;
+    flex-shrink: 0 !important;
+  }
+  .map-grid > div:first-child > div > div:first-child svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+  .map-grid > div:first-child > div > div:last-child span {
+    font-size: 9.5px !important;
+    margin-bottom: 4px !important;
+  }
+  .map-grid > div:first-child > div > div:last-child > div {
+    font-size: 13px !important;
+    line-height: 1.5 !important;
+  }
+  .map-grid > div:first-child > div[style*="background: #1D3318"] {
+    border-radius: 14px !important;
+    padding: 20px 18px !important;
+    margin-bottom: 0 !important;
+  }
+  .map-grid > div:first-child > div[style*="background: #1D3318"] h3 {
+    font-size: 18px !important;
+    margin-bottom: 10px !important;
+  }
+  .map-grid > div:first-child > div[style*="background: #1D3318"] p {
+    font-size: 12px !important;
+    margin-bottom: 16px !important;
+  }
+  .map-grid > div:first-child > div[style*="background: #1D3318"] a {
+    padding: 12px 16px !important;
+    font-size: 11px !important;
+  }
+  .map-grid > div:last-child {
+    padding-bottom: 0 !important;
+    padding-right: 0 !important;
+  }
+  .map-grid > div:last-child > div:nth-child(1),
+  .map-grid > div:last-child > div:nth-child(2) {
+    display: none !important;
+  }
+  .map-grid > div:last-child > div:nth-child(3) {
+    position: relative !important;
+    padding-bottom: 0 !important;
+    padding-right: 0 !important;
+  }
+  .map-grid > div:last-child > div:nth-child(3) > div {
+    height: 300px !important;
   }
   .section-reasons {
   }
@@ -1832,8 +1909,74 @@ body.drawer-open {
     font-size: 9.5px !important;
   }
   .section-map {
+    padding: 50px 0 !important;
+  }
+  .section-map > div {
+    padding: 0 16px !important;
   }
   .map-grid {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+  .map-grid > div:first-child h2 {
+    font-size: clamp(24px, 4vw, 32px) !important;
+    margin-bottom: 12px !important;
+  }
+  .map-grid > div:first-child > div:nth-child(2) {
+    margin-bottom: 28px !important;
+  }
+  .map-grid > div:first-child > div {
+    gap: 12px !important;
+    margin-bottom: 16px !important;
+  }
+  .map-grid > div:first-child > div > div:first-child {
+    width: 36px !important;
+    height: 36px !important;
+  }
+  .map-grid > div:first-child > div > div:first-child svg {
+    width: 15px !important;
+    height: 15px !important;
+  }
+  .map-grid > div:first-child > div > div:last-child span {
+    font-size: 9px !important;
+    margin-bottom: 3px !important;
+  }
+  .map-grid > div:first-child > div > div:last-child > div {
+    font-size: 12px !important;
+    line-height: 1.45 !important;
+  }
+  .map-grid > div:first-child > div[style*="background: #1D3318"] {
+    border-radius: 12px !important;
+    padding: 16px 14px !important;
+    margin-bottom: 0 !important;
+  }
+  .map-grid > div:first-child > div[style*="background: #1D3318"] h3 {
+    font-size: 16px !important;
+    margin-bottom: 8px !important;
+  }
+  .map-grid > div:first-child > div[style*="background: #1D3318"] p {
+    font-size: 11px !important;
+    margin-bottom: 14px !important;
+  }
+  .map-grid > div:first-child > div[style*="background: #1D3318"] a {
+    padding: 10px 14px !important;
+    font-size: 10px !important;
+  }
+  .map-grid > div:last-child {
+    padding-bottom: 0 !important;
+    padding-right: 0 !important;
+  }
+  .map-grid > div:last-child > div:nth-child(1),
+  .map-grid > div:last-child > div:nth-child(2) {
+    display: none !important;
+  }
+  .map-grid > div:last-child > div:nth-child(3) {
+    position: relative !important;
+    padding-bottom: 0 !important;
+    padding-right: 0 !important;
+  }
+  .map-grid > div:last-child > div:nth-child(3) > div {
+    height: 220px !important;
   }
   .section-reasons {
   }
