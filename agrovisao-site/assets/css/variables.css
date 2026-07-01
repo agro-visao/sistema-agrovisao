@@ -61,6 +61,25 @@
   --transition-base:   0.25s ease;
   --transition-nav:    0.45s ease;
 
+  /* ── Footer tokens ──────────────────────────────────────────────── */
+  --footer-bg:                   #FFFFFF;
+  --footer-text:                 #1a1a18;
+  --footer-text-muted:           #666660;
+  --footer-text-links:           #555550;
+  --footer-text-meta:            #aaaaaa;
+  --footer-title:                #315B2C;
+  --footer-tagline:              #6F8F3A;
+  --footer-border-top:           rgba(49, 91, 44, 0.10);
+  --footer-border-grid:          rgba(49, 91, 44, 0.10);
+  --footer-icon:                 #315B2C;
+  --footer-icon-border:          rgba(49, 91, 44, 0.15);
+  --footer-icon-bg-hover:        rgba(49, 91, 44, 0.07);
+  --footer-icon-border-hover:    rgba(49, 91, 44, 0.32);
+  --footer-hover:                #315B2C;
+  --footer-address:              #888882;
+  --footer-padding:              80px 0 40px;
+  --footer-gap:                  56px;
+
   /* ── Header fixo — altura real por breakpoint ───────────────────────
      Usada por qualquer página/seção que precise empurrar seu primeiro
      bloco para fora da área do header fixo. Não alterar individualmente
