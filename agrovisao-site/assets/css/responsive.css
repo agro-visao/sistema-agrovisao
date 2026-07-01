@@ -349,6 +349,12 @@ body.drawer-open {
     grid-template-columns: repeat(4, 1fr) !important;
   }
 
+  /* ─── PROJETOS SEÇÃO 7: Nossa Metodologia (Tablet) ─── */
+  /* Desktop: 7 colunas com linha horizontal. Tablet: adaptar para melhor leitura */
+  div[style*="grid-template-columns: repeat(7, 1fr)"] {
+    grid-template-columns: repeat(5, 1fr) !important;
+  }
+
   /* CONTATO */
   .section-contact {
   }
@@ -1104,6 +1110,49 @@ body.drawer-open {
     margin-top: 2px !important;
   }
 
+  /* ─── PROJETOS SEÇÃO 7: Nossa Metodologia (Mobile First) ─── */
+  /* Transform horizontal timeline (7 cols) to vertical single column */
+  div[style*="grid-template-columns: repeat(7, 1fr)"] {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+
+  /* Hide horizontal line, show vertical connector via position */
+  div[style*="position: absolute"][style*="top: 27px"][style*="left: 40px"][style*="right: 40px"][style*="height: 1px"] {
+    display: none !important;
+  }
+
+  /* Timeline step card: center content, add vertical spacing */
+  div[style*="grid-template-columns: repeat(7, 1fr)"] + div,
+  div[style*="grid-template-columns: repeat(7, 1fr)"] > div {
+    text-align: center;
+    padding: 24px 20px !important;
+  }
+
+  /* Timeline circle: keep prominent, ensure visibility */
+  div[style*="grid-template-columns: repeat(7, 1fr)"]
+    > div
+    > div[style*="width: 54px"][style*="height: 54px"] {
+    margin: 0 auto 18px !important;
+    flex-shrink: 0;
+  }
+
+  /* Timeline title: better mobile readability */
+  div[style*="grid-template-columns: repeat(7, 1fr)"]
+    > div
+    > div[style*="font-size: 10.5px"][style*="color: #B8D48A"] {
+    font-size: 10px !important;
+    margin-bottom: 10px !important;
+  }
+
+  /* Timeline description: mobile optimized */
+  div[style*="grid-template-columns: repeat(7, 1fr)"]
+    > div
+    > div[style*="font-size: 12px"][style*="color: rgba(246,244,239,0.55)"] {
+    font-size: 13px !important;
+    line-height: 1.5 !important;
+  }
+
   /* CONTATO */
   .section-contact {
   }
@@ -1522,6 +1571,50 @@ body.drawer-open {
 
   .logo-card > div:last-child > div:last-child {
     font-size: 7px !important;
+  }
+
+  /* ─── PROJETOS SEÇÃO 7: Nossa Metodologia (Small Mobile ≤480px) ─── */
+  /* Maintain single column, tighter spacing for small screens */
+  div[style*="grid-template-columns: repeat(7, 1fr)"] {
+    gap: 20px !important;
+  }
+
+  /* Timeline step card: compact padding for small mobile */
+  div[style*="grid-template-columns: repeat(7, 1fr)"] > div {
+    padding: 20px 16px !important;
+  }
+
+  /* Timeline circle: slightly smaller to fit compact layout */
+  div[style*="grid-template-columns: repeat(7, 1fr)"]
+    > div
+    > div[style*="width: 54px"][style*="height: 54px"] {
+    width: 50px !important;
+    height: 50px !important;
+    margin-bottom: 16px !important;
+  }
+
+  /* Timeline circle number: scale with circle */
+  div[style*="grid-template-columns: repeat(7, 1fr)"]
+    > div
+    > div[style*="width: 54px"]
+    span[style*="font-size: 20px"] {
+    font-size: 18px !important;
+  }
+
+  /* Timeline title: extra tight for small mobile */
+  div[style*="grid-template-columns: repeat(7, 1fr)"]
+    > div
+    > div[style*="font-size: 10.5px"][style*="color: #B8D48A"] {
+    font-size: 9px !important;
+    margin-bottom: 8px !important;
+  }
+
+  /* Timeline description: compact for small mobile */
+  div[style*="grid-template-columns: repeat(7, 1fr)"]
+    > div
+    > div[style*="font-size: 12px"][style*="color: rgba(246,244,239,0.55)"] {
+    font-size: 12px !important;
+    line-height: 1.4 !important;
   }
 
   /* CONTATO */
