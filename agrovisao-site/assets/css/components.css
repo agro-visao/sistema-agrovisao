@@ -102,7 +102,88 @@
   animation-play-state: paused;
 }
 
-/* ─── Social Icons (footer — todas as páginas) ───────────────────── */
+/* ─── Footer ─────────────────────────────────────────────────────── */
+
+.footer {
+  background: var(--footer-bg);
+  padding: var(--footer-padding);
+  border-top: 1px solid var(--footer-border-top);
+}
+
+.footer--dark {
+  --footer-bg:                  #131E11;
+  --footer-text:                #F6F4EF;
+  --footer-text-muted:          rgba(246, 244, 239, 0.68);
+  --footer-text-links:          rgba(246, 244, 239, 0.62);
+  --footer-text-meta:           rgba(246, 244, 239, 0.40);
+  --footer-title:               #B8D48A;
+  --footer-tagline:             #B8D48A;
+  --footer-border-top:          transparent;
+  --footer-border-grid:         rgba(184, 212, 138, 0.14);
+  --footer-icon:                #B8D48A;
+  --footer-icon-border:         rgba(184, 212, 138, 0.25);
+  --footer-icon-bg-hover:       rgba(184, 212, 138, 0.10);
+  --footer-icon-border-hover:   rgba(184, 212, 138, 0.55);
+  --footer-hover:               #F6F4EF;
+  --footer-address:             rgba(246, 244, 239, 0.50);
+}
+
+.footer-container {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 64px;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2.2fr 1fr 1fr 1.3fr;
+  gap: var(--footer-gap);
+  padding-bottom: var(--footer-gap);
+  border-bottom: 1px solid var(--footer-border-grid);
+}
+
+.footer-brand-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+  text-decoration: none;
+  color: var(--footer-title);
+}
+
+.footer-brand-name {
+  font-family: var(--font-serif);
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--footer-text);
+}
+
+.footer-tagline {
+  font-family: var(--font-sans);
+  font-size: 8.5px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--footer-tagline);
+}
+
+.footer-desc {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--footer-text-muted);
+  line-height: 1.82;
+  max-width: 280px;
+  margin-bottom: 28px;
+}
+
+.footer-social {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
 
 .social-icon {
   display: flex;
@@ -111,16 +192,106 @@
   width: 48px;
   height: 48px;
   border-radius: 12px;
-  border: 1.5px solid rgba(49, 91, 44, 0.15);
-  color: #315B2C;
+  border: 1.5px solid var(--footer-icon-border);
+  color: var(--footer-icon);
   text-decoration: none;
   transition: background 0.22s, border-color 0.22s, transform 0.22s;
 }
 
 .social-icon:hover {
-  background: rgba(49, 91, 44, 0.07);
-  border-color: rgba(49, 91, 44, 0.32);
+  background: var(--footer-icon-bg-hover);
+  border-color: var(--footer-icon-border-hover);
   transform: translateY(-2px);
+}
+
+.footer-nav-title {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--footer-title);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  margin-bottom: 22px;
+}
+
+.footer-nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer-nav-link {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--footer-text-links);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-nav-link:hover {
+  color: var(--footer-hover);
+}
+
+.footer-contact-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer-contact-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--footer-text-links);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-contact-link:hover {
+  color: var(--footer-hover);
+}
+
+.footer-contact-link svg {
+  flex-shrink: 0;
+  color: var(--footer-title);
+}
+
+.footer-address {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  font-weight: 400;
+  color: var(--footer-address);
+  line-height: 1.65;
+}
+
+.footer-address > svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--footer-title);
+  opacity: 0.5;
+}
+
+.footer-bottom {
+  padding-top: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-meta {
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  font-weight: 400;
+  color: var(--footer-text-meta);
 }
 
 /* ─── Project Logo Cards (projetos) ─────────────────────────────── */
