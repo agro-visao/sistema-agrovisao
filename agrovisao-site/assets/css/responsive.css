@@ -622,8 +622,73 @@ body.drawer-open {
   .credentials-strip {}
   .section-editorial {}
   .editorial-grid {}
-  .section-categories {}
-  .categories-grid {}
+
+  /* ─── SPRINT SECTION 3 — Categorias de Projetos (Mobile First) ─── */
+  .section-categories {
+    padding-top: 64px !important;
+    padding-bottom: 64px !important;
+  }
+
+  .section-categories > .container > div:first-child {
+    text-align: center !important;
+    margin-bottom: 48px !important;
+  }
+
+  .section-categories > .container > div:first-child > div {
+    justify-content: center !important;
+    margin-bottom: 18px !important;
+  }
+
+  .section-categories > .container > div:first-child > div > span {
+    font-size: 10px !important;
+    letter-spacing: 0.2em !important;
+  }
+
+  .section-categories > .container > div:first-child h2 {
+    font-size: clamp(24px, 6.5vw, 38px) !important;
+    margin-bottom: 12px !important;
+  }
+
+  .section-categories > .container > div:first-child p {
+    font-size: 14px !important;
+    line-height: 1.7 !important;
+    margin: 0 auto !important;
+    max-width: 100% !important;
+  }
+
+  .categories-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .cat-card {
+    padding: 22px 18px !important;
+    border-radius: 12px !important;
+    min-height: auto !important;
+  }
+
+  .cat-card[style*="background: #315B2C"] {
+    background: #315B2C !important;
+    border-color: #315B2C !important;
+  }
+
+  .cat-card > div[style*="width: 52px"] {
+    width: 48px !important;
+    height: 48px !important;
+    margin: 0 auto 14px !important;
+  }
+
+  .cat-card h3 {
+    font-size: 16px !important;
+    margin-bottom: 8px !important;
+    line-height: 1.3 !important;
+  }
+
+  .cat-card > div[style*="width: 18px"] {
+    width: 16px !important;
+    height: 2px !important;
+  }
+
   .section-logos {}
   .logos-grid {}
 
@@ -762,8 +827,51 @@ body.drawer-open {
   .credentials-strip {}
   .section-editorial {}
   .editorial-grid {}
-  .section-categories {}
-  .categories-grid {}
+
+  /* ─── SPRINT SECTION 3 — refinamentos para small mobile (≤480px) ─── */
+  .section-categories {
+    padding-top: 48px !important;
+    padding-bottom: 48px !important;
+  }
+
+  .section-categories > .container > div:first-child {
+    margin-bottom: 40px !important;
+  }
+
+  .section-categories > .container > div:first-child > div > span {
+    font-size: 9.5px !important;
+    letter-spacing: 0.18em !important;
+  }
+
+  .section-categories > .container > div:first-child h2 {
+    font-size: clamp(20px, 7vw, 34px) !important;
+    margin-bottom: 10px !important;
+  }
+
+  .section-categories > .container > div:first-child p {
+    font-size: 13.5px !important;
+    line-height: 1.65 !important;
+  }
+
+  .categories-grid {
+    gap: 14px !important;
+  }
+
+  .cat-card {
+    padding: 20px 14px !important;
+  }
+
+  .cat-card > div[style*="width: 52px"] {
+    width: 44px !important;
+    height: 44px !important;
+    margin: 0 auto 12px !important;
+  }
+
+  .cat-card h3 {
+    font-size: 15px !important;
+    margin-bottom: 6px !important;
+  }
+
   .section-logos {}
   .logos-grid {}
 
