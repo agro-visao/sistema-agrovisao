@@ -408,6 +408,17 @@ body.drawer-open {
   /* FIXED */
   .wa-fab {
   }
+
+  /* ─── CONTATO SEÇÃO 2: Redes Sociais (Tablet ≤1023px) ─── */
+  .section-social {
+  }
+  .section-social > .container {
+    padding: 0 40px !important;
+  }
+  .social-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 16px !important;
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
@@ -1241,8 +1252,38 @@ body.drawer-open {
   .contact-grid {
   }
   .section-social {
+    padding: 80px 0 !important;
+  }
+  .section-social > .container {
+    padding: 0 20px !important;
+  }
+  .section-social > .container > div:first-child {
+    margin-bottom: 48px !important;
+  }
+  .section-social h2 {
+    font-size: clamp(28px, 5.5vw, 42px) !important;
   }
   .social-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 16px !important;
+  }
+  .social-grid > a {
+    padding: 24px 16px !important;
+  }
+  .social-grid > a > div:first-child {
+    width: 44px !important;
+    height: 44px !important;
+  }
+  .social-grid > a > div:first-child svg {
+    width: 20px !important;
+    height: 20px !important;
+  }
+  .social-grid > a > div:last-child > div:first-child {
+    font-size: 12px !important;
+    margin-bottom: 3px !important;
+  }
+  .social-grid > a > div:last-child > div:last-child {
+    font-size: 10.5px !important;
   }
   .section-map {
   }
@@ -1757,8 +1798,38 @@ body.drawer-open {
   .contact-grid {
   }
   .section-social {
+    padding: 60px 0 !important;
+  }
+  .section-social > .container {
+    padding: 0 16px !important;
+  }
+  .section-social > .container > div:first-child {
+    margin-bottom: 40px !important;
+  }
+  .section-social h2 {
+    font-size: clamp(24px, 5vw, 32px) !important;
   }
   .social-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+  .social-grid > a {
+    padding: 20px 14px !important;
+  }
+  .social-grid > a > div:first-child {
+    width: 40px !important;
+    height: 40px !important;
+  }
+  .social-grid > a > div:first-child svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+  .social-grid > a > div:last-child > div:first-child {
+    font-size: 11px !important;
+    margin-bottom: 2px !important;
+  }
+  .social-grid > a > div:last-child > div:last-child {
+    font-size: 9.5px !important;
   }
   .section-map {
   }
