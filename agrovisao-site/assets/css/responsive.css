@@ -667,6 +667,70 @@ body.drawer-open {
     margin: 0 auto !important;
   }
 
+  /* ─── SOBRE SEÇÃO 4: Como Trabalhamos (Mobile First) ─── */
+  /* Cabeçalho com título e descrição — centralizar */
+  .section-process > .container > div:first-child {
+    text-align: center !important;
+    margin-bottom: 48px !important;
+  }
+
+  .section-process > .container > div:first-child span {
+    display: block !important;
+    margin-bottom: 16px !important;
+  }
+
+  .section-process > .container > div:first-child h2 {
+    font-size: clamp(28px, 6vw, 42px) !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* Grid de passos — 1 coluna, empilhado verticalmente */
+  .process-steps {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  /* Cada passo — transformar em card visual */
+  .process-steps > div {
+    border-top: none !important;
+    border-bottom: 2px solid #B8D48A !important;
+    padding: 24px 20px !important;
+    padding-top: 24px !important;
+    position: relative !important;
+    background: transparent !important;
+  }
+
+  /* Remover o ponto de posição absoluta do topo e repositionar */
+  .process-steps > div > div:first-child {
+    position: relative !important;
+    width: 8px !important;
+    height: 8px !important;
+    background: #315B2C !important;
+    border-radius: 50% !important;
+    margin-bottom: 16px !important;
+    left: auto !important;
+    top: auto !important;
+  }
+
+  /* Número da etapa — destaque visual */
+  .process-steps > div > div:nth-child(2) {
+    font-size: 36px !important;
+    margin-bottom: 12px !important;
+  }
+
+  /* Título da etapa — capitalização e espaçamento */
+  .process-steps > div h3 {
+    font-size: 13px !important;
+    margin-bottom: 10px !important;
+  }
+
+  /* Descrição da etapa — leitura confortável */
+  .process-steps > div p {
+    font-size: 13px !important;
+    line-height: 1.65 !important;
+    margin-bottom: 0 !important;
+  }
+
   /* ─── SOBRE SEÇÃO 6: Nossa Experiência em Campo (Mobile First) ─── */
   /* Cabeçalho — transformar flex horizontal em vertical centralizado */
   .section-gallery > div:first-child {
@@ -889,6 +953,34 @@ body.drawer-open {
 
   .services-grid-4 > div svg {
     margin: 0 auto 14px !important;
+  }
+
+  /* ─── SOBRE SEÇÃO 4: Como Trabalhamos (Small Mobile) ─── */
+  .section-process > .container > div:first-child {
+    margin-bottom: 40px !important;
+  }
+
+  .process-steps {
+    gap: 12px !important;
+  }
+
+  .process-steps > div {
+    padding: 20px 16px !important;
+  }
+
+  .process-steps > div > div:nth-child(2) {
+    font-size: 32px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .process-steps > div h3 {
+    font-size: 12px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .process-steps > div p {
+    font-size: 12px !important;
+    line-height: 1.6 !important;
   }
 
   /* ─── SOBRE SEÇÃO 6: Nossa Experiência em Campo (Small Mobile) ─── */
