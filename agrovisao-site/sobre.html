@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <script src="./support.js"></script>
 </head>
 <body>
@@ -19,13 +19,16 @@
 </helmet>
 
 <!-- ─── NAVIGATION ─────────────────────────────────────────────────── -->
-<nav style="position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 22px 64px; display: flex; align-items: center; justify-content: space-between; background: {{ navBg }}; border-bottom: {{ navBorder }}; transition: background 0.5s ease, border-bottom-color 0.5s ease;">
-  <div style="{{ navEntryStyle }}">
+<nav class="nav" style="position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 22px 64px; display: flex; align-items: center; justify-content: space-between; background: {{ navBg }}; border-bottom: {{ navBorder }}; transition: background 0.5s ease, border-bottom-color 0.5s ease;">
+  <div class="nav-logo" style="{{ navEntryStyle }}">
     <a href="./index.html" style="display: flex; align-items: center; gap: 14px; text-decoration: none; color: {{ logoColor }}; transition: color 0.5s ease;">
       <img src="./assets/logos/agrovisao/logo-agro-visao-v1.png" alt="AgroVisão" style="height: 55px; width: 130px; display: block; object-fit: cover;">
     </a>
   </div>
-  <div style="{{ navLinksEntryStyle }}; display: flex; align-items: center; gap: 40px;">
+  <button class="nav-hamburger" aria-label="Abrir menu" aria-expanded="false" aria-controls="drawer" style="color: {{ navColor }};">
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true"><rect y="3" width="22" height="2.5" rx="1.25" fill="currentColor"/><rect y="9.75" width="22" height="2.5" rx="1.25" fill="currentColor"/><rect y="16.5" width="22" height="2.5" rx="1.25" fill="currentColor"/></svg>
+  </button>
+  <div class="nav-links" style="{{ navLinksEntryStyle }}; display: flex; align-items: center; gap: 40px;">
     <a href="./index.html" style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; color: {{ navColor }}; text-decoration: none; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: {{ navTextShadow }}; transition: opacity 0.2s, color 0.5s;" style-hover="opacity: 0.72;">Home</a>
     <a href="./sobre.html" style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; color: {{ navColor }}; text-decoration: none; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: {{ navTextShadow }}; border-bottom: 1px solid currentColor; padding-bottom: 2px; transition: color 0.5s;">Sobre</a>
     <a href="./servicos.html" style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; color: {{ navColor }}; text-decoration: none; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: {{ navTextShadow }}; transition: opacity 0.2s, color 0.5s;" style-hover="opacity: 0.72;">Serviços</a>
@@ -34,13 +37,33 @@
     <a href="#" onClick="{{ openModal }}" style="display: inline-block; padding: 11px 26px; background: #315B2C; color: #F6F4EF; font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; border-radius: 8px; transition: background 0.25s;" style-hover="background: #254822;">Fale Conosco</a>
   </div>
 </nav>
+<!-- ─── DRAWER ─────────────────────────────────────────────────────── -->
+<div class="drawer-overlay" aria-hidden="true"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Menu de navegação" aria-hidden="true">
+  <div class="drawer-header">
+    <img src="./assets/logos/agrovisao/logo-agro-visao-v1.png" alt="AgroVisão" class="drawer-logo">
+    <button class="drawer-close" aria-label="Fechar menu">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 3l14 14M17 3L3 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <nav class="drawer-nav" aria-label="Menu principal">
+    <a href="./index.html" class="drawer-link">Home</a>
+    <a href="./sobre.html" class="drawer-link drawer-link--active">Sobre</a>
+    <a href="./servicos.html" class="drawer-link">Serviços</a>
+    <a href="./projetos.html" class="drawer-link">Projetos</a>
+    <a href="./contato.html" class="drawer-link">Contato</a>
+  </nav>
+  <div class="drawer-footer">
+    <a href="#" class="drawer-cta" onClick="{{ openModal }}">Fale Conosco</a>
+  </div>
+</aside>
 
 <!-- ─── HERO ───────────────────────────────────────────────────────── -->
-<section style="position: relative; width: 100%; height: 88vh; min-height: 640px; overflow: hidden;">
+<section class="hero" style="position: relative; width: 100%; height: 88vh; min-height: 640px; overflow: hidden;">
   <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?w=1920&q=88&fm=jpg&fit=crop" alt="Paisagem amazônica com produção agrícola" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 40%; display: block;">
   <div style="position: absolute; inset: 0; background: linear-gradient(155deg, rgba(6,14,4,0.20) 0%, rgba(6,14,4,0.48) 45%, rgba(6,14,4,0.88) 100%);"></div>
-  <div style="position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; padding: 0 84px 100px;">
-    <div style="max-width: 780px;">
+  <div class="hero-content" style="position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; padding: 0 84px 100px;">
+    <div class="hero-inner" style="max-width: 780px;">
       <div style="{{ heroEyebrowStyle }}">
         <div style="display: flex; align-items: center; gap: 18px; margin-bottom: 28px;">
           <div style="width: 36px; height: 1px; background: #B8D48A;"></div>
@@ -55,15 +78,15 @@
       </div>
     </div>
   </div>
-  <div style="position: absolute; bottom: -1px; left: 0; right: 0; z-index: 3; line-height: 0;">
+  <div class="hero-wave" style="position: absolute; bottom: -1px; left: 0; right: 0; z-index: 3; line-height: 0;">
     <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="display: block; width: 100%; height: 60px;"><path d="M0,60 L1440,60 L1440,18 Q1080,60 720,28 Q360,0 0,28 Z" fill="#FFFFFF"></path></svg>
   </div>
 </section>
 
 <!-- ─── WHO WE ARE ─────────────────────────────────────────────────── -->
-<section style="background: #FFFFFF; padding: 148px 0;">
-  <div style="max-width: 1280px; margin: 0 auto; padding: 0 84px;">
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 108px; align-items: center;">
+<section class="section-about" style="background: #FFFFFF; padding: 148px 0;">
+  <div class="container" style="max-width: 1280px; margin: 0 auto; padding: 0 84px;">
+    <div class="about-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 108px; align-items: center;">
       <div style="overflow: hidden; background: #d4d0c8;">
         <div style="aspect-ratio: 4/5; overflow: hidden;">
           <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=900&q=88&fm=jpg&fit=crop" alt="Vista aérea de área agrícola" style="width: 100%; height: 100%; object-fit: cover; display: block;">
@@ -75,7 +98,7 @@
         <h2 style="font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 3.6vw, 52px); font-weight: 400; color: #1a1a18; line-height: 1.2; letter-spacing: -0.015em; margin-bottom: 32px; text-wrap: pretty;">Uma consultoria dedicada ao desenvolvimento sustentável da Amazônia</h2>
         <p style="font-family: 'Manrope', sans-serif; font-size: 15px; font-weight: 400; color: #4a4a44; line-height: 1.92; margin-bottom: 22px;">A AgroVisão é uma consultoria técnica especializada em desenvolvimento rural, regularização fundiária e gestão ambiental na Amazônia Legal. Atuamos ao lado de produtores rurais, associações, cooperativas, ONGs e instituições públicas, oferecendo soluções completas e alinhadas às exigências legais vigentes.</p>
         <p style="font-family: 'Manrope', sans-serif; font-size: 15px; font-weight: 400; color: #4a4a44; line-height: 1.92; margin-bottom: 48px;">Nossa equipe multidisciplinar combina formação técnica de excelência com profundo conhecimento do território amazônico e das políticas públicas voltadas ao desenvolvimento da agricultura familiar e empresarial.</p>
-        <div style="display: flex; gap: 48px;">
+        <div class="stats-row" style="display: flex; gap: 48px;">
           <div>
             <div style="font-family: 'Cormorant Garamond', serif; font-size: 48px; font-weight: 300; color: #315B2C; line-height: 1; margin-bottom: 8px;">15<span style="font-size: 28px; color: #6F8F3A;">+</span></div>
             <div style="font-family: 'Manrope', sans-serif; font-size: 10.5px; font-weight: 500; color: #6F8F3A; letter-spacing: 0.18em; text-transform: uppercase; line-height: 1.5;">Anos de<br>Experiência</div>
@@ -97,7 +120,7 @@
 </section>
 
 <!-- ─── MISSION ────────────────────────────────────────────────────── -->
-<section style="background: #F5F8F3; padding: 128px 0; border-top: 1px solid rgba(49,91,44,0.08); border-bottom: 1px solid rgba(49,91,44,0.08);">
+<section class="section-mission" style="background: #F5F8F3; padding: 128px 0; border-top: 1px solid rgba(49,91,44,0.08); border-bottom: 1px solid rgba(49,91,44,0.08);">
   <div style="max-width: 960px; margin: 0 auto; padding: 0 84px; text-align: center;">
     <div style="width: 34px; height: 1px; background: #315B2C; margin: 0 auto 24px;"></div>
     <span style="font-family: 'Manrope', sans-serif; font-size: 10.5px; font-weight: 500; color: #6F8F3A; letter-spacing: 0.24em; text-transform: uppercase; display: block; margin-bottom: 48px;">Nossa Missão</span>
@@ -108,8 +131,8 @@
 </section>
 
 <!-- ─── WHAT WE DO ─────────────────────────────────────────────────── -->
-<section style="background: #FFFFFF; padding: 148px 0;">
-  <div style="max-width: 1280px; margin: 0 auto; padding: 0 84px;">
+<section class="section-what" style="background: #FFFFFF; padding: 148px 0;">
+  <div class="container" style="max-width: 1280px; margin: 0 auto; padding: 0 84px;">
     <div style="display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 72px;">
       <div>
         <span style="font-family: 'Manrope', sans-serif; font-size: 10.5px; font-weight: 500; color: #6F8F3A; letter-spacing: 0.24em; text-transform: uppercase; display: block; margin-bottom: 16px;">Serviços</span>
@@ -118,7 +141,7 @@
       <p style="font-family: 'Manrope', sans-serif; font-size: 14.5px; font-weight: 400; color: #555550; line-height: 1.8; max-width: 380px; margin-bottom: 6px;">Soluções técnicas integradas para o desenvolvimento rural sustentável em toda a Amazônia Legal.</p>
     </div>
 
-    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;">
+    <div class="services-grid-4" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;">
 
       <!-- Card 1 -->
       <div style="background: #FFFFFF; border: 1px solid rgba(49,91,44,0.12); border-radius: 12px; padding: 32px 28px 28px; display: flex; flex-direction: column; gap: 0; transition: border-color 0.25s, box-shadow 0.25s;" style-hover="border-color: rgba(49,91,44,0.28); box-shadow: 0 4px 24px rgba(49,91,44,0.07);">
@@ -251,13 +274,13 @@
 </section>
 
 <!-- ─── HOW WE WORK ─────────────────────────────────────────────────── -->
-<section style="background: #F8F7F3; padding: 128px 0; border-top: 1px solid rgba(49,91,44,0.08);">
-  <div style="max-width: 1280px; margin: 0 auto; padding: 0 84px;">
+<section class="section-process" style="background: #F8F7F3; padding: 128px 0; border-top: 1px solid rgba(49,91,44,0.08);">
+  <div class="container" style="max-width: 1280px; margin: 0 auto; padding: 0 84px;">
     <div style="margin-bottom: 80px;">
       <span style="font-family: 'Manrope', sans-serif; font-size: 10.5px; font-weight: 500; color: #6F8F3A; letter-spacing: 0.24em; text-transform: uppercase; display: block; margin-bottom: 16px;">Metodologia</span>
       <h2 style="font-family: 'Cormorant Garamond', serif; font-size: clamp(38px, 4.5vw, 60px); font-weight: 400; color: #1a1a18; line-height: 1.08; letter-spacing: -0.02em;">Como Trabalhamos</h2>
     </div>
-    <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 24px;">
+    <div class="process-steps" style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 24px;">
 
       <div style="border-top: 1.5px solid #B8D48A; padding-top: 24px; position: relative;">
         <div style="position: absolute; top: -5px; left: 0; width: 8px; height: 8px; background: #315B2C; border-radius: 50%;"></div>
@@ -306,16 +329,16 @@
 </section>
 
 <!-- ─── WHY AGROVISÃO ──────────────────────────────────────────────── -->
-<section style="background: #FFFFFF; padding: 148px 0;">
-  <div style="max-width: 1280px; margin: 0 auto; padding: 0 84px;">
-    <div style="display: grid; grid-template-columns: 360px 1fr; gap: 108px; align-items: start;">
+<section class="section-diff" style="background: #FFFFFF; padding: 148px 0;">
+  <div class="container" style="max-width: 1280px; margin: 0 auto; padding: 0 84px;">
+    <div class="diff-sticky-grid" style="display: grid; grid-template-columns: 360px 1fr; gap: 108px; align-items: start;">
       <div style="position: sticky; top: 120px;">
         <div style="width: 34px; height: 1px; background: #315B2C; margin-bottom: 18px;"></div>
         <span style="font-family: 'Manrope', sans-serif; font-size: 10.5px; font-weight: 500; color: #6F8F3A; letter-spacing: 0.24em; text-transform: uppercase; display: block; margin-bottom: 28px;">Nossos Diferenciais</span>
         <h2 style="font-family: 'Cormorant Garamond', serif; font-size: clamp(38px, 4vw, 56px); font-weight: 400; color: #1a1a18; line-height: 1.12; letter-spacing: -0.015em; margin-bottom: 28px;">Por que escolher a AgroVisão</h2>
         <p style="font-family: 'Manrope', sans-serif; font-size: 14.5px; font-weight: 400; color: #4a4a44; line-height: 1.88;">Mais de 15 anos consolidando nossa presença no setor agropecuário da Amazônia com resultados técnicos comprovados.</p>
       </div>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0;">
+      <div class="diff-grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0;">
 
         <div style="padding: 36px 32px 36px 0; border-bottom: 1px solid rgba(49,91,44,0.1); border-right: 1px solid rgba(49,91,44,0.1);">
           <div style="font-family: 'Cormorant Garamond', serif; font-size: 13px; font-weight: 500; color: #6F8F3A; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px;">01</div>
@@ -359,7 +382,7 @@
 </section>
 
 <!-- ─── EXPERIENCE GALLERY ─────────────────────────────────────────── -->
-<section style="background: #F5F8F3; padding: 0 0 0 0; border-top: 1px solid rgba(49,91,44,0.08);">
+<section class="section-gallery" style="background: #F5F8F3; padding: 0 0 0 0; border-top: 1px solid rgba(49,91,44,0.08);">
   <div style="max-width: 1280px; margin: 0 auto; padding: 128px 84px 0;">
     <div style="display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 56px;">
       <div>
@@ -370,7 +393,7 @@
     </div>
   </div>
   <div style="max-width: 1280px; margin: 0 auto; padding: 0 84px 128px;">
-    <div style="display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 3px; height: 620px;">
+    <div class="gallery-grid" style="display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 3px; height: 620px;">
       <div style="overflow: hidden; background: #c8c4bc;">
         <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=900&q=82&fm=jpg&fit=crop" alt="Vista aérea de área agrícola mapeada" style="width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.7s ease;" style-hover="transform: scale(1.03);">
       </div>
@@ -390,8 +413,8 @@
 </section>
 
 <!-- ─── CTA ────────────────────────────────────────────────────────── -->
-<section style="background: #FFFFFF; padding: 148px 0; border-top: 1px solid rgba(49,91,44,0.08);">
-  <div style="max-width: 1280px; margin: 0 auto; padding: 0 84px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;">
+<section class="section-cta" style="background: #FFFFFF; padding: 148px 0; border-top: 1px solid rgba(49,91,44,0.08);">
+  <div class="cta-grid container" style="max-width: 1280px; margin: 0 auto; padding: 0 84px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;">
     <div>
       <div style="width: 34px; height: 1px; background: #315B2C; margin-bottom: 18px;"></div>
       <span style="font-family: 'Manrope', sans-serif; font-size: 10.5px; font-weight: 500; color: #6F8F3A; letter-spacing: 0.24em; text-transform: uppercase; display: block; margin-bottom: 32px;">Próximo Passo</span>
@@ -408,7 +431,7 @@
 </section>
 
 <!-- ─── WHATSAPP ───────────────────────────────────────────────────── -->
-<div style="position: fixed; bottom: 32px; right: 32px; z-index: 998; width: 56px; height: 56px;">
+<div class="wa-fab" style="position: fixed; bottom: 32px; right: 32px; z-index: 998; width: 56px; height: 56px;">
   <div style="position: absolute; inset: -4px; border-radius: 50%; border: 2px solid rgba(37,211,102,0.35); animation: wa-ring 8s ease-in-out infinite; pointer-events: none;"></div>
   <a href="https://wa.me/5591999999999?text=Ol%C3%A1%2C%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es%20sobre%20os%20servi%C3%A7os%20da%20AgroVis%C3%A3o" target="_blank" rel="noopener noreferrer" title="Fale conosco pelo WhatsApp" style="position: absolute; inset: 0; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; box-shadow: 0 4px 16px rgba(37,211,102,0.40); transition: transform 0.2s, box-shadow 0.2s;" style-hover="transform: scale(1.1); box-shadow: 0 6px 24px rgba(37,211,102,0.60);">
     <svg width="26" height="26" viewBox="0 0 24 24" fill="#FFFFFF" xmlns="http://www.w3.org/2000/svg">
@@ -418,9 +441,9 @@
 </div>
 
 <!-- ─── FOOTER ─────────────────────────────────────────────────────── -->
-<footer style="background: #131E11; padding: 80px 0 40px;">
-  <div style="max-width: 1320px; margin: 0 auto; padding: 0 64px;">
-    <div style="display: grid; grid-template-columns: 2.2fr 1fr 1fr 1.3fr; gap: 56px; padding-bottom: 56px; border-bottom: 1px solid rgba(184,212,138,0.14);">
+<footer class="footer footer--dark" style="background: #131E11; padding: 80px 0 40px;">
+  <div class="container" style="max-width: 1320px; margin: 0 auto; padding: 0 64px;">
+    <div class="footer-grid" style="display: grid; grid-template-columns: 2.2fr 1fr 1fr 1.3fr; gap: 56px; padding-bottom: 56px; border-bottom: 1px solid rgba(184,212,138,0.14);">
       <div>
         <a href="./index.html" style="display: inline-flex; align-items: center; gap: 12px; margin-bottom: 18px; text-decoration: none; color: #F6F4EF;">
           <svg width="24" height="24" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="13" stroke="#B8D48A" stroke-width="1.2"></circle><path d="M14 4V24M4 14H24" stroke="#B8D48A" stroke-width="0.8" opacity="0.45"></path><circle cx="14" cy="14" r="3.5" stroke="#B8D48A" stroke-width="1.2"></circle></svg>
@@ -520,5 +543,6 @@ class Component extends DCLogic {
   }
 }
 </script>
+<script src="./assets/js/drawer.js"></script>
 </body>
 </html>
