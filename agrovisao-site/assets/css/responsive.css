@@ -695,6 +695,15 @@ body.drawer-open {
 
   .services-nav > .container {
     padding: 0 18px !important;
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+  }
+
+  /* Fallback seletor mais específico */
+  section.services-nav > div.container {
+    padding: 0 18px !important;
+    padding-left: 18px !important;
+    padding-right: 18px !important;
   }
 
   .services-tabs {
@@ -702,6 +711,8 @@ body.drawer-open {
     padding-bottom: 12px !important;
     scroll-padding-left: 18px !important;
     scroll-snap-type: x mandatory !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
 
   .services-tabs a {
@@ -1044,6 +1055,14 @@ body.drawer-open {
 
   .services-nav > .container {
     padding: 0 48px !important;
+    padding-left: 48px !important;
+    padding-right: 48px !important;
+  }
+
+  section.services-nav > div.container {
+    padding: 0 48px !important;
+    padding-left: 48px !important;
+    padding-right: 48px !important;
   }
 
   .services-tabs {
@@ -1051,6 +1070,8 @@ body.drawer-open {
     padding-bottom: 12px !important;
     scroll-padding-left: 24px !important;
     scroll-snap-type: x mandatory !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
 
   .services-tabs a {
@@ -1824,6 +1845,14 @@ body.drawer-open {
 
   .services-nav > .container {
     padding: 0 16px !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  section.services-nav > div.container {
+    padding: 0 16px !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
   }
 
   .services-tabs {
@@ -1831,6 +1860,8 @@ body.drawer-open {
     padding-bottom: 10px !important;
     scroll-padding-left: 16px !important;
     scroll-snap-type: x mandatory !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
 
   .services-tabs a {
