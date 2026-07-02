@@ -990,6 +990,36 @@ body.drawer-open {
     line-height: 1.65 !important;
   }
 
+  /* ─── SOBRE SEÇÃO 5: Por que escolher a AgroVisão (Mobile ≤768px) ─── */
+  /* Transformar grid sticky de 2 colunas (360px 1fr) para 1 coluna */
+  .diff-sticky-grid {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+
+  /* Desativar sticky no mobile para permitir fluxo natural */
+  .diff-sticky-grid > div:first-child {
+    position: relative !important;
+    top: auto !important;
+  }
+
+  /* Grid de diferenciais: transformar de 2 colunas para 1 */
+  .diff-grid-2 {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+
+  /* Remover borders direita e ajustar padding dos cards */
+  .diff-grid-2 > div {
+    border-right: none !important;
+    border-bottom: 1px solid rgba(49, 91, 44, 0.1) !important;
+    padding: 24px 0 !important;
+  }
+
+  .diff-grid-2 > div:last-child {
+    border-bottom: none !important;
+  }
+
   /* ─── SOBRE SEÇÃO 6: Nossa Experiência em Campo (Mobile First) ─── */
   /* Cabeçalho — transformar flex horizontal em vertical centralizado */
   .section-gallery > div:first-child {
@@ -1810,6 +1840,19 @@ body.drawer-open {
 
   .diff-card p {
     font-size: 11px !important;
+  }
+
+  /* ─── SOBRE SEÇÃO 5: Por que escolher a AgroVisão (Small Mobile ≤480px) ─── */
+  .diff-sticky-grid {
+    gap: 24px !important;
+  }
+
+  .diff-grid-2 {
+    gap: 20px !important;
+  }
+
+  .diff-grid-2 > div {
+    padding: 20px 0 !important;
   }
 
   /* ─── SOBRE SEÇÃO 6: Nossa Experiência em Campo (Small Mobile) ─── */
