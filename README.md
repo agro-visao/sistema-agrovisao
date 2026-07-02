@@ -2,7 +2,7 @@
 
 ## Servidor Local
 
-python3 m- server.http 8080
+python3 -m http.server 8080
 
 ## Live Server
 
