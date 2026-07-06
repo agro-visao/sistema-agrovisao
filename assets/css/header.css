@@ -78,7 +78,9 @@
   font-weight: 700 !important;
   letter-spacing: 0.04em !important;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.92) !important;
+  /* Verde institucional escuro, sólido — contraste ~7.9:1 sobre fundo
+     branco (WCAG AAA). Sem opacidade/transparência reduzida. */
+  color: #315B2C !important;
   text-decoration: none !important;
   border-radius: 7px;
   /* !important: o HTML já define "transition" inline (ex.: opacity 0.2s),
@@ -90,21 +92,20 @@
   white-space: nowrap;
 }
 
-.nav-links > a:hover {
-  background: #1a3a15;
+/* ─── Hover e Estado Ativo — mesmo conceito visual ───────────────────── */
+
+.nav-links > a:hover,
+.nav-links > a[style*="border-bottom: 1px"] {
+  background: #315B2C;
   color: #FFFFFF !important;
 }
 
 .nav-links > a:focus-visible {
-  outline: 2px solid #B8D48A;
+  outline: 2px solid #315B2C;
   outline-offset: 2px;
 }
 
-/* ─── Active State — mesmo conceito visual do hover ──────────────────── */
-
 .nav-links > a[style*="border-bottom: 1px"] {
-  background: #1a3a15;
-  color: #FFFFFF !important;
   border-bottom: none !important;
   padding-bottom: 10px !important;
 }
@@ -144,7 +145,7 @@
   flex-shrink: 0;
   margin-left: 28px;
   padding-left: 22px;
-  border-left: 1px solid rgba(255, 255, 255, 0.14);
+  border-left: 1px solid rgba(49, 91, 44, 0.16);
 }
 
 .nav-lang-item {
@@ -157,7 +158,7 @@
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.03em;
-  color: rgba(255, 255, 255, 0.65);
+  color: #315B2C;
   text-decoration: none;
   border-radius: 6px;
   cursor: pointer;
@@ -170,18 +171,18 @@
 }
 
 .nav-lang-item:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: #315B2C;
   color: #FFFFFF;
 }
 
 .nav-lang-item:focus-visible {
-  outline: 2px solid #B8D48A;
+  outline: 2px solid #315B2C;
   outline-offset: 2px;
 }
 
 .nav-lang-item.is-active {
   color: #FFFFFF;
-  background: rgba(255, 255, 255, 0.08);
+  background: #315B2C;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
