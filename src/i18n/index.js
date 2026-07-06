@@ -89,6 +89,9 @@
         /* o DC runtime renderiza o header de forma assíncrona —
            reaplica a sincronização até os seletores existirem */
         waitForSwitchers();
+      })
+      .catch(function (e) {
+        console.error('[i18n] erro na inicialização:', e);
       });
   });
 
@@ -128,7 +131,8 @@
 
   function syncSwitchers() {
     var lng = currentLang();
-    document.querySelectorAll('.nav-lang-item, .drawer-lang-item').forEach(function (el) {
+    var items = document.querySelectorAll('.nav-lang-item, .drawer-lang-item');
+    items.forEach(function (el) {
       var active = langOfItem(el) === lng;
       el.classList.toggle('is-active', active);
       if (active) el.setAttribute('aria-current', 'true');
@@ -153,7 +157,6 @@
     e.preventDefault();
     var lng = langOfItem(item);
     if (window.i18next && lng !== currentLang()) {
-      /* changeLanguage dispara languageChanged e persiste via caches */
       window.i18next.changeLanguage(lng);
     }
   });

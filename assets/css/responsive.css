@@ -261,6 +261,8 @@ body.drawer-open {
 .drawer-lang-item.is-active {
   font-weight: 600;
   color: #B8D48A;
+  border-bottom: 2px solid #B8D48A;
+  padding-bottom: 6px;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
