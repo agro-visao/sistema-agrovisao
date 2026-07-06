@@ -162,6 +162,34 @@ Transição de hover incompleta        →   Transição suave garantida (!impor
 
 ---
 
+## 8. Correção de Contraste — Cor dos Itens do Menu
+
+O header renderiza com **fundo branco** (o valor dinâmico `{{ navBg }}` resolvido em runtime). A rodada anterior havia fixado a cor do texto do menu em branco/quase-branco via `!important`, pensada para um fundo escuro — resultado: itens praticamente invisíveis sobre o branco.
+
+### Correção aplicada
+
+| Estado | Antes | Depois |
+|---|---|---|
+| Padrão | `rgba(255,255,255,0.92)` (quase invisível no branco) | **`#315B2C`** sólido — verde institucional escuro |
+| Hover | `#1a3a15` + texto branco | **`#315B2C`** + texto branco (cantos 7px) |
+| Ativo | mesmo hover | **idêntico ao hover** — mesma regra CSS, sem estilo à parte |
+| Idiomas (PT/EN) | texto branco translúcido (mesmo problema) | **`#315B2C`** sólido, hover `#315B2C` + texto branco |
+
+Nenhuma opacidade reduzida, nenhuma transparência, nenhum cinza ou verde claro — cor sólida em todos os estados, como pedido.
+
+### Verificação de contraste (WCAG)
+
+| Combinação | Contraste | Resultado |
+|---|---|---|
+| `#315B2C` texto sobre `#FFFFFF` fundo (padrão) | **7.88 : 1** | AAA (exige 7:1) |
+| `#FFFFFF` texto sobre `#315B2C` fundo (hover/ativo) | **7.88 : 1** | AAA |
+
+Ambos os estados superam o mínimo AA (4.5:1 texto normal) com folga, atingindo inclusive o nível AAA.
+
+O botão CTA "Fale Conosco" não foi tocado nesta correção — já usava fundo verde sólido + texto claro, contraste adequado desde a rodada anterior.
+
+---
+
 ## ⚡ Lighthouse / Performance
 
 - Nenhum JavaScript novo adicionado
