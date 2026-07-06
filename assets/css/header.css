@@ -1,10 +1,10 @@
-/* ─── Header Moderno — AgroVisão ───────────────────────────────────────
-   Inspirado em institutoayrtonsenna.org.br
-   Estilo corporativo, elegante e acessível
+/* ─── Header Premium — AgroVisão ────────────────────────────────────────
+   Inspirado no comportamento visual de institutoayrtonsenna.org.br
+   Identidade AgroVisão (verde institucional) preservada
    ──────────────────────────────────────────────────────────────────── */
 
 /* ═══════════════════════════════════════════════════════════════════════
-   NAV — Estilo base moderno
+   NAV — Base
 ═══════════════════════════════════════════════════════════════════════ */
 
 .nav {
@@ -17,11 +17,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 64px;
+  /* !important necessário: o HTML define padding inline estático (ex.: 20px 64px)
+     que, sem isso, sobrescreveria o refinamento do header */
+  padding: 0 56px !important;
   background: linear-gradient(135deg, #254822 0%, #315B2C 100%);
   border-bottom: 1px solid rgba(184, 212, 138, 0.1);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.3s ease;
 }
 
 .nav-logo {
@@ -40,7 +43,7 @@
 }
 
 .nav-logo a:hover {
-  opacity: 0.8;
+  opacity: 0.85;
 }
 
 .nav-logo img {
@@ -55,11 +58,11 @@
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 10px;
   margin: 0 auto;
   flex: 1;
   justify-content: center;
-  max-width: 800px;
+  max-width: 900px;
 }
 
 /* ─── Nav Links (Menu Items) ─────────────────────────────────────────── */
@@ -68,17 +71,19 @@
   position: relative;
   display: flex;
   align-items: center;
-  padding: 8px 16px;
+  padding: 10px 18px;
   height: 40px;
   font-family: var(--font-sans) !important;
-  font-size: 12px !important;
-  font-weight: 500 !important;
-  letter-spacing: 0.08em !important;
+  font-size: 12.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.04em !important;
   text-transform: uppercase;
-  color: rgba(246, 244, 239, 0.85) !important;
+  color: rgba(255, 255, 255, 0.92) !important;
   text-decoration: none !important;
-  border-radius: 20px;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 7px;
+  /* !important: o HTML já define "transition" inline (ex.: opacity 0.2s),
+     que sem isso substituiria por completo a transição de background/color */
+  transition: background 0.22s ease, color 0.22s ease !important;
   border: none;
   background: transparent;
   cursor: pointer;
@@ -86,46 +91,97 @@
 }
 
 .nav-links > a:hover {
-  background: rgba(184, 212, 138, 0.2);
-  color: #F6F4EF !important;
+  background: #1a3a15;
+  color: #FFFFFF !important;
 }
 
 .nav-links > a:focus-visible {
   outline: 2px solid #B8D48A;
-  outline-offset: 4px;
+  outline-offset: 2px;
 }
 
-/* ─── Active State (Border bottom) ───────────────────────────────────── */
+/* ─── Active State — mesmo conceito visual do hover ──────────────────── */
 
 .nav-links > a[style*="border-bottom: 1px"] {
-  background: rgba(184, 212, 138, 0.15);
-  color: #B8D48A !important;
+  background: #1a3a15;
+  color: #FFFFFF !important;
   border-bottom: none !important;
-  padding-bottom: 8px !important;
+  padding-bottom: 10px !important;
 }
 
-/* ─── CTA Button (Fale Conosco) ──────────────────────────────────────── */
+/* ─── CTA Button (Fale Conosco) — identidade institucional mantida ───── */
 
 .nav-links > a[style*="background: #315B2C"] {
-  margin-left: 12px;
-  padding: 10px 24px !important;
-  background: linear-gradient(135deg, #00a8e9 0%, #0096d1 100%) !important;
-  color: #FFFFFF !important;
-  font-weight: 600 !important;
+  margin-left: 14px;
+  padding: 11px 26px !important;
+  background: #315B2C !important;
+  color: #F6F4EF !important;
+  font-weight: 700 !important;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 168, 233, 0.25);
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(49, 91, 44, 0.28);
+  transition: background 0.22s ease, box-shadow 0.22s ease, transform 0.22s ease !important;
 }
 
 .nav-links > a[style*="background: #315B2C"]:hover {
-  background: linear-gradient(135deg, #0096d1 0%, #007aa8 100%) !important;
-  box-shadow: 0 6px 20px rgba(0, 168, 233, 0.35);
-  transform: translateY(-2px);
+  background: #254822 !important;
+  box-shadow: 0 4px 14px rgba(49, 91, 44, 0.36);
+  transform: translateY(-1px);
 }
 
 .nav-links > a[style*="background: #315B2C"]:focus-visible {
   outline: 2px solid #B8D48A;
-  outline-offset: 4px;
+  outline-offset: 2px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   NAV LANGUAGE SWITCHER — PT / EN
+═══════════════════════════════════════════════════════════════════════ */
+
+.nav-lang {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  margin-left: 28px;
+  padding-left: 22px;
+  border-left: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.nav-lang-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 8px 12px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: rgba(255, 255, 255, 0.65);
+  text-decoration: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.nav-lang-item span {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.nav-lang-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+}
+
+.nav-lang-item:focus-visible {
+  outline: 2px solid #B8D48A;
+  outline-offset: 2px;
+}
+
+.nav-lang-item.is-active {
+  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.08);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
@@ -145,7 +201,7 @@
   cursor: pointer;
   color: #F6F4EF;
   border-radius: 8px;
-  transition: all 0.2s ease;
+  transition: background 0.2s ease;
 }
 
 .nav-hamburger:hover {
@@ -158,20 +214,7 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
-   SCROLL EFFECT — Header compacto ao scroll
-═══════════════════════════════════════════════════════════════════════ */
-
-.nav.is-scrolled {
-  height: 70px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
-}
-
-.nav.is-scrolled .nav-logo img {
-  height: 42px;
-}
-
-/* ═══════════════════════════════════════════════════════════════════════
-   DRAWER — Mobile Menu Moderno
+   DRAWER — Mobile Menu
 ═══════════════════════════════════════════════════════════════════════ */
 
 .drawer-overlay {
@@ -243,7 +286,7 @@
   color: #B8D48A;
   cursor: pointer;
   flex-shrink: 0;
-  transition: all 0.2s ease;
+  transition: background 0.2s ease, border-color 0.2s ease;
 }
 
 .drawer-close:hover {
@@ -261,7 +304,7 @@
 .drawer-nav {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 3px;
   padding: 24px 16px 20px;
   flex: 1;
 }
@@ -271,18 +314,18 @@
   padding: 14px 16px;
   font-family: var(--font-sans);
   font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
+  font-weight: 700;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: rgba(246, 244, 239, 0.75);
+  color: rgba(246, 244, 239, 0.78);
   text-decoration: none;
-  border-radius: 8px;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 7px;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 .drawer-link:hover {
-  background: rgba(184, 212, 138, 0.12);
-  color: #F6F4EF;
+  background: #1a3a15;
+  color: #FFFFFF;
 }
 
 .drawer-link:focus-visible {
@@ -291,12 +334,52 @@
 }
 
 .drawer-link--active {
-  background: rgba(184, 212, 138, 0.15);
-  color: #B8D48A;
+  background: #1a3a15;
+  color: #FFFFFF;
 }
 
 .drawer-link--active:hover {
-  background: rgba(184, 212, 138, 0.2);
+  background: #142c10;
+}
+
+/* ─── Drawer Language Switcher ───────────────────────────────────────── */
+
+.drawer-lang {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 16px 0;
+}
+
+.drawer-lang-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 14px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: rgba(246, 244, 239, 0.65);
+  text-decoration: none;
+  border-radius: 6px;
+  border: 1px solid rgba(184, 212, 138, 0.15);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.drawer-lang-item span {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.drawer-lang-item:hover {
+  background: rgba(184, 212, 138, 0.1);
+  color: #F6F4EF;
+}
+
+.drawer-lang-item.is-active {
+  color: #F6F4EF;
+  background: rgba(184, 212, 138, 0.1);
 }
 
 /* ─── Drawer Footer (CTA) ────────────────────────────────────────────── */
@@ -311,23 +394,22 @@
   display: block;
   text-align: center;
   padding: 14px 24px;
-  background: linear-gradient(135deg, #00a8e9 0%, #0096d1 100%);
-  color: #FFFFFF;
+  background: #315B2C;
+  color: #F6F4EF;
   font-family: var(--font-sans);
   font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
+  font-weight: 700;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   text-decoration: none;
   border-radius: 8px;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 12px rgba(0, 168, 233, 0.2);
+  transition: background 0.22s ease, box-shadow 0.22s ease;
+  box-shadow: 0 2px 8px rgba(49, 91, 44, 0.22);
 }
 
 .drawer-cta:hover {
-  background: linear-gradient(135deg, #0096d1 0%, #007aa8 100%);
-  box-shadow: 0 6px 16px rgba(0, 168, 233, 0.3);
-  transform: translateY(-2px);
+  background: #254822;
+  box-shadow: 0 4px 12px rgba(49, 91, 44, 0.3);
 }
 
 .drawer-cta:focus-visible {
@@ -346,12 +428,15 @@ body.drawer-open {
 ═══════════════════════════════════════════════════════════════════════ */
 
 @media (max-width: 1023px) {
+  /* Padding real deste breakpoint é definido em responsive.css
+     (regra !important já existente); aqui só altura e cantos. */
   .nav {
-    padding: 0 20px;
     height: 75px;
+    border-radius: 0 0 8px 8px;
   }
 
-  .nav-links {
+  .nav-links,
+  .nav-lang {
     display: none !important;
   }
 
@@ -371,7 +456,6 @@ body.drawer-open {
 
 @media (max-width: 480px) {
   .nav {
-    padding: 0 16px;
     height: 70px;
   }
 
@@ -382,6 +466,10 @@ body.drawer-open {
   .drawer {
     max-width: 100%;
   }
+
+  .drawer-lang {
+    flex-wrap: wrap;
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
@@ -390,13 +478,7 @@ body.drawer-open {
 
 @supports (padding-top: env(safe-area-inset-top)) {
   .nav {
-    padding-top: max(0, env(safe-area-inset-top));
-    padding-left: max(20px, calc(20px + env(safe-area-inset-left)));
-    padding-right: max(20px, calc(20px + env(safe-area-inset-right)));
-  }
-
-  .drawer {
-    padding-right: max(0, env(safe-area-inset-right));
+    padding-top: max(0, env(safe-area-inset-top)) !important;
   }
 }
 

@@ -37,6 +37,10 @@
     <a href="./contato.html" style="font-family: var(--font-sans); font-size: 11px; font-weight: 600; color: {{ navColor }}; text-decoration: none; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: {{ navTextShadow }}; border-bottom: 1px solid currentColor; padding-bottom: 2px; transition: color 0.5s;">Contato</a>
     <a href="#" onClick="{{ openModal }}" style="display: inline-block; padding: 11px 26px; background: #315B2C; color: #F6F4EF; font-family: var(--font-sans); font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; border-radius: 8px; transition: background 0.25s;" style-hover="background: #254822;">Fale Conosco</a>
   </div>
+  <div class="nav-lang" aria-label="Seletor de idioma">
+    <a href="#" class="nav-lang-item is-active" aria-label="Português" aria-current="true"><span aria-hidden="true">🇧🇷</span>PT</a>
+    <a href="#" class="nav-lang-item" aria-label="English"><span aria-hidden="true">🇺🇸</span>EN</a>
+  </div>
 </nav>
 <!-- ─── DRAWER ─────────────────────────────────────────────────────── -->
 <div class="drawer-overlay" aria-hidden="true"></div>
@@ -54,6 +58,10 @@
     <a href="./projetos.html" class="drawer-link">Projetos</a>
     <a href="./contato.html" class="drawer-link drawer-link--active">Contato</a>
   </nav>
+  <div class="drawer-lang" aria-label="Seletor de idioma">
+    <a href="#" class="drawer-lang-item is-active" aria-label="Português" aria-current="true"><span aria-hidden="true">🇧🇷</span>PT</a>
+    <a href="#" class="drawer-lang-item" aria-label="English"><span aria-hidden="true">🇺🇸</span>EN</a>
+  </div>
   <div class="drawer-footer">
     <a href="#" class="drawer-cta" onClick="{{ openModal }}">Fale Conosco</a>
   </div>
