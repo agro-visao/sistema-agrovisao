@@ -1,11 +1,18 @@
 /* ─── src/i18n/index.js — AgroVisão ─────────────────────────────────
    Infraestrutura de internacionalização (i18next + language detector).
 
-   NESTA ETAPA nenhum texto do site é traduzido — apenas a fundação:
-     • detecção automática do idioma (localStorage → navigator → pt);
-     • persistência da preferência em localStorage ("preferred-language");
-     • troca instantânea PT/EN sem reload (seletores do header e drawer);
-     • mecanismo data-i18n pronto para receber as chaves de tradução.
+   LÓGICA DE DETECÇÃO:
+     1º: localStorage["preferred-language"] (preferência salva do usuário)
+     2º: navigator.languages ou navigator.language (idioma do navegador)
+     3º: Português (fallback)
+
+   Regras de normalização:
+     • "pt" / "pt-BR" / "pt-PT" / etc → "pt"
+     • "en" / "en-US" / "en-GB" / etc → "en"
+     • qualquer outro idioma → "pt"
+
+   Após detectar o idioma automaticamente, salva em localStorage.
+   Cliques manuais no Language Switcher (PT/EN) têm prioridade absoluta.
 
    NOTA DE ARQUITETURA (mesma do drawer.js):
    O conteúdo da página vive dentro de <x-dc> e é renderizado pelo DC
@@ -29,6 +36,34 @@
   var STORAGE_KEY = 'preferred-language';
   var SUPPORTED = ['pt', 'en'];
   var FALLBACK = 'pt';
+
+  /* ── detectar idioma inicial (localStorage > navigator > fallback) ──── */
+  function detectLanguage() {
+    /* 1º: verificar localStorage */
+    var stored = localStorage.getItem(STORAGE_KEY);
+    if (stored && SUPPORTED.indexOf(stored) >= 0) {
+      return stored;
+    }
+
+    /* 2º: detectar do navegador */
+    var navigatorLangs = [];
+    if (navigator.languages && Array.isArray(navigator.languages)) {
+      navigatorLangs = navigator.languages;
+    } else if (navigator.language) {
+      navigatorLangs = [navigator.language];
+    }
+
+    for (var i = 0; i < navigatorLangs.length; i++) {
+      var lang = navigatorLangs[i];
+      if (!lang) continue;
+      var code = lang.split('-')[0].toLowerCase();
+      if (code === 'pt') return 'pt';
+      if (code === 'en') return 'en';
+    }
+
+    /* 3º: fallback para português */
+    return FALLBACK;
+  }
 
   /* Caminho base deste script → permite resolver locales/ de qualquer página */
   var BASE = (function () {
@@ -56,6 +91,12 @@
   }
 
   /* ── inicialização ────────────────────────────────────────────────── */
+  var detectedLang = detectLanguage();
+  /* salvar no localStorage se foi detectado automaticamente (não estava lá antes) */
+  if (!localStorage.getItem(STORAGE_KEY)) {
+    localStorage.setItem(STORAGE_KEY, detectedLang);
+  }
+
   Promise.all(SUPPORTED.map(loadLocale)).then(function (bundles) {
     var resources = {};
     SUPPORTED.forEach(function (lng, i) {
@@ -63,29 +104,24 @@
     });
 
     window.i18next
-      .use(window.i18nextBrowserLanguageDetector)
       .init({
         resources: resources,
+        lng: detectedLang,                /* usar idioma detectado/salvo */
         supportedLngs: SUPPORTED,
-        nonExplicitSupportedLngs: true, /* "pt-BR" → pt, "en-GB" → en */
-        load: 'languageOnly',
-        fallbackLng: FALLBACK,          /* qualquer outro idioma → pt */
+        fallbackLng: FALLBACK,            /* qualquer outro idioma → pt */
         defaultNS: 'common',
         ns: ['common'],
-        interpolation: { escapeValue: false },
-        detection: {
-          /* 1º localStorage (preferência salva), 2º idioma do navegador */
-          order: ['localStorage', 'navigator'],
-          lookupLocalStorage: STORAGE_KEY,
-          /* salva automaticamente em localStorage a cada changeLanguage */
-          caches: ['localStorage']
-        }
+        interpolation: { escapeValue: false }
       })
       .then(function () {
         window.i18n = window.i18next;
         window.t = window.i18next.t.bind(window.i18next);
         applyLanguage();
-        window.i18next.on('languageChanged', applyLanguage);
+        window.i18next.on('languageChanged', function (lng) {
+          /* salvar preferência do usuário quando muda manualmente */
+          localStorage.setItem(STORAGE_KEY, lng);
+          applyLanguage();
+        });
         /* o DC runtime renderiza o header de forma assíncrona —
            reaplica a sincronização até os seletores existirem */
         waitForSwitchers();
