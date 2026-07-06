@@ -65,7 +65,7 @@
 
 /* ─── Nav Links (Menu Items) ─────────────────────────────────────────── */
 
-.nav-links > a {
+.nav-links > a:not(.nav-cta) {
   position: relative;
   display: flex;
   align-items: center;
@@ -92,19 +92,19 @@
 
 /* ─── Hover ──────────────────────────────────────────────────────────── */
 
-.nav-links > a:hover {
+.nav-links > a:not(.nav-cta):hover {
   background: #315B2C !important;
   color: #FFFFFF !important;
 }
 
-.nav-links > a:focus-visible {
+.nav-links > a:not(.nav-cta):focus-visible {
   outline: 2px solid #315B2C;
   outline-offset: 2px;
 }
 
 /* ─── Estado Ativo — indicação discreta ──────────────────────────────── */
 
-.nav-links > a[style*="border-bottom: 1px"] {
+.nav-links > a:not(.nav-cta)[style*="border-bottom: 1px"] {
   font-weight: 600 !important;
   border-bottom: none !important;
   padding-bottom: 10px !important;
@@ -115,32 +115,32 @@
 ═══════════════════════════════════════════════════════════════════════ */
 
 .nav-cta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 30px;
-  height: 38px;
-  background: #FFFFFF;
-  border: 1.5px solid #315B2C;
-  color: #315B2C;
-  font-family: var(--font-sans);
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  text-decoration: none;
-  border-radius: 9999px;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 12px 32px !important;
+  height: auto !important;
+  background: #FFFFFF !important;
+  border: 2px solid #315B2C !important;
+  color: #315B2C !important;
+  font-family: var(--font-sans) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  text-decoration: none !important;
+  border-radius: 999px !important;
   cursor: pointer;
   white-space: nowrap;
-  transition: background 0.22s ease, color 0.22s ease, border-color 0.22s ease;
+  transition: background 0.22s ease, color 0.22s ease !important;
   box-sizing: border-box;
 }
 
 .nav-cta:hover,
 .nav-cta:active {
-  background: #315B2C;
-  color: #FFFFFF;
-  border-color: #315B2C;
+  background: #315B2C !important;
+  color: #FFFFFF !important;
+  border-color: #315B2C !important;
 }
 
 .nav-cta:focus-visible {
