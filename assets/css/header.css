@@ -110,29 +110,41 @@
   padding-bottom: 10px !important;
 }
 
-/* ─── CTA Button (Fale Conosco) — identidade institucional mantida ───── */
+/* ═══════════════════════════════════════════════════════════════════════
+   CTA BUTTON — Fale Conosco (Estilo Outline Institucional)
+═══════════════════════════════════════════════════════════════════════ */
 
-.nav-links > a[style*="background: #315B2C"] {
-  margin-left: 14px;
-  padding: 11px 26px !important;
-  background: #FFFFFF !important;
-  color: #315B2C !important;
-  font-weight: 700 !important;
-  border: 2px solid #315B2C !important;
-  border-radius: 2px;
-  box-shadow: none;
-  transition: background 0.22s ease, color 0.22s ease, box-shadow 0.22s ease !important;
+.nav-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 28px;
+  height: 40px;
+  background: #FFFFFF;
+  border: 2px solid #315B2C;
+  color: #315B2C;
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: background 0.22s ease, color 0.22s ease, border-color 0.22s ease;
+  box-sizing: border-box;
 }
 
-.nav-links > a[style*="background: #315B2C"]:hover {
-  background: #315B2C !important;
-  color: #FFFFFF !important;
-  box-shadow: 0 2px 8px rgba(49, 91, 44, 0.28);
+.nav-cta:hover,
+.nav-cta:active {
+  background: #315B2C;
+  color: #FFFFFF;
+  border-color: #315B2C;
 }
 
-.nav-links > a[style*="background: #315B2C"]:focus-visible {
+.nav-cta:focus-visible {
   outline: 2px solid #315B2C;
-  outline-offset: 2px;
+  outline-offset: 3px;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
