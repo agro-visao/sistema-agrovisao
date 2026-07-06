@@ -74,8 +74,8 @@
   height: 40px;
   font-family: var(--font-sans) !important;
   font-size: 12.5px !important;
-  font-weight: 600 !important;
-  letter-spacing: 0.04em !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.06em !important;
   text-transform: uppercase;
   /* Verde institucional escuro, sólido — contraste ~7.9:1 sobre fundo
      branco (WCAG AAA). Sem opacidade/transparência reduzida. */
@@ -106,7 +106,7 @@
 /* ─── Estado Ativo — indicação discreta ──────────────────────────────── */
 
 .nav-links > a[style*="border-bottom: 1px"] {
-  font-weight: 700 !important;
+  font-weight: 600 !important;
   border-bottom: none !important;
   padding-bottom: 10px !important;
 }
@@ -158,8 +158,8 @@
   padding: 8px 12px;
   font-family: var(--font-sans);
   font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
+  font-weight: 500;
+  letter-spacing: 0.04em;
   color: #315B2C;
   text-decoration: none;
   border-radius: 0;
@@ -184,7 +184,7 @@
 }
 
 .nav-lang-item.is-active {
-  font-weight: 700;
+  font-weight: 600;
   color: #315B2C;
 }
 
@@ -318,8 +318,8 @@
   padding: 14px 16px;
   font-family: var(--font-sans);
   font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
+  font-weight: 500;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: rgba(246, 244, 239, 0.78);
   text-decoration: none;
@@ -338,7 +338,7 @@
 }
 
 .drawer-link--active {
-  font-weight: 700;
+  font-weight: 600;
   color: rgba(246, 244, 239, 0.78);
 }
 
