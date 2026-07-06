@@ -212,13 +212,66 @@ body.drawer-open {
   outline-offset: 2px;
 }
 
+/* ─── Drawer Language Selector ─────────────────────────────────────── */
+
+.drawer-lang {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 16px 16px 24px;
+  border-top: 1px solid rgba(184, 212, 138, 0.12);
+  flex-shrink: 0;
+}
+
+.drawer-lang-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 36px;
+  padding: 8px 12px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: rgba(184, 212, 138, 0.8);
+  text-decoration: none;
+  border-radius: 0;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.drawer-lang-flag {
+  width: 18px;
+  height: 12px;
+  display: block;
+  object-fit: cover;
+}
+
+.drawer-lang-item:hover {
+  color: #B8D48A;
+}
+
+.drawer-lang-item:focus-visible {
+  outline: 2px solid #B8D48A;
+  outline-offset: 2px;
+}
+
+.drawer-lang-item.is-active {
+  font-weight: 700;
+  color: #B8D48A;
+}
+
 /* ═══════════════════════════════════════════════════════════════════════
    TABLET  (≤ 1023px) — ativa o drawer, oculta nav horizontal
 ═══════════════════════════════════════════════════════════════════════ */
 
 @media (max-width: 1023px) {
-  /* esconde o menu horizontal */
+  /* esconde o menu horizontal e seletor de idiomas desktop */
   .nav-links {
+    display: none !important;
+  }
+
+  .nav-lang {
     display: none !important;
   }
 
