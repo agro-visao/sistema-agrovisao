@@ -15,11 +15,12 @@
   >
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./assets/css/reset.css">
   <link rel="stylesheet" href="./assets/css/variables.css">
   <link rel="stylesheet" href="./assets/css/global.css">
   <link rel="stylesheet" href="./assets/css/components.css">
+  <link rel="stylesheet" href="./assets/css/header.css">
   <link rel="stylesheet" href="./assets/css/responsive.css">
 </helmet>
 
@@ -34,12 +35,16 @@
     <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true"><rect y="3" width="22" height="2.5" rx="1.25" fill="currentColor"/><rect y="9.75" width="22" height="2.5" rx="1.25" fill="currentColor"/><rect y="16.5" width="22" height="2.5" rx="1.25" fill="currentColor"/></svg>
   </button>
   <div class="nav-links" style="{{ navLinksEntryStyle }}; display: flex; align-items: center; gap: 40px;">
-    <a href="./index.html" style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; color: {{ navColor }}; text-decoration: none; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: {{ navTextShadow }}; transition: opacity 0.2s, color 0.5s;" style-hover="opacity: 0.72;">Home</a>
-    <a href="./sobre.html" style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; color: {{ navColor }}; text-decoration: none; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: {{ navTextShadow }}; transition: opacity 0.2s, color 0.5s;" style-hover="opacity: 0.72;">Sobre</a>
-    <a href="./servicos.html" style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; color: {{ navColor }}; text-decoration: none; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: {{ navTextShadow }}; border-bottom: 1px solid currentColor; padding-bottom: 2px; transition: color 0.5s;">Serviços</a>
-    <a href="./projetos.html" style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; color: {{ navColor }}; text-decoration: none; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: {{ navTextShadow }}; transition: opacity 0.2s, color 0.5s;" style-hover="opacity: 0.72;">Projetos</a>
-    <a href="./contato.html" style="font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; color: {{ navColor }}; text-decoration: none; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: {{ navTextShadow }}; transition: opacity 0.2s, color 0.5s;" style-hover="opacity: 0.72;">Contato</a>
-    <a href="#" onClick="{{ openModal }}" style="display: inline-block; padding: 11px 26px; background: #315B2C; color: #F6F4EF; font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; border-radius: 8px; transition: background 0.25s;" style-hover="background: #254822;">Fale Conosco</a>
+    <a href="./index.html" style="font-family: var(--font-sans); font-size: 11px; font-weight: 600; color: {{ navColor }}; text-decoration: none; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: {{ navTextShadow }}; transition: opacity 0.2s, color 0.5s;" style-hover="opacity: 0.72;">Home</a>
+    <a href="./sobre.html" style="font-family: var(--font-sans); font-size: 11px; font-weight: 600; color: {{ navColor }}; text-decoration: none; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: {{ navTextShadow }}; transition: opacity 0.2s, color 0.5s;" style-hover="opacity: 0.72;">Sobre</a>
+    <a href="./servicos.html" style="font-family: var(--font-sans); font-size: 11px; font-weight: 600; color: {{ navColor }}; text-decoration: none; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: {{ navTextShadow }}; border-bottom: 1px solid currentColor; padding-bottom: 2px; transition: color 0.5s;">Serviços</a>
+    <a href="./projetos.html" style="font-family: var(--font-sans); font-size: 11px; font-weight: 600; color: {{ navColor }}; text-decoration: none; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: {{ navTextShadow }}; transition: opacity 0.2s, color 0.5s;" style-hover="opacity: 0.72;">Projetos</a>
+    <a href="./contato.html" style="font-family: var(--font-sans); font-size: 11px; font-weight: 600; color: {{ navColor }}; text-decoration: none; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: {{ navTextShadow }}; transition: opacity 0.2s, color 0.5s;" style-hover="opacity: 0.72;">Contato</a>
+    <a href="#" onClick="{{ openModal }}" class="nav-cta">Fale Conosco</a>
+  </div>
+  <div class="nav-lang" aria-label="Seletor de idioma">
+    <a href="#" class="nav-lang-item is-active" aria-label="Português" aria-current="true">PT<img src="./assets/icons/br-flag.png" alt="" class="nav-lang-flag"></a>
+    <a href="#" class="nav-lang-item" aria-label="English">EN<img src="./assets/icons/eua-flag.png" alt="" class="nav-lang-flag"></a>
   </div>
 </nav>
 <!-- ─── DRAWER ─────────────────────────────────────────────────────── -->
@@ -58,6 +63,10 @@
     <a href="./projetos.html" class="drawer-link">Projetos</a>
     <a href="./contato.html" class="drawer-link">Contato</a>
   </nav>
+  <div class="drawer-lang" aria-label="Seletor de idioma">
+    <a href="#" class="drawer-lang-item is-active" aria-label="Português" aria-current="true">PT<img src="./assets/icons/br-flag.png" alt="" class="drawer-lang-flag"></a>
+    <a href="#" class="drawer-lang-item" aria-label="English">EN<img src="./assets/icons/eua-flag.png" alt="" class="drawer-lang-flag"></a>
+  </div>
   <div class="drawer-footer">
     <a href="#" class="drawer-cta" onClick="{{ openModal }}">Fale Conosco</a>
   </div>
@@ -72,17 +81,17 @@
       <div style="{{ heroEyebrowStyle }}">
         <div style="display: flex; align-items: center; gap: 18px; margin-bottom: 28px;">
           <div style="width: 36px; height: 1px; background: #B8D48A;"></div>
-          <span style="font-family: 'Manrope', sans-serif; font-size: 10.5px; font-weight: 500; color: #B8D48A; letter-spacing: 0.32em; text-transform: uppercase;">Nossos Serviços</span>
+          <span style="font-family: var(--font-sans); font-size: 10.5px; font-weight: 500; color: #B8D48A; letter-spacing: 0.32em; text-transform: uppercase;">Nossos Serviços</span>
         </div>
       </div>
       <div style="{{ heroTitleStyle }}">
-        <h1 style="font-family: 'Cormorant Garamond', serif; font-size: clamp(46px, 6vw, 80px); font-weight: 300; color: #F6F4EF; line-height: 1.08; letter-spacing: -0.02em; margin-bottom: 28px;">Soluções Técnicas<br>para a Amazônia.</h1>
+        <h1 style="font-family: 'Barlow', sans-serif; font-size: clamp(46px, 6vw, 80px); font-weight: 300; color: #F6F4EF; line-height: 1.08; letter-spacing: -0.02em; margin-bottom: 28px;">Soluções Técnicas<br>para a Amazônia.</h1>
       </div>
       <div style="{{ heroDescStyle }}">
-        <p style="font-family: 'Manrope', sans-serif; font-size: 16px; font-weight: 400; color: rgba(246,244,239,0.78); line-height: 1.78; max-width: 560px; margin-bottom: 48px;">Regularização fundiária, licenciamento ambiental, georreferenciamento e gestão de projetos rurais para produtores, empresas e instituições.</p>
+        <p style="font-family: var(--font-sans); font-size: 16px; font-weight: 400; color: rgba(246,244,239,0.78); line-height: 1.78; max-width: 560px; margin-bottom: 48px;">Regularização fundiária, licenciamento ambiental, georreferenciamento e gestão de projetos rurais para produtores, empresas e instituições.</p>
       </div>
       <div style="{{ heroCTAStyle }}">
-        <a href="#regularizacao-fundiaria" style="display: inline-block; padding: 15px 40px; background: #315B2C; color: #F6F4EF; font-family: 'Manrope', sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; border-radius: 8px; transition: background 0.25s;" style-hover="background: #254822;">Explorar Serviços</a>
+        <a href="#regularizacao-fundiaria" style="display: inline-block; padding: 15px 40px; background: #315B2C; color: #F6F4EF; font-family: var(--font-sans); font-size: 11.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; border-radius: 8px; transition: background 0.25s;" style-hover="background: #254822;">Explorar Serviços</a>
       </div>
     </div>
   </div>
@@ -97,12 +106,12 @@
 <section class="services-nav" style="background: #FFFFFF; padding: 60px 0 40px; position: sticky; top: 72px; z-index: 99;">
   <div class="container" style="max-width: 1280px; margin: 0 auto; padding: 0 84px;">
     <div class="services-tabs" style="display: flex; gap: 20px; overflow-x: auto; padding-bottom: 12px; scroll-behavior: smooth;">
-      <a href="#regularizacao-fundiaria" style="flex-shrink: 0; padding: 10px 20px; font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 600; color: #315B2C; text-decoration: none; border-bottom: 2px solid #315B2C; white-space: nowrap; transition: color 0.2s;">Regularização Fundiária</a>
-      <a href="#licenciamento-ambiental" style="flex-shrink: 0; padding: 10px 20px; font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: #999994; text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s;" style-hover="color: #555550;">Licenciamento Ambiental</a>
-      <a href="#georreferenciamento" style="flex-shrink: 0; padding: 10px 20px; font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: #999994; text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s;" style-hover="color: #555550;">Georreferenciamento</a>
-      <a href="#car-ccir" style="flex-shrink: 0; padding: 10px 20px; font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: #999994; text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s;" style-hover="color: #555550;">CAR / CCIR</a>
-      <a href="#pronaf" style="flex-shrink: 0; padding: 10px 20px; font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: #999994; text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s;" style-hover="color: #555550;">Consultoria PRONAF</a>
-      <a href="#gestao-projetos" style="flex-shrink: 0; padding: 10px 20px; font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: #999994; text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s;" style-hover="color: #555550;">Gestão de Projetos</a>
+      <a href="#regularizacao-fundiaria" style="flex-shrink: 0; padding: 10px 20px; font-family: var(--font-sans); font-size: 13px; font-weight: 600; color: #315B2C; text-decoration: none; border-bottom: 2px solid #315B2C; white-space: nowrap; transition: color 0.2s;">Regularização Fundiária</a>
+      <a href="#licenciamento-ambiental" style="flex-shrink: 0; padding: 10px 20px; font-family: var(--font-sans); font-size: 13px; font-weight: 500; color: #999994; text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s;" style-hover="color: #555550;">Licenciamento Ambiental</a>
+      <a href="#georreferenciamento" style="flex-shrink: 0; padding: 10px 20px; font-family: var(--font-sans); font-size: 13px; font-weight: 500; color: #999994; text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s;" style-hover="color: #555550;">Georreferenciamento</a>
+      <a href="#car-ccir" style="flex-shrink: 0; padding: 10px 20px; font-family: var(--font-sans); font-size: 13px; font-weight: 500; color: #999994; text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s;" style-hover="color: #555550;">CAR / CCIR</a>
+      <a href="#pronaf" style="flex-shrink: 0; padding: 10px 20px; font-family: var(--font-sans); font-size: 13px; font-weight: 500; color: #999994; text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s;" style-hover="color: #555550;">Consultoria PRONAF</a>
+      <a href="#gestao-projetos" style="flex-shrink: 0; padding: 10px 20px; font-family: var(--font-sans); font-size: 13px; font-weight: 500; color: #999994; text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s;" style-hover="color: #555550;">Gestão de Projetos</a>
     </div>
   </div>
 </section>
@@ -113,11 +122,11 @@
     <div class="service-grid" style="display: grid; grid-template-columns: 420px 1fr; gap: 80px; align-items: center;">
       <div>
         <div style="width: 34px; height: 1px; background: #315B2C; margin-bottom: 18px;"></div>
-        <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 400; color: #1a1a18; line-height: 1.15; letter-spacing: -0.015em; margin-bottom: 24px;">Regularização<br>Fundiária</h2>
-        <p style="font-family: 'Manrope', sans-serif; font-size: 15px; font-weight: 400; color: #555550; line-height: 1.85; margin-bottom: 32px;">Soluções completas para regularizar sua propriedade rural, com análise de documentação, levantamentos topográficos e procedimentos junto aos órgãos competentes.</p>
+        <h2 style="font-family: 'Barlow', sans-serif; font-size: 42px; font-weight: 400; color: #1a1a18; line-height: 1.15; letter-spacing: -0.015em; margin-bottom: 24px;">Regularização<br>Fundiária</h2>
+        <p style="font-family: var(--font-sans); font-size: 15px; font-weight: 400; color: #555550; line-height: 1.85; margin-bottom: 32px;">Soluções completas para regularizar sua propriedade rural, com análise de documentação, levantamentos topográficos e procedimentos junto aos órgãos competentes.</p>
         <div style="display: flex; flex-direction: column; gap: 12px;">
-          <a href="#" onClick="{{ openModal }}" style="display: inline-block; padding: 14px 32px; background: #315B2C; color: #F6F4EF; font-family: 'Manrope', sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; border-radius: 8px; transition: background 0.25s; text-align: center;" style-hover="background: #254822;">Solicitar Orçamento</a>
-          <a href="https://api.whatsapp.com/send?phone=5591982064340" target="_blank" rel="noopener noreferrer" style="display: inline-block; padding: 13px 32px; color: #315B2C; font-family: 'Manrope', sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; border-radius: 8px; border: 1px solid rgba(49,91,44,0.28); transition: border-color 0.25s; text-align: center;" style-hover="border-color: rgba(49,91,44,0.6);">Conversar no WhatsApp</a>
+          <a href="#" onClick="{{ openModal }}" style="display: inline-block; padding: 14px 32px; background: #315B2C; color: #F6F4EF; font-family: var(--font-sans); font-size: 11.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; border-radius: 8px; transition: background 0.25s; text-align: center;" style-hover="background: #254822;">Solicitar Orçamento</a>
+          <a href="https://api.whatsapp.com/send?phone=5591982064340" target="_blank" rel="noopener noreferrer" style="display: inline-block; padding: 13px 32px; color: #315B2C; font-family: var(--font-sans); font-size: 11.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; border-radius: 8px; border: 1px solid rgba(49,91,44,0.28); transition: border-color 0.25s; text-align: center;" style-hover="border-color: rgba(49,91,44,0.6);">Conversar no WhatsApp</a>
         </div>
       </div>
       <div class="service-panel" style="background: #F5F8F3; border-radius: 14px; padding: 40px; display: flex; flex-direction: column; gap: 24px;">
@@ -126,8 +135,8 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="#F6F4EF"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path></svg>
           </div>
           <div>
-            <h3 style="font-family: 'Manrope', sans-serif; font-size: 14px; font-weight: 700; color: #1a1a18; margin-bottom: 6px;">Análise de Documentação</h3>
-            <p style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 400; color: #666660; line-height: 1.6;">Revisão completa de títulos, matrículas e registros imobiliários para identificar inconsistências.</p>
+            <h3 style="font-family: var(--font-sans); font-size: 14px; font-weight: 700; color: #1a1a18; margin-bottom: 6px;">Análise de Documentação</h3>
+            <p style="font-family: var(--font-sans); font-size: 13px; font-weight: 400; color: #666660; line-height: 1.6;">Revisão completa de títulos, matrículas e registros imobiliários para identificar inconsistências.</p>
           </div>
         </div>
         <div style="display: flex; gap: 16px;">
@@ -135,8 +144,8 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="#F6F4EF"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path></svg>
           </div>
           <div>
-            <h3 style="font-family: 'Manrope', sans-serif; font-size: 14px; font-weight: 700; color: #1a1a18; margin-bottom: 6px;">Levantamentos Topográficos</h3>
-            <p style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 400; color: #666660; line-height: 1.6;">Demarcação precisa de limites de propriedade com equipamentos de alta precisão.</p>
+            <h3 style="font-family: var(--font-sans); font-size: 14px; font-weight: 700; color: #1a1a18; margin-bottom: 6px;">Levantamentos Topográficos</h3>
+            <p style="font-family: var(--font-sans); font-size: 13px; font-weight: 400; color: #666660; line-height: 1.6;">Demarcação precisa de limites de propriedade com equipamentos de alta precisão.</p>
           </div>
         </div>
         <div style="display: flex; gap: 16px;">
@@ -144,8 +153,8 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="#F6F4EF"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path></svg>
           </div>
           <div>
-            <h3 style="font-family: 'Manrope', sans-serif; font-size: 14px; font-weight: 700; color: #1a1a18; margin-bottom: 6px;">Procedimentos Legais</h3>
-            <p style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 400; color: #666660; line-height: 1.6;">Acompanhamento de todos os processos junto a cartórios, prefeituras e órgãos ambientais.</p>
+            <h3 style="font-family: var(--font-sans); font-size: 14px; font-weight: 700; color: #1a1a18; margin-bottom: 6px;">Procedimentos Legais</h3>
+            <p style="font-family: var(--font-sans); font-size: 13px; font-weight: 400; color: #666660; line-height: 1.6;">Acompanhamento de todos os processos junto a cartórios, prefeituras e órgãos ambientais.</p>
           </div>
         </div>
       </div>
@@ -163,8 +172,8 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="#F6F4EF"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path></svg>
           </div>
           <div>
-            <h3 style="font-family: 'Manrope', sans-serif; font-size: 14px; font-weight: 700; color: #1a1a18; margin-bottom: 6px;">Estudos Ambientais</h3>
-            <p style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 400; color: #666660; line-height: 1.6;">EIA, RIMA, RAS e diagnósticos completos da situação ambiental do empreendimento.</p>
+            <h3 style="font-family: var(--font-sans); font-size: 14px; font-weight: 700; color: #1a1a18; margin-bottom: 6px;">Estudos Ambientais</h3>
+            <p style="font-family: var(--font-sans); font-size: 13px; font-weight: 400; color: #666660; line-height: 1.6;">EIA, RIMA, RAS e diagnósticos completos da situação ambiental do empreendimento.</p>
           </div>
         </div>
         <div style="display: flex; gap: 16px;">
@@ -172,8 +181,8 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="#F6F4EF"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path></svg>
           </div>
           <div>
-            <h3 style="font-family: 'Manrope', sans-serif; font-size: 14px; font-weight: 700; color: #1a1a18; margin-bottom: 6px;">Gestão de Licenças</h3>
-            <p style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 400; color: #666660; line-height: 1.6;">LP, LI e LO — coordenação de todos os procedimentos junto aos órgãos licenciadores.</p>
+            <h3 style="font-family: var(--font-sans); font-size: 14px; font-weight: 700; color: #1a1a18; margin-bottom: 6px;">Gestão de Licenças</h3>
+            <p style="font-family: var(--font-sans); font-size: 13px; font-weight: 400; color: #666660; line-height: 1.6;">LP, LI e LO — coordenação de todos os procedimentos junto aos órgãos licenciadores.</p>
           </div>
         </div>
         <div style="display: flex; gap: 16px;">
@@ -181,18 +190,18 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="#F6F4EF"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path></svg>
           </div>
           <div>
-            <h3 style="font-family: 'Manrope', sans-serif; font-size: 14px; font-weight: 700; color: #1a1a18; margin-bottom: 6px;">Conformidade Regulatória</h3>
-            <p style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 400; color: #666660; line-height: 1.6;">Monitoramento contínuo de regulamentações e adequação às normas ambientais vigentes.</p>
+            <h3 style="font-family: var(--font-sans); font-size: 14px; font-weight: 700; color: #1a1a18; margin-bottom: 6px;">Conformidade Regulatória</h3>
+            <p style="font-family: var(--font-sans); font-size: 13px; font-weight: 400; color: #666660; line-height: 1.6;">Monitoramento contínuo de regulamentações e adequação às normas ambientais vigentes.</p>
           </div>
         </div>
       </div>
       <div>
         <div style="width: 34px; height: 1px; background: #315B2C; margin-bottom: 18px;"></div>
-        <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 400; color: #1a1a18; line-height: 1.15; letter-spacing: -0.015em; margin-bottom: 24px;">Licenciamento<br>Ambiental</h2>
-        <p style="font-family: 'Manrope', sans-serif; font-size: 15px; font-weight: 400; color: #555550; line-height: 1.85; margin-bottom: 32px;">Orientação especializada em legislação ambiental, com elaboração de estudos técnicos e gestão de processos junto à SEMA e demais órgãos.</p>
+        <h2 style="font-family: 'Barlow', sans-serif; font-size: 42px; font-weight: 400; color: #1a1a18; line-height: 1.15; letter-spacing: -0.015em; margin-bottom: 24px;">Licenciamento<br>Ambiental</h2>
+        <p style="font-family: var(--font-sans); font-size: 15px; font-weight: 400; color: #555550; line-height: 1.85; margin-bottom: 32px;">Orientação especializada em legislação ambiental, com elaboração de estudos técnicos e gestão de processos junto à SEMA e demais órgãos.</p>
         <div style="display: flex; flex-direction: column; gap: 12px;">
-          <a href="#" onClick="{{ openModal }}" style="display: inline-block; padding: 14px 32px; background: #315B2C; color: #F6F4EF; font-family: 'Manrope', sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; border-radius: 8px; transition: background 0.25s; text-align: center;" style-hover="background: #254822;">Solicitar Orçamento</a>
-          <a href="https://api.whatsapp.com/send?phone=5591982064340" target="_blank" rel="noopener noreferrer" style="display: inline-block; padding: 13px 32px; color: #315B2C; font-family: 'Manrope', sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; border-radius: 8px; border: 1px solid rgba(49,91,44,0.28); transition: border-color 0.25s; text-align: center;" style-hover="border-color: rgba(49,91,44,0.6);">Conversar no WhatsApp</a>
+          <a href="#" onClick="{{ openModal }}" style="display: inline-block; padding: 14px 32px; background: #315B2C; color: #F6F4EF; font-family: var(--font-sans); font-size: 11.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; border-radius: 8px; transition: background 0.25s; text-align: center;" style-hover="background: #254822;">Solicitar Orçamento</a>
+          <a href="https://api.whatsapp.com/send?phone=5591982064340" target="_blank" rel="noopener noreferrer" style="display: inline-block; padding: 13px 32px; color: #315B2C; font-family: var(--font-sans); font-size: 11.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; border-radius: 8px; border: 1px solid rgba(49,91,44,0.28); transition: border-color 0.25s; text-align: center;" style-hover="border-color: rgba(49,91,44,0.6);">Conversar no WhatsApp</a>
         </div>
       </div>
     </div>
@@ -205,11 +214,11 @@
     <div class="service-grid" style="display: grid; grid-template-columns: 420px 1fr; gap: 80px; align-items: center;">
       <div>
         <div style="width: 34px; height: 1px; background: #315B2C; margin-bottom: 18px;"></div>
-        <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 400; color: #1a1a18; line-height: 1.15; letter-spacing: -0.015em; margin-bottom: 24px;">Georreferenciamento</h2>
-        <p style="font-family: 'Manrope', sans-serif; font-size: 15px; font-weight: 400; color: #555550; line-height: 1.85; margin-bottom: 32px;">Demarcação e registro de propriedades com coordenadas geodésicas certificadas, atendendo às exigências do INCRA.</p>
+        <h2 style="font-family: 'Barlow', sans-serif; font-size: 42px; font-weight: 400; color: #1a1a18; line-height: 1.15; letter-spacing: -0.015em; margin-bottom: 24px;">Georreferenciamento</h2>
+        <p style="font-family: var(--font-sans); font-size: 15px; font-weight: 400; color: #555550; line-height: 1.85; margin-bottom: 32px;">Demarcação e registro de propriedades com coordenadas geodésicas certificadas, atendendo às exigências do INCRA.</p>
         <div style="display: flex; flex-direction: column; gap: 12px;">
-          <a href="#" onClick="{{ openModal }}" style="display: inline-block; padding: 14px 32px; background: #315B2C; color: #F6F4EF; font-family: 'Manrope', sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; border-radius: 8px; transition: background 0.25s; text-align: center;" style-hover="background: #254822;">Solicitar Orçamento</a>
-          <a href="https://api.whatsapp.com/send?phone=5591982064340" target="_blank" rel="noopener noreferrer" style="display: inline-block; padding: 13px 32px; color: #315B2C; font-family: 'Manrope', sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; border-radius: 8px; border: 1px solid rgba(49,91,44,0.28); transition: border-color 0.25s; text-align: center;" style-hover="border-color: rgba(49,91,44,0.6);">Fale com Especialista</a>
+          <a href="#" onClick="{{ openModal }}" style="display: inline-block; padding: 14px 32px; background: #315B2C; color: #F6F4EF; font-family: var(--font-sans); font-size: 11.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; border-radius: 8px; transition: background 0.25s; text-align: center;" style-hover="background: #254822;">Solicitar Orçamento</a>
+          <a href="https://api.whatsapp.com/send?phone=5591982064340" target="_blank" rel="noopener noreferrer" style="display: inline-block; padding: 13px 32px; color: #315B2C; font-family: var(--font-sans); font-size: 11.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; border-radius: 8px; border: 1px solid rgba(49,91,44,0.28); transition: border-color 0.25s; text-align: center;" style-hover="border-color: rgba(49,91,44,0.6);">Fale com Especialista</a>
         </div>
       </div>
       <div class="service-panel" style="background: #F5F8F3; border-radius: 14px; padding: 40px; display: flex; flex-direction: column; gap: 24px;">
@@ -218,8 +227,8 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="#F6F4EF"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path></svg>
           </div>
           <div>
-            <h3 style="font-family: 'Manrope', sans-serif; font-size: 14px; font-weight: 700; color: #1a1a18; margin-bottom: 6px;">Levantamento com GPS/GNSS</h3>
-            <p style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 400; color: #666660; line-height: 1.6;">Posicionamento de alta precisão em sistema de referência geodésico oficial.</p>
+            <h3 style="font-family: var(--font-sans); font-size: 14px; font-weight: 700; color: #1a1a18; margin-bottom: 6px;">Levantamento com GPS/GNSS</h3>
+            <p style="font-family: var(--font-sans); font-size: 13px; font-weight: 400; color: #666660; line-height: 1.6;">Posicionamento de alta precisão em sistema de referência geodésico oficial.</p>
           </div>
         </div>
         <div style="display: flex; gap: 16px;">
@@ -227,8 +236,8 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="#F6F4EF"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path></svg>
           </div>
           <div>
-            <h3 style="font-family: 'Manrope', sans-serif; font-size: 14px; font-weight: 700; color: #1a1a18; margin-bottom: 6px;">Certificação INCRA</h3>
-            <p style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 400; color: #666660; line-height: 1.6;">Memória descritiva e plantas georreferenciadas certificadas pelo Instituto Nacional de Colonização.</p>
+            <h3 style="font-family: var(--font-sans); font-size: 14px; font-weight: 700; color: #1a1a18; margin-bottom: 6px;">Certificação INCRA</h3>
+            <p style="font-family: var(--font-sans); font-size: 13px; font-weight: 400; color: #666660; line-height: 1.6;">Memória descritiva e plantas georreferenciadas certificadas pelo Instituto Nacional de Colonização.</p>
           </div>
         </div>
         <div style="display: flex; gap: 16px;">
@@ -236,8 +245,8 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="#F6F4EF"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path></svg>
           </div>
           <div>
-            <h3 style="font-family: 'Manrope', sans-serif; font-size: 14px; font-weight: 700; color: #1a1a18; margin-bottom: 6px;">SIG e Cartografia</h3>
-            <p style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 400; color: #666660; line-height: 1.6;">Mapeamento digital e análise espacial de propriedades rurais com sistemas de informação geográfica.</p>
+            <h3 style="font-family: var(--font-sans); font-size: 14px; font-weight: 700; color: #1a1a18; margin-bottom: 6px;">SIG e Cartografia</h3>
+            <p style="font-family: var(--font-sans); font-size: 13px; font-weight: 400; color: #666660; line-height: 1.6;">Mapeamento digital e análise espacial de propriedades rurais com sistemas de informação geográfica.</p>
           </div>
         </div>
       </div>
@@ -255,8 +264,8 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="#F6F4EF"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path></svg>
           </div>
           <div>
-            <h3 style="font-family: 'Manrope', sans-serif; font-size: 14px; font-weight: 700; color: #1a1a18; margin-bottom: 6px;">CAR – Cadastro Ambiental</h3>
-            <p style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 400; color: #666660; line-height: 1.6;">Inscrição no Cadastro Ambiental Rural com identificação de áreas de preservação e uso da terra.</p>
+            <h3 style="font-family: var(--font-sans); font-size: 14px; font-weight: 700; color: #1a1a18; margin-bottom: 6px;">CAR – Cadastro Ambiental</h3>
+            <p style="font-family: var(--font-sans); font-size: 13px; font-weight: 400; color: #666660; line-height: 1.6;">Inscrição no Cadastro Ambiental Rural com identificação de áreas de preservação e uso da terra.</p>
           </div>
         </div>
         <div style="display: flex; gap: 16px;">
@@ -264,8 +273,8 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="#F6F4EF"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path></svg>
           </div>
           <div>
-            <h3 style="font-family: 'Manrope', sans-serif; font-size: 14px; font-weight: 700; color: #1a1a18; margin-bottom: 6px;">CCIR / CAFIR / CIB / ITR</h3>
-            <p style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 400; color: #666660; line-height: 1.6;">Obtenção de certificados e documentos comprobatórios para operações e financiamentos rurais.</p>
+            <h3 style="font-family: var(--font-sans); font-size: 14px; font-weight: 700; color: #1a1a18; margin-bottom: 6px;">CCIR / CAFIR / CIB / ITR</h3>
+            <p style="font-family: var(--font-sans); font-size: 13px; font-weight: 400; color: #666660; line-height: 1.6;">Obtenção de certificados e documentos comprobatórios para operações e financiamentos rurais.</p>
           </div>
         </div>
         <div style="display: flex; gap: 16px;">
@@ -273,18 +282,18 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="#F6F4EF"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path></svg>
           </div>
           <div>
-            <h3 style="font-family: 'Manrope', sans-serif; font-size: 14px; font-weight: 700; color: #1a1a18; margin-bottom: 6px;">Compliance Ambiental</h3>
-            <p style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 400; color: #666660; line-height: 1.6;">Auditoria de conformidade ambiental e documentação requerida por órgãos reguladores.</p>
+            <h3 style="font-family: var(--font-sans); font-size: 14px; font-weight: 700; color: #1a1a18; margin-bottom: 6px;">Compliance Ambiental</h3>
+            <p style="font-family: var(--font-sans); font-size: 13px; font-weight: 400; color: #666660; line-height: 1.6;">Auditoria de conformidade ambiental e documentação requerida por órgãos reguladores.</p>
           </div>
         </div>
       </div>
       <div>
         <div style="width: 34px; height: 1px; background: #315B2C; margin-bottom: 18px;"></div>
-        <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 400; color: #1a1a18; line-height: 1.15; letter-spacing: -0.015em; margin-bottom: 24px;">CAR / CCIR<br>e Registros</h2>
-        <p style="font-family: 'Manrope', sans-serif; font-size: 15px; font-weight: 400; color: #555550; line-height: 1.85; margin-bottom: 32px;">Gestão completa de cadastros ambientais, certificados comprobatórios e documentação exigida para propriedades rurais.</p>
+        <h2 style="font-family: 'Barlow', sans-serif; font-size: 42px; font-weight: 400; color: #1a1a18; line-height: 1.15; letter-spacing: -0.015em; margin-bottom: 24px;">CAR / CCIR<br>e Registros</h2>
+        <p style="font-family: var(--font-sans); font-size: 15px; font-weight: 400; color: #555550; line-height: 1.85; margin-bottom: 32px;">Gestão completa de cadastros ambientais, certificados comprobatórios e documentação exigida para propriedades rurais.</p>
         <div style="display: flex; flex-direction: column; gap: 12px;">
-          <a href="#" onClick="{{ openModal }}" style="display: inline-block; padding: 14px 32px; background: #315B2C; color: #F6F4EF; font-family: 'Manrope', sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; border-radius: 8px; transition: background 0.25s; text-align: center;" style-hover="background: #254822;">Solicitar Consultoria</a>
-          <a href="https://api.whatsapp.com/send?phone=5591982064340" target="_blank" rel="noopener noreferrer" style="display: inline-block; padding: 13px 32px; color: #315B2C; font-family: 'Manrope', sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; border-radius: 8px; border: 1px solid rgba(49,91,44,0.28); transition: border-color 0.25s; text-align: center;" style-hover="border-color: rgba(49,91,44,0.6);">Fale com Especialista</a>
+          <a href="#" onClick="{{ openModal }}" style="display: inline-block; padding: 14px 32px; background: #315B2C; color: #F6F4EF; font-family: var(--font-sans); font-size: 11.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; border-radius: 8px; transition: background 0.25s; text-align: center;" style-hover="background: #254822;">Solicitar Consultoria</a>
+          <a href="https://api.whatsapp.com/send?phone=5591982064340" target="_blank" rel="noopener noreferrer" style="display: inline-block; padding: 13px 32px; color: #315B2C; font-family: var(--font-sans); font-size: 11.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; border-radius: 8px; border: 1px solid rgba(49,91,44,0.28); transition: border-color 0.25s; text-align: center;" style-hover="border-color: rgba(49,91,44,0.6);">Fale com Especialista</a>
         </div>
       </div>
     </div>
@@ -297,11 +306,11 @@
     <div class="service-grid" style="display: grid; grid-template-columns: 420px 1fr; gap: 80px; align-items: center;">
       <div>
         <div style="width: 34px; height: 1px; background: #315B2C; margin-bottom: 18px;"></div>
-        <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 400; color: #1a1a18; line-height: 1.15; letter-spacing: -0.015em; margin-bottom: 24px;">Consultoria<br>PRONAF</h2>
-        <p style="font-family: 'Manrope', sans-serif; font-size: 15px; font-weight: 400; color: #555550; line-height: 1.85; margin-bottom: 32px;">Orientação especializada para pequenos e médios produtores rurais interessados em crédito agrícola e programas de financiamento.</p>
+        <h2 style="font-family: 'Barlow', sans-serif; font-size: 42px; font-weight: 400; color: #1a1a18; line-height: 1.15; letter-spacing: -0.015em; margin-bottom: 24px;">Consultoria<br>PRONAF</h2>
+        <p style="font-family: var(--font-sans); font-size: 15px; font-weight: 400; color: #555550; line-height: 1.85; margin-bottom: 32px;">Orientação especializada para pequenos e médios produtores rurais interessados em crédito agrícola e programas de financiamento.</p>
         <div style="display: flex; flex-direction: column; gap: 12px;">
-          <a href="#" onClick="{{ openModal }}" style="display: inline-block; padding: 14px 32px; background: #315B2C; color: #F6F4EF; font-family: 'Manrope', sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; border-radius: 8px; transition: background 0.25s; text-align: center;" style-hover="background: #254822;">Solicitar Consultoria</a>
-          <a href="https://api.whatsapp.com/send?phone=5591982064340" target="_blank" rel="noopener noreferrer" style="display: inline-block; padding: 13px 32px; color: #315B2C; font-family: 'Manrope', sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; border-radius: 8px; border: 1px solid rgba(49,91,44,0.28); transition: border-color 0.25s; text-align: center;" style-hover="border-color: rgba(49,91,44,0.6);">Conversar no WhatsApp</a>
+          <a href="#" onClick="{{ openModal }}" style="display: inline-block; padding: 14px 32px; background: #315B2C; color: #F6F4EF; font-family: var(--font-sans); font-size: 11.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; border-radius: 8px; transition: background 0.25s; text-align: center;" style-hover="background: #254822;">Solicitar Consultoria</a>
+          <a href="https://api.whatsapp.com/send?phone=5591982064340" target="_blank" rel="noopener noreferrer" style="display: inline-block; padding: 13px 32px; color: #315B2C; font-family: var(--font-sans); font-size: 11.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; border-radius: 8px; border: 1px solid rgba(49,91,44,0.28); transition: border-color 0.25s; text-align: center;" style-hover="border-color: rgba(49,91,44,0.6);">Conversar no WhatsApp</a>
         </div>
       </div>
       <div class="service-panel" style="background: #F5F8F3; border-radius: 14px; padding: 40px; display: flex; flex-direction: column; gap: 24px;">
@@ -310,8 +319,8 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="#F6F4EF"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path></svg>
           </div>
           <div>
-            <h3 style="font-family: 'Manrope', sans-serif; font-size: 14px; font-weight: 700; color: #1a1a18; margin-bottom: 6px;">Acesso a Crédito</h3>
-            <p style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 400; color: #666660; line-height: 1.6;">Orientação sobre linhas de crédito PRONAF, seus requisitos e processo de solicitação.</p>
+            <h3 style="font-family: var(--font-sans); font-size: 14px; font-weight: 700; color: #1a1a18; margin-bottom: 6px;">Acesso a Crédito</h3>
+            <p style="font-family: var(--font-sans); font-size: 13px; font-weight: 400; color: #666660; line-height: 1.6;">Orientação sobre linhas de crédito PRONAF, seus requisitos e processo de solicitação.</p>
           </div>
         </div>
         <div style="display: flex; gap: 16px;">
@@ -319,8 +328,8 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="#F6F4EF"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path></svg>
           </div>
           <div>
-            <h3 style="font-family: 'Manrope', sans-serif; font-size: 14px; font-weight: 700; color: #1a1a18; margin-bottom: 6px;">Elaboração de Projetos</h3>
-            <p style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 400; color: #666660; line-height: 1.6;">Desenvolvimento de projetos técnicos e econômicos para submissão aos bancos e instituições financeiras.</p>
+            <h3 style="font-family: var(--font-sans); font-size: 14px; font-weight: 700; color: #1a1a18; margin-bottom: 6px;">Elaboração de Projetos</h3>
+            <p style="font-family: var(--font-sans); font-size: 13px; font-weight: 400; color: #666660; line-height: 1.6;">Desenvolvimento de projetos técnicos e econômicos para submissão aos bancos e instituições financeiras.</p>
           </div>
         </div>
         <div style="display: flex; gap: 16px;">
@@ -328,8 +337,8 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="#F6F4EF"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path></svg>
           </div>
           <div>
-            <h3 style="font-family: 'Manrope', sans-serif; font-size: 14px; font-weight: 700; color: #1a1a18; margin-bottom: 6px;">Acompanhamento</h3>
-            <p style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 400; color: #666660; line-height: 1.6;">Suporte durante todo o processo de análise e aprovação da solicitação de crédito.</p>
+            <h3 style="font-family: var(--font-sans); font-size: 14px; font-weight: 700; color: #1a1a18; margin-bottom: 6px;">Acompanhamento</h3>
+            <p style="font-family: var(--font-sans); font-size: 13px; font-weight: 400; color: #666660; line-height: 1.6;">Suporte durante todo o processo de análise e aprovação da solicitação de crédito.</p>
           </div>
         </div>
       </div>
@@ -347,8 +356,8 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="#F6F4EF"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path></svg>
           </div>
           <div>
-            <h3 style="font-family: 'Manrope', sans-serif; font-size: 14px; font-weight: 700; color: #1a1a18; margin-bottom: 6px;">Planejamento Estratégico</h3>
-            <p style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 400; color: #666660; line-height: 1.6;">Definição clara de objetivos, escopo e viabilidade econômica de empreendimentos rurais.</p>
+            <h3 style="font-family: var(--font-sans); font-size: 14px; font-weight: 700; color: #1a1a18; margin-bottom: 6px;">Planejamento Estratégico</h3>
+            <p style="font-family: var(--font-sans); font-size: 13px; font-weight: 400; color: #666660; line-height: 1.6;">Definição clara de objetivos, escopo e viabilidade econômica de empreendimentos rurais.</p>
           </div>
         </div>
         <div style="display: flex; gap: 16px;">
@@ -356,8 +365,8 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="#F6F4EF"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path></svg>
           </div>
           <div>
-            <h3 style="font-family: 'Manrope', sans-serif; font-size: 14px; font-weight: 700; color: #1a1a18; margin-bottom: 6px;">Gestão de Recursos</h3>
-            <p style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 400; color: #666660; line-height: 1.6;">Otimização de tempo, orçamento e recursos humanos durante a execução do projeto.</p>
+            <h3 style="font-family: var(--font-sans); font-size: 14px; font-weight: 700; color: #1a1a18; margin-bottom: 6px;">Gestão de Recursos</h3>
+            <p style="font-family: var(--font-sans); font-size: 13px; font-weight: 400; color: #666660; line-height: 1.6;">Otimização de tempo, orçamento e recursos humanos durante a execução do projeto.</p>
           </div>
         </div>
         <div style="display: flex; gap: 16px;">
@@ -365,18 +374,18 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="#F6F4EF"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path></svg>
           </div>
           <div>
-            <h3 style="font-family: 'Manrope', sans-serif; font-size: 14px; font-weight: 700; color: #1a1a18; margin-bottom: 6px;">Monitoramento</h3>
-            <p style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 400; color: #666660; line-height: 1.6;">Acompanhamento contínuo e relatórios de progresso com correção de desvios.</p>
+            <h3 style="font-family: var(--font-sans); font-size: 14px; font-weight: 700; color: #1a1a18; margin-bottom: 6px;">Monitoramento</h3>
+            <p style="font-family: var(--font-sans); font-size: 13px; font-weight: 400; color: #666660; line-height: 1.6;">Acompanhamento contínuo e relatórios de progresso com correção de desvios.</p>
           </div>
         </div>
       </div>
       <div>
         <div style="width: 34px; height: 1px; background: #315B2C; margin-bottom: 18px;"></div>
-        <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 400; color: #1a1a18; line-height: 1.15; letter-spacing: -0.015em; margin-bottom: 24px;">Gestão de<br>Projetos</h2>
-        <p style="font-family: 'Manrope', sans-serif; font-size: 15px; font-weight: 400; color: #555550; line-height: 1.85; margin-bottom: 32px;">Coordenação completa de projetos agrícolas e rurais, desde o planejamento até a execução e entrega.</p>
+        <h2 style="font-family: 'Barlow', sans-serif; font-size: 42px; font-weight: 400; color: #1a1a18; line-height: 1.15; letter-spacing: -0.015em; margin-bottom: 24px;">Gestão de<br>Projetos</h2>
+        <p style="font-family: var(--font-sans); font-size: 15px; font-weight: 400; color: #555550; line-height: 1.85; margin-bottom: 32px;">Coordenação completa de projetos agrícolas e rurais, desde o planejamento até a execução e entrega.</p>
         <div style="display: flex; flex-direction: column; gap: 12px;">
-          <a href="#" onClick="{{ openModal }}" style="display: inline-block; padding: 14px 32px; background: #315B2C; color: #F6F4EF; font-family: 'Manrope', sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; border-radius: 8px; transition: background 0.25s; text-align: center;" style-hover="background: #254822;">Solicitar Consultoria</a>
-          <a href="https://api.whatsapp.com/send?phone=5591982064340" target="_blank" rel="noopener noreferrer" style="display: inline-block; padding: 13px 32px; color: #315B2C; font-family: 'Manrope', sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; border-radius: 8px; border: 1px solid rgba(49,91,44,0.28); transition: border-color 0.25s; text-align: center;" style-hover="border-color: rgba(49,91,44,0.6);">Fale com Especialista</a>
+          <a href="#" onClick="{{ openModal }}" style="display: inline-block; padding: 14px 32px; background: #315B2C; color: #F6F4EF; font-family: var(--font-sans); font-size: 11.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; border-radius: 8px; transition: background 0.25s; text-align: center;" style-hover="background: #254822;">Solicitar Consultoria</a>
+          <a href="https://api.whatsapp.com/send?phone=5591982064340" target="_blank" rel="noopener noreferrer" style="display: inline-block; padding: 13px 32px; color: #315B2C; font-family: var(--font-sans); font-size: 11.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; border-radius: 8px; border: 1px solid rgba(49,91,44,0.28); transition: border-color 0.25s; text-align: center;" style-hover="border-color: rgba(49,91,44,0.6);">Fale com Especialista</a>
         </div>
       </div>
     </div>
@@ -387,12 +396,12 @@
 <section class="section-cta-dark" style="background: #315B2C; padding: 128px 0;">
   <div style="max-width: 900px; margin: 0 auto; padding: 0 84px; text-align: center;">
     <div style="width: 34px; height: 1px; background: #B8D48A; margin: 0 auto 18px;"></div>
-    <span style="font-family: 'Manrope', sans-serif; font-size: 10.5px; font-weight: 500; color: #B8D48A; letter-spacing: 0.24em; text-transform: uppercase; display: block; margin-bottom: 28px;">Pronto para começar?</span>
-    <h2 style="font-family: 'Cormorant Garamond', serif; font-size: clamp(38px, 4.5vw, 62px); font-weight: 300; color: #F6F4EF; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 24px; text-wrap: pretty;">Encontre a solução<br>ideal para seu<br><em style="font-style: italic;">projeto</em>.</h2>
-    <p style="font-family: 'Manrope', sans-serif; font-size: 15px; font-weight: 400; color: rgba(246,244,239,0.75); line-height: 1.85; margin-bottom: 52px; max-width: 560px; margin-left: auto; margin-right: auto;">Conversamos sobre sua necessidade e apresentamos a melhor proposta técnica e comercial.</p>
+    <span style="font-family: var(--font-sans); font-size: 10.5px; font-weight: 500; color: #B8D48A; letter-spacing: 0.24em; text-transform: uppercase; display: block; margin-bottom: 28px;">Pronto para começar?</span>
+    <h2 style="font-family: 'Barlow', sans-serif; font-size: clamp(38px, 4.5vw, 62px); font-weight: 300; color: #F6F4EF; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 24px; text-wrap: pretty;">Encontre a solução<br>ideal para seu<br><em style="font-family: var(--font-sans); font-weight: 600; font-size: clamp(33px, 3.9vw, 53px);">projeto</em>.</h2>
+    <p style="font-family: var(--font-sans); font-size: 15px; font-weight: 400; color: rgba(246,244,239,0.75); line-height: 1.85; margin-bottom: 52px; max-width: 560px; margin-left: auto; margin-right: auto;">Conversamos sobre sua necessidade e apresentamos a melhor proposta técnica e comercial.</p>
     <div style="display: flex; gap: 14px; align-items: center; justify-content: center; flex-wrap: wrap;">
-      <a href="#" onClick="{{ openModal }}" style="display: inline-block; padding: 16px 44px; background: #F6F4EF; color: #315B2C; font-family: 'Manrope', sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; border-radius: 8px; transition: background 0.25s;" style-hover="background: #ede9e2;">Solicitar Consultoria</a>
-      <a href="https://api.whatsapp.com/send?phone=5591982064340" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 10px; padding: 15px 40px; color: #F6F4EF; font-family: 'Manrope', sans-serif; font-size: 11.5px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; border-radius: 8px; border: 1px solid rgba(246,244,239,0.4); transition: border-color 0.25s;" style-hover="border-color: rgba(246,244,239,0.72);">
+      <a href="#" onClick="{{ openModal }}" style="display: inline-block; padding: 16px 44px; background: #F6F4EF; color: #315B2C; font-family: var(--font-sans); font-size: 11.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; border-radius: 8px; transition: background 0.25s;" style-hover="background: #ede9e2;">Solicitar Consultoria</a>
+      <a href="https://api.whatsapp.com/send?phone=5591982064340" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 10px; padding: 15px 40px; color: #F6F4EF; font-family: var(--font-sans); font-size: 11.5px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; border-radius: 8px; border: 1px solid rgba(246,244,239,0.4); transition: border-color 0.25s;" style-hover="border-color: rgba(246,244,239,0.72);">
         Falar no WhatsApp
       </a>
     </div>
@@ -405,8 +414,8 @@
   <div class="modal" style="background: #FFFFFF; border-radius: 12px; width: min(720px, 100%); max-height: 88vh; overflow-y: auto; box-shadow: 0 32px 100px rgba(0,0,0,0.28);">
     <div style="padding: 36px 44px 24px; border-bottom: 1px solid rgba(49,91,44,0.08); display: flex; align-items: flex-start; justify-content: space-between; position: sticky; top: 0; background: #FFFFFF; z-index: 1; border-radius: 12px 12px 0 0;">
       <div>
-        <div style="font-family: 'Manrope', sans-serif; font-size: 10.5px; font-weight: 500; color: #6F8F3A; letter-spacing: 0.24em; text-transform: uppercase; margin-bottom: 10px;">Consultoria Gratuita</div>
-        <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 400; color: #1a1a18; line-height: 1.2;">Solicite um Atendimento</h2>
+        <div style="font-family: var(--font-sans); font-size: 10.5px; font-weight: 500; color: #6F8F3A; letter-spacing: 0.24em; text-transform: uppercase; margin-bottom: 10px;">Consultoria Gratuita</div>
+        <h2 style="font-family: 'Barlow', sans-serif; font-size: 30px; font-weight: 400; color: #1a1a18; line-height: 1.2;">Solicite um Atendimento</h2>
       </div>
       <button onClick="{{ closeModal }}" style="background: none; border: none; cursor: pointer; padding: 8px; color: #999994; line-height: 1; border-radius: 6px; margin-top: 4px; transition: color 0.2s;" style-hover="color: #1a1a18;">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 4L16 16M16 4L4 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg>
@@ -416,43 +425,43 @@
     <form onSubmit="{{ submitForm }}" style="padding: 32px 44px 44px;">
       <div class="form-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
         <div>
-          <label style="display: block; font-family: 'Manrope', sans-serif; font-size: 10.5px; font-weight: 600; color: #555550; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;">Nome Completo <span style="color: #DD8758;">*</span></label>
-          <input type="text" value="{{ fName }}" onChange="{{ chName }}" placeholder="Seu nome completo" style="width: 100%; padding: 12px 14px; border: 1px solid rgba(49,91,44,0.2); border-radius: 8px; font-family: 'Manrope', sans-serif; font-size: 14px; color: #1a1a18; background: #FAFAF9; outline: none; transition: border-color 0.2s, box-shadow 0.2s;" style-focus="border-color: #315B2C; background: #FFFFFF; box-shadow: 0 0 0 3px rgba(49,91,44,0.08);">
-          <sc-if value="{{ eName }}" hint-placeholder-val="{{ false }}"><span style="display: block; font-family: 'Manrope', sans-serif; font-size: 11.5px; color: #c0392b; margin-top: 5px;">{{ eName }}</span></sc-if>
+          <label style="display: block; font-family: var(--font-sans); font-size: 10.5px; font-weight: 600; color: #555550; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;">Nome Completo <span style="color: #DD8758;">*</span></label>
+          <input type="text" value="{{ fName }}" onChange="{{ chName }}" placeholder="Seu nome completo" style="width: 100%; padding: 12px 14px; border: 1px solid rgba(49,91,44,0.2); border-radius: 8px; font-family: var(--font-sans); font-size: 14px; color: #1a1a18; background: #FAFAF9; outline: none; transition: border-color 0.2s, box-shadow 0.2s;" style-focus="border-color: #315B2C; background: #FFFFFF; box-shadow: 0 0 0 3px rgba(49,91,44,0.08);">
+          <sc-if value="{{ eName }}" hint-placeholder-val="{{ false }}"><span style="display: block; font-family: var(--font-sans); font-size: 11.5px; color: #c0392b; margin-top: 5px;">{{ eName }}</span></sc-if>
         </div>
         <div>
-          <label style="display: block; font-family: 'Manrope', sans-serif; font-size: 10.5px; font-weight: 600; color: #555550; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;">Empresa</label>
-          <input type="text" value="{{ fCompany }}" onChange="{{ chCompany }}" placeholder="Nome da empresa (opcional)" style="width: 100%; padding: 12px 14px; border: 1px solid rgba(49,91,44,0.2); border-radius: 8px; font-family: 'Manrope', sans-serif; font-size: 14px; color: #1a1a18; background: #FAFAF9; outline: none; transition: border-color 0.2s, box-shadow 0.2s;" style-focus="border-color: #315B2C; background: #FFFFFF; box-shadow: 0 0 0 3px rgba(49,91,44,0.08);">
+          <label style="display: block; font-family: var(--font-sans); font-size: 10.5px; font-weight: 600; color: #555550; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;">Empresa</label>
+          <input type="text" value="{{ fCompany }}" onChange="{{ chCompany }}" placeholder="Nome da empresa (opcional)" style="width: 100%; padding: 12px 14px; border: 1px solid rgba(49,91,44,0.2); border-radius: 8px; font-family: var(--font-sans); font-size: 14px; color: #1a1a18; background: #FAFAF9; outline: none; transition: border-color 0.2s, box-shadow 0.2s;" style-focus="border-color: #315B2C; background: #FFFFFF; box-shadow: 0 0 0 3px rgba(49,91,44,0.08);">
         </div>
       </div>
       <div class="form-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
         <div>
-          <label style="display: block; font-family: 'Manrope', sans-serif; font-size: 10.5px; font-weight: 600; color: #555550; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;">Telefone <span style="color: #DD8758;">*</span></label>
-          <input type="tel" value="{{ fPhone }}" onChange="{{ chPhone }}" placeholder="(91) 9 9999-9999" style="width: 100%; padding: 12px 14px; border: 1px solid rgba(49,91,44,0.2); border-radius: 8px; font-family: 'Manrope', sans-serif; font-size: 14px; color: #1a1a18; background: #FAFAF9; outline: none; transition: border-color 0.2s, box-shadow 0.2s;" style-focus="border-color: #315B2C; background: #FFFFFF; box-shadow: 0 0 0 3px rgba(49,91,44,0.08);">
-          <sc-if value="{{ ePhone }}" hint-placeholder-val="{{ false }}"><span style="display: block; font-family: 'Manrope', sans-serif; font-size: 11.5px; color: #c0392b; margin-top: 5px;">{{ ePhone }}</span></sc-if>
+          <label style="display: block; font-family: var(--font-sans); font-size: 10.5px; font-weight: 600; color: #555550; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;">Telefone <span style="color: #DD8758;">*</span></label>
+          <input type="tel" value="{{ fPhone }}" onChange="{{ chPhone }}" placeholder="(91) 9 9999-9999" style="width: 100%; padding: 12px 14px; border: 1px solid rgba(49,91,44,0.2); border-radius: 8px; font-family: var(--font-sans); font-size: 14px; color: #1a1a18; background: #FAFAF9; outline: none; transition: border-color 0.2s, box-shadow 0.2s;" style-focus="border-color: #315B2C; background: #FFFFFF; box-shadow: 0 0 0 3px rgba(49,91,44,0.08);">
+          <sc-if value="{{ ePhone }}" hint-placeholder-val="{{ false }}"><span style="display: block; font-family: var(--font-sans); font-size: 11.5px; color: #c0392b; margin-top: 5px;">{{ ePhone }}</span></sc-if>
         </div>
         <div>
-          <label style="display: block; font-family: 'Manrope', sans-serif; font-size: 10.5px; font-weight: 600; color: #555550; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;">Email <span style="color: #DD8758;">*</span></label>
-          <input type="email" value="{{ fEmail }}" onChange="{{ chEmail }}" placeholder="seu@email.com.br" style="width: 100%; padding: 12px 14px; border: 1px solid rgba(49,91,44,0.2); border-radius: 8px; font-family: 'Manrope', sans-serif; font-size: 14px; color: #1a1a18; background: #FAFAF9; outline: none; transition: border-color 0.2s, box-shadow 0.2s;" style-focus="border-color: #315B2C; background: #FFFFFF; box-shadow: 0 0 0 3px rgba(49,91,44,0.08);">
-          <sc-if value="{{ eEmail }}" hint-placeholder-val="{{ false }}"><span style="display: block; font-family: 'Manrope', sans-serif; font-size: 11.5px; color: #c0392b; margin-top: 5px;">{{ eEmail }}</span></sc-if>
+          <label style="display: block; font-family: var(--font-sans); font-size: 10.5px; font-weight: 600; color: #555550; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;">Email <span style="color: #DD8758;">*</span></label>
+          <input type="email" value="{{ fEmail }}" onChange="{{ chEmail }}" placeholder="seu@email.com.br" style="width: 100%; padding: 12px 14px; border: 1px solid rgba(49,91,44,0.2); border-radius: 8px; font-family: var(--font-sans); font-size: 14px; color: #1a1a18; background: #FAFAF9; outline: none; transition: border-color 0.2s, box-shadow 0.2s;" style-focus="border-color: #315B2C; background: #FFFFFF; box-shadow: 0 0 0 3px rgba(49,91,44,0.08);">
+          <sc-if value="{{ eEmail }}" hint-placeholder-val="{{ false }}"><span style="display: block; font-family: var(--font-sans); font-size: 11.5px; color: #c0392b; margin-top: 5px;">{{ eEmail }}</span></sc-if>
         </div>
       </div>
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
         <div>
-          <label style="display: block; font-family: 'Manrope', sans-serif; font-size: 10.5px; font-weight: 600; color: #555550; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;">Município</label>
-          <input type="text" value="{{ fCity }}" onChange="{{ chCity }}" placeholder="Sua cidade" style="width: 100%; padding: 12px 14px; border: 1px solid rgba(49,91,44,0.2); border-radius: 8px; font-family: 'Manrope', sans-serif; font-size: 14px; color: #1a1a18; background: #FAFAF9; outline: none; transition: border-color 0.2s, box-shadow 0.2s;" style-focus="border-color: #315B2C; background: #FFFFFF; box-shadow: 0 0 0 3px rgba(49,91,44,0.08);">
+          <label style="display: block; font-family: var(--font-sans); font-size: 10.5px; font-weight: 600; color: #555550; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;">Município</label>
+          <input type="text" value="{{ fCity }}" onChange="{{ chCity }}" placeholder="Sua cidade" style="width: 100%; padding: 12px 14px; border: 1px solid rgba(49,91,44,0.2); border-radius: 8px; font-family: var(--font-sans); font-size: 14px; color: #1a1a18; background: #FAFAF9; outline: none; transition: border-color 0.2s, box-shadow 0.2s;" style-focus="border-color: #315B2C; background: #FFFFFF; box-shadow: 0 0 0 3px rgba(49,91,44,0.08);">
         </div>
         <div>
-          <label style="display: block; font-family: 'Manrope', sans-serif; font-size: 10.5px; font-weight: 600; color: #555550; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;">Estado</label>
-          <select value="{{ fSt }}" onChange="{{ chSt }}" style="width: 100%; padding: 12px 14px; border: 1px solid rgba(49,91,44,0.2); border-radius: 8px; font-family: 'Manrope', sans-serif; font-size: 14px; color: #1a1a18; background: #FAFAF9; outline: none; appearance: none; -webkit-appearance: none; transition: border-color 0.2s; cursor: pointer;" style-focus="border-color: #315B2C; background: #FFFFFF; box-shadow: 0 0 0 3px rgba(49,91,44,0.08);">
+          <label style="display: block; font-family: var(--font-sans); font-size: 10.5px; font-weight: 600; color: #555550; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;">Estado</label>
+          <select value="{{ fSt }}" onChange="{{ chSt }}" style="width: 100%; padding: 12px 14px; border: 1px solid rgba(49,91,44,0.2); border-radius: 8px; font-family: var(--font-sans); font-size: 14px; color: #1a1a18; background: #FAFAF9; outline: none; appearance: none; -webkit-appearance: none; transition: border-color 0.2s; cursor: pointer;" style-focus="border-color: #315B2C; background: #FFFFFF; box-shadow: 0 0 0 3px rgba(49,91,44,0.08);">
             <option value="">Selecione o estado</option>
             <option value="AC">Acre</option><option value="AL">Alagoas</option><option value="AM">Amazonas</option><option value="AP">Amapá</option><option value="BA">Bahia</option><option value="CE">Ceará</option><option value="DF">Distrito Federal</option><option value="ES">Espírito Santo</option><option value="GO">Goiás</option><option value="MA">Maranhão</option><option value="MG">Minas Gerais</option><option value="MS">Mato Grosso do Sul</option><option value="MT">Mato Grosso</option><option value="PA">Pará</option><option value="PB">Paraíba</option><option value="PE">Pernambuco</option><option value="PI">Piauí</option><option value="PR">Paraná</option><option value="RJ">Rio de Janeiro</option><option value="RN">Rio Grande do Norte</option><option value="RO">Rondônia</option><option value="RR">Roraima</option><option value="RS">Rio Grande do Sul</option><option value="SC">Santa Catarina</option><option value="SE">Sergipe</option><option value="SP">São Paulo</option><option value="TO">Tocantins</option>
           </select>
         </div>
       </div>
       <div style="margin-bottom: 20px;">
-        <label style="display: block; font-family: 'Manrope', sans-serif; font-size: 10.5px; font-weight: 600; color: #555550; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;">Serviço de Interesse</label>
-        <select value="{{ fSvc }}" onChange="{{ chSvc }}" style="width: 100%; padding: 12px 14px; border: 1px solid rgba(49,91,44,0.2); border-radius: 8px; font-family: 'Manrope', sans-serif; font-size: 14px; color: #1a1a18; background: #FAFAF9; outline: none; appearance: none; -webkit-appearance: none; transition: border-color 0.2s; cursor: pointer;" style-focus="border-color: #315B2C; background: #FFFFFF; box-shadow: 0 0 0 3px rgba(49,91,44,0.08);">
+        <label style="display: block; font-family: var(--font-sans); font-size: 10.5px; font-weight: 600; color: #555550; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;">Serviço de Interesse</label>
+        <select value="{{ fSvc }}" onChange="{{ chSvc }}" style="width: 100%; padding: 12px 14px; border: 1px solid rgba(49,91,44,0.2); border-radius: 8px; font-family: var(--font-sans); font-size: 14px; color: #1a1a18; background: #FAFAF9; outline: none; appearance: none; -webkit-appearance: none; transition: border-color 0.2s; cursor: pointer;" style-focus="border-color: #315B2C; background: #FFFFFF; box-shadow: 0 0 0 3px rgba(49,91,44,0.08);">
           <option value="">Selecione o serviço</option>
           <option value="regularizacao">Regularização Fundiária</option>
           <option value="licenciamento">Licenciamento Ambiental</option>
@@ -466,18 +475,18 @@
         </select>
       </div>
       <div style="margin-bottom: 24px;">
-        <label style="display: block; font-family: 'Manrope', sans-serif; font-size: 10.5px; font-weight: 600; color: #555550; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;">Mensagem <span style="color: #DD8758;">*</span></label>
-        <textarea value="{{ fMsg }}" onChange="{{ chMsg }}" rows="4" placeholder="Descreva brevemente seu projeto ou necessidade…" style="width: 100%; padding: 12px 14px; border: 1px solid rgba(49,91,44,0.2); border-radius: 8px; font-family: 'Manrope', sans-serif; font-size: 14px; color: #1a1a18; background: #FAFAF9; outline: none; resize: vertical; min-height: 110px; line-height: 1.65; transition: border-color 0.2s, box-shadow 0.2s;" style-focus="border-color: #315B2C; background: #FFFFFF; box-shadow: 0 0 0 3px rgba(49,91,44,0.08);"></textarea>
-        <sc-if value="{{ eMsg }}" hint-placeholder-val="{{ false }}"><span style="display: block; font-family: 'Manrope', sans-serif; font-size: 11.5px; color: #c0392b; margin-top: 5px;">{{ eMsg }}</span></sc-if>
+        <label style="display: block; font-family: var(--font-sans); font-size: 10.5px; font-weight: 600; color: #555550; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;">Mensagem <span style="color: #DD8758;">*</span></label>
+        <textarea value="{{ fMsg }}" onChange="{{ chMsg }}" rows="4" placeholder="Descreva brevemente seu projeto ou necessidade…" style="width: 100%; padding: 12px 14px; border: 1px solid rgba(49,91,44,0.2); border-radius: 8px; font-family: var(--font-sans); font-size: 14px; color: #1a1a18; background: #FAFAF9; outline: none; resize: vertical; min-height: 110px; line-height: 1.65; transition: border-color 0.2s, box-shadow 0.2s;" style-focus="border-color: #315B2C; background: #FFFFFF; box-shadow: 0 0 0 3px rgba(49,91,44,0.08);"></textarea>
+        <sc-if value="{{ eMsg }}" hint-placeholder-val="{{ false }}"><span style="display: block; font-family: var(--font-sans); font-size: 11.5px; color: #c0392b; margin-top: 5px;">{{ eMsg }}</span></sc-if>
       </div>
       <div style="display: flex; align-items: flex-start; gap: 12px; padding: 16px; background: #F8F7F3; border-radius: 8px; margin-bottom: 28px;">
         <input type="checkbox" id="c-privacy" checked="{{ fOk }}" onChange="{{ chOk }}" style="width: 18px; height: 18px; accent-color: #315B2C; margin-top: 2px; cursor: pointer; flex-shrink: 0;">
-        <label for="c-privacy" style="font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 400; color: #555550; line-height: 1.65; cursor: pointer;">
+        <label for="c-privacy" style="font-family: var(--font-sans); font-size: 13px; font-weight: 400; color: #555550; line-height: 1.65; cursor: pointer;">
           Li e concordo com a <a href="#" style="color: #315B2C; text-decoration: underline; text-underline-offset: 2px;">Política de Privacidade</a> da AgroVisão.
           <sc-if value="{{ eOk }}" hint-placeholder-val="{{ false }}"><span style="display: block; font-size: 11.5px; color: #c0392b; margin-top: 4px;">{{ eOk }}</span></sc-if>
         </label>
       </div>
-      <button type="submit" disabled="{{ mSending }}" style="width: 100%; padding: 16px; background: #315B2C; color: #F6F4EF; font-family: 'Manrope', sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; border: none; border-radius: 8px; cursor: pointer; transition: background 0.25s;" style-hover="background: #254822;">{{ mBtnLabel }}</button>
+      <button type="submit" disabled="{{ mSending }}" style="width: 100%; padding: 16px; background: #315B2C; color: #F6F4EF; font-family: var(--font-sans); font-size: 11.5px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; border: none; border-radius: 8px; cursor: pointer; transition: background 0.25s;" style-hover="background: #254822;">{{ mBtnLabel }}</button>
     </form>
     </sc-if>
     <sc-if value="{{ mSuccess }}" hint-placeholder-val="{{ false }}">
@@ -485,9 +494,9 @@
       <div style="width: 64px; height: 64px; background: #F5F8F3; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; border: 1.5px solid rgba(49,91,44,0.15);">
         <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M5 14L11 20L23 8" stroke="#315B2C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
       </div>
-      <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 34px; font-weight: 400; color: #1a1a18; margin-bottom: 16px;">Solicitação Enviada!</h3>
-      <p style="font-family: 'Manrope', sans-serif; font-size: 15px; font-weight: 400; color: #555550; line-height: 1.75; max-width: 380px; margin: 0 auto 40px;">Nossa equipe entrará em contato em até <strong style="color: #315B2C;">24 horas úteis</strong>. Obrigado pelo interesse na AgroVisão.</p>
-      <button onClick="{{ closeModal }}" style="padding: 14px 44px; background: #315B2C; color: #F6F4EF; font-family: 'Manrope', sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; border: none; border-radius: 8px; cursor: pointer; transition: background 0.25s;" style-hover="background: #254822;">Fechar</button>
+      <h3 style="font-family: 'Barlow', sans-serif; font-size: 34px; font-weight: 400; color: #1a1a18; margin-bottom: 16px;">Solicitação Enviada!</h3>
+      <p style="font-family: var(--font-sans); font-size: 15px; font-weight: 400; color: #555550; line-height: 1.75; max-width: 380px; margin: 0 auto 40px;">Nossa equipe entrará em contato em até <strong style="color: #315B2C;">24 horas úteis</strong>. Obrigado pelo interesse na AgroVisão.</p>
+      <button onClick="{{ closeModal }}" style="padding: 14px 44px; background: #315B2C; color: #F6F4EF; font-family: var(--font-sans); font-size: 11.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; border: none; border-radius: 8px; cursor: pointer; transition: background 0.25s;" style-hover="background: #254822;">Fechar</button>
     </div>
     </sc-if>
   </div>
@@ -659,5 +668,8 @@ class Component extends DCLogic {
 }
 </script>
 <script src="./assets/js/drawer.js"></script>
+<script src="./src/i18n/vendor/i18next.min.js"></script>
+<script src="./src/i18n/vendor/i18nextBrowserLanguageDetector.min.js"></script>
+<script src="./src/i18n/index.js"></script>
 </body>
 </html>
