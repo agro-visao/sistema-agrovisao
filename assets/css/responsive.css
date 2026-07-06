@@ -148,10 +148,10 @@ body.drawer-open {
 .drawer-link {
   display: block;
   padding: 13px 16px;
-  font-family: "Manrope", sans-serif;
+  font-family: var(--font-sans);
   font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--letter-spacing-wider);
   text-transform: uppercase;
   color: rgba(246, 244, 239, 0.72);
   text-decoration: none;
@@ -193,10 +193,10 @@ body.drawer-open {
   padding: 14px 24px;
   background: #315b2c;
   color: #f6f4ef;
-  font-family: "Manrope", sans-serif;
+  font-family: var(--font-sans);
   font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--letter-spacing-wider);
   text-transform: uppercase;
   text-decoration: none;
   border-radius: 8px;
