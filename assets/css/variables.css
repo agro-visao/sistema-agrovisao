@@ -36,7 +36,37 @@
 
   /* ── Tipografia ──────────────────────────────────────────────────── */
   --font-serif:  'Cormorant Garamond', serif;
-  --font-sans:   'Manrope', sans-serif;
+  --font-sans:   'Barlow', sans-serif;
+
+  /* ── Escala Tipográfica (baseado Instituto Ayrton Senna) ────────── */
+  --font-size-xs:     11px;
+  --font-size-sm:     13px;
+  --font-size-base:   16px;
+  --font-size-lg:     18px;
+  --font-size-xl:     24px;
+  --font-size-2xl:    32px;
+  --font-size-3xl:    40px;
+
+  /* ── Font Weights (Barlow: 300, 400, 500, 600, 700) ────────────── */
+  --font-weight-light:   300;
+  --font-weight-normal:  400;
+  --font-weight-medium:  500;
+  --font-weight-semibold: 600;
+  --font-weight-bold:    700;
+
+  /* ── Line Heights (hierarquia visual) ───────────────────────────── */
+  --line-height-tight:   1.1;
+  --line-height-normal:  1.4;
+  --line-height-relaxed: 1.6;
+  --line-height-loose:   1.8;
+
+  /* ── Letter Spacing ───────────────────────────────────────────────
+     Alinhado com padrão do Instituto Ayrton Senna ──────────────────── */
+  --letter-spacing-compact:  0em;
+  --letter-spacing-normal:   0.01em;
+  --letter-spacing-wide:     0.02em;
+  --letter-spacing-wider:    0.1em;
+  --letter-spacing-widest:   0.15em;
 
   /* ── Espaçamentos base ───────────────────────────────────────────── */
   --space-xs:   8px;
