@@ -58,7 +58,7 @@
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 4px;
   margin: 0 auto;
   flex: 1;
   justify-content: center;
@@ -75,28 +75,27 @@
   height: 40px;
   font-family: var(--font-sans) !important;
   font-size: 12.5px !important;
-  font-weight: 700 !important;
+  font-weight: 600 !important;
   letter-spacing: 0.04em !important;
   text-transform: uppercase;
   /* Verde institucional escuro, sólido — contraste ~7.9:1 sobre fundo
      branco (WCAG AAA). Sem opacidade/transparência reduzida. */
   color: #315B2C !important;
   text-decoration: none !important;
-  border-radius: 7px;
+  border-radius: 2px;
   /* !important: o HTML já define "transition" inline (ex.: opacity 0.2s),
      que sem isso substituiria por completo a transição de background/color */
   transition: background 0.22s ease, color 0.22s ease !important;
   border: none;
-  background: transparent;
+  background: transparent !important;
   cursor: pointer;
   white-space: nowrap;
 }
 
-/* ─── Hover e Estado Ativo — mesmo conceito visual ───────────────────── */
+/* ─── Hover ──────────────────────────────────────────────────────────── */
 
-.nav-links > a:hover,
-.nav-links > a[style*="border-bottom: 1px"] {
-  background: #315B2C;
+.nav-links > a:hover {
+  background: #315B2C !important;
   color: #FFFFFF !important;
 }
 
@@ -105,7 +104,10 @@
   outline-offset: 2px;
 }
 
+/* ─── Estado Ativo — indicação discreta ──────────────────────────────── */
+
 .nav-links > a[style*="border-bottom: 1px"] {
+  font-weight: 700 !important;
   border-bottom: none !important;
   padding-bottom: 10px !important;
 }
@@ -115,22 +117,23 @@
 .nav-links > a[style*="background: #315B2C"] {
   margin-left: 14px;
   padding: 11px 26px !important;
-  background: #315B2C !important;
-  color: #F6F4EF !important;
+  background: #FFFFFF !important;
+  color: #315B2C !important;
   font-weight: 700 !important;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(49, 91, 44, 0.28);
-  transition: background 0.22s ease, box-shadow 0.22s ease, transform 0.22s ease !important;
+  border: 2px solid #315B2C !important;
+  border-radius: 2px;
+  box-shadow: none;
+  transition: background 0.22s ease, color 0.22s ease, box-shadow 0.22s ease !important;
 }
 
 .nav-links > a[style*="background: #315B2C"]:hover {
-  background: #254822 !important;
-  box-shadow: 0 4px 14px rgba(49, 91, 44, 0.36);
-  transform: translateY(-1px);
+  background: #315B2C !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 2px 8px rgba(49, 91, 44, 0.28);
 }
 
 .nav-links > a[style*="background: #315B2C"]:focus-visible {
-  outline: 2px solid #B8D48A;
+  outline: 2px solid #315B2C;
   outline-offset: 2px;
 }
 
@@ -202,7 +205,7 @@
   border: none;
   cursor: pointer;
   color: #F6F4EF;
-  border-radius: 8px;
+  border-radius: 2px;
   transition: background 0.2s ease;
 }
 
@@ -284,7 +287,7 @@
   height: 40px;
   background: rgba(184, 212, 138, 0.08);
   border: 1px solid rgba(184, 212, 138, 0.15);
-  border-radius: 8px;
+  border-radius: 2px;
   color: #B8D48A;
   cursor: pointer;
   flex-shrink: 0;
@@ -316,12 +319,12 @@
   padding: 14px 16px;
   font-family: var(--font-sans);
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: rgba(246, 244, 239, 0.78);
   text-decoration: none;
-  border-radius: 7px;
+  border-radius: 2px;
   transition: background 0.2s ease, color 0.2s ease;
 }
 
@@ -336,12 +339,13 @@
 }
 
 .drawer-link--active {
-  background: #1a3a15;
-  color: #FFFFFF;
+  font-weight: 700;
+  color: rgba(246, 244, 239, 0.78);
 }
 
 .drawer-link--active:hover {
-  background: #142c10;
+  background: #1a3a15;
+  color: #FFFFFF;
 }
 
 /* ─── Drawer Language Switcher ───────────────────────────────────────── */
@@ -396,26 +400,28 @@
   display: block;
   text-align: center;
   padding: 14px 24px;
-  background: #315B2C;
-  color: #F6F4EF;
+  background: #FFFFFF;
+  color: #315B2C;
   font-family: var(--font-sans);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   text-decoration: none;
-  border-radius: 8px;
-  transition: background 0.22s ease, box-shadow 0.22s ease;
-  box-shadow: 0 2px 8px rgba(49, 91, 44, 0.22);
+  border: 2px solid #315B2C;
+  border-radius: 2px;
+  transition: background 0.22s ease, color 0.22s ease, box-shadow 0.22s ease;
+  box-shadow: none;
 }
 
 .drawer-cta:hover {
-  background: #254822;
-  box-shadow: 0 4px 12px rgba(49, 91, 44, 0.3);
+  background: #315B2C;
+  color: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(49, 91, 44, 0.28);
 }
 
 .drawer-cta:focus-visible {
-  outline: 2px solid #B8D48A;
+  outline: 2px solid #315B2C;
   outline-offset: 2px;
 }
 
