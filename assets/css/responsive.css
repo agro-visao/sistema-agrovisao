@@ -270,12 +270,8 @@ body.drawer-open {
 ═══════════════════════════════════════════════════════════════════════ */
 
 @media (max-width: 1023px) {
-  /* esconde o menu horizontal e seletor de idiomas desktop */
-  .nav-links {
-    display: none !important;
-  }
-
-  .nav-lang {
+  /* esconde o menu horizontal, seletor de idiomas e ações desktop */
+  .nav-right {
     display: none !important;
   }
 

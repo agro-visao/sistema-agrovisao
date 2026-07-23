@@ -25,26 +25,29 @@
 </helmet>
 
 <!-- ─── NAV ────────────────────────────────────────────────────────── -->
-<nav class="nav" style="position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 22px 64px; display: flex; align-items: center; justify-content: space-between; background: {{ navBg }}; border-bottom: {{ navBorder }}; transition: background 0.5s ease, border-bottom-color 0.5s ease;">
+<nav class="nav" style="position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; align-items: center; justify-content: space-between; background: {{ navBg }}; border-bottom: {{ navBorder }}; transition: background 0.5s ease, border-bottom-color 0.5s ease;">
   <div class="nav-logo" style="{{ navEntryStyle }}">
     <a href="./index.html" style="display: flex; align-items: center; gap: 14px; text-decoration: none; color: {{ logoColor }}; transition: color 0.5s ease;">
-      <img src="./assets/logos/agrovisao/logo-agro-visao-v1.png" alt="AgroVisão" style="height: 50px; width: 130px; display: block; object-fit: cover;">
+      <img src="./assets/logos/agrovisao/logo-agro-visao-v1.png" alt="AgroVisão" style="height: 58px; width: auto; display: block; max-width: none; object-fit: unset;">
     </a>
   </div>
   <button class="nav-hamburger" aria-label="Abrir menu" aria-expanded="false" aria-controls="drawer" style="color: {{ navColor }};">
     <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true"><rect y="3" width="22" height="2.5" rx="1.25" fill="currentColor"/><rect y="9.75" width="22" height="2.5" rx="1.25" fill="currentColor"/><rect y="16.5" width="22" height="2.5" rx="1.25" fill="currentColor"/></svg>
   </button>
-  <div class="nav-links" style="{{ navLinksEntryStyle }}; display: flex; align-items: center; gap: 40px;">
-    <a href="./index.html" style="font-family: var(--font-sans); font-size: 11px; font-weight: 600; color: {{ navColor }}; text-decoration: none; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: {{ navTextShadow }}; transition: opacity 0.2s, color 0.5s;" style-hover="opacity: 0.72;">Home</a>
-    <a href="./sobre.html" style="font-family: var(--font-sans); font-size: 11px; font-weight: 600; color: {{ navColor }}; text-decoration: none; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: {{ navTextShadow }}; transition: opacity 0.2s, color 0.5s;" style-hover="opacity: 0.72;">Sobre</a>
-    <a href="./servicos.html" style="font-family: var(--font-sans); font-size: 11px; font-weight: 600; color: {{ navColor }}; text-decoration: none; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: {{ navTextShadow }}; transition: opacity 0.2s, color 0.5s;" style-hover="opacity: 0.72;">Serviços</a>
-    <a href="./projetos.html" style="font-family: var(--font-sans); font-size: 11px; font-weight: 600; color: {{ navColor }}; text-decoration: none; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: {{ navTextShadow }}; border-bottom: 1px solid currentColor; padding-bottom: 2px; transition: color 0.5s;">Projetos</a>
-    <a href="./contato.html" style="font-family: var(--font-sans); font-size: 11px; font-weight: 600; color: {{ navColor }}; text-decoration: none; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: {{ navTextShadow }}; transition: opacity 0.2s, color 0.5s;" style-hover="opacity: 0.72;">Contato</a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="./index.html" style="font-family: var(--font-sans); font-size: 16px; font-weight: 700; color: {{ navColor }}; text-decoration: none; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: {{ navTextShadow }}; transition: opacity 0.2s, color 0.5s;" style-hover="opacity: 0.72;">Home</a>
+      <a href="./sobre.html" style="font-family: var(--font-sans); font-size: 16px; font-weight: 700; color: {{ navColor }}; text-decoration: none; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: {{ navTextShadow }}; transition: opacity 0.2s, color 0.5s;" style-hover="opacity: 0.72;">Sobre</a>
+      <a href="./servicos.html" style="font-family: var(--font-sans); font-size: 16px; font-weight: 700; color: {{ navColor }}; text-decoration: none; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: {{ navTextShadow }}; transition: opacity 0.2s, color 0.5s;" style-hover="opacity: 0.72;">Serviços</a>
+      <a href="./projetos.html" style="font-family: var(--font-sans); font-size: 16px; font-weight: 700; color: {{ navColor }}; text-decoration: none; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: {{ navTextShadow }}; border-bottom: 1px solid currentColor; padding-bottom: 2px; transition: color 0.5s;">Projetos</a>
+      <a href="./vendas.html" style="font-family: var(--font-sans); font-size: 16px; font-weight: 700; color: {{ navColor }}; text-decoration: none; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: {{ navTextShadow }}; transition: opacity 0.2s, color 0.5s;" style-hover="opacity: 0.72;">Vendas</a>
+      <a href="./contato.html" style="font-family: var(--font-sans); font-size: 16px; font-weight: 700; color: {{ navColor }}; text-decoration: none; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: {{ navTextShadow }}; transition: opacity 0.2s, color 0.5s;" style-hover="opacity: 0.72;">Contato</a>
+    </div>
     <a href="#" onClick="{{ openModal }}" class="nav-cta">Fale Conosco</a>
-  </div>
-  <div class="nav-lang" aria-label="Seletor de idioma">
-    <a href="#" class="nav-lang-item is-active" aria-label="Português" aria-current="true">PT<img src="./assets/icons/br-flag.png" alt="" class="nav-lang-flag"></a>
-    <a href="#" class="nav-lang-item" aria-label="English">EN<img src="./assets/icons/eua-flag.png" alt="" class="nav-lang-flag"></a>
+    <div class="nav-lang" aria-label="Seletor de idioma">
+      <a href="#" class="nav-lang-item is-active" aria-label="Português" aria-current="true">PT<img src="./assets/icons/br-flag.png" alt="" class="nav-lang-flag"></a>
+      <a href="#" class="nav-lang-item" aria-label="English">EN<img src="./assets/icons/eua-flag.png" alt="" class="nav-lang-flag"></a>
+    </div>
   </div>
 </nav>
 <!-- ─── DRAWER ─────────────────────────────────────────────────────── -->
@@ -61,6 +64,7 @@
     <a href="./sobre.html" class="drawer-link">Sobre</a>
     <a href="./servicos.html" class="drawer-link">Serviços</a>
     <a href="./projetos.html" class="drawer-link drawer-link--active">Projetos</a>
+    <a href="./vendas.html" class="drawer-link">Vendas</a>
     <a href="./contato.html" class="drawer-link">Contato</a>
   </nav>
   <div class="drawer-lang" aria-label="Seletor de idioma">
