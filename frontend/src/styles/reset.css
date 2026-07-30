@@ -1,0 +1,11 @@
+/* ─── Reset ──────────────────────────────────────────────────────────
+   Zera margens, paddings e define box-sizing global.
+   ──────────────────────────────────────────────────────────────────── */
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
