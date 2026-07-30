@@ -28,7 +28,7 @@
 <nav class="nav" style="position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; align-items: center; justify-content: space-between; background: {{ navBg }}; border-bottom: {{ navBorder }}; transition: background 0.5s ease, border-bottom-color 0.5s ease;">
   <div class="nav-logo" style="{{ navEntryStyle }}">
     <a href="./index.html" style="display: flex; align-items: center; gap: 14px; text-decoration: none; color: {{ logoColor }}; transition: color 0.5s ease;">
-      <img src="./assets/logos/agrovisao/logo-agro-visao-v1.png" alt="AgroVisão" style="height: 58px; width: auto; display: block; max-width: none; object-fit: unset;">
+      <img src="./assets/logos/agrovisao/logo-agro-visao-v1-2.svg" alt="AgroVisão" style="height: 58px; width: auto; display: block; max-width: none; object-fit: unset;">
     </a>
   </div>
   <button class="nav-hamburger" aria-label="Abrir menu" aria-expanded="false" aria-controls="drawer" style="color: {{ navColor }};">
@@ -54,7 +54,7 @@
 <div class="drawer-overlay" aria-hidden="true"></div>
 <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Menu de navegação" aria-hidden="true">
   <div class="drawer-header">
-    <img src="./assets/logos/agrovisao/logo-agro-visao-v1.png" alt="AgroVisão" width="130" height="42" class="drawer-logo">
+    <img src="./assets/logos/agrovisao/logo-agro-visao-v1-2.svg" alt="AgroVisão" width="130" height="42" class="drawer-logo">
     <button class="drawer-close" aria-label="Fechar menu">
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 3l14 14M17 3L3 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
     </button>
@@ -114,83 +114,24 @@
       <h2 style="font-family: 'Barlow', sans-serif; font-size: clamp(34px, 3.6vw, 50px); font-weight: 400; color: #1a1a18; line-height: 1.1; letter-spacing: -0.015em;">Catálogo de Mudas de Açaí</h2>
     </div>
     <div class="products-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;" data-animate="" data-d="1">
-
-      <!-- PRODUTO 1 -->
-      <div class="product-card" style="background: #FFFFFF; border-radius: 14px; overflow: hidden; border: 1px solid rgba(49,91,44,0.08); transition: transform 0.22s, box-shadow 0.22s;" style-hover="transform: translateY(-4px); box-shadow: 0 12px 40px rgba(49,91,44,0.10);">
-        <div style="position: relative; height: 240px; overflow: hidden; background: #F5F8F3;">
-          <img src="https://images.unsplash.com/photo-1464226184081-280282a34a4d?w=500&q=88&fm=jpg&fit=crop" alt="Muda de Açaí Premium" style="width: 100%; height: 100%; object-fit: cover; display: block;">
-        </div>
-        <div style="padding: 24px;">
-          <h3 style="font-family: 'Barlow', sans-serif; font-size: 18px; font-weight: 500; color: #1a1a18; margin-bottom: 8px; line-height: 1.25;">Açaí Premium</h3>
-          <p style="font-family: var(--font-sans); font-size: 13px; font-weight: 400; color: #777772; line-height: 1.65; margin-bottom: 16px;">Muda com 6 meses de desenvolvimento, pronta para o plantio em solo previamente preparado.</p>
-          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 20px;">
-            <span style="font-family: 'Barlow', sans-serif; font-size: 16px; font-weight: 600; color: #315B2C;">R$ 35,00</span>
-            <span style="font-family: var(--font-sans); font-size: 11px; font-weight: 400; color: #999994; text-decoration: line-through;">R$ 45,00</span>
+      <sc-for list="{{ productList }}" as="p" hint-placeholder-count="5">
+        <div class="product-card" style="background: #FFFFFF; border-radius: 14px; overflow: hidden; border: 1px solid rgba(49,91,44,0.08); transition: transform 0.22s, box-shadow 0.22s;" style-hover="transform: translateY(-4px); box-shadow: 0 12px 40px rgba(49,91,44,0.10);">
+          <div style="position: relative; height: 240px; overflow: hidden; background: #F5F8F3;">
+            <img src="{{ p.image_url }}" alt="{{ p.name }}" style="width: 100%; height: 100%; object-fit: cover; display: block;">
           </div>
-          <a href="https://api.whatsapp.com/send?phone=5591982064340&text=Olá!%20Tenho%20interesse%20em%20comprar%20Açaí%20Premium.%20Gostaria%20de%20receber%20mais%20informações." target="_blank" rel="noopener noreferrer" style="display: block; width: 100%; padding: 12px; text-align: center; background: #25D366; color: #FFFFFF; font-family: var(--font-sans); font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; border-radius: 8px; transition: background 0.22s; border: none; cursor: pointer;" style-hover="background: #1ea952;">💬 Comprar pelo WhatsApp</a>
-        </div>
-      </div>
-
-      <!-- PRODUTO 2 -->
-      <div class="product-card" style="background: #FFFFFF; border-radius: 14px; overflow: hidden; border: 1px solid rgba(49,91,44,0.08); transition: transform 0.22s, box-shadow 0.22s;" style-hover="transform: translateY(-4px); box-shadow: 0 12px 40px rgba(49,91,44,0.10);">
-        <div style="position: relative; height: 240px; overflow: hidden; background: #F5F8F3;">
-          <img src="https://images.unsplash.com/photo-1464226184081-280282a34a4d?w=500&q=88&fm=jpg&fit=crop&crop=entropy&cs=tinysrgb" alt="Muda de Açaí Vigorosa" style="width: 100%; height: 100%; object-fit: cover; display: block;">
-        </div>
-        <div style="padding: 24px;">
-          <h3 style="font-family: 'Barlow', sans-serif; font-size: 18px; font-weight: 500; color: #1a1a18; margin-bottom: 8px; line-height: 1.25;">Açaí Vigorosa</h3>
-          <p style="font-family: var(--font-sans); font-size: 13px; font-weight: 400; color: #777772; line-height: 1.65; margin-bottom: 16px;">Variedade selecionada para alta produtividade. Sistema radicular bem desenvolvido e resistente.</p>
-          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 20px;">
-            <span style="font-family: 'Barlow', sans-serif; font-size: 16px; font-weight: 600; color: #315B2C;">R$ 40,00</span>
+          <div style="padding: 24px;">
+            <h3 style="font-family: 'Barlow', sans-serif; font-size: 18px; font-weight: 500; color: #1a1a18; margin-bottom: 8px; line-height: 1.25;">{{ p.name }}</h3>
+            <p style="font-family: var(--font-sans); font-size: 13px; font-weight: 400; color: #777772; line-height: 1.65; margin-bottom: 16px;">{{ p.description }}</p>
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 20px;">
+              <span style="font-family: 'Barlow', sans-serif; font-size: 16px; font-weight: 600; color: #315B2C;">R$ {{ p.price }}</span>
+              <sc-if value="{{ p.hasCompare }}">
+                <span style="font-family: var(--font-sans); font-size: 11px; font-weight: 400; color: #999994; text-decoration: line-through;">R$ {{ p.comparePrice }}</span>
+              </sc-if>
+            </div>
+            <a href="https://api.whatsapp.com/send?phone=5591982064340&text={{ p.whatsappTextEncoded }}" target="_blank" rel="noopener noreferrer" style="display: block; width: 100%; padding: 12px; text-align: center; background: #25D366; color: #FFFFFF; font-family: var(--font-sans); font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; border-radius: 8px; transition: background 0.22s; border: none; cursor: pointer;" style-hover="background: #1ea952;">💬 Comprar pelo WhatsApp</a>
           </div>
-          <a href="https://api.whatsapp.com/send?phone=5591982064340&text=Olá!%20Tenho%20interesse%20em%20comprar%20Açaí%20Vigorosa.%20Gostaria%20de%20receber%20mais%20informações." target="_blank" rel="noopener noreferrer" style="display: block; width: 100%; padding: 12px; text-align: center; background: #25D366; color: #FFFFFF; font-family: var(--font-sans); font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; border-radius: 8px; transition: background 0.22s; border: none; cursor: pointer;" style-hover="background: #1ea952;">💬 Comprar pelo WhatsApp</a>
         </div>
-      </div>
-
-      <!-- PRODUTO 3 -->
-      <div class="product-card" style="background: #FFFFFF; border-radius: 14px; overflow: hidden; border: 1px solid rgba(49,91,44,0.08); transition: transform 0.22s, box-shadow 0.22s;" style-hover="transform: translateY(-4px); box-shadow: 0 12px 40px rgba(49,91,44,0.10);">
-        <div style="position: relative; height: 240px; overflow: hidden; background: #F5F8F3;">
-          <img src="https://images.unsplash.com/photo-1464226184081-280282a34a4d?w=500&q=88&fm=jpg&fit=crop&crop=edges" alt="Muda de Açaí Selecionada" style="width: 100%; height: 100%; object-fit: cover; display: block;">
-        </div>
-        <div style="padding: 24px;">
-          <h3 style="font-family: 'Barlow', sans-serif; font-size: 18px; font-weight: 500; color: #1a1a18; margin-bottom: 8px; line-height: 1.25;">Açaí Selecionada</h3>
-          <p style="font-family: var(--font-sans); font-size: 13px; font-weight: 400; color: #777772; line-height: 1.65; margin-bottom: 16px;">Genética privilegiada com potencial de produção aumentado. Ideal para cultivo em sistemas agroecológicos.</p>
-          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 20px;">
-            <span style="font-family: 'Barlow', sans-serif; font-size: 16px; font-weight: 600; color: #315B2C;">R$ 38,00</span>
-          </div>
-          <a href="https://api.whatsapp.com/send?phone=5591982064340&text=Olá!%20Tenho%20interesse%20em%20comprar%20Açaí%20Selecionada.%20Gostaria%20de%20receber%20mais%20informações." target="_blank" rel="noopener noreferrer" style="display: block; width: 100%; padding: 12px; text-align: center; background: #25D366; color: #FFFFFF; font-family: var(--font-sans); font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; border-radius: 8px; transition: background 0.22s; border: none; cursor: pointer;" style-hover="background: #1ea952;">💬 Comprar pelo WhatsApp</a>
-        </div>
-      </div>
-
-      <!-- PRODUTO 4 -->
-      <div class="product-card" style="background: #FFFFFF; border-radius: 14px; overflow: hidden; border: 1px solid rgba(49,91,44,0.08); transition: transform 0.22s, box-shadow 0.22s;" style-hover="transform: translateY(-4px); box-shadow: 0 12px 40px rgba(49,91,44,0.10);">
-        <div style="position: relative; height: 240px; overflow: hidden; background: #F5F8F3;">
-          <img src="https://images.unsplash.com/photo-1464226184081-280282a34a4d?w=500&q=88&fm=jpg&fit=crop&crop=north" alt="Muda de Açaí para Paisagismo" style="width: 100%; height: 100%; object-fit: cover; display: block;">
-        </div>
-        <div style="padding: 24px;">
-          <h3 style="font-family: 'Barlow', sans-serif; font-size: 18px; font-weight: 500; color: #1a1a18; margin-bottom: 8px; line-height: 1.25;">Açaí Paisagismo</h3>
-          <p style="font-family: var(--font-sans); font-size: 13px; font-weight: 400; color: #777772; line-height: 1.65; margin-bottom: 16px;">Muda ornamental com forma equilibrada. Perfeita para projetos de paisagismo sustentável e biodiversidade.</p>
-          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 20px;">
-            <span style="font-family: 'Barlow', sans-serif; font-size: 16px; font-weight: 600; color: #315B2C;">R$ 32,00</span>
-          </div>
-          <a href="https://api.whatsapp.com/send?phone=5591982064340&text=Olá!%20Tenho%20interesse%20em%20comprar%20Açaí%20Paisagismo.%20Gostaria%20de%20receber%20mais%20informações." target="_blank" rel="noopener noreferrer" style="display: block; width: 100%; padding: 12px; text-align: center; background: #25D366; color: #FFFFFF; font-family: var(--font-sans); font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; border-radius: 8px; transition: background 0.22s; border: none; cursor: pointer;" style-hover="background: #1ea952;">💬 Comprar pelo WhatsApp</a>
-        </div>
-      </div>
-
-      <!-- PRODUTO 5 -->
-      <div class="product-card" style="background: #FFFFFF; border-radius: 14px; overflow: hidden; border: 1px solid rgba(49,91,44,0.08); transition: transform 0.22s, box-shadow 0.22s;" style-hover="transform: translateY(-4px); box-shadow: 0 12px 40px rgba(49,91,44,0.10);">
-        <div style="position: relative; height: 240px; overflow: hidden; background: #F5F8F3;">
-          <img src="https://images.unsplash.com/photo-1464226184081-280282a34a4d?w=500&q=88&fm=jpg&fit=crop&crop=south" alt="Muda de Açaí Concentrada" style="width: 100%; height: 100%; object-fit: cover; display: block;">
-        </div>
-        <div style="padding: 24px;">
-          <h3 style="font-family: 'Barlow', sans-serif; font-size: 18px; font-weight: 500; color: #1a1a18; margin-bottom: 8px; line-height: 1.25;">Açaí Concentrada</h3>
-          <p style="font-family: var(--font-sans); font-size: 13px; font-weight: 400; color: #777772; line-height: 1.65; margin-bottom: 16px;">Variedade anã com maior densidade de frutos por metro. Ideal para cultivo em pequenas áreas com alta produção.</p>
-          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 20px;">
-            <span style="font-family: 'Barlow', sans-serif; font-size: 16px; font-weight: 600; color: #315B2C;">R$ 42,00</span>
-          </div>
-          <a href="https://api.whatsapp.com/send?phone=5591982064340&text=Olá!%20Tenho%20interesse%20em%20comprar%20Açaí%20Concentrada.%20Gostaria%20de%20receber%20mais%20informações." target="_blank" rel="noopener noreferrer" style="display: block; width: 100%; padding: 12px; text-align: center; background: #25D366; color: #FFFFFF; font-family: var(--font-sans); font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; border-radius: 8px; transition: background 0.22s; border: none; cursor: pointer;" style-hover="background: #1ea952;">💬 Comprar pelo WhatsApp</a>
-        </div>
-      </div>
-
+      </sc-for>
     </div>
   </div>
 </section>
@@ -321,7 +262,16 @@ class Component extends DCLogic {
     mOpen: false,
     mData: { name:'', company:'', phone:'', email:'', city:'', st:'', msg:'', ok: false },
     mErrs: {}, mSts: 'idle',
+    products: [], prodLoaded: false,
   };
+
+  _PRODUCTS_FALLBACK = [
+    { slug: 'acai-premium', name: 'Açaí Premium', description: 'Muda com 6 meses de desenvolvimento, pronta para o plantio em solo previamente preparado.', image_url: 'https://images.unsplash.com/photo-1464226184081-280282a34a4d?w=500&q=88&fm=jpg&fit=crop', price_cents: 3500, compare_price_cents: 4500, whatsapp_text: 'Olá! Tenho interesse em comprar Açaí Premium. Gostaria de receber mais informações.' },
+    { slug: 'acai-vigorosa', name: 'Açaí Vigorosa', description: 'Variedade selecionada para alta produtividade. Sistema radicular bem desenvolvido e resistente.', image_url: 'https://images.unsplash.com/photo-1464226184081-280282a34a4d?w=500&q=88&fm=jpg&fit=crop&crop=entropy&cs=tinysrgb', price_cents: 4000, compare_price_cents: null, whatsapp_text: 'Olá! Tenho interesse em comprar Açaí Vigorosa. Gostaria de receber mais informações.' },
+    { slug: 'acai-selecionada', name: 'Açaí Selecionada', description: 'Genética privilegiada com potencial de produção aumentado. Ideal para cultivo em sistemas agroecológicos.', image_url: 'https://images.unsplash.com/photo-1464226184081-280282a34a4d?w=500&q=88&fm=jpg&fit=crop&crop=edges', price_cents: 3800, compare_price_cents: null, whatsapp_text: 'Olá! Tenho interesse em comprar Açaí Selecionada. Gostaria de receber mais informações.' },
+    { slug: 'acai-paisagismo', name: 'Açaí Paisagismo', description: 'Muda ornamental com forma equilibrada. Perfeita para projetos de paisagismo sustentável e biodiversidade.', image_url: 'https://images.unsplash.com/photo-1464226184081-280282a34a4d?w=500&q=88&fm=jpg&fit=crop&crop=north', price_cents: 3200, compare_price_cents: null, whatsapp_text: 'Olá! Tenho interesse em comprar Açaí Paisagismo. Gostaria de receber mais informações.' },
+    { slug: 'acai-concentrada', name: 'Açaí Concentrada', description: 'Variedade anã com maior densidade de frutos por metro. Ideal para cultivo em pequenas áreas com alta produção.', image_url: 'https://images.unsplash.com/photo-1464226184081-280282a34a4d?w=500&q=88&fm=jpg&fit=crop&crop=south', price_cents: 4200, compare_price_cents: null, whatsapp_text: 'Olá! Tenho interesse em comprar Açaí Concentrada. Gostaria de receber mais informações.' },
+  ];
 
   componentDidMount() {
     setTimeout(() => this.setState({ entered: true }), 80);
@@ -335,6 +285,8 @@ class Component extends DCLogic {
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); this._io.unobserve(e.target); } });
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
     document.querySelectorAll('[data-animate]').forEach(el => this._io.observe(el));
+
+    this._loadProducts();
   }
 
   componentWillUnmount() {
@@ -342,11 +294,37 @@ class Component extends DCLogic {
     if (this._io) this._io.disconnect();
   }
 
+  async _loadProducts() {
+    try {
+      if (window.AgroApi) {
+        var data = await window.AgroApi.listProducts();
+        if (data && data.length) {
+          this.setState({ products: data, prodLoaded: true });
+          return;
+        }
+      }
+    } catch (_) {}
+    this.setState({ products: this._PRODUCTS_FALLBACK, prodLoaded: true });
+  }
+
   renderVals() {
-    const { scrolled, entered, mOpen, mData, mErrs, mSts } = this.state;
+    const { scrolled, entered, mOpen, mData, mErrs, mSts, products, prodLoaded } = this.state;
     const up = (d) => ({ opacity: entered?1:0, transform: entered?'translateY(0)':'translateY(22px)', transition: `opacity 0.9s ease ${d}s, transform 0.9s ease ${d}s` });
     const dn = (d) => ({ opacity: entered?1:0, transform: entered?'translateY(0)':'translateY(-10px)', transition: `opacity 0.7s ease ${d}s, transform 0.7s ease ${d}s` });
+    var fmt = function (c) { if (c == null) return ''; return (c / 100).toFixed(2).replace('.', ','); };
+    var productList = (prodLoaded ? products : []).map(function (p) {
+      return {
+        image_url: p.image_url,
+        name: p.name,
+        description: p.description,
+        price: fmt(p.price_cents),
+        hasCompare: p.compare_price_cents != null,
+        comparePrice: fmt(p.compare_price_cents),
+        whatsappTextEncoded: encodeURIComponent(p.whatsapp_text || 'Olá! Tenho interesse em comprar ' + p.name + '.'),
+      };
+    });
     return {
+      productList,
       navBg: scrolled ? '#FFFFFF' : 'transparent',
       navBorder: scrolled ? '1px solid rgba(49,91,44,0.08)' : '1px solid transparent',
       navColor: scrolled ? '#1a1a18' : '#FFFFFF',
@@ -397,6 +375,7 @@ class Component extends DCLogic {
 }
 </script>
 <script src="./assets/js/drawer.js"></script>
+<script src="./src/api.js"></script>
 <script src="./src/i18n/vendor/i18next.min.js"></script>
 <script src="./src/i18n/vendor/i18nextBrowserLanguageDetector.min.js"></script>
 <script src="./src/i18n/index.js"></script>

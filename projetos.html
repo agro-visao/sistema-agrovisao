@@ -28,7 +28,7 @@
 <nav class="nav" style="position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; align-items: center; justify-content: space-between; background: {{ navBg }}; border-bottom: {{ navBorder }}; transition: background 0.5s ease, border-bottom-color 0.5s ease;">
   <div class="nav-logo" style="{{ navEntryStyle }}">
     <a href="./index.html" style="display: flex; align-items: center; gap: 14px; text-decoration: none; color: {{ logoColor }}; transition: color 0.5s ease;">
-      <img src="./assets/logos/agrovisao/logo-agro-visao-v1.png" alt="AgroVisão" style="height: 58px; width: auto; display: block; max-width: none; object-fit: unset;">
+      <img src="./assets/logos/agrovisao/logo-agro-visao-v1-2.svg" alt="AgroVisão" style="height: 58px; width: auto; display: block; max-width: none; object-fit: unset;">
     </a>
   </div>
   <button class="nav-hamburger" aria-label="Abrir menu" aria-expanded="false" aria-controls="drawer" style="color: {{ navColor }};">
@@ -54,7 +54,7 @@
 <div class="drawer-overlay" aria-hidden="true"></div>
 <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Menu de navegação" aria-hidden="true">
   <div class="drawer-header">
-    <img src="./assets/logos/agrovisao/logo-agro-visao-v1.png" alt="AgroVisão" width="130" height="42" class="drawer-logo">
+    <img src="./assets/logos/agrovisao/logo-agro-visao-v1-2.svg" alt="AgroVisão" width="130" height="42" class="drawer-logo">
     <button class="drawer-close" aria-label="Fechar menu">
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 3l14 14M17 3L3 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
     </button>
@@ -613,9 +613,10 @@ class Component extends DCLogic {
     mData: { name:'', company:'', phone:'', email:'', city:'', st:'', svc:'', msg:'', ok: false },
     mErrs: {}, mSts: 'idle',
     activeCat: 'todos', projOpen: false, pv: null,
+    projects: [], projLoaded: false,
   };
 
-  _PROJECTS = [
+  _PROJECTS_FALLBACK = [
     { logo:'./assets/logos/projetos/acai-amazonico.png', name:"Açaí Amazônico", cat:'familiar', catLabel:"Agricultura Familiar", inst:"Cooperativa de Açaicultores", desc:"Fortalecimento da cadeia produtiva do açaí, agregando valor à produção e ampliando o acesso ao mercado.", services:["Elaboração de Projeto","Captação de Recursos","Consultoria Técnica"] },
     { logo:'./assets/logos/projetos/agricultura-para-todos.png', name:"Agricultura Para Todos", cat:'familiar', catLabel:"Agricultura Familiar", inst:"Sindicato dos Trabalhadores Rurais", desc:"Programa de fortalecimento da agricultura familiar, ampliando acesso a crédito, mercado e assistência técnica.", services:["Consultoria PRONAF","Elaboração de Projeto","Capacitação"] },
     { logo:'./assets/logos/projetos/amazonia-viva.png', name:"Amazônia Viva", cat:'ambiental', catLabel:"Ambiental", inst:"Instituto Ambiental da Amazônia", desc:"Iniciativa de conservação e uso sustentável dos recursos naturais da floresta amazônica.", services:["Licenciamento Ambiental","Consultoria Técnica","Gestão de Projetos"] },
@@ -635,7 +636,6 @@ class Component extends DCLogic {
     { logo:'./assets/logos/projetos/projeto-eco-inovar.png', name:"Projeto Eco Inovar", cat:'ambiental', catLabel:"Ambiental", inst:"Secretaria de Meio Ambiente", desc:"Iniciativa de inovação ambiental e bioeconomia, valorizando cadeias produtivas sustentáveis da floresta.", services:["Elaboração de Projeto","Licenciamento Ambiental","Gestão de Projetos"] },
     { logo:'./assets/logos/projetos/projeto-gerando-sonhos.png', name:"Projeto Gerando Sonhos", cat:'social', catLabel:"Projeto Social", inst:"Fundação Gerardo Soares", desc:"Construindo futuros com oportunidades, por meio de formação, empreendedorismo e inclusão produtiva.", services:["Diagnóstico","Elaboração de Projeto","Gestão de Projetos"] },
     { logo:'./assets/logos/projetos/projeto-renda-para.png', name:"Projeto Renda Pará", cat:'familiar', catLabel:"Agricultura Familiar", inst:"Governo do Estado do Pará", desc:"Iniciativa de geração de renda no campo, estruturando cadeias produtivas da agricultura familiar paraense.", services:["Consultoria PRONAF","Captação de Recursos","Gestão de Projetos"] },
-    
   ];
 
   componentDidMount() {
@@ -670,6 +670,21 @@ class Component extends DCLogic {
       });
     }, { threshold: 0.5 });
     document.querySelectorAll('[data-counter]').forEach(el => this._cio.observe(el));
+
+    this._loadProjects();
+  }
+
+  async _loadProjects() {
+    try {
+      if (window.AgroApi) {
+        var data = await window.AgroApi.listProjects();
+        if (data && data.length) {
+          this.setState({ projects: data, projLoaded: true });
+          return;
+        }
+      }
+    } catch (_) {}
+    this.setState({ projects: this._PROJECTS_FALLBACK, projLoaded: true });
   }
 
   componentWillUnmount() {
@@ -679,12 +694,13 @@ class Component extends DCLogic {
   }
 
   renderVals() {
-    const { scrolled, entered, mOpen, mData, mErrs, mSts } = this.state;
+    const { scrolled, entered, mOpen, mData, mErrs, mSts, projects, projLoaded } = this.state;
     const fadeUp = (d) => ({ opacity: entered?1:0, transform: entered?'translateY(0)':'translateY(22px)', transition: `opacity 0.9s ease ${d}s, transform 0.9s ease ${d}s` });
     const fadeDown = (d) => ({ opacity: entered?1:0, transform: entered?'translateY(0)':'translateY(-10px)', transition: `opacity 0.7s ease ${d}s, transform 0.7s ease ${d}s` });
     const ac = this.state.activeCat;
     const pv = this.state.pv || {};
-    const filtered = this._PROJECTS.filter(p => ac === 'todos' || p.cat === ac).map(p => ({ logo: p.logo, name: p.name, catLabel: p.catLabel, open: () => this.setState({ projOpen: true, pv: p }) }));
+    const src = projLoaded ? projects : [];
+    const filtered = src.filter(p => ac === 'todos' || p.cat === ac).map(p => ({ logo: p.logo, name: p.name, catLabel: p.catLabel, open: () => this.setState({ projOpen: true, pv: p }) }));
 
     return {
       filtered,
@@ -745,6 +761,7 @@ class Component extends DCLogic {
 }
 </script>
 <script src="./assets/js/drawer.js"></script>
+<script src="./src/api.js"></script>
 <script src="./src/i18n/vendor/i18next.min.js"></script>
 <script src="./src/i18n/vendor/i18nextBrowserLanguageDetector.min.js"></script>
 <script src="./src/i18n/index.js"></script>
