@@ -1,5 +1,6 @@
 import { json, error } from './_lib.js';
 import { getSupabaseAdmin, AuthError } from './admin/_supabase.js';
+import { getPublicImageUrl } from './admin/_storage.js';
 
 export async function onRequest(context) {
   const { request, env } = context;
@@ -34,7 +35,7 @@ export async function onRequest(context) {
 
     const result = (data || []).map((img) => ({
       id: img.id,
-      url: img.url,
+      url: /^https?:\/\//.test(img.url) ? img.url : getPublicImageUrl(env, img.url),
       alt: img.alt,
       sortOrder: img.sort_order,
       createdAt: img.created_at,
