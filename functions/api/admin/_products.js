@@ -1,5 +1,6 @@
 // ─── Helpers compartilhados do CRUD de produtos (painel admin) ───────────────
-import { readJson } from './_auth.js';
+import { readJson } from './_supabase.js';
+import { getPublicImageUrl } from './_storage.js';
 
 const CATEGORY_LABELS = {
   mudas: 'Mudas',
@@ -54,62 +55,76 @@ export async function readProductForm(request) {
   return { body: await readJson(request), file: null };
 }
 
-export function serializeProduct(row) {
+// Recebe a env para poder resolver a URL pública da imagem no Supabase Storage
+// (row.image_path -> URL). Antes a imagem era servida via proxy do backend.
+export function serializeProduct(row, env) {
   return {
     id: row.id,
     slug: row.slug,
     name: row.name,
     description: row.description || '',
-    image: row.b2_file_key ? `/api/products/${row.id}/image` : '',
-    b2FileKey: row.b2_file_key || '',
-    b2FileId: row.b2_file_id || '',
-    mimeType: row.mime_type || '',
-    width: row.width ?? null,
-    height: row.height ?? null,
+    image: row.image_path ? getPublicImageUrl(env, row.image_path) : '',
+    imagePath: row.image_path || '',
     price: row.price_cents,
-    originalPrice: row.compare_price_cents !== null ? row.compare_price_cents : null,
+    originalPrice: row.compare_price_cents !== null && row.compare_price_cents !== undefined ? row.compare_price_cents : null,
     categoryId: row.category_id,
     category: row.category,
     categoryLabel: row.category_label,
     stock: row.stock,
-    featured: row.featured === 1,
-    isNew: row.is_new === 1,
-    active: row.active === 1,
+    featured: Boolean(row.featured),
+    isNew: Boolean(row.is_new),
+    active: Boolean(row.active),
     whatsappText: row.whatsapp_text || '',
     createdAt: row.created_at,
     updatedAt: row.updated_at,
   };
 }
 
-const PRODUCT_SELECT =
-  'id, slug, name, description, image_url, b2_file_key, b2_file_id, mime_type, width, height, ' +
+const PRODUCT_COLUMNS =
+  'id, slug, name, description, image_path, ' +
   'price_cents, compare_price_cents, ' +
   'whatsapp_phone, whatsapp_text, category, category_label, category_id, stock, featured, is_new, active, ' +
   'created_at, updated_at';
 
-export async function getProducts(db) {
-  const { results } = await db
-    .prepare(`SELECT ${PRODUCT_SELECT} FROM products ORDER BY active DESC, sort_order ASC, id ASC`)
-    .all();
-  return results.map(serializeProduct);
+export async function getProducts(supabase, env) {
+  const { data, error: dbError } = await supabase
+    .from('products')
+    .select(PRODUCT_COLUMNS)
+    .order('active', { ascending: false })
+    .order('sort_order', { ascending: true })
+    .order('id', { ascending: true });
+  if (dbError) throw new Error(dbError.message);
+  return (data || []).map((row) => serializeProduct(row, env));
 }
 
-export async function getProductById(db, id) {
-  const row = await db
-    .prepare(`SELECT ${PRODUCT_SELECT} FROM products WHERE id = ?`)
-    .bind(id)
-    .first();
-  return row ? serializeProduct(row) : null;
+export async function getProductById(supabase, env, id) {
+  const { data, error: dbError } = await supabase
+    .from('products')
+    .select(PRODUCT_COLUMNS)
+    .eq('id', id)
+    .maybeSingle();
+  if (dbError) throw new Error(dbError.message);
+  return data ? serializeProduct(data, env) : null;
 }
 
-export async function ensureUniqueSlug(db, baseSlug, excludeId = null) {
+export async function ensureUniqueSlug(supabase, baseSlug, excludeId = null) {
   const slug = baseSlug || 'produto';
-  const row = await db.prepare('SELECT id FROM products WHERE slug = ?').bind(slug).first();
-  if (!row || (excludeId !== null && row.id === excludeId)) return slug;
+
+  const isTaken = async (candidate) => {
+    const { data, error: dbError } = await supabase
+      .from('products')
+      .select('id')
+      .eq('slug', candidate)
+      .maybeSingle();
+    if (dbError) throw new Error(dbError.message);
+    if (!data) return false;
+    return !(excludeId !== null && data.id === excludeId);
+  };
+
+  if (!(await isTaken(slug))) return slug;
   for (let i = 2; i < 1000; i++) {
     const candidate = `${slug}-${i}`;
-    const candidateRow = await db.prepare('SELECT id FROM products WHERE slug = ?').bind(candidate).first();
-    if (!candidateRow || (excludeId !== null && candidateRow.id === excludeId)) return candidate;
+    if (!(await isTaken(candidate))) return candidate;
   }
   return `${slug}-${Date.now()}`;
 }

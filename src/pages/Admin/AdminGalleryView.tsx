@@ -7,7 +7,11 @@ interface GalleryImage {
   projectId: number
   url: string
   imagePath: string
+  /** Breve descrição, exibida ao lado da foto na página pública. */
   alt: string
+  /** Descrição completa, exibida abaixo das fotos. */
+  description: string
+  featured: boolean
   sortOrder: number
   projectName: string
   projectSlug: string
@@ -28,6 +32,7 @@ interface PendingImage {
   file: File
   previewUrl: string
   alt: string
+  description: string
 }
 
 const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp']
@@ -44,12 +49,17 @@ function AdminGalleryView() {
   const [createOpen, setCreateOpen] = useState(false)
   const [createProjectId, setCreateProjectId] = useState('')
   const [pending, setPending] = useState<PendingImage[]>([])
+  // Índice, dentro do lote, da imagem escolhida como destaque (capa) da
+  // galeria. null = mantém o destaque atual do projeto.
+  const [featuredIndex, setFeaturedIndex] = useState<number | null>(null)
   const [formError, setFormError] = useState('')
   const [saving, setSaving] = useState(false)
 
   const [editing, setEditing] = useState<GalleryImage | null>(null)
   const [editProjectId, setEditProjectId] = useState('')
   const [editAlt, setEditAlt] = useState('')
+  const [editDescription, setEditDescription] = useState('')
+  const [editFeatured, setEditFeatured] = useState(false)
   const [editFile, setEditFile] = useState<File | null>(null)
   const [editPreview, setEditPreview] = useState<string | null>(null)
 
@@ -127,6 +137,7 @@ function AdminGalleryView() {
   const openCreate = useCallback(() => {
     setCreateProjectId((prev) => prev || String(projects[0]?.id || ''))
     setPending([])
+    setFeaturedIndex(null)
     setFormError('')
     setCreateOpen(true)
   }, [projects])
@@ -153,7 +164,12 @@ function AdminGalleryView() {
           setFormError(err)
           continue
         }
-        accepted.push({ file, previewUrl: trackUrl(URL.createObjectURL(file)), alt: '' })
+        accepted.push({
+          file,
+          previewUrl: trackUrl(URL.createObjectURL(file)),
+          alt: '',
+          description: '',
+        })
       }
 
       setPending((prev) => {
@@ -168,12 +184,18 @@ function AdminGalleryView() {
     [validateFile, trackUrl]
   )
 
-  const setPendingAlt = useCallback((index: number, alt: string) => {
-    setPending((prev) => prev.map((p, i) => (i === index ? { ...p, alt } : p)))
+  const setPendingField = useCallback((index: number, patch: Partial<PendingImage>) => {
+    setPending((prev) => prev.map((p, i) => (i === index ? { ...p, ...patch } : p)))
   }, [])
 
   const removePending = useCallback((index: number) => {
     setPending((prev) => prev.filter((_, i) => i !== index))
+    // O destaque acompanha a remoção: some quem estava marcado, some o destaque.
+    setFeaturedIndex((prev) => {
+      if (prev === null) return null
+      if (index === prev) return null
+      return index < prev ? prev - 1 : prev
+    })
   }, [])
 
   const submitCreate = useCallback(
@@ -194,7 +216,11 @@ function AdminGalleryView() {
       pending.forEach((item, index) => {
         fd.append('images', item.file)
         fd.append(`alt_${index}`, item.alt.trim())
+        fd.append(`description_${index}`, item.description.trim())
       })
+      if (featuredIndex !== null && featuredIndex < pending.length) {
+        fd.append('featuredIndex', String(featuredIndex))
+      }
 
       try {
         setSaving(true)
@@ -216,7 +242,7 @@ function AdminGalleryView() {
         setSaving(false)
       }
     },
-    [createProjectId, pending, loadImages, closeCreate, showToast]
+    [createProjectId, pending, featuredIndex, loadImages, closeCreate, showToast]
   )
 
   // ─── Edição (uma imagem por vez) ───────────────────────────────────────────
@@ -224,6 +250,8 @@ function AdminGalleryView() {
     setEditing(img)
     setEditProjectId(String(img.projectId))
     setEditAlt(img.alt)
+    setEditDescription(img.description)
+    setEditFeatured(img.featured)
     setEditFile(null)
     setEditPreview(null)
     setFormError('')
@@ -264,6 +292,8 @@ function AdminGalleryView() {
       const fd = new FormData()
       fd.append('projectId', editProjectId)
       fd.append('alt', editAlt.trim())
+      fd.append('description', editDescription.trim())
+      fd.append('featured', String(editFeatured))
       if (editFile) fd.append('image', editFile)
 
       try {
@@ -283,7 +313,7 @@ function AdminGalleryView() {
         setSaving(false)
       }
     },
-    [editing, editProjectId, editAlt, editFile, loadImages, closeEdit, showToast]
+    [editing, editProjectId, editAlt, editDescription, editFeatured, editFile, loadImages, closeEdit, showToast]
   )
 
   // ─── Exclusão ──────────────────────────────────────────────────────────────
@@ -433,6 +463,11 @@ function AdminGalleryView() {
                           </svg>
                         </div>
                       )}
+                      {img.featured && (
+                        <div className={styles.productCardBadges}>
+                          <span className={`${styles.productCardBadge} ${styles.badgeFeatured}`}>Destaque</span>
+                        </div>
+                      )}
                     </div>
                     <div className={styles.productCardBody}>
                       <div className={styles.productCardName}>
@@ -440,7 +475,7 @@ function AdminGalleryView() {
                       </div>
                       <div className={styles.productCardMeta}>
                         <span>{group.project}</span>
-                        <span>#{img.sortOrder + 1}</span>
+                        <span>{img.description ? 'Com descrição completa' : 'Sem descrição completa'}</span>
                       </div>
                       <div className={styles.productCardActions}>
                         <button className={styles.btnEdit} onClick={() => openEdit(img)} data-testid="edit-gallery-image">Editar</button>
@@ -534,30 +569,62 @@ function AdminGalleryView() {
               </div>
 
               {pending.length > 0 && (
-                <div className={`${styles.field} ${styles.fieldFull}`} style={{ display: 'grid', gap: '12px' }}>
+                <div className={`${styles.field} ${styles.fieldFull}`} style={{ display: 'grid', gap: '18px' }}>
+                  <div className={styles.inputHint} style={{ margin: 0 }}>
+                    Marque uma imagem como destaque para ela virar a capa da galeria e abrir
+                    primeiro na tela de detalhes. Sem marcar, a capa atual do projeto é mantida.
+                  </div>
                   {pending.map((item, index) => (
                     <div
                       key={`${item.file.name}-${index}`}
-                      style={{ display: 'grid', gridTemplateColumns: '72px 1fr auto', gap: '12px', alignItems: 'center' }}
+                      style={{ display: 'grid', gridTemplateColumns: '96px 1fr', gap: '14px', alignItems: 'start', paddingBottom: '18px', borderBottom: '1px solid rgba(49,91,44,0.1)' }}
                     >
-                      <img
-                        src={item.previewUrl}
-                        alt={`Pré-visualização ${index + 1}`}
-                        style={{ width: '72px', height: '72px', objectFit: 'cover', borderRadius: '8px', display: 'block' }}
-                      />
-                      <input
-                        className={styles.input}
-                        type="text"
-                        value={item.alt}
-                        onChange={(e) => setPendingAlt(index, e.target.value)}
-                        placeholder="Descrição da imagem (ex.: Plantio inicial)"
-                        data-testid="f-alt"
-                      />
-                      <button type="button" className={styles.linkBtn} onClick={() => removePending(index)} aria-label="Remover imagem">
-                        Remover
-                      </button>
+                      <div style={{ display: 'grid', gap: '8px', justifyItems: 'center' }}>
+                        <img
+                          src={item.previewUrl}
+                          alt={`Pré-visualização ${index + 1}`}
+                          style={{ width: '96px', height: '96px', objectFit: 'cover', borderRadius: '8px', display: 'block' }}
+                        />
+                        <button type="button" className={styles.linkBtn} onClick={() => removePending(index)}>
+                          Remover
+                        </button>
+                      </div>
+                      <div style={{ display: 'grid', gap: '10px' }}>
+                        <input
+                          className={styles.input}
+                          type="text"
+                          value={item.alt}
+                          onChange={(e) => setPendingField(index, { alt: e.target.value })}
+                          placeholder="Breve descrição (ex.: Plantio inicial)"
+                          maxLength={300}
+                          data-testid="f-alt"
+                        />
+                        <textarea
+                          className={styles.input}
+                          rows={3}
+                          value={item.description}
+                          onChange={(e) => setPendingField(index, { description: e.target.value })}
+                          placeholder="Descrição completa — texto exibido abaixo das fotos"
+                          data-testid="f-description"
+                        />
+                        <label className={styles.checkboxRow} style={{ margin: 0 }}>
+                          <input
+                            type="radio"
+                            name="gallery-featured"
+                            checked={featuredIndex === index}
+                            onChange={() => setFeaturedIndex(index)}
+                            data-testid="f-featured"
+                          />
+                          <span className={styles.checkboxLabel}>Imagem de destaque (capa da galeria)</span>
+                        </label>
+                      </div>
                     </div>
                   ))}
+                  {featuredIndex !== null && (
+                    <button type="button" className={styles.linkBtn} style={{ justifySelf: 'start' }} onClick={() => setFeaturedIndex(null)}>
+                      Não alterar o destaque
+                    </button>
+                  )}
                 </div>
               )}
 
@@ -607,16 +674,45 @@ function AdminGalleryView() {
               </div>
 
               <div className={`${styles.field} ${styles.fieldFull}`}>
-                <label className={styles.label} htmlFor="g-edit-alt">Descrição</label>
-                <textarea
+                <label className={styles.label} htmlFor="g-edit-alt">Breve descrição</label>
+                <input
                   id="g-edit-alt"
                   className={styles.input}
-                  rows={2}
+                  type="text"
                   value={editAlt}
                   onChange={(e) => setEditAlt(e.target.value)}
-                  placeholder="Descrição exibida na galeria"
+                  placeholder="Ex.: Plantio inicial"
+                  maxLength={300}
                   data-testid="f-edit-alt"
                 />
+                <div className={styles.inputHint}>Aparece ao lado da foto na página da galeria.</div>
+              </div>
+
+              <div className={`${styles.field} ${styles.fieldFull}`}>
+                <label className={styles.label} htmlFor="g-edit-description">Descrição completa</label>
+                <textarea
+                  id="g-edit-description"
+                  className={styles.input}
+                  rows={6}
+                  value={editDescription}
+                  onChange={(e) => setEditDescription(e.target.value)}
+                  placeholder="Texto completo exibido abaixo das fotos"
+                  data-testid="f-edit-description"
+                />
+                <div className={styles.inputHint}>Use uma linha em branco para separar parágrafos.</div>
+              </div>
+
+              <div className={`${styles.field} ${styles.fieldFull} ${styles.checkboxRow}`}>
+                <input
+                  id="g-edit-featured"
+                  type="checkbox"
+                  checked={editFeatured}
+                  onChange={(e) => setEditFeatured(e.target.checked)}
+                  data-testid="f-edit-featured"
+                />
+                <label className={styles.checkboxLabel} htmlFor="g-edit-featured">
+                  Imagem de destaque (capa da galeria)
+                </label>
               </div>
 
               <div className={`${styles.field} ${styles.fieldFull}`}>

@@ -1,28 +1,37 @@
 // ─── Helpers compartilhados do CRUD de categorias ───────────────────────────
 
-import { readJson } from './_auth.js';
+import { readJson } from './_supabase.js';
 
-export async function getCategories(db) {
-  const { results } = await db
-    .prepare('SELECT id, key, label, description, sort_order, active, created_at, updated_at FROM categories ORDER BY sort_order ASC, id ASC')
-    .all();
-  return results.map(serializeCategory);
+const CATEGORY_COLUMNS = 'id, key, label, description, sort_order, active, created_at, updated_at';
+
+export async function getCategories(supabase) {
+  const { data, error: dbError } = await supabase
+    .from('categories')
+    .select(CATEGORY_COLUMNS)
+    .order('sort_order', { ascending: true })
+    .order('id', { ascending: true });
+  if (dbError) throw new Error(dbError.message);
+  return (data || []).map(serializeCategory);
 }
 
-export async function getCategoryById(db, id) {
-  const row = await db
-    .prepare('SELECT id, key, label, description, sort_order, active, created_at, updated_at FROM categories WHERE id = ?')
-    .bind(id)
-    .first();
-  return row ? serializeCategory(row) : null;
+export async function getCategoryById(supabase, id) {
+  const { data, error: dbError } = await supabase
+    .from('categories')
+    .select(CATEGORY_COLUMNS)
+    .eq('id', id)
+    .maybeSingle();
+  if (dbError) throw new Error(dbError.message);
+  return data ? serializeCategory(data) : null;
 }
 
-export async function getCategoryByKey(db, key) {
-  const row = await db
-    .prepare('SELECT id, key, label, description, sort_order, active, created_at, updated_at FROM categories WHERE key = ?')
-    .bind(key)
-    .first();
-  return row ? serializeCategory(row) : null;
+export async function getCategoryByKey(supabase, key) {
+  const { data, error: dbError } = await supabase
+    .from('categories')
+    .select(CATEGORY_COLUMNS)
+    .eq('key', key)
+    .maybeSingle();
+  if (dbError) throw new Error(dbError.message);
+  return data ? serializeCategory(data) : null;
 }
 
 export function serializeCategory(row) {
@@ -32,7 +41,7 @@ export function serializeCategory(row) {
     label: row.label,
     description: row.description || '',
     sortOrder: row.sort_order,
-    active: row.active === 1,
+    active: Boolean(row.active),
     createdAt: row.created_at,
     updatedAt: row.updated_at,
   };
@@ -42,20 +51,30 @@ export function slugify(text) {
   return text
     .toLowerCase()
     .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '')
+    .replace(/[\u0300-\u036f]/g, '')
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '')
     .slice(0, 50);
 }
 
-export async function ensureUniqueKey(db, baseKey, excludeId = null) {
+export async function ensureUniqueKey(supabase, baseKey, excludeId = null) {
   const key = baseKey || 'categoria';
-  const row = await db.prepare('SELECT id FROM categories WHERE key = ?').bind(key).first();
-  if (!row || (excludeId !== null && row.id === excludeId)) return key;
+
+  const isTaken = async (candidate) => {
+    const { data, error: dbError } = await supabase
+      .from('categories')
+      .select('id')
+      .eq('key', candidate)
+      .maybeSingle();
+    if (dbError) throw new Error(dbError.message);
+    if (!data) return false;
+    return !(excludeId !== null && data.id === excludeId);
+  };
+
+  if (!(await isTaken(key))) return key;
   for (let i = 2; i < 1000; i++) {
     const candidate = `${key}-${i}`;
-    const candidateRow = await db.prepare('SELECT id FROM categories WHERE key = ?').bind(candidate).first();
-    if (!candidateRow || (excludeId !== null && candidateRow.id === excludeId)) return candidate;
+    if (!(await isTaken(candidate))) return candidate;
   }
   return `${key}-${Date.now()}`;
 }

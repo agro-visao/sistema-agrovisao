@@ -8,7 +8,11 @@ import styles from '../Sales/Sales.module.css'
 interface ProjectImage {
   id: number
   url: string
+  /** Breve descrição, exibida ao lado da foto principal. */
   alt: string
+  /** Descrição completa, exibida abaixo das fotos. */
+  description: string
+  featured: boolean
   sortOrder: number
   project: {
     id: number
@@ -45,7 +49,9 @@ function GalleryDetail() {
         if (data && data.length > 0) {
           setImages(data)
           setProject(data[0].project)
-          setSelectedImage(data[0])
+          // Abre pela imagem marcada como destaque no painel; sem destaque
+          // definido, mantém a primeira pela ordem de exibição.
+          setSelectedImage(data.find((img) => img.featured) || data[0])
         }
         setLoaded(true)
       })
@@ -113,10 +119,12 @@ function GalleryDetail() {
                         <div style={{ fontFamily: 'var(--font-sans)', fontSize: '9.5px', fontWeight: 600, color: '#6F8F3A', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: '12px' }}>
                           {project?.categoryLabel}
                         </div>
-                        <h3 style={{ fontFamily: "'Barlow', sans-serif", fontSize: '28px', fontWeight: 400, color: '#1a1a18', lineHeight: 1.2, marginBottom: '16px', letterSpacing: '-0.015em' }}>
-                          {selectedImage.alt}
-                        </h3>
-                        <p style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', fontWeight: 400, color: '#666660', lineHeight: 1.8, marginBottom: '28px' }}>
+                        {selectedImage.alt && (
+                          <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: '19px', fontWeight: 400, color: '#1a1a18', lineHeight: 1.55, marginBottom: '16px', letterSpacing: '-0.005em' }}>
+                            {selectedImage.alt}
+                          </p>
+                        )}
+                        <p style={{ fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 400, color: '#888882', lineHeight: 1.8, marginBottom: '28px' }}>
                           Imagem {images.indexOf(selectedImage) + 1} de {images.length} • {project?.name}
                         </p>
                         <button
@@ -172,6 +180,23 @@ function GalleryDetail() {
                     ))}
                   </div>
                 </div>
+
+                {/* Descrição completa da imagem selecionada, abaixo das fotos */}
+                {selectedImage?.description && (
+                  <div style={{ gridColumn: '1 / -1', marginTop: '48px', maxWidth: '780px' }}>
+                    <div style={{ fontFamily: 'var(--font-sans)', fontSize: '11px', fontWeight: 600, color: '#6F8F3A', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '16px' }}>
+                      Descrição
+                    </div>
+                    {selectedImage.description.split(/\n{2,}/).map((paragraph, i) => (
+                      <p
+                        key={i}
+                        style={{ fontFamily: 'var(--font-sans)', fontSize: '15px', fontWeight: 400, color: '#555550', lineHeight: 1.9, marginBottom: '16px', whiteSpace: 'pre-line' }}
+                      >
+                        {paragraph}
+                      </p>
+                    ))}
+                  </div>
+                )}
               </>
             )}
           </div>

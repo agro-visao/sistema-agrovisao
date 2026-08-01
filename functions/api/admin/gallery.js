@@ -7,6 +7,8 @@ import {
   serializeGalleryImage,
   parseProjectId,
   readAlt,
+  readDescription,
+  setFeaturedImage,
   MAX_IMAGES_PER_UPLOAD,
 } from './_gallery.js';
 import { validateImageFile, uploadProductImage, makeGalleryImagePath } from './_storage.js';
@@ -46,8 +48,16 @@ export async function onRequest(context) {
       for (let i = 0; i < files.length; i++) {
         const fileCheck = await validateImageFile(files[i]);
         if (!fileCheck.ok) return error(`Imagem ${i + 1}: ${fileCheck.error}`, 400);
-        checked.push({ ...fileCheck.data, alt: readAlt(body, i) });
+        checked.push({
+          ...fileCheck.data,
+          alt: readAlt(body, i),
+          description: readDescription(body, i),
+        });
       }
+
+      // Índice (dentro deste envio) da imagem escolhida como destaque da galeria.
+      const featuredIndex = parseInt(body.featuredIndex, 10);
+      const hasFeatured = Number.isInteger(featuredIndex) && featuredIndex >= 0 && featuredIndex < checked.length;
 
       let sortOrder = await nextSortOrder(supabase, projectId);
       const rows = [];
@@ -66,6 +76,7 @@ export async function onRequest(context) {
             project_id: projectId,
             url: uploaded.path,
             alt: item.alt,
+            description: item.description,
             sort_order: sortOrder++,
           });
         }
@@ -76,8 +87,13 @@ export async function onRequest(context) {
       const { data: inserted, error: insertErr } = await supabase
         .from('project_images')
         .insert(rows)
-        .select('id, project_id, url, alt, sort_order, created_at');
+        .select('*');
       if (insertErr) return error(insertErr.message, 500);
+
+      if (hasFeatured && inserted && inserted[featuredIndex]) {
+        await setFeaturedImage(supabase, projectId, inserted[featuredIndex].id);
+        inserted.forEach((row, i) => { row.featured = i === featuredIndex; });
+      }
 
       const serialized = (inserted || []).map((row) =>
         serializeGalleryImage({ ...row, projects: project }, env)

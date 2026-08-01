@@ -1,4 +1,4 @@
-import { json, error, requireAdmin, AuthError, authError } from './_auth.js';
+import { json, error, requireAdmin, AuthError, authError } from './_supabase.js';
 import {
   getCategories,
   validateCategoryInput,
@@ -13,14 +13,14 @@ export async function onRequest(context) {
   if (request.method === 'OPTIONS') return json(null, 204);
 
   try {
-    const { user, db } = await requireAdmin(context);
+    const { user, supabase } = await requireAdmin(context);
     void user;
     if (user.mustChangePassword) {
       return error('Troque a senha inicial antes de continuar.', 403);
     }
 
     if (request.method === 'GET') {
-      const categories = await getCategories(db);
+      const categories = await getCategories(supabase);
       return json({ data: categories });
     }
 
@@ -30,24 +30,27 @@ export async function onRequest(context) {
       if (!validated.ok) return error(validated.error, 400);
 
       const { label, description, sortOrder, active } = validated.data;
-      const key = await ensureUniqueKey(db, slugify(label));
+      const key = await ensureUniqueKey(supabase, slugify(label));
 
-      await db
-        .prepare(
-          `INSERT INTO categories
-             (key, label, description, sort_order, active)
-           VALUES (?, ?, ?, ?, ?)`
-        )
-        .bind(key, label, description, sortOrder, active ? 1 : 0)
-        .run();
+      const { data: inserted, error: insertErr } = await supabase
+        .from('categories')
+        .insert({
+          key,
+          label,
+          description,
+          sort_order: sortOrder,
+          active,
+        })
+        .select('*')
+        .single();
+      if (insertErr) return error(insertErr.message, 500);
 
-      const row = await db.prepare('SELECT * FROM categories WHERE key = ?').bind(key).first();
-      return json({ data: serializeCategory(row) }, 201);
+      return json({ data: serializeCategory(inserted) }, 201);
     }
 
     return error('Method not allowed', 405);
   } catch (e) {
-    if (e instanceof AuthError) return authError(e.message, e.status, request);
+    if (e instanceof AuthError) return authError(e.message, e.status);
     return error(e.message, 500);
   }
 }

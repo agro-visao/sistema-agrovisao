@@ -31,15 +31,20 @@ async function fetchProjectGalleries(): Promise<ProjectGallery[] | null> {
         grouped.get(key)!.images.push(img)
       })
 
-      return Array.from(grouped.values()).map((g) => ({
-        id: g.project.id,
-        slug: g.project.slug,
-        name: g.project.name,
-        category: g.project.category,
-        categoryLabel: g.project.categoryLabel,
-        firstImage: g.images[0]?.url || '',
-        imageCount: g.images.length,
-      }))
+      return Array.from(grouped.values()).map((g) => {
+        // A capa é a imagem marcada como destaque no painel; sem destaque
+        // definido, usa a primeira pela ordem de exibição.
+        const cover = g.images.find((img: any) => img.featured) || g.images[0]
+        return {
+          id: g.project.id,
+          slug: g.project.slug,
+          name: g.project.name,
+          category: g.project.category,
+          categoryLabel: g.project.categoryLabel,
+          firstImage: cover?.url || '',
+          imageCount: g.images.length,
+        }
+      })
     }
   } catch (_) {}
   return null

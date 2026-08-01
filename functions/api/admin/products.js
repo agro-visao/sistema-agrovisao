@@ -1,4 +1,4 @@
-import { json, error, requireAdmin, AuthError, authError } from './_auth.js';
+import { json, error, requireAdmin, AuthError, authError } from './_supabase.js';
 import {
   getProducts,
   validateProductInput,
@@ -7,21 +7,21 @@ import {
   serializeProduct,
   readProductForm,
 } from './_products.js';
-import { b2Configured, validateImageFile, uploadImage, makeFileKey } from './_b2.js';
+import { validateImageFile, uploadProductImage, makeImagePath } from './_storage.js';
 
 export async function onRequest(context) {
-  const { request } = context;
+  const { request, env } = context;
   if (request.method === 'OPTIONS') return json(null, 204);
 
   try {
-    const { user, db } = await requireAdmin(context);
+    const { user, supabase } = await requireAdmin(context);
     void user;
     if (user.mustChangePassword) {
       return error('Troque a senha inicial antes de continuar.', 403);
     }
 
     if (request.method === 'GET') {
-      const products = await getProducts(db);
+      const products = await getProducts(supabase, env);
       return json({ data: products });
     }
 
@@ -31,50 +31,56 @@ export async function onRequest(context) {
       if (!validated.ok) return error(validated.error, 400);
 
       const { name, description, price, originalPrice, category, categoryLabel, stock, featured, isNew, whatsappText } = validated.data;
-      const slug = await ensureUniqueSlug(db, slugify(name));
+      const slug = await ensureUniqueSlug(supabase, slugify(name));
 
-      const image = { fileKey: '', fileId: '', mimeType: '', width: null, height: null };
+      let imagePath = '';
       if (file) {
         const fileCheck = await validateImageFile(file);
         if (!fileCheck.ok) return error(fileCheck.error, 400);
-        if (!b2Configured(context.env)) {
-          return error('Upload de imagem indisponível: B2 não configurado.', 503);
-        }
-        const uploaded = await uploadImage(context.env, {
+        const uploaded = await uploadProductImage(env, {
           bytes: fileCheck.data.bytes,
           mimeType: fileCheck.data.mimeType,
-          fileKey: makeFileKey(slug, fileCheck.data.mimeType),
+          path: makeImagePath(slug, fileCheck.data.mimeType),
         });
-        image.fileKey = uploaded.fileKey;
-        image.fileId = uploaded.fileId;
-        image.mimeType = uploaded.mimeType;
-        image.width = uploaded.width;
-        image.height = uploaded.height;
+        imagePath = uploaded.path;
       }
 
-      await db
-        .prepare(
-          `INSERT INTO products
-             (slug, name, description, b2_file_key, b2_file_id, mime_type, width, height,
-              price_cents, compare_price_cents, whatsapp_text, category, category_label,
-              stock, featured, is_new, sort_order)
-           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
-                   (SELECT COALESCE(MAX(sort_order), 0) + 1 FROM products))`
-        )
-        .bind(
-          slug, name, description, image.fileKey, image.fileId, image.mimeType, image.width, image.height,
-          price, originalPrice, whatsappText, category, categoryLabel, stock,
-          featured ? 1 : 0, isNew ? 1 : 0
-        )
-        .run();
+      const { data: lastRow, error: sortErr } = await supabase
+        .from('products')
+        .select('sort_order')
+        .order('sort_order', { ascending: false })
+        .limit(1)
+        .maybeSingle();
+      if (sortErr) return error(sortErr.message, 500);
+      const sortOrder = (lastRow && typeof lastRow.sort_order === 'number' ? lastRow.sort_order : 0) + 1;
 
-      const row = await db.prepare('SELECT * FROM products WHERE slug = ?').bind(slug).first();
-      return json({ data: serializeProduct(row) }, 201);
+      const { data: inserted, error: insertErr } = await supabase
+        .from('products')
+        .insert({
+          slug,
+          name,
+          description,
+          image_path: imagePath,
+          price_cents: price,
+          compare_price_cents: originalPrice,
+          whatsapp_text: whatsappText,
+          category,
+          category_label: categoryLabel,
+          stock,
+          featured,
+          is_new: isNew,
+          sort_order: sortOrder,
+        })
+        .select('*')
+        .single();
+      if (insertErr) return error(insertErr.message, 500);
+
+      return json({ data: serializeProduct(inserted, env) }, 201);
     }
 
     return error('Method not allowed', 405);
   } catch (e) {
-    if (e instanceof AuthError) return authError(e.message, e.status, request);
+    if (e instanceof AuthError) return authError(e.message, e.status);
     return error(e.message, 500);
   }
 }

@@ -6,6 +6,9 @@ import {
   readGalleryForm,
   parseProjectId,
   readAlt,
+  readDescription,
+  parseBoolean,
+  setFeaturedImage,
 } from '../_gallery.js';
 import { validateImageFile, uploadProductImage, deleteProductImage, makeGalleryImagePath } from '../_storage.js';
 
@@ -33,6 +36,10 @@ export async function onRequest(context) {
       if (!project) return error('Projeto não encontrado.', 404);
 
       const alt = typeof body.alt === 'string' ? body.alt.trim().slice(0, 300) : readAlt(body, 0);
+      const description = typeof body.description === 'string'
+        ? body.description.trim().slice(0, 5000)
+        : readDescription(body, 0);
+      const featured = parseBoolean(body.featured);
 
       // Sem novo arquivo, mantém a imagem atual (nunca zera por omissão).
       let imagePath = existing.imagePath;
@@ -53,17 +60,26 @@ export async function onRequest(context) {
       const patch = {
         project_id: projectId,
         alt,
+        description,
         url: replaced ? imagePath : existing.imagePath || existing.url,
       };
       if (projectId !== existing.projectId) {
         patch.sort_order = await nextSortOrder(supabase, projectId);
+        // Ao trocar de projeto, o destaque anterior não vale mais na galeria
+        // de destino — é reaplicado abaixo só se o formulário pediu.
+        patch.featured = false;
       }
+      if (!featured) patch.featured = false;
 
       const { error: updateErr } = await supabase
         .from('project_images')
         .update(patch)
         .eq('id', id);
       if (updateErr) return error(updateErr.message, 500);
+
+      if (featured) {
+        await setFeaturedImage(supabase, projectId, id);
+      }
 
       // Só remove o arquivo antigo depois de a troca estar confirmada no banco.
       if (replaced && existing.imagePath && existing.imagePath !== imagePath) {

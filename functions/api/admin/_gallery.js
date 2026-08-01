@@ -8,7 +8,9 @@ import { getPublicImageUrl } from './_storage.js';
 
 export const MAX_IMAGES_PER_UPLOAD = 12;
 
-const IMAGE_COLUMNS = 'id, project_id, url, alt, sort_order, created_at';
+// `*` (em vez da lista explícita de colunas) mantém a leitura funcionando
+// mesmo antes de a migration 0002 (description/featured) ser aplicada.
+const IMAGE_COLUMNS = '*';
 const IMAGE_COLUMNS_WITH_PROJECT =
   `${IMAGE_COLUMNS}, projects ( id, slug, name, category, category_label, active )`;
 
@@ -27,7 +29,11 @@ export function serializeGalleryImage(row, env) {
     url: isAbsoluteUrl(raw) ? raw : getPublicImageUrl(env, raw),
     // Vazio quando a imagem é uma URL externa (não há objeto para remover).
     imagePath: isAbsoluteUrl(raw) ? '' : raw,
+    // alt = breve descrição (ao lado da foto); description = texto completo
+    // (abaixo das fotos, na tela de detalhes).
     alt: row.alt || '',
+    description: row.description || '',
+    featured: Boolean(row.featured),
     sortOrder: row.sort_order,
     createdAt: row.created_at,
     projectName: project ? project.name : '',
@@ -116,4 +122,34 @@ export function readAlt(body, index) {
   if (typeof perImage === 'string' && perImage.trim()) return perImage.trim().slice(0, 300);
   if (typeof body.alt === 'string' && body.alt.trim()) return body.alt.trim().slice(0, 300);
   return '';
+}
+
+export function readDescription(body, index) {
+  const perImage = body[`description_${index}`];
+  if (typeof perImage === 'string' && perImage.trim()) return perImage.trim().slice(0, 5000);
+  if (typeof body.description === 'string' && body.description.trim()) {
+    return body.description.trim().slice(0, 5000);
+  }
+  return '';
+}
+
+export function parseBoolean(value) {
+  return value === true || value === 1 || value === '1' || value === 'true';
+}
+
+// Só pode existir uma imagem em destaque por projeto (a capa da galeria), então
+// os demais destaques do mesmo projeto são desmarcados antes de marcar o novo.
+export async function setFeaturedImage(supabase, projectId, imageId) {
+  const { error: clearErr } = await supabase
+    .from('project_images')
+    .update({ featured: false })
+    .eq('project_id', projectId)
+    .neq('id', imageId);
+  if (clearErr) throw new Error(clearErr.message);
+
+  const { error: setErr } = await supabase
+    .from('project_images')
+    .update({ featured: true })
+    .eq('id', imageId);
+  if (setErr) throw new Error(setErr.message);
 }

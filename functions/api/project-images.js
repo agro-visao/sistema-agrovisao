@@ -13,11 +13,7 @@ export async function onRequest(context) {
     const { data, error: dbError } = await supabase
       .from('project_images')
       .select(`
-        id,
-        url,
-        alt,
-        sort_order,
-        created_at,
+        *,
         projects!inner (
           id,
           slug,
@@ -36,7 +32,11 @@ export async function onRequest(context) {
     const result = (data || []).map((img) => ({
       id: img.id,
       url: /^https?:\/\//.test(img.url) ? img.url : getPublicImageUrl(env, img.url),
+      // alt = breve descrição (ao lado da foto principal);
+      // description = texto completo, exibido abaixo das fotos.
       alt: img.alt,
+      description: img.description || '',
+      featured: Boolean(img.featured),
       sortOrder: img.sort_order,
       createdAt: img.created_at,
       project: {
