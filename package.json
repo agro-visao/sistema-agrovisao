@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --port 5173 & sleep 3 && npx wrangler pages dev --local --port 8788 --proxy 5173",
     "build": "tsc -b && vite build && npm run build:functions",
     "build:functions": "echo 'Functions pronta para deploy em Cloudflare'",
     "lint": "oxlint",
