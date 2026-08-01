@@ -1263,6 +1263,9 @@
   font-size: 12px;
   color: var(--clr-text-muted);
   text-decoration: line-through;
+  /* Reserva a linha mesmo sem valor original, para os preços dos cards
+     ficarem na mesma altura. */
+  min-height: 17px;
 }
 
 .productCardActions {

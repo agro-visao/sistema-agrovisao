@@ -370,9 +370,12 @@ function AdminSalesView() {
                   </div>
                   <div className={styles.productCardPrice}>
                     <div className={styles.productCardCurrentPrice}>{formatBRL(p.price)}</div>
-                    {p.originalPrice !== null && (
-                      <div className={styles.productCardOriginalPrice}>{formatBRL(p.originalPrice)}</div>
-                    )}
+                    {/* A linha do valor original é sempre renderizada (vazia
+                        quando não há) para os preços ficarem alinhados entre
+                        os cards da grade. */}
+                    <div className={styles.productCardOriginalPrice}>
+                      {p.originalPrice !== null ? formatBRL(p.originalPrice) : ' '}
+                    </div>
                   </div>
                   <div className={styles.productCardActions}>
                     <button className={styles.btnEdit} onClick={() => openEdit(p)} data-testid="edit-product">Editar</button>
