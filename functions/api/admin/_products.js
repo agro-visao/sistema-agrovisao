@@ -17,13 +17,13 @@ export function slugify(text) {
     .slice(0, 80);
 }
 
+// O painel envia o valor JÁ EM CENTAVOS (inteiro), que é como price_cents /
+// compare_price_cents são guardados. Multiplicar por 100 aqui — como a versão
+// anterior fazia — deixava todo produto salvo pelo painel 100x mais caro.
 export function toCents(value) {
-  if (typeof value === 'number' && Number.isFinite(value)) return Math.round(value * 100);
-  if (typeof value === 'string' && value.trim() !== '') {
-    const num = parseFloat(value.replace(',', '.'));
-    if (Number.isFinite(num)) return Math.round(num * 100);
-  }
-  return null;
+  const num = typeof value === 'number' ? value : parseInt(String(value ?? '').trim(), 10);
+  if (!Number.isFinite(num)) return null;
+  return Math.round(num);
 }
 
 export function categoryLabelFor(category) {
