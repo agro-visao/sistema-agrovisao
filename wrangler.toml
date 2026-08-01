@@ -1,11 +1,11 @@
 name = "agrovisao-site"
 compatibility_date = "2025-01-01"
-pages_build_output_dir = "."
+pages_build_output_dir = "./dist"
 
-# D1 database — substitua database_id pelo ID real após criar o banco
-# Crie com: npx wrangler d1 create agrovisao-db
-# Execute migrations com: npx wrangler d1 migrations apply agrovisao-db
+# D1 database
+# Crie com: npx wrangler d1 create agro-visao
+# Execute migrations com: npx wrangler d1 migrations apply agro-visao
 [[d1_databases]]
 binding = "DB"
-database_name = "agrovisao-db"
-database_id = ""
+database_name = "agro-visao"
+database_id = "6449e722-9464-4df2-b09d-6fe76baeaca0"

@@ -1,5 +1,5 @@
 import { json, error } from './_lib.js';
-import { getProducts } from './admin/_products.js';
+import { getCategories } from './admin/_categories.js';
 
 export async function onRequest(context) {
   const { request } = context;
@@ -10,12 +10,10 @@ export async function onRequest(context) {
     const db = context.env.DB;
     if (!db) return error('Database not available', 503);
 
-    const products = await getProducts(db);
-    const active = products
-      .filter((p) => p.active)
-      .map((p) => ({ ...p, image_url: p.image }));
+    const categories = await getCategories(db);
+    const active = categories.filter((c) => c.active);
     return json({ data: active });
   } catch (e) {
-    return error(e.message);
+    return error(e.message, 500);
   }
 }

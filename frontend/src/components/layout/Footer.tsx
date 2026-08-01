@@ -1,0 +1,119 @@
+function Footer() {
+  return (
+    <footer className="footer footer--light">
+      <div className="footer-container">
+        <div className="footer-grid">
+          <div>
+            <a href="/" className="footer-brand-link">
+              <svg width="24" height="24" viewBox="0 0 28 28" fill="none">
+                <circle cx="14" cy="14" r="13" stroke="currentColor" strokeWidth="1.2" />
+                <path d="M14 4V24M4 14H24" stroke="currentColor" strokeWidth="0.8" opacity="0.45" />
+                <circle cx="14" cy="14" r="3.5" stroke="currentColor" strokeWidth="1.2" />
+              </svg>
+              <div>
+                <div className="footer-brand-name">AgroVisão</div>
+                <div className="footer-tagline">Consultoria Agrícola</div>
+              </div>
+            </a>
+            <p className="footer-desc">
+              Consultoria especializada em planejamento, gestão e execução de projetos que geram impacto real na Amazônia e no Brasil.
+            </p>
+            <div className="footer-social">
+              <a
+                href="https://www.instagram.com/visaogestaodeprojetos/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="social-icon"
+              >
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="2" y="2" width="20" height="20" rx="5" />
+                  <circle cx="12" cy="12" r="5" />
+                  <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+                </svg>
+              </a>
+              <a href="mailto:contato@agrovisaopara.com.br" aria-label="Email" className="social-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="2" y="4" width="20" height="16" rx="2" />
+                  <path d="M2 7L12 13L22 7" />
+                </svg>
+              </a>
+              <a
+                href="https://api.whatsapp.com/send?phone=5591982064340"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="WhatsApp"
+                className="social-icon"
+              >
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                </svg>
+              </a>
+              <a href="tel:+5591982064340" aria-label="Telefone" className="social-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8a19.79 19.79 0 01-3.07-8.63A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z" transform="scale(0.9) translate(1.2,1.2)" />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div>
+            <h4 className="footer-nav-title">Links Rápidos</h4>
+            <div className="footer-nav-list">
+              <a href="/" className="footer-nav-link">Home</a>
+              <a href="/sobre" className="footer-nav-link">Sobre</a>
+              <a href="/servicos" className="footer-nav-link">Serviços</a>
+              <a href="/projetos" className="footer-nav-link">Projetos</a>
+              <a href="/contato" className="footer-nav-link">Contato</a>
+            </div>
+          </div>
+          <div>
+            <h4 className="footer-nav-title">Serviços</h4>
+            <div className="footer-nav-list">
+              <a href="/servicos#regularizacao-fundiaria" className="footer-nav-link">Gestão de Projetos</a>
+              <a href="/servicos#licenciamento" className="footer-nav-link">Consultoria Estratégica</a>
+              <a href="/servicos#pronaf" className="footer-nav-link">Captação de Recursos</a>
+              <a href="/servicos#gestao" className="footer-nav-link">Monitoramento e Avaliação</a>
+              <a href="/servicos#georreferenciamento" className="footer-nav-link">Treinamentos</a>
+            </div>
+          </div>
+          <div>
+            <h4 className="footer-nav-title">Fale Conosco</h4>
+            <div className="footer-contact-list">
+              <a href="tel:+5591982064340" className="footer-contact-link">
+                <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+                  <path d="M13 10.5v2A1 1 0 0 1 12 13.5a10 10 0 01-8-8A1 1 0 015 4.5h2a1 1 0 011 1c.08.6.224 1.19.43 1.75a1 1 0 01-.23 1.05L7.4 9.1a8 8 0 003.5 3.5l.8-.8a1 1 0 011.05-.23c.56.206 1.15.35 1.75.43A1 1 0 0113 12v-1.5z" stroke="currentColor" strokeWidth="1.2" fill="none" strokeLinecap="round" />
+                </svg>
+                (91) 98206-4340
+              </a>
+              <a href="tel:+5591987190993" className="footer-contact-link">
+                <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+                  <path d="M13 10.5v2A1 1 0 0 1 12 13.5a10 10 0 01-8-8A1 1 0 015 4.5h2a1 1 0 011 1c.08.6.224 1.19.43 1.75a1 1 0 01-.23 1.05L7.4 9.1a8 8 0 003.5 3.5l.8-.8a1 1 0 011.05-.23c.56.206 1.15.35 1.75.43A1 1 0 0113 12v-1.5z" stroke="currentColor" strokeWidth="1.2" fill="none" strokeLinecap="round" />
+                </svg>
+                (91) 98719-0993
+              </a>
+              <a href="mailto:contato@agrovisaopara.com.br" className="footer-contact-link">
+                <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+                  <rect x="1" y="3" width="13" height="9" rx="1.5" stroke="currentColor" strokeWidth="1.2" fill="none" />
+                  <path d="M1 5L7.5 9L14 5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+                </svg>
+                contato@agrovisaopara.com.br
+              </a>
+              <div className="footer-address">
+                <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+                  <path d="M7.5 1.5C5.01 1.5 3 3.51 3 6c0 3.75 4.5 7.5 4.5 7.5S12 9.75 12 6c0-2.49-2.01-4.5-4.5-4.5zm0 6a1.5 1.5 0 110-3 1.5 1.5 0 010 3z" fill="currentColor" />
+                </svg>
+                Sala 206, Next Office, BR-316,<br />Ananindeua — PA
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="footer-bottom">
+          <span className="footer-meta">© 2025 AgroVisão Consultoria Agrícola · CNPJ 55.818.360/0001-33</span>
+          <span className="footer-meta">Desenvolvido com ♥ para transformar projetos em realidades.</span>
+        </div>
+      </div>
+    </footer>
+  )
+}
+
+export default Footer
