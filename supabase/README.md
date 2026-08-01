@@ -28,6 +28,18 @@ que adiciona à tabela `project_images` os campos usados pela galeria:
 (imagem de destaque/capa, no máximo uma por projeto). Sem essa migration o
 painel não consegue salvar imagens na galeria.
 
+Por fim, `supabase/migrations/0003_gallery_extra_photos.sql` acrescenta
+`parent_id`, que transforma cada registro da galeria em "imagem de capa +
+breve descrição + fotos complementares + descrição completa": a linha com
+`parent_id` nulo é o registro e as linhas que apontam para ela são as fotos
+complementares (só com a breve descrição própria, opcional).
+
+Atalho para aplicar tudo de uma vez, sem abrir o painel:
+
+```bash
+node --env-file=.dev.vars scripts/apply-migrations.mjs
+```
+
 ### 2. Criar o usuário administrador
 
 ```bash

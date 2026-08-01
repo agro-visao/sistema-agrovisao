@@ -26,6 +26,9 @@ export function serializeGalleryImage(row, env) {
   return {
     id: row.id,
     projectId: row.project_id,
+    // Registro da galeria (parentId null) x foto complementar dele (parentId
+    // apontando para o registro). A foto complementar só tem breve descrição.
+    parentId: row.parent_id || null,
     url: isAbsoluteUrl(raw) ? raw : getPublicImageUrl(env, raw),
     // Vazio quando a imagem é uma URL externa (não há objeto para remover).
     imagePath: isAbsoluteUrl(raw) ? '' : raw,
@@ -50,6 +53,17 @@ export async function getGalleryImages(supabase, env) {
     .order('project_id', { ascending: true })
     .order('sort_order', { ascending: true })
     .order('id', { ascending: true });
+  if (dbError) throw new Error(dbError.message);
+  return (data || []).map((row) => serializeGalleryImage(row, env));
+}
+
+// Fotos complementares de um registro (usadas para limpar o Storage quando o
+// registro é excluído — o delete das linhas é feito em cascata pelo banco).
+export async function getChildImages(supabase, env, parentId) {
+  const { data, error: dbError } = await supabase
+    .from('project_images')
+    .select(IMAGE_COLUMNS)
+    .eq('parent_id', parentId);
   if (dbError) throw new Error(dbError.message);
   return (data || []).map((row) => serializeGalleryImage(row, env));
 }

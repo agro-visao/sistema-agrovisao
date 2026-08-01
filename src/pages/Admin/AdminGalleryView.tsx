@@ -2,14 +2,23 @@ import { useEffect, useState, useCallback, useRef, useMemo } from 'react'
 import { adminApi as api } from '../../lib/adminApi'
 import styles from './Admin.module.css'
 
+/**
+ * Um registro da galeria é: imagem de capa + breve descrição + fotos
+ * complementares + descrição completa.
+ *
+ * No banco, o registro é a linha com `parentId` nulo (guarda os dois textos e o
+ * destaque) e cada foto complementar é uma linha apontando para ela, com no
+ * máximo uma breve descrição própria.
+ */
 interface GalleryImage {
   id: number
   projectId: number
+  parentId: number | null
   url: string
   imagePath: string
   /** Breve descrição, exibida ao lado da foto na página pública. */
   alt: string
-  /** Descrição completa, exibida abaixo das fotos. */
+  /** Descrição completa, exibida abaixo das fotos (só no registro). */
   description: string
   featured: boolean
   sortOrder: number
@@ -31,56 +40,46 @@ interface Project {
 interface PendingImage {
   file: File
   previewUrl: string
+  /** Breve descrição da foto (opcional nas complementares). */
   alt: string
-  description: string
 }
-
-/**
- * Qual foto é a capa da galeria: `'current'` = a foto que está sendo editada,
- * um número = índice dentro das fotos novas, `null` = mantém o destaque atual
- * do projeto.
- */
-type FeaturedChoice = 'current' | number | null
 
 const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp']
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024
 const MAX_IMAGES_PER_UPLOAD = 12
 const NEW_PROJECT = '__new__'
 
-/** Foto com o seletor de destaque sobreposto — é ali que se escolhe a capa. */
-function FeaturedPhoto({
+/** Capa com o seletor de destaque sobreposto à própria foto. */
+function CoverPhoto({
   src,
   label,
-  name,
   checked,
-  onSelect,
+  onToggle,
 }: {
   src: string
   label: string
-  name: string
   checked: boolean
-  onSelect: () => void
+  onToggle: (value: boolean) => void
 }) {
   return (
     <div className={styles.photoTile}>
       <img src={src} alt={label} />
       <label className={`${styles.photoFeatured} ${checked ? styles.photoFeaturedOn : ''}`}>
         <input
-          type="radio"
-          name={name}
+          type="checkbox"
           checked={checked}
-          onChange={onSelect}
+          onChange={(e) => onToggle(e.target.checked)}
           data-testid="f-featured"
         />
-        {checked ? 'Capa da galeria' : 'Destaque'}
+        {checked ? 'Capa da galeria' : 'Definir como capa'}
       </label>
     </div>
   )
 }
 
 /**
- * Seletor do projeto ao qual a imagem pertence, com a opção de escrever o nome
- * de um projeto novo e salvá-lo sem sair do formulário da galeria.
+ * Seletor do projeto ao qual o registro pertence, com a opção de escrever o
+ * nome de um projeto novo e salvá-lo sem sair do formulário da galeria.
  */
 function ProjectField({
   id,
@@ -241,25 +240,30 @@ function AdminGalleryView() {
   const [listError, setListError] = useState(false)
   const [filterProject, setFilterProject] = useState('all')
 
+  // ─── Novo registro ─────────────────────────────────────────────────────────
   const [createOpen, setCreateOpen] = useState(false)
   const [createProjectId, setCreateProjectId] = useState('')
-  const [pending, setPending] = useState<PendingImage[]>([])
-  // Índice, dentro do lote, da imagem escolhida como destaque (capa) da
-  // galeria. null = mantém o destaque atual do projeto.
-  const [featuredIndex, setFeaturedIndex] = useState<number | null>(null)
+  const [createCover, setCreateCover] = useState<PendingImage | null>(null)
+  const [createAlt, setCreateAlt] = useState('')
+  const [createDescription, setCreateDescription] = useState('')
+  const [createFeatured, setCreateFeatured] = useState(false)
+  const [createExtras, setCreateExtras] = useState<PendingImage[]>([])
   const [formError, setFormError] = useState('')
   const [saving, setSaving] = useState(false)
 
+  // ─── Edição de um registro ─────────────────────────────────────────────────
   const [editing, setEditing] = useState<GalleryImage | null>(null)
   const [editProjectId, setEditProjectId] = useState('')
   const [editAlt, setEditAlt] = useState('')
   const [editDescription, setEditDescription] = useState('')
-  const [editFeatured, setEditFeatured] = useState<FeaturedChoice>(null)
-  // Fotos novas que entram no MESMO projeto junto com a edição.
-  const [editPending, setEditPending] = useState<PendingImage[]>([])
-  // Substituição (opcional) do arquivo da foto que está sendo editada.
+  const [editFeatured, setEditFeatured] = useState(false)
   const [editFile, setEditFile] = useState<File | null>(null)
   const [editPreview, setEditPreview] = useState<string | null>(null)
+  // Fotos complementares já salvas (alt editável) e as marcadas para remoção.
+  const [editExtras, setEditExtras] = useState<GalleryImage[]>([])
+  const [removedExtras, setRemovedExtras] = useState<number[]>([])
+  // Fotos complementares novas, que entram no mesmo registro ao salvar.
+  const [newExtras, setNewExtras] = useState<PendingImage[]>([])
 
   const [confirmDelete, setConfirmDelete] = useState<GalleryImage | null>(null)
   const [deleting, setDeleting] = useState(false)
@@ -335,8 +339,29 @@ function AdminGalleryView() {
     return ''
   }, [])
 
-  // ─── Seleção de arquivos (mesma lógica nos dois modais) ────────────────────
-  const handleFilesSelect = useCallback(
+  const toPending = useCallback(
+    (file: File): PendingImage => ({ file, previewUrl: trackUrl(URL.createObjectURL(file)), alt: '' }),
+    [trackUrl]
+  )
+
+  // ─── Seleção de arquivos ───────────────────────────────────────────────────
+  const handleCoverSelect = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0] || null
+      e.target.value = ''
+      if (!file) return
+      const err = validateFile(file)
+      if (err) {
+        setFormError(err)
+        return
+      }
+      setFormError('')
+      setCreateCover(toPending(file))
+    },
+    [validateFile, toPending]
+  )
+
+  const handleExtrasSelect = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>, target: 'create' | 'edit') => {
       const files = Array.from(e.target.files || [])
       e.target.value = ''
@@ -350,58 +375,41 @@ function AdminGalleryView() {
           setFormError(err)
           continue
         }
-        accepted.push({
-          file,
-          previewUrl: trackUrl(URL.createObjectURL(file)),
-          alt: '',
-          description: '',
-        })
+        accepted.push(toPending(file))
       }
       if (accepted.length === 0) return
 
-      const setter = target === 'create' ? setPending : setEditPending
+      const setter = target === 'create' ? setCreateExtras : setNewExtras
       setter((prev) => {
         const next = [...prev, ...accepted]
         if (next.length > MAX_IMAGES_PER_UPLOAD) {
-          setFormError(`Envie no máximo ${MAX_IMAGES_PER_UPLOAD} imagens por vez.`)
+          setFormError(`Envie no máximo ${MAX_IMAGES_PER_UPLOAD} fotos por vez.`)
           return next.slice(0, MAX_IMAGES_PER_UPLOAD)
         }
         return next
       })
     },
-    [validateFile, trackUrl]
+    [validateFile, toPending]
   )
 
-  const setPendingField = useCallback(
-    (target: 'create' | 'edit', index: number, patch: Partial<PendingImage>) => {
-      const setter = target === 'create' ? setPending : setEditPending
-      setter((prev) => prev.map((p, i) => (i === index ? { ...p, ...patch } : p)))
-    },
-    []
-  )
-
-  // O destaque acompanha a remoção: some quem estava marcado, some o destaque.
-  const shiftFeatured = (prev: FeaturedChoice, removed: number): FeaturedChoice => {
-    if (typeof prev !== 'number') return prev
-    if (removed === prev) return null
-    return removed < prev ? prev - 1 : prev
-  }
-
-  const removePending = useCallback((target: 'create' | 'edit', index: number) => {
-    if (target === 'create') {
-      setPending((prev) => prev.filter((_, i) => i !== index))
-      setFeaturedIndex((prev) => shiftFeatured(prev, index) as number | null)
-    } else {
-      setEditPending((prev) => prev.filter((_, i) => i !== index))
-      setEditFeatured((prev) => shiftFeatured(prev, index))
-    }
+  const setExtraAlt = useCallback((target: 'create' | 'edit', index: number, alt: string) => {
+    const setter = target === 'create' ? setCreateExtras : setNewExtras
+    setter((prev) => prev.map((p, i) => (i === index ? { ...p, alt } : p)))
   }, [])
 
-  // ─── Criação (envio em lote) ───────────────────────────────────────────────
+  const removeExtra = useCallback((target: 'create' | 'edit', index: number) => {
+    const setter = target === 'create' ? setCreateExtras : setNewExtras
+    setter((prev) => prev.filter((_, i) => i !== index))
+  }, [])
+
+  // ─── Criação ───────────────────────────────────────────────────────────────
   const openCreate = useCallback(() => {
     setCreateProjectId((prev) => prev || String(projects[0]?.id || ''))
-    setPending([])
-    setFeaturedIndex(null)
+    setCreateCover(null)
+    setCreateAlt('')
+    setCreateDescription('')
+    setCreateFeatured(false)
+    setCreateExtras([])
     setFormError('')
     setCreateOpen(true)
   }, [projects])
@@ -409,7 +417,8 @@ function AdminGalleryView() {
   const closeCreate = useCallback(() => {
     if (saving) return
     setCreateOpen(false)
-    setPending([])
+    setCreateCover(null)
+    setCreateExtras([])
     setFormError('')
     revokeAllUrls()
   }, [saving, revokeAllUrls])
@@ -422,64 +431,74 @@ function AdminGalleryView() {
         setFormError('Selecione o projeto da galeria.')
         return
       }
-      if (pending.length === 0) {
-        setFormError('Selecione ao menos uma imagem.')
+      if (!createCover) {
+        setFormError('Selecione a imagem de capa do registro.')
         return
       }
 
       const fd = new FormData()
       fd.append('projectId', createProjectId)
-      pending.forEach((item, index) => {
+      // O 1º arquivo é a capa; os demais entram como fotos do mesmo registro.
+      fd.append('images', createCover.file)
+      fd.append('alt_0', createAlt.trim())
+      createExtras.forEach((item, index) => {
         fd.append('images', item.file)
-        fd.append(`alt_${index}`, item.alt.trim())
-        fd.append(`description_${index}`, item.description.trim())
+        fd.append(`alt_${index + 1}`, item.alt.trim())
       })
-      if (featuredIndex !== null && featuredIndex < pending.length) {
-        fd.append('featuredIndex', String(featuredIndex))
-      }
+      fd.append('description', createDescription.trim())
+      fd.append('featured', String(createFeatured))
 
       try {
         setSaving(true)
         const res = await api('/api/admin/gallery', { method: 'POST', body: fd })
         if (!res.ok) {
-          setFormError(res.payload?.error || 'Erro ao enviar imagens.')
+          setFormError(res.payload?.error || 'Erro ao salvar o registro.')
           return
         }
         showToast(
           'success',
-          pending.length === 1 ? 'Imagem adicionada!' : `${pending.length} imagens adicionadas!`
+          createExtras.length > 0
+            ? `Registro criado com ${createExtras.length + 1} fotos!`
+            : 'Registro criado!'
         )
         await loadImages()
         closeCreate()
       } catch (error) {
         console.error('Save gallery error:', error)
-        setFormError('Erro ao enviar imagens. Tente novamente.')
+        setFormError('Erro ao salvar o registro. Tente novamente.')
       } finally {
         setSaving(false)
       }
     },
-    [createProjectId, pending, featuredIndex, loadImages, closeCreate, showToast]
+    [createProjectId, createCover, createAlt, createExtras, createDescription, createFeatured, loadImages, closeCreate, showToast]
   )
 
-  // ─── Edição (a foto atual + novas fotos do mesmo projeto) ──────────────────
-  const openEdit = useCallback((img: GalleryImage) => {
-    setEditing(img)
-    setEditProjectId(String(img.projectId))
-    setEditAlt(img.alt)
-    setEditDescription(img.description)
-    setEditFeatured(img.featured ? 'current' : null)
-    setEditPending([])
-    setEditFile(null)
-    setEditPreview(null)
-    setFormError('')
-  }, [])
+  // ─── Edição ────────────────────────────────────────────────────────────────
+  const openEdit = useCallback(
+    (record: GalleryImage, extras: GalleryImage[]) => {
+      setEditing(record)
+      setEditProjectId(String(record.projectId))
+      setEditAlt(record.alt)
+      setEditDescription(record.description)
+      setEditFeatured(record.featured)
+      setEditFile(null)
+      setEditPreview(null)
+      setEditExtras(extras)
+      setRemovedExtras([])
+      setNewExtras([])
+      setFormError('')
+    },
+    []
+  )
 
   const closeEdit = useCallback(() => {
     if (saving) return
     setEditing(null)
-    setEditPending([])
     setEditFile(null)
     setEditPreview(null)
+    setEditExtras([])
+    setRemovedExtras([])
+    setNewExtras([])
     setFormError('')
     revokeAllUrls()
   }, [saving, revokeAllUrls])
@@ -507,73 +526,70 @@ function AdminGalleryView() {
       if (!editing) return
       setFormError('')
 
-      const fd = new FormData()
-      fd.append('projectId', editProjectId)
-      fd.append('alt', editAlt.trim())
-      fd.append('description', editDescription.trim())
-      fd.append('featured', String(editFeatured === 'current'))
-      if (editFile) fd.append('image', editFile)
+      const original = new Map(editExtras.map((item) => [item.id, item.alt]))
 
       try {
         setSaving(true)
+
+        // 1. O registro em si (capa, textos, destaque e projeto).
+        const fd = new FormData()
+        fd.append('projectId', editProjectId)
+        fd.append('alt', editAlt.trim())
+        fd.append('description', editDescription.trim())
+        fd.append('featured', String(editFeatured))
+        if (editFile) fd.append('image', editFile)
+
         const res = await api(`/api/admin/gallery/${editing.id}`, { method: 'PUT', body: fd })
         if (!res.ok) {
-          setFormError(res.payload?.error || 'Erro ao salvar imagem.')
+          setFormError(res.payload?.error || 'Erro ao salvar o registro.')
           return
         }
 
-        // As fotos novas entram como imagens adicionais do mesmo projeto. Vão
-        // depois do PUT para que o destaque escolhido aqui seja o último a
-        // valer (só existe uma capa por projeto).
-        if (editPending.length > 0) {
+        // 2. Fotos complementares removidas.
+        for (const extraId of removedExtras) {
+          await api(`/api/admin/gallery/${extraId}`, { method: 'DELETE' })
+        }
+
+        // 3. Breve descrição alterada nas fotos que ficaram.
+        for (const item of editExtras) {
+          if (removedExtras.includes(item.id)) continue
+          if (item.alt === original.get(item.id)) continue
+          await api(`/api/admin/gallery/${item.id}`, {
+            method: 'PUT',
+            body: JSON.stringify({ alt: item.alt.trim() }),
+          })
+        }
+
+        // 4. Fotos novas, anexadas ao MESMO registro (parentId).
+        if (newExtras.length > 0) {
           const batch = new FormData()
-          batch.append('projectId', editProjectId)
-          editPending.forEach((item, index) => {
+          batch.append('parentId', String(editing.id))
+          newExtras.forEach((item, index) => {
             batch.append('images', item.file)
             batch.append(`alt_${index}`, item.alt.trim())
-            batch.append(`description_${index}`, item.description.trim())
           })
-          if (typeof editFeatured === 'number' && editFeatured < editPending.length) {
-            batch.append('featuredIndex', String(editFeatured))
-          }
           const batchRes = await api('/api/admin/gallery', { method: 'POST', body: batch })
           if (!batchRes.ok) {
             await loadImages()
             setFormError(
               batchRes.payload?.error ||
-                'A imagem foi salva, mas as fotos novas não foram enviadas. Tente de novo.'
+                'O registro foi salvo, mas as fotos novas não foram enviadas. Tente de novo.'
             )
             return
           }
         }
 
-        showToast(
-          'success',
-          editPending.length > 0
-            ? `Imagem atualizada e ${editPending.length} ${editPending.length === 1 ? 'foto adicionada' : 'fotos adicionadas'}!`
-            : 'Imagem atualizada!'
-        )
+        showToast('success', 'Registro atualizado!')
         await loadImages()
         closeEdit()
       } catch (error) {
         console.error('Update gallery error:', error)
-        setFormError('Erro ao salvar imagem. Tente novamente.')
+        setFormError('Erro ao salvar o registro. Tente novamente.')
       } finally {
         setSaving(false)
       }
     },
-    [
-      editing,
-      editProjectId,
-      editAlt,
-      editDescription,
-      editFeatured,
-      editFile,
-      editPending,
-      loadImages,
-      closeEdit,
-      showToast,
-    ]
+    [editing, editProjectId, editAlt, editDescription, editFeatured, editFile, editExtras, removedExtras, newExtras, loadImages, closeEdit, showToast]
   )
 
   // ─── Exclusão ──────────────────────────────────────────────────────────────
@@ -583,62 +599,68 @@ function AdminGalleryView() {
       setDeleting(true)
       const res = await api(`/api/admin/gallery/${confirmDelete.id}`, { method: 'DELETE' })
       if (!res.ok) {
-        showToast('error', res.payload?.error || 'Erro ao excluir imagem.')
+        showToast('error', res.payload?.error || 'Erro ao excluir o registro.')
         return
       }
-      showToast('success', 'Imagem excluída!')
+      showToast('success', 'Registro excluído!')
       setConfirmDelete(null)
       await loadImages()
     } catch (error) {
       console.error('Delete gallery error:', error)
-      showToast('error', 'Erro ao excluir imagem')
+      showToast('error', 'Erro ao excluir o registro')
     } finally {
       setDeleting(false)
     }
   }, [confirmDelete, loadImages, showToast])
 
-  // ─── Agrupamento por projeto (mesma leitura da galeria pública) ────────────
+  // ─── Agrupamento: projeto → registros → fotos do registro ──────────────────
   const groups = useMemo(() => {
     const filtered =
       filterProject === 'all'
         ? images
         : images.filter((img) => String(img.projectId) === filterProject)
 
-    const map = new Map<number, { project: string; categoryLabel: string; active: boolean; items: GalleryImage[] }>()
+    const extrasByParent = new Map<number, GalleryImage[]>()
     filtered.forEach((img) => {
+      if (!img.parentId) return
+      const list = extrasByParent.get(img.parentId) || []
+      list.push(img)
+      extrasByParent.set(img.parentId, list)
+    })
+
+    const map = new Map<
+      number,
+      { project: string; categoryLabel: string; active: boolean; records: { record: GalleryImage; extras: GalleryImage[] }[] }
+    >()
+    filtered.forEach((img) => {
+      if (img.parentId) return
       if (!map.has(img.projectId)) {
         map.set(img.projectId, {
           project: img.projectName || 'Projeto sem nome',
           categoryLabel: img.projectCategoryLabel,
           active: img.projectActive,
-          items: [],
+          records: [],
         })
       }
-      map.get(img.projectId)!.items.push(img)
+      map.get(img.projectId)!.records.push({ record: img, extras: extrasByParent.get(img.id) || [] })
     })
     return Array.from(map.entries()).map(([projectId, group]) => ({ projectId, ...group }))
   }, [images, filterProject])
 
   const hasProjects = projects.length > 0
 
-  const renderPendingRows = (target: 'create' | 'edit', items: PendingImage[], featured: FeaturedChoice) =>
+  const renderPendingExtras = (target: 'create' | 'edit', items: PendingImage[]) =>
     items.map((item, index) => (
       <div className={styles.photoRow} key={`${item.file.name}-${index}`}>
         <div style={{ display: 'grid', gap: '6px' }}>
-          <FeaturedPhoto
-            src={item.previewUrl}
-            label={`Pré-visualização ${index + 1}`}
-            name={`gallery-featured-${target}`}
-            checked={featured === index}
-            onSelect={() =>
-              target === 'create' ? setFeaturedIndex(index) : setEditFeatured(index)
-            }
-          />
+          <div className={styles.photoTile}>
+            <img src={item.previewUrl} alt={`Foto ${index + 1}`} />
+          </div>
           <button
             type="button"
             className={styles.linkBtn}
             style={{ padding: '4px 0' }}
-            onClick={() => removePending(target, index)}
+            onClick={() => removeExtra(target, index)}
           >
             Remover
           </button>
@@ -648,18 +670,10 @@ function AdminGalleryView() {
             className={styles.input}
             type="text"
             value={item.alt}
-            onChange={(e) => setPendingField(target, index, { alt: e.target.value })}
-            placeholder="Breve descrição (ex.: Plantio inicial)"
+            onChange={(e) => setExtraAlt(target, index, e.target.value)}
+            placeholder="Breve descrição desta foto (opcional)"
             maxLength={300}
-            data-testid="f-alt"
-          />
-          <textarea
-            className={styles.input}
-            rows={3}
-            value={item.description}
-            onChange={(e) => setPendingField(target, index, { description: e.target.value })}
-            placeholder="Descrição completa — texto exibido abaixo das fotos"
-            data-testid="f-description"
+            data-testid="f-extra-alt"
           />
         </div>
       </div>
@@ -671,15 +685,11 @@ function AdminGalleryView() {
         <div>
           <h1 className={styles.dashboardTitle}>Galeria</h1>
         </div>
-        <button
-          className={styles.btnAdd}
-          onClick={openCreate}
-          data-testid="add-gallery-image"
-        >
+        <button className={styles.btnAdd} onClick={openCreate} data-testid="add-gallery-image">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
             <path d="M12 5v14M5 12h14" />
           </svg>
-          Adicionar imagens
+          Adicionar registro
         </button>
       </div>
 
@@ -728,12 +738,12 @@ function AdminGalleryView() {
               </svg>
             </div>
             <div className={styles.emptyTitle}>
-              {images.length === 0 ? 'Nenhuma imagem na galeria' : 'Nenhuma imagem neste projeto'}
+              {images.length === 0 ? 'Nenhum registro na galeria' : 'Nenhum registro neste projeto'}
             </div>
             <div className={styles.emptyDesc}>
               {hasProjects
-                ? 'Adicione imagens a um projeto para elas aparecerem na página Galeria do site.'
-                : 'Clique em “Adicionar imagens” para criar o primeiro projeto e montar a galeria.'}
+                ? 'Cada registro tem uma imagem de capa, uma breve descrição, as fotos do projeto e a descrição completa.'
+                : 'Clique em “Adicionar registro” para criar o primeiro projeto e montar a galeria.'}
             </div>
           </div>
         ) : (
@@ -746,16 +756,16 @@ function AdminGalleryView() {
                 {group.categoryLabel && <span className={styles.badge}>{group.categoryLabel}</span>}
                 {!group.active && <span className={`${styles.badge} ${styles.badgeInactive}`}>Projeto inativo</span>}
                 <span style={{ fontFamily: 'var(--font-sans)', fontSize: '12px', color: '#888882' }}>
-                  {group.items.length} {group.items.length === 1 ? 'imagem' : 'imagens'}
+                  {group.records.length} {group.records.length === 1 ? 'registro' : 'registros'}
                 </span>
               </div>
 
               <div className={styles.productsGrid}>
-                {group.items.map((img) => (
-                  <div className={styles.productCard} key={img.id} data-testid="gallery-row">
+                {group.records.map(({ record, extras }) => (
+                  <div className={styles.productCard} key={record.id} data-testid="gallery-row">
                     <div className={styles.productCardImage}>
-                      {img.url ? (
-                        <img src={img.url} alt={img.alt || group.project} loading="lazy" />
+                      {record.url ? (
+                        <img src={record.url} alt={record.alt || group.project} loading="lazy" />
                       ) : (
                         <div className={styles.productCardPlaceholder}>
                           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4">
@@ -765,23 +775,23 @@ function AdminGalleryView() {
                           </svg>
                         </div>
                       )}
-                      {img.featured && (
+                      {record.featured && (
                         <div className={styles.productCardBadges}>
-                          <span className={`${styles.productCardBadge} ${styles.badgeFeatured}`}>Destaque</span>
+                          <span className={`${styles.productCardBadge} ${styles.badgeFeatured}`}>Capa</span>
                         </div>
                       )}
                     </div>
                     <div className={styles.productCardBody}>
                       <div className={styles.productCardName}>
-                        {img.alt || <span style={{ color: '#9a9a94' }}>Sem descrição</span>}
+                        {record.alt || <span style={{ color: '#9a9a94' }}>Sem breve descrição</span>}
                       </div>
                       <div className={styles.productCardMeta}>
-                        <span>{group.project}</span>
-                        <span>{img.description ? 'Com descrição completa' : 'Sem descrição completa'}</span>
+                        <span>{extras.length + 1} {extras.length === 0 ? 'foto' : 'fotos'}</span>
+                        <span>{record.description ? 'Com descrição completa' : 'Sem descrição completa'}</span>
                       </div>
                       <div className={styles.productCardActions}>
-                        <button className={styles.btnEdit} onClick={() => openEdit(img)} data-testid="edit-gallery-image">Editar</button>
-                        <button className={styles.btnDelete} onClick={() => setConfirmDelete(img)} data-testid="delete-gallery-image">Excluir</button>
+                        <button className={styles.btnEdit} onClick={() => openEdit(record, extras)} data-testid="edit-gallery-image">Editar</button>
+                        <button className={styles.btnDelete} onClick={() => setConfirmDelete(record)} data-testid="delete-gallery-image">Excluir</button>
                       </div>
                     </div>
                   </div>
@@ -794,11 +804,11 @@ function AdminGalleryView() {
 
       {createOpen && (
         <div className={styles.overlay} onClick={(e) => { if (e.target === e.currentTarget) closeCreate() }}>
-          <div className={styles.modal} role="dialog" aria-modal="true" aria-label="Adicionar imagens à galeria">
+          <div className={styles.modal} role="dialog" aria-modal="true" aria-label="Novo registro da galeria">
             <div className={styles.modalHeader}>
               <div>
-                <div className={styles.modalEyebrow}>Novo envio</div>
-                <div className={styles.modalTitle}>Adicionar imagens</div>
+                <div className={styles.modalEyebrow}>Novo</div>
+                <div className={styles.modalTitle}>Registro da galeria</div>
               </div>
               <button className={styles.modalClose} onClick={closeCreate} aria-label="Fechar">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
@@ -815,72 +825,118 @@ function AdminGalleryView() {
                 value={createProjectId}
                 onChange={setCreateProjectId}
                 onCreated={addProject}
-                hint="As imagens aparecem agrupadas por projeto na página Galeria."
+                hint="Os registros aparecem agrupados por projeto na página Galeria."
               />
 
               <div className={`${styles.field} ${styles.fieldFull}`}>
-                <label className={styles.label} htmlFor="g-images">Imagens</label>
-                <div className={styles.uploadArea}>
-                  <div className={styles.uploadPlaceholder}>
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden="true">
-                      <rect x="3" y="3" width="18" height="18" rx="2" />
-                      <circle cx="8.5" cy="8.5" r="1.5" />
-                      <path d="M21 15L16 10L5 21" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                    <span>
-                      {pending.length === 0
-                        ? 'Nenhuma imagem selecionada'
-                        : `${pending.length} ${pending.length === 1 ? 'imagem selecionada' : 'imagens selecionadas'}`}
-                    </span>
-                  </div>
-                  <div className={styles.uploadControls}>
-                    <label className={styles.btnUpload} htmlFor="g-images">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12" />
-                      </svg>
-                      {pending.length > 0 ? 'Adicionar mais' : 'Selecionar imagens'}
+                <label className={styles.label} htmlFor="g-cover">Imagem de capa</label>
+                <div className={styles.photoRow}>
+                  <div style={{ display: 'grid', gap: '6px' }}>
+                    {createCover ? (
+                      <CoverPhoto
+                        src={createCover.previewUrl}
+                        label="Capa do registro"
+                        checked={createFeatured}
+                        onToggle={setCreateFeatured}
+                      />
+                    ) : (
+                      <div className={styles.uploadPlaceholder} style={{ maxWidth: '170px', height: '140px' }}>
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden="true">
+                          <rect x="3" y="3" width="18" height="18" rx="2" />
+                          <circle cx="8.5" cy="8.5" r="1.5" />
+                          <path d="M21 15L16 10L5 21" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      </div>
+                    )}
+                    <label className={styles.linkBtn} style={{ padding: '4px 0', cursor: 'pointer' }} htmlFor="g-cover">
+                      {createCover ? 'Trocar capa' : 'Selecionar capa'}
                     </label>
                     <input
-                      id="g-images"
+                      id="g-cover"
                       className={styles.fileInput}
                       type="file"
-                      multiple
                       accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
-                      onChange={(e) => handleFilesSelect(e, 'create')}
-                      data-testid="f-images"
+                      onChange={handleCoverSelect}
+                      data-testid="f-cover"
                     />
-                    {pending.length > 0 && (
-                      <button type="button" className={styles.linkBtn} style={{ width: 'auto', padding: 0 }} onClick={() => { setPending([]); setFeaturedIndex(null) }}>
-                        Limpar seleção
-                      </button>
-                    )}
+                  </div>
+                  <div className={styles.photoRowFields}>
+                    <div>
+                      <label className={styles.label} htmlFor="g-alt">Breve descrição</label>
+                      <input
+                        id="g-alt"
+                        className={styles.input}
+                        type="text"
+                        value={createAlt}
+                        onChange={(e) => setCreateAlt(e.target.value)}
+                        placeholder="Ex.: Plantio inicial da safra"
+                        maxLength={300}
+                        data-testid="f-alt"
+                      />
+                      <div className={styles.inputHint}>Aparece ao lado da foto na página da galeria.</div>
+                    </div>
                   </div>
                 </div>
                 <div className={styles.inputHint}>
-                  JPG, PNG ou WEBP · máximo 5 MB por imagem · até {MAX_IMAGES_PER_UPLOAD} por envio
+                  JPG, PNG ou WEBP · máximo 5 MB. Marque “Definir como capa” sobre a foto para este
+                  registro virar a capa do projeto na página Galeria.
                 </div>
               </div>
 
-              {pending.length > 0 && (
-                <div className={`${styles.field} ${styles.fieldFull}`} style={{ display: 'grid', gap: '18px' }}>
-                  <div className={styles.inputHint} style={{ margin: 0 }}>
-                    Clique em “Destaque” sobre uma foto para ela virar a capa da galeria e abrir
-                    primeiro na tela de detalhes. Sem marcar, a capa atual do projeto é mantida.
-                  </div>
-                  {renderPendingRows('create', pending, featuredIndex)}
-                  {featuredIndex !== null && (
-                    <button type="button" className={styles.linkBtn} style={{ width: 'auto', padding: 0, justifySelf: 'start' }} onClick={() => setFeaturedIndex(null)}>
-                      Não alterar o destaque
+              <div className={`${styles.field} ${styles.fieldFull}`}>
+                <label className={styles.label} htmlFor="g-extras">Fotos do registro</label>
+                <div className={styles.uploadControls}>
+                  <label className={styles.btnUpload} htmlFor="g-extras">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" aria-hidden="true">
+                      <path d="M12 5v14M5 12h14" />
+                    </svg>
+                    {createExtras.length > 0 ? 'Adicionar mais' : 'Adicionar fotos'}
+                  </label>
+                  <input
+                    id="g-extras"
+                    className={styles.fileInput}
+                    type="file"
+                    multiple
+                    accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+                    onChange={(e) => handleExtrasSelect(e, 'create')}
+                    data-testid="f-images"
+                  />
+                  {createExtras.length > 0 && (
+                    <button type="button" className={styles.linkBtn} style={{ width: 'auto', padding: 0 }} onClick={() => setCreateExtras([])}>
+                      Limpar seleção
                     </button>
                   )}
                 </div>
+                <div className={styles.inputHint}>
+                  Fotos extras deste mesmo registro. A breve descrição de cada uma é opcional.
+                </div>
+              </div>
+
+              {createExtras.length > 0 && (
+                <div className={`${styles.field} ${styles.fieldFull}`} style={{ display: 'grid', gap: '18px' }}>
+                  {renderPendingExtras('create', createExtras)}
+                </div>
               )}
+
+              <div className={`${styles.field} ${styles.fieldFull}`}>
+                <label className={styles.label} htmlFor="g-description">Descrição completa</label>
+                <textarea
+                  id="g-description"
+                  className={styles.input}
+                  rows={6}
+                  value={createDescription}
+                  onChange={(e) => setCreateDescription(e.target.value)}
+                  placeholder="Texto completo exibido abaixo das fotos"
+                  data-testid="f-description"
+                />
+                <div className={styles.inputHint}>Use uma linha em branco para separar parágrafos.</div>
+              </div>
 
               <div className={styles.formActions}>
                 <button type="button" className={styles.btnCancel} onClick={closeCreate} disabled={saving}>Cancelar</button>
                 <button type="submit" className={styles.btnSave} disabled={saving} data-testid="form-submit">
                   {saving ? <span className={styles.spinner} aria-hidden="true" /> : null}
-                  {saving ? 'Enviando…' : 'Salvar imagens'}
+                  {saving ? 'Enviando…' : 'Salvar registro'}
                 </button>
               </div>
             </form>
@@ -890,11 +946,11 @@ function AdminGalleryView() {
 
       {editing && (
         <div className={styles.overlay} onClick={(e) => { if (e.target === e.currentTarget) closeEdit() }}>
-          <div className={styles.modal} role="dialog" aria-modal="true" aria-label="Editar imagem da galeria">
+          <div className={styles.modal} role="dialog" aria-modal="true" aria-label="Editar registro da galeria">
             <div className={styles.modalHeader}>
               <div>
                 <div className={styles.modalEyebrow}>Atualizar</div>
-                <div className={styles.modalTitle}>Editar imagem</div>
+                <div className={styles.modalTitle}>Registro da galeria</div>
               </div>
               <button className={styles.modalClose} onClick={closeEdit} aria-label="Fechar">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
@@ -911,22 +967,21 @@ function AdminGalleryView() {
                 value={editProjectId}
                 onChange={setEditProjectId}
                 onCreated={addProject}
-                hint="Projeto ao qual esta imagem pertence na página Galeria."
+                hint="As fotos do registro acompanham a troca de projeto."
               />
 
               <div className={`${styles.field} ${styles.fieldFull}`}>
-                <label className={styles.label}>Foto atual</label>
+                <label className={styles.label}>Imagem de capa</label>
                 <div className={styles.photoRow}>
                   <div style={{ display: 'grid', gap: '6px' }}>
-                    <FeaturedPhoto
+                    <CoverPhoto
                       src={editPreview || editing.url}
-                      label={editAlt || 'Foto da galeria'}
-                      name="gallery-featured-edit"
-                      checked={editFeatured === 'current'}
-                      onSelect={() => setEditFeatured('current')}
+                      label={editAlt || 'Capa do registro'}
+                      checked={editFeatured}
+                      onToggle={setEditFeatured}
                     />
                     <label className={styles.linkBtn} style={{ padding: '4px 0', cursor: 'pointer' }} htmlFor="g-edit-image">
-                      {editFile ? 'Trocar outro arquivo' : 'Substituir esta foto'}
+                      {editFile ? 'Trocar outro arquivo' : 'Substituir a capa'}
                     </label>
                     <input
                       id="g-edit-image"
@@ -950,82 +1005,104 @@ function AdminGalleryView() {
                         type="text"
                         value={editAlt}
                         onChange={(e) => setEditAlt(e.target.value)}
-                        placeholder="Ex.: Plantio inicial"
+                        placeholder="Ex.: Plantio inicial da safra"
                         maxLength={300}
                         data-testid="f-edit-alt"
                       />
                       <div className={styles.inputHint}>Aparece ao lado da foto na página da galeria.</div>
                     </div>
-                    <div>
-                      <label className={styles.label} htmlFor="g-edit-description">Descrição completa</label>
-                      <textarea
-                        id="g-edit-description"
-                        className={styles.input}
-                        rows={6}
-                        value={editDescription}
-                        onChange={(e) => setEditDescription(e.target.value)}
-                        placeholder="Texto completo exibido abaixo das fotos"
-                        data-testid="f-edit-description"
-                      />
-                      <div className={styles.inputHint}>Use uma linha em branco para separar parágrafos.</div>
-                    </div>
                   </div>
-                </div>
-                <div className={styles.inputHint}>
-                  “Substituir esta foto” troca o arquivo desta imagem. Para ter mais de uma foto no
-                  projeto, use “Adicionar fotos” abaixo.
                 </div>
               </div>
 
               <div className={`${styles.field} ${styles.fieldFull}`}>
-                <label className={styles.label} htmlFor="g-edit-more">Adicionar fotos a este projeto</label>
+                <label className={styles.label} htmlFor="g-edit-extras">Fotos do registro</label>
                 <div className={styles.uploadControls}>
-                  <label className={styles.btnUpload} htmlFor="g-edit-more">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <label className={styles.btnUpload} htmlFor="g-edit-extras">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" aria-hidden="true">
                       <path d="M12 5v14M5 12h14" />
                     </svg>
-                    {editPending.length > 0 ? 'Adicionar mais' : 'Adicionar fotos'}
+                    Adicionar fotos
                   </label>
                   <input
-                    id="g-edit-more"
+                    id="g-edit-extras"
                     className={styles.fileInput}
                     type="file"
                     multiple
                     accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
-                    onChange={(e) => handleFilesSelect(e, 'edit')}
+                    onChange={(e) => handleExtrasSelect(e, 'edit')}
                     data-testid="f-edit-images"
                   />
-                  {editPending.length > 0 && (
-                    <button type="button" className={styles.linkBtn} style={{ width: 'auto', padding: 0 }} onClick={() => { setEditPending([]); setEditFeatured((prev) => (typeof prev === 'number' ? null : prev)) }}>
-                      Limpar seleção
-                    </button>
-                  )}
                 </div>
                 <div className={styles.inputHint}>
-                  Cada foto nova vira uma imagem do mesmo projeto, com sua própria descrição.
-                  JPG, PNG ou WEBP · máximo 5 MB por imagem.
+                  As fotos ficam neste mesmo registro — não viram registros novos na galeria.
                 </div>
               </div>
 
-              {editPending.length > 0 && (
+              {(editExtras.length > 0 || newExtras.length > 0) && (
                 <div className={`${styles.field} ${styles.fieldFull}`} style={{ display: 'grid', gap: '18px' }}>
-                  {renderPendingRows('edit', editPending, editFeatured)}
+                  {editExtras.map((item) => {
+                    const removed = removedExtras.includes(item.id)
+                    return (
+                      <div className={styles.photoRow} key={item.id} style={{ opacity: removed ? 0.45 : 1 }}>
+                        <div style={{ display: 'grid', gap: '6px' }}>
+                          <div className={styles.photoTile}>
+                            <img src={item.url} alt={item.alt || 'Foto do registro'} />
+                          </div>
+                          <button
+                            type="button"
+                            className={styles.linkBtn}
+                            style={{ padding: '4px 0' }}
+                            onClick={() =>
+                              setRemovedExtras((prev) =>
+                                removed ? prev.filter((id) => id !== item.id) : [...prev, item.id]
+                              )
+                            }
+                          >
+                            {removed ? 'Desfazer' : 'Remover'}
+                          </button>
+                        </div>
+                        <div className={styles.photoRowFields}>
+                          <input
+                            className={styles.input}
+                            type="text"
+                            value={item.alt}
+                            disabled={removed}
+                            onChange={(e) =>
+                              setEditExtras((prev) =>
+                                prev.map((p) => (p.id === item.id ? { ...p, alt: e.target.value } : p))
+                              )
+                            }
+                            placeholder="Breve descrição desta foto (opcional)"
+                            maxLength={300}
+                          />
+                        </div>
+                      </div>
+                    )
+                  })}
+                  {renderPendingExtras('edit', newExtras)}
                 </div>
               )}
 
-              {editFeatured !== null && (
-                <button type="button" className={styles.linkBtn} style={{ width: 'auto', padding: '10px 0 0', justifySelf: 'start' }} onClick={() => setEditFeatured(null)}>
-                  {editing.featured && editFeatured === 'current'
-                    ? 'Remover o destaque desta foto'
-                    : 'Não alterar o destaque'}
-                </button>
-              )}
+              <div className={`${styles.field} ${styles.fieldFull}`}>
+                <label className={styles.label} htmlFor="g-edit-description">Descrição completa</label>
+                <textarea
+                  id="g-edit-description"
+                  className={styles.input}
+                  rows={6}
+                  value={editDescription}
+                  onChange={(e) => setEditDescription(e.target.value)}
+                  placeholder="Texto completo exibido abaixo das fotos"
+                  data-testid="f-edit-description"
+                />
+                <div className={styles.inputHint}>Use uma linha em branco para separar parágrafos.</div>
+              </div>
 
               <div className={styles.formActions}>
                 <button type="button" className={styles.btnCancel} onClick={closeEdit} disabled={saving}>Cancelar</button>
                 <button type="submit" className={styles.btnSave} disabled={saving} data-testid="edit-submit">
                   {saving ? <span className={styles.spinner} aria-hidden="true" /> : null}
-                  {saving ? 'Salvando…' : 'Salvar imagem'}
+                  {saving ? 'Salvando…' : 'Salvar registro'}
                 </button>
               </div>
             </form>
@@ -1039,7 +1116,7 @@ function AdminGalleryView() {
             <div className={styles.modalHeader}>
               <div>
                 <div className={styles.modalEyebrow}>Atenção</div>
-                <div className={styles.modalTitle}>Excluir imagem</div>
+                <div className={styles.modalTitle}>Excluir registro</div>
               </div>
               <button className={styles.modalClose} onClick={() => { if (!deleting) setConfirmDelete(null) }} aria-label="Fechar">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
@@ -1049,15 +1126,16 @@ function AdminGalleryView() {
             </div>
             <div className={styles.form}>
               <p style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', color: 'var(--clr-text-body)', lineHeight: 1.7 }}>
-                Tem certeza de que deseja excluir esta imagem
-                {confirmDelete.alt ? <> (<strong>{confirmDelete.alt}</strong>)</> : null}? Esta ação não pode ser desfeita.
+                Excluir este registro
+                {confirmDelete.alt ? <> (<strong>{confirmDelete.alt}</strong>)</> : null} apaga também
+                as fotos complementares dele. Esta ação não pode ser desfeita.
               </p>
               <div className={styles.formActions}>
                 <button type="button" className={styles.btnCancel} onClick={() => { if (!deleting) setConfirmDelete(null) }} disabled={deleting}>
                   Cancelar
                 </button>
                 <button type="button" className={styles.btnDelete} onClick={confirmRemove} disabled={deleting} data-testid="delete-confirm">
-                  {deleting ? 'Excluindo…' : 'Excluir imagem'}
+                  {deleting ? 'Excluindo…' : 'Excluir registro'}
                 </button>
               </div>
             </div>

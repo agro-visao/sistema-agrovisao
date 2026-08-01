@@ -37,6 +37,9 @@ export async function onRequest(context) {
       alt: img.alt,
       description: img.description || '',
       featured: Boolean(img.featured),
+      // parentId preenchido = foto complementar de um registro; a breve
+      // descrição dela é opcional e a descrição completa é a do registro.
+      parentId: img.parent_id || null,
       sortOrder: img.sort_order,
       createdAt: img.created_at,
       project: {

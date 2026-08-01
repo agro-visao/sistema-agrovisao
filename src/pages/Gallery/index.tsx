@@ -32,9 +32,12 @@ async function fetchProjectGalleries(): Promise<ProjectGallery[] | null> {
       })
 
       return Array.from(grouped.values()).map((g) => {
-        // A capa é a imagem marcada como destaque no painel; sem destaque
-        // definido, usa a primeira pela ordem de exibição.
-        const cover = g.images.find((img: any) => img.featured) || g.images[0]
+        // A capa é o registro marcado como destaque no painel; sem destaque
+        // definido, usa o primeiro registro (nunca uma foto complementar).
+        const cover =
+          g.images.find((img: any) => img.featured) ||
+          g.images.find((img: any) => !img.parentId) ||
+          g.images[0]
         return {
           id: g.project.id,
           slug: g.project.slug,

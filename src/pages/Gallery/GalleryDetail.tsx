@@ -10,9 +10,11 @@ interface ProjectImage {
   url: string
   /** Breve descrição, exibida ao lado da foto principal. */
   alt: string
-  /** Descrição completa, exibida abaixo das fotos. */
+  /** Descrição completa, exibida abaixo das fotos (só no registro). */
   description: string
   featured: boolean
+  /** Preenchido nas fotos complementares; aponta para o registro da galeria. */
+  parentId: number | null
   sortOrder: number
   project: {
     id: number
@@ -23,13 +25,31 @@ interface ProjectImage {
   }
 }
 
+/**
+ * Deixa cada registro seguido das suas fotos complementares, para que as
+ * miniaturas apareçam na mesma ordem em que foram cadastradas no painel.
+ */
+function sortByRecord(images: ProjectImage[]): ProjectImage[] {
+  const byId = new Map(images.map((img) => [img.id, img]))
+  const recordOrder = (img: ProjectImage) => {
+    const record = img.parentId ? byId.get(img.parentId) : img
+    return record ? record.sortOrder : img.sortOrder
+  }
+  return [...images].sort((a, b) => {
+    const diff = recordOrder(a) - recordOrder(b)
+    if (diff !== 0) return diff
+    if (!a.parentId !== !b.parentId) return a.parentId ? 1 : -1
+    return a.sortOrder - b.sortOrder
+  })
+}
+
 async function fetchProjectImages(slug: string): Promise<ProjectImage[] | null> {
   try {
     const res = await fetch('/api/project-images')
     if (!res.ok) throw new Error('API unavailable')
     const json = await res.json()
     if (json.data) {
-      return json.data.filter((img: ProjectImage) => img.project.slug === slug).sort((a: ProjectImage, b: ProjectImage) => a.sortOrder - b.sortOrder)
+      return sortByRecord(json.data.filter((img: ProjectImage) => img.project.slug === slug))
     }
   } catch (_) {}
   return null
@@ -49,7 +69,7 @@ function GalleryDetail() {
         if (data && data.length > 0) {
           setImages(data)
           setProject(data[0].project)
-          // Abre pela imagem marcada como destaque no painel; sem destaque
+          // Abre pela capa marcada como destaque no painel; sem destaque
           // definido, mantém a primeira pela ordem de exibição.
           setSelectedImage(data.find((img) => img.featured) || data[0])
         }
@@ -57,6 +77,14 @@ function GalleryDetail() {
       })
     }
   }, [slug])
+
+  // A foto complementar herda os textos do registro: a breve descrição dela é
+  // opcional e a descrição completa é sempre a do registro.
+  const selectedRecord = selectedImage?.parentId
+    ? images.find((img) => img.id === selectedImage.parentId) || selectedImage
+    : selectedImage
+  const briefDescription = selectedImage?.alt || selectedRecord?.alt || ''
+  const fullDescription = selectedRecord?.description || ''
 
   return (
     <>
@@ -119,9 +147,9 @@ function GalleryDetail() {
                         <div style={{ fontFamily: 'var(--font-sans)', fontSize: '9.5px', fontWeight: 600, color: '#6F8F3A', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: '12px' }}>
                           {project?.categoryLabel}
                         </div>
-                        {selectedImage.alt && (
+                        {briefDescription && (
                           <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: '19px', fontWeight: 400, color: '#1a1a18', lineHeight: 1.55, marginBottom: '16px', letterSpacing: '-0.005em' }}>
-                            {selectedImage.alt}
+                            {briefDescription}
                           </p>
                         )}
                         <p style={{ fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 400, color: '#888882', lineHeight: 1.8, marginBottom: '28px' }}>
@@ -181,13 +209,13 @@ function GalleryDetail() {
                   </div>
                 </div>
 
-                {/* Descrição completa da imagem selecionada, abaixo das fotos */}
-                {selectedImage?.description && (
+                {/* Descrição completa do registro selecionado, abaixo das fotos */}
+                {fullDescription && (
                   <div style={{ gridColumn: '1 / -1', marginTop: '48px', maxWidth: '780px' }}>
                     <div style={{ fontFamily: 'var(--font-sans)', fontSize: '11px', fontWeight: 600, color: '#6F8F3A', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '16px' }}>
                       Descrição
                     </div>
-                    {selectedImage.description.split(/\n{2,}/).map((paragraph, i) => (
+                    {fullDescription.split(/\n{2,}/).map((paragraph, i) => (
                       <p
                         key={i}
                         style={{ fontFamily: 'var(--font-sans)', fontSize: '15px', fontWeight: 400, color: '#555550', lineHeight: 1.9, marginBottom: '16px', whiteSpace: 'pre-line' }}
