@@ -45,25 +45,46 @@ const EMPTY_FORM: FormState = {
 const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp']
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024
 
-// ─── Máscara monetária (R$ 0,00) ────────────────────────────────────────────
-// O campo sempre exibe o valor formatado: só os dígitos digitados contam e o
-// valor vai sendo preenchido da direita para a esquerda (centavos primeiro).
+// ─── Campo monetário (R$ 0,00) ──────────────────────────────────────────────
+// A digitação é livre: o número é interpretado em REAIS e só é formatado
+// quando o campo perde o foco. Reformatar a cada tecla embaralhava o cursor
+// dentro do texto já formatado e fazia o valor sair errado.
 
 function centsToInput(cents: number): string {
   return formatBRL(cents)
 }
 
-/** Reformata o que foi digitado; ignora tudo que não é dígito. */
-function maskBRL(value: string): string {
-  const digits = value.replace(/\D/g, '').replace(/^0+(?=\d)/, '').slice(0, 11)
-  if (!digits) return ''
-  return formatBRL(parseInt(digits, 10))
-}
+/**
+ * Lê o que foi digitado em centavos, aceitando vírgula ou ponto como
+ * separador decimal:
+ *
+ *   "8"  "8,00"  "8.00"  "R$ 8,00" → 800      (R$ 8,00)
+ *   "12,5"                         → 1250     (R$ 12,50)
+ *   "1200"  "1.200"  "1.200,00"    → 120000   (R$ 1.200,00)
+ *
+ * Regra: o último ponto/vírgula seguido de 1 ou 2 dígitos é o separador
+ * decimal; qualquer outro é separador de milhar. Retorna null se não houver
+ * número nenhum.
+ */
+function parseMoneyToCents(value: string): number | null {
+  const cleaned = value.replace(/[^\d.,]/g, '')
+  if (!/\d/.test(cleaned)) return null
 
-/** Valor do campo em centavos; null quando está vazio. */
-function inputToCents(value: string): number | null {
-  const digits = value.replace(/\D/g, '')
-  return digits ? parseInt(digits, 10) : null
+  let reaisPart = cleaned
+  let centsPart = ''
+
+  const lastSeparator = Math.max(cleaned.lastIndexOf(','), cleaned.lastIndexOf('.'))
+  if (lastSeparator !== -1) {
+    const afterSeparator = cleaned.slice(lastSeparator + 1)
+    if (/^\d{1,2}$/.test(afterSeparator)) {
+      reaisPart = cleaned.slice(0, lastSeparator)
+      centsPart = afterSeparator.padEnd(2, '0')
+    }
+  }
+
+  const reais = reaisPart.replace(/\D/g, '').slice(0, 9)
+  const cents = centsPart ? parseInt(centsPart, 10) : 0
+  return parseInt(reais || '0', 10) * 100 + cents
 }
 
 interface Category {
@@ -72,10 +93,9 @@ interface Category {
 }
 
 /**
- * Campo de valor em reais. O conteúdo é sempre reescrito da direita para a
- * esquerda (os dígitos entram pelos centavos), então o cursor volta para o fim
- * a cada tecla e o foco seleciona tudo — assim dá para redigitar um valor já
- * preenchido sem precisar apagar caractere por caractere.
+ * Campo de valor em reais: digite à vontade ("8", "8,00", "8.00", "1.200,50")
+ * que o campo se formata sozinho ao sair — nada é reescrito no meio da
+ * digitação. Focar seleciona tudo, para trocar um valor já preenchido.
  */
 function MoneyInput({
   id,
@@ -85,30 +105,22 @@ function MoneyInput({
 }: {
   id: string
   value: string
-  onChange: (masked: string) => void
+  onChange: (text: string) => void
   testId: string
 }) {
-  const ref = useRef<HTMLInputElement>(null)
-
-  const caretToEnd = () => {
-    const el = ref.current
-    if (el) el.setSelectionRange(el.value.length, el.value.length)
-  }
-
   return (
     <input
-      ref={ref}
       id={id}
       className={styles.input}
       type="text"
-      inputMode="numeric"
+      inputMode="decimal"
       value={value}
-      onChange={(e) => {
-        onChange(maskBRL(e.target.value))
-        requestAnimationFrame(caretToEnd)
-      }}
+      onChange={(e) => onChange(e.target.value)}
       onFocus={(e) => e.currentTarget.select()}
-      onClick={() => { if (ref.current?.selectionStart !== 0) caretToEnd() }}
+      onBlur={() => {
+        const cents = parseMoneyToCents(value)
+        onChange(cents === null ? '' : formatBRL(cents))
+      }}
       placeholder="R$ 0,00"
       data-testid={testId}
     />
@@ -281,14 +293,14 @@ function AdminSalesView() {
       fd.append('featured', String(form.featured))
       fd.append('isNew', String(form.isNew))
 
-      const priceCents = inputToCents(form.price)
+      const priceCents = parseMoneyToCents(form.price)
       if (priceCents === null || priceCents < 0) {
         setFormError('Valor inválido.')
         return
       }
       fd.append('price', String(priceCents))
 
-      const originalCents = inputToCents(form.originalPrice)
+      const originalCents = parseMoneyToCents(form.originalPrice)
       if (originalCents !== null && originalCents > 0) {
         fd.append('originalPrice', String(originalCents))
       }
