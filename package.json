@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && npm run build:functions",
+    "build:functions": "echo 'Functions pronta para deploy em Cloudflare'",
     "lint": "oxlint",
     "preview": "vite preview"
   },
