@@ -35,9 +35,204 @@ interface PendingImage {
   description: string
 }
 
+/**
+ * Qual foto é a capa da galeria: `'current'` = a foto que está sendo editada,
+ * um número = índice dentro das fotos novas, `null` = mantém o destaque atual
+ * do projeto.
+ */
+type FeaturedChoice = 'current' | number | null
+
 const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp']
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024
 const MAX_IMAGES_PER_UPLOAD = 12
+const NEW_PROJECT = '__new__'
+
+/** Foto com o seletor de destaque sobreposto — é ali que se escolhe a capa. */
+function FeaturedPhoto({
+  src,
+  label,
+  name,
+  checked,
+  onSelect,
+}: {
+  src: string
+  label: string
+  name: string
+  checked: boolean
+  onSelect: () => void
+}) {
+  return (
+    <div className={styles.photoTile}>
+      <img src={src} alt={label} />
+      <label className={`${styles.photoFeatured} ${checked ? styles.photoFeaturedOn : ''}`}>
+        <input
+          type="radio"
+          name={name}
+          checked={checked}
+          onChange={onSelect}
+          data-testid="f-featured"
+        />
+        {checked ? 'Capa da galeria' : 'Destaque'}
+      </label>
+    </div>
+  )
+}
+
+/**
+ * Seletor do projeto ao qual a imagem pertence, com a opção de escrever o nome
+ * de um projeto novo e salvá-lo sem sair do formulário da galeria.
+ */
+function ProjectField({
+  id,
+  projects,
+  value,
+  onChange,
+  onCreated,
+  hint,
+}: {
+  id: string
+  projects: Project[]
+  value: string
+  onChange: (projectId: string) => void
+  onCreated: (project: Project) => void
+  hint?: string
+}) {
+  const [creating, setCreating] = useState(false)
+  const [name, setName] = useState('')
+  const [categoryLabel, setCategoryLabel] = useState('')
+  const [busy, setBusy] = useState(false)
+  const [err, setErr] = useState('')
+
+  // Sem nenhum projeto cadastrado não há o que selecionar: o formulário de
+  // criação já abre aberto.
+  useEffect(() => {
+    if (projects.length === 0) setCreating(true)
+  }, [projects.length])
+
+  const cancel = () => {
+    setCreating(false)
+    setName('')
+    setCategoryLabel('')
+    setErr('')
+  }
+
+  const save = async () => {
+    const trimmed = name.trim()
+    if (!trimmed) {
+      setErr('Escreva o nome do projeto.')
+      return
+    }
+    try {
+      setBusy(true)
+      setErr('')
+      const res = await api('/api/admin/projects', {
+        method: 'POST',
+        body: JSON.stringify({ name: trimmed, categoryLabel: categoryLabel.trim() }),
+      })
+      if (!res.ok) {
+        setErr(res.payload?.error || 'Erro ao criar o projeto.')
+        return
+      }
+      const created = res.payload?.data as Project | undefined
+      if (!created?.id) {
+        setErr('Resposta inesperada do servidor.')
+        return
+      }
+      onCreated(created)
+      onChange(String(created.id))
+      cancel()
+    } catch (error) {
+      console.error('Create project error:', error)
+      setErr('Erro ao criar o projeto. Tente novamente.')
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  return (
+    <div className={`${styles.field} ${styles.fieldFull}`}>
+      <label className={styles.label} htmlFor={id}>Projeto</label>
+      <select
+        id={id}
+        className={styles.input}
+        value={creating ? NEW_PROJECT : value}
+        onChange={(e) => {
+          if (e.target.value === NEW_PROJECT) {
+            setCreating(true)
+            setErr('')
+          } else {
+            setCreating(false)
+            onChange(e.target.value)
+          }
+        }}
+        data-testid="f-project"
+      >
+        {projects.map((p) => (
+          <option key={p.id} value={String(p.id)}>
+            {p.name}{p.active ? '' : ' (inativo)'}
+          </option>
+        ))}
+        <option value={NEW_PROJECT}>+ Criar novo projeto…</option>
+      </select>
+
+      {creating && (
+        <div
+          style={{
+            display: 'grid',
+            gap: '10px',
+            marginTop: '12px',
+            padding: '14px',
+            border: '1px solid rgba(49,91,44,0.16)',
+            borderRadius: '8px',
+          }}
+        >
+          <input
+            className={styles.input}
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Nome do projeto (ex.: Horta Comunitária 2026)"
+            maxLength={120}
+            autoFocus
+            data-testid="f-new-project-name"
+          />
+          <input
+            className={styles.input}
+            type="text"
+            value={categoryLabel}
+            onChange={(e) => setCategoryLabel(e.target.value)}
+            placeholder="Categoria (ex.: Agricultura) — opcional"
+            maxLength={60}
+            data-testid="f-new-project-category"
+          />
+          {err && <div className={styles.fieldError}>{err}</div>}
+          <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+            <button
+              type="button"
+              className={styles.btnUpload}
+              onClick={save}
+              disabled={busy}
+              data-testid="f-new-project-save"
+            >
+              {busy ? 'Salvando…' : 'Salvar projeto'}
+            </button>
+            <button
+              type="button"
+              className={styles.linkBtn}
+              style={{ width: 'auto', padding: 0 }}
+              onClick={cancel}
+              disabled={busy}
+            >
+              Cancelar
+            </button>
+          </div>
+        </div>
+      )}
+
+      {hint && !creating && <div className={styles.inputHint}>{hint}</div>}
+    </div>
+  )
+}
 
 function AdminGalleryView() {
   const [images, setImages] = useState<GalleryImage[]>([])
@@ -59,7 +254,10 @@ function AdminGalleryView() {
   const [editProjectId, setEditProjectId] = useState('')
   const [editAlt, setEditAlt] = useState('')
   const [editDescription, setEditDescription] = useState('')
-  const [editFeatured, setEditFeatured] = useState(false)
+  const [editFeatured, setEditFeatured] = useState<FeaturedChoice>(null)
+  // Fotos novas que entram no MESMO projeto junto com a edição.
+  const [editPending, setEditPending] = useState<PendingImage[]>([])
+  // Substituição (opcional) do arquivo da foto que está sendo editada.
   const [editFile, setEditFile] = useState<File | null>(null)
   const [editPreview, setEditPreview] = useState<string | null>(null)
 
@@ -122,6 +320,10 @@ function AdminGalleryView() {
     loadProjects()
   }, [loadImages, loadProjects])
 
+  const addProject = useCallback((project: Project) => {
+    setProjects((prev) => (prev.some((p) => p.id === project.id) ? prev : [...prev, project]))
+  }, [])
+
   const validateFile = useCallback((file: File): string => {
     const extOk = /\.(jpe?g|png|webp)$/i.test(file.name)
     if (!ALLOWED_IMAGE_TYPES.includes(file.type) || !extOk) {
@@ -133,25 +335,9 @@ function AdminGalleryView() {
     return ''
   }, [])
 
-  // ─── Criação (envio em lote) ───────────────────────────────────────────────
-  const openCreate = useCallback(() => {
-    setCreateProjectId((prev) => prev || String(projects[0]?.id || ''))
-    setPending([])
-    setFeaturedIndex(null)
-    setFormError('')
-    setCreateOpen(true)
-  }, [projects])
-
-  const closeCreate = useCallback(() => {
-    if (saving) return
-    setCreateOpen(false)
-    setPending([])
-    setFormError('')
-    revokeAllUrls()
-  }, [saving, revokeAllUrls])
-
+  // ─── Seleção de arquivos (mesma lógica nos dois modais) ────────────────────
   const handleFilesSelect = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    (e: React.ChangeEvent<HTMLInputElement>, target: 'create' | 'edit') => {
       const files = Array.from(e.target.files || [])
       e.target.value = ''
       if (files.length === 0) return
@@ -171,8 +357,10 @@ function AdminGalleryView() {
           description: '',
         })
       }
+      if (accepted.length === 0) return
 
-      setPending((prev) => {
+      const setter = target === 'create' ? setPending : setEditPending
+      setter((prev) => {
         const next = [...prev, ...accepted]
         if (next.length > MAX_IMAGES_PER_UPLOAD) {
           setFormError(`Envie no máximo ${MAX_IMAGES_PER_UPLOAD} imagens por vez.`)
@@ -184,19 +372,47 @@ function AdminGalleryView() {
     [validateFile, trackUrl]
   )
 
-  const setPendingField = useCallback((index: number, patch: Partial<PendingImage>) => {
-    setPending((prev) => prev.map((p, i) => (i === index ? { ...p, ...patch } : p)))
+  const setPendingField = useCallback(
+    (target: 'create' | 'edit', index: number, patch: Partial<PendingImage>) => {
+      const setter = target === 'create' ? setPending : setEditPending
+      setter((prev) => prev.map((p, i) => (i === index ? { ...p, ...patch } : p)))
+    },
+    []
+  )
+
+  // O destaque acompanha a remoção: some quem estava marcado, some o destaque.
+  const shiftFeatured = (prev: FeaturedChoice, removed: number): FeaturedChoice => {
+    if (typeof prev !== 'number') return prev
+    if (removed === prev) return null
+    return removed < prev ? prev - 1 : prev
+  }
+
+  const removePending = useCallback((target: 'create' | 'edit', index: number) => {
+    if (target === 'create') {
+      setPending((prev) => prev.filter((_, i) => i !== index))
+      setFeaturedIndex((prev) => shiftFeatured(prev, index) as number | null)
+    } else {
+      setEditPending((prev) => prev.filter((_, i) => i !== index))
+      setEditFeatured((prev) => shiftFeatured(prev, index))
+    }
   }, [])
 
-  const removePending = useCallback((index: number) => {
-    setPending((prev) => prev.filter((_, i) => i !== index))
-    // O destaque acompanha a remoção: some quem estava marcado, some o destaque.
-    setFeaturedIndex((prev) => {
-      if (prev === null) return null
-      if (index === prev) return null
-      return index < prev ? prev - 1 : prev
-    })
-  }, [])
+  // ─── Criação (envio em lote) ───────────────────────────────────────────────
+  const openCreate = useCallback(() => {
+    setCreateProjectId((prev) => prev || String(projects[0]?.id || ''))
+    setPending([])
+    setFeaturedIndex(null)
+    setFormError('')
+    setCreateOpen(true)
+  }, [projects])
+
+  const closeCreate = useCallback(() => {
+    if (saving) return
+    setCreateOpen(false)
+    setPending([])
+    setFormError('')
+    revokeAllUrls()
+  }, [saving, revokeAllUrls])
 
   const submitCreate = useCallback(
     async (e: React.FormEvent) => {
@@ -245,13 +461,14 @@ function AdminGalleryView() {
     [createProjectId, pending, featuredIndex, loadImages, closeCreate, showToast]
   )
 
-  // ─── Edição (uma imagem por vez) ───────────────────────────────────────────
+  // ─── Edição (a foto atual + novas fotos do mesmo projeto) ──────────────────
   const openEdit = useCallback((img: GalleryImage) => {
     setEditing(img)
     setEditProjectId(String(img.projectId))
     setEditAlt(img.alt)
     setEditDescription(img.description)
-    setEditFeatured(img.featured)
+    setEditFeatured(img.featured ? 'current' : null)
+    setEditPending([])
     setEditFile(null)
     setEditPreview(null)
     setFormError('')
@@ -260,13 +477,14 @@ function AdminGalleryView() {
   const closeEdit = useCallback(() => {
     if (saving) return
     setEditing(null)
+    setEditPending([])
     setEditFile(null)
     setEditPreview(null)
     setFormError('')
     revokeAllUrls()
   }, [saving, revokeAllUrls])
 
-  const handleEditFileSelect = useCallback(
+  const handleReplaceSelect = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0] || null
       e.target.value = ''
@@ -293,7 +511,7 @@ function AdminGalleryView() {
       fd.append('projectId', editProjectId)
       fd.append('alt', editAlt.trim())
       fd.append('description', editDescription.trim())
-      fd.append('featured', String(editFeatured))
+      fd.append('featured', String(editFeatured === 'current'))
       if (editFile) fd.append('image', editFile)
 
       try {
@@ -303,7 +521,38 @@ function AdminGalleryView() {
           setFormError(res.payload?.error || 'Erro ao salvar imagem.')
           return
         }
-        showToast('success', 'Imagem atualizada!')
+
+        // As fotos novas entram como imagens adicionais do mesmo projeto. Vão
+        // depois do PUT para que o destaque escolhido aqui seja o último a
+        // valer (só existe uma capa por projeto).
+        if (editPending.length > 0) {
+          const batch = new FormData()
+          batch.append('projectId', editProjectId)
+          editPending.forEach((item, index) => {
+            batch.append('images', item.file)
+            batch.append(`alt_${index}`, item.alt.trim())
+            batch.append(`description_${index}`, item.description.trim())
+          })
+          if (typeof editFeatured === 'number' && editFeatured < editPending.length) {
+            batch.append('featuredIndex', String(editFeatured))
+          }
+          const batchRes = await api('/api/admin/gallery', { method: 'POST', body: batch })
+          if (!batchRes.ok) {
+            await loadImages()
+            setFormError(
+              batchRes.payload?.error ||
+                'A imagem foi salva, mas as fotos novas não foram enviadas. Tente de novo.'
+            )
+            return
+          }
+        }
+
+        showToast(
+          'success',
+          editPending.length > 0
+            ? `Imagem atualizada e ${editPending.length} ${editPending.length === 1 ? 'foto adicionada' : 'fotos adicionadas'}!`
+            : 'Imagem atualizada!'
+        )
         await loadImages()
         closeEdit()
       } catch (error) {
@@ -313,7 +562,18 @@ function AdminGalleryView() {
         setSaving(false)
       }
     },
-    [editing, editProjectId, editAlt, editDescription, editFeatured, editFile, loadImages, closeEdit, showToast]
+    [
+      editing,
+      editProjectId,
+      editAlt,
+      editDescription,
+      editFeatured,
+      editFile,
+      editPending,
+      loadImages,
+      closeEdit,
+      showToast,
+    ]
   )
 
   // ─── Exclusão ──────────────────────────────────────────────────────────────
@@ -361,6 +621,50 @@ function AdminGalleryView() {
 
   const hasProjects = projects.length > 0
 
+  const renderPendingRows = (target: 'create' | 'edit', items: PendingImage[], featured: FeaturedChoice) =>
+    items.map((item, index) => (
+      <div className={styles.photoRow} key={`${item.file.name}-${index}`}>
+        <div style={{ display: 'grid', gap: '6px' }}>
+          <FeaturedPhoto
+            src={item.previewUrl}
+            label={`Pré-visualização ${index + 1}`}
+            name={`gallery-featured-${target}`}
+            checked={featured === index}
+            onSelect={() =>
+              target === 'create' ? setFeaturedIndex(index) : setEditFeatured(index)
+            }
+          />
+          <button
+            type="button"
+            className={styles.linkBtn}
+            style={{ padding: '4px 0' }}
+            onClick={() => removePending(target, index)}
+          >
+            Remover
+          </button>
+        </div>
+        <div className={styles.photoRowFields}>
+          <input
+            className={styles.input}
+            type="text"
+            value={item.alt}
+            onChange={(e) => setPendingField(target, index, { alt: e.target.value })}
+            placeholder="Breve descrição (ex.: Plantio inicial)"
+            maxLength={300}
+            data-testid="f-alt"
+          />
+          <textarea
+            className={styles.input}
+            rows={3}
+            value={item.description}
+            onChange={(e) => setPendingField(target, index, { description: e.target.value })}
+            placeholder="Descrição completa — texto exibido abaixo das fotos"
+            data-testid="f-description"
+          />
+        </div>
+      </div>
+    ))
+
   return (
     <>
       <div className={styles.dashboardHeader}>
@@ -370,8 +674,6 @@ function AdminGalleryView() {
         <button
           className={styles.btnAdd}
           onClick={openCreate}
-          disabled={!hasProjects}
-          title={hasProjects ? undefined : 'Cadastre um projeto antes de adicionar imagens'}
           data-testid="add-gallery-image"
         >
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
@@ -431,7 +733,7 @@ function AdminGalleryView() {
             <div className={styles.emptyDesc}>
               {hasProjects
                 ? 'Adicione imagens a um projeto para elas aparecerem na página Galeria do site.'
-                : 'Cadastre um projeto antes de montar a galeria.'}
+                : 'Clique em “Adicionar imagens” para criar o primeiro projeto e montar a galeria.'}
             </div>
           </div>
         ) : (
@@ -507,23 +809,14 @@ function AdminGalleryView() {
             <form className={styles.form} onSubmit={submitCreate} noValidate data-testid="gallery-form">
               {formError && <div className={styles.alertError} role="alert" data-testid="form-error">{formError}</div>}
 
-              <div className={`${styles.field} ${styles.fieldFull}`}>
-                <label className={styles.label} htmlFor="g-project">Projeto</label>
-                <select
-                  id="g-project"
-                  className={styles.input}
-                  value={createProjectId}
-                  onChange={(e) => setCreateProjectId(e.target.value)}
-                  data-testid="f-project"
-                >
-                  {projects.map((p) => (
-                    <option key={p.id} value={String(p.id)}>
-                      {p.name}{p.active ? '' : ' (inativo)'}
-                    </option>
-                  ))}
-                </select>
-                <div className={styles.inputHint}>As imagens aparecem agrupadas por projeto na página Galeria.</div>
-              </div>
+              <ProjectField
+                id="g-project"
+                projects={projects}
+                value={createProjectId}
+                onChange={setCreateProjectId}
+                onCreated={addProject}
+                hint="As imagens aparecem agrupadas por projeto na página Galeria."
+              />
 
               <div className={`${styles.field} ${styles.fieldFull}`}>
                 <label className={styles.label} htmlFor="g-images">Imagens</label>
@@ -553,11 +846,11 @@ function AdminGalleryView() {
                       type="file"
                       multiple
                       accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
-                      onChange={handleFilesSelect}
+                      onChange={(e) => handleFilesSelect(e, 'create')}
                       data-testid="f-images"
                     />
                     {pending.length > 0 && (
-                      <button type="button" className={styles.linkBtn} onClick={() => setPending([])}>
+                      <button type="button" className={styles.linkBtn} style={{ width: 'auto', padding: 0 }} onClick={() => { setPending([]); setFeaturedIndex(null) }}>
                         Limpar seleção
                       </button>
                     )}
@@ -571,57 +864,12 @@ function AdminGalleryView() {
               {pending.length > 0 && (
                 <div className={`${styles.field} ${styles.fieldFull}`} style={{ display: 'grid', gap: '18px' }}>
                   <div className={styles.inputHint} style={{ margin: 0 }}>
-                    Marque uma imagem como destaque para ela virar a capa da galeria e abrir
+                    Clique em “Destaque” sobre uma foto para ela virar a capa da galeria e abrir
                     primeiro na tela de detalhes. Sem marcar, a capa atual do projeto é mantida.
                   </div>
-                  {pending.map((item, index) => (
-                    <div
-                      key={`${item.file.name}-${index}`}
-                      style={{ display: 'grid', gridTemplateColumns: '96px 1fr', gap: '14px', alignItems: 'start', paddingBottom: '18px', borderBottom: '1px solid rgba(49,91,44,0.1)' }}
-                    >
-                      <div style={{ display: 'grid', gap: '8px', justifyItems: 'center' }}>
-                        <img
-                          src={item.previewUrl}
-                          alt={`Pré-visualização ${index + 1}`}
-                          style={{ width: '96px', height: '96px', objectFit: 'cover', borderRadius: '8px', display: 'block' }}
-                        />
-                        <button type="button" className={styles.linkBtn} onClick={() => removePending(index)}>
-                          Remover
-                        </button>
-                      </div>
-                      <div style={{ display: 'grid', gap: '10px' }}>
-                        <input
-                          className={styles.input}
-                          type="text"
-                          value={item.alt}
-                          onChange={(e) => setPendingField(index, { alt: e.target.value })}
-                          placeholder="Breve descrição (ex.: Plantio inicial)"
-                          maxLength={300}
-                          data-testid="f-alt"
-                        />
-                        <textarea
-                          className={styles.input}
-                          rows={3}
-                          value={item.description}
-                          onChange={(e) => setPendingField(index, { description: e.target.value })}
-                          placeholder="Descrição completa — texto exibido abaixo das fotos"
-                          data-testid="f-description"
-                        />
-                        <label className={styles.checkboxRow} style={{ margin: 0 }}>
-                          <input
-                            type="radio"
-                            name="gallery-featured"
-                            checked={featuredIndex === index}
-                            onChange={() => setFeaturedIndex(index)}
-                            data-testid="f-featured"
-                          />
-                          <span className={styles.checkboxLabel}>Imagem de destaque (capa da galeria)</span>
-                        </label>
-                      </div>
-                    </div>
-                  ))}
+                  {renderPendingRows('create', pending, featuredIndex)}
                   {featuredIndex !== null && (
-                    <button type="button" className={styles.linkBtn} style={{ justifySelf: 'start' }} onClick={() => setFeaturedIndex(null)}>
+                    <button type="button" className={styles.linkBtn} style={{ width: 'auto', padding: 0, justifySelf: 'start' }} onClick={() => setFeaturedIndex(null)}>
                       Não alterar o destaque
                     </button>
                   )}
@@ -657,97 +905,121 @@ function AdminGalleryView() {
             <form className={styles.form} onSubmit={submitEdit} noValidate data-testid="gallery-edit-form">
               {formError && <div className={styles.alertError} role="alert">{formError}</div>}
 
-              <div className={`${styles.field} ${styles.fieldFull}`}>
-                <label className={styles.label} htmlFor="g-edit-project">Projeto</label>
-                <select
-                  id="g-edit-project"
-                  className={styles.input}
-                  value={editProjectId}
-                  onChange={(e) => setEditProjectId(e.target.value)}
-                >
-                  {projects.map((p) => (
-                    <option key={p.id} value={String(p.id)}>
-                      {p.name}{p.active ? '' : ' (inativo)'}
-                    </option>
-                  ))}
-                </select>
-              </div>
+              <ProjectField
+                id="g-edit-project"
+                projects={projects}
+                value={editProjectId}
+                onChange={setEditProjectId}
+                onCreated={addProject}
+                hint="Projeto ao qual esta imagem pertence na página Galeria."
+              />
 
               <div className={`${styles.field} ${styles.fieldFull}`}>
-                <label className={styles.label} htmlFor="g-edit-alt">Breve descrição</label>
-                <input
-                  id="g-edit-alt"
-                  className={styles.input}
-                  type="text"
-                  value={editAlt}
-                  onChange={(e) => setEditAlt(e.target.value)}
-                  placeholder="Ex.: Plantio inicial"
-                  maxLength={300}
-                  data-testid="f-edit-alt"
-                />
-                <div className={styles.inputHint}>Aparece ao lado da foto na página da galeria.</div>
-              </div>
-
-              <div className={`${styles.field} ${styles.fieldFull}`}>
-                <label className={styles.label} htmlFor="g-edit-description">Descrição completa</label>
-                <textarea
-                  id="g-edit-description"
-                  className={styles.input}
-                  rows={6}
-                  value={editDescription}
-                  onChange={(e) => setEditDescription(e.target.value)}
-                  placeholder="Texto completo exibido abaixo das fotos"
-                  data-testid="f-edit-description"
-                />
-                <div className={styles.inputHint}>Use uma linha em branco para separar parágrafos.</div>
-              </div>
-
-              <div className={`${styles.field} ${styles.fieldFull} ${styles.checkboxRow}`}>
-                <input
-                  id="g-edit-featured"
-                  type="checkbox"
-                  checked={editFeatured}
-                  onChange={(e) => setEditFeatured(e.target.checked)}
-                  data-testid="f-edit-featured"
-                />
-                <label className={styles.checkboxLabel} htmlFor="g-edit-featured">
-                  Imagem de destaque (capa da galeria)
-                </label>
-              </div>
-
-              <div className={`${styles.field} ${styles.fieldFull}`}>
-                <label className={styles.label} htmlFor="g-edit-image">Imagem</label>
-                <div className={styles.uploadArea}>
-                  {editPreview || editing.url ? (
-                    <img className={styles.uploadPreview} src={editPreview || editing.url} alt="Pré-visualização" />
-                  ) : (
-                    <div className={styles.uploadPlaceholder}>
-                      <span>Nenhuma imagem</span>
-                    </div>
-                  )}
-                  <div className={styles.uploadControls}>
-                    <label className={styles.btnUpload} htmlFor="g-edit-image">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12" />
-                      </svg>
-                      {editFile ? 'Trocar imagem' : 'Enviar nova imagem'}
+                <label className={styles.label}>Foto atual</label>
+                <div className={styles.photoRow}>
+                  <div style={{ display: 'grid', gap: '6px' }}>
+                    <FeaturedPhoto
+                      src={editPreview || editing.url}
+                      label={editAlt || 'Foto da galeria'}
+                      name="gallery-featured-edit"
+                      checked={editFeatured === 'current'}
+                      onSelect={() => setEditFeatured('current')}
+                    />
+                    <label className={styles.linkBtn} style={{ padding: '4px 0', cursor: 'pointer' }} htmlFor="g-edit-image">
+                      {editFile ? 'Trocar outro arquivo' : 'Substituir esta foto'}
                     </label>
                     <input
                       id="g-edit-image"
                       className={styles.fileInput}
                       type="file"
                       accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
-                      onChange={handleEditFileSelect}
+                      onChange={handleReplaceSelect}
                     />
                     {editFile && (
-                      <button type="button" className={styles.linkBtn} onClick={() => { setEditFile(null); setEditPreview(null) }}>
+                      <button type="button" className={styles.linkBtn} style={{ padding: '4px 0' }} onClick={() => { setEditFile(null); setEditPreview(null) }}>
                         Descartar troca
                       </button>
                     )}
                   </div>
+                  <div className={styles.photoRowFields}>
+                    <div>
+                      <label className={styles.label} htmlFor="g-edit-alt">Breve descrição</label>
+                      <input
+                        id="g-edit-alt"
+                        className={styles.input}
+                        type="text"
+                        value={editAlt}
+                        onChange={(e) => setEditAlt(e.target.value)}
+                        placeholder="Ex.: Plantio inicial"
+                        maxLength={300}
+                        data-testid="f-edit-alt"
+                      />
+                      <div className={styles.inputHint}>Aparece ao lado da foto na página da galeria.</div>
+                    </div>
+                    <div>
+                      <label className={styles.label} htmlFor="g-edit-description">Descrição completa</label>
+                      <textarea
+                        id="g-edit-description"
+                        className={styles.input}
+                        rows={6}
+                        value={editDescription}
+                        onChange={(e) => setEditDescription(e.target.value)}
+                        placeholder="Texto completo exibido abaixo das fotos"
+                        data-testid="f-edit-description"
+                      />
+                      <div className={styles.inputHint}>Use uma linha em branco para separar parágrafos.</div>
+                    </div>
+                  </div>
                 </div>
-                <div className={styles.inputHint}>Deixe em branco para manter a imagem atual.</div>
+                <div className={styles.inputHint}>
+                  “Substituir esta foto” troca o arquivo desta imagem. Para ter mais de uma foto no
+                  projeto, use “Adicionar fotos” abaixo.
+                </div>
               </div>
+
+              <div className={`${styles.field} ${styles.fieldFull}`}>
+                <label className={styles.label} htmlFor="g-edit-more">Adicionar fotos a este projeto</label>
+                <div className={styles.uploadControls}>
+                  <label className={styles.btnUpload} htmlFor="g-edit-more">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M12 5v14M5 12h14" />
+                    </svg>
+                    {editPending.length > 0 ? 'Adicionar mais' : 'Adicionar fotos'}
+                  </label>
+                  <input
+                    id="g-edit-more"
+                    className={styles.fileInput}
+                    type="file"
+                    multiple
+                    accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+                    onChange={(e) => handleFilesSelect(e, 'edit')}
+                    data-testid="f-edit-images"
+                  />
+                  {editPending.length > 0 && (
+                    <button type="button" className={styles.linkBtn} style={{ width: 'auto', padding: 0 }} onClick={() => { setEditPending([]); setEditFeatured((prev) => (typeof prev === 'number' ? null : prev)) }}>
+                      Limpar seleção
+                    </button>
+                  )}
+                </div>
+                <div className={styles.inputHint}>
+                  Cada foto nova vira uma imagem do mesmo projeto, com sua própria descrição.
+                  JPG, PNG ou WEBP · máximo 5 MB por imagem.
+                </div>
+              </div>
+
+              {editPending.length > 0 && (
+                <div className={`${styles.field} ${styles.fieldFull}`} style={{ display: 'grid', gap: '18px' }}>
+                  {renderPendingRows('edit', editPending, editFeatured)}
+                </div>
+              )}
+
+              {editFeatured !== null && (
+                <button type="button" className={styles.linkBtn} style={{ width: 'auto', padding: '10px 0 0', justifySelf: 'start' }} onClick={() => setEditFeatured(null)}>
+                  {editing.featured && editFeatured === 'current'
+                    ? 'Remover o destaque desta foto'
+                    : 'Não alterar o destaque'}
+                </button>
+              )}
 
               <div className={styles.formActions}>
                 <button type="button" className={styles.btnCancel} onClick={closeEdit} disabled={saving}>Cancelar</button>
