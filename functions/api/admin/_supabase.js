@@ -53,8 +53,12 @@ let cachedAdmin = null;
 let cachedCacheKey = '';
 
 export function getSupabaseAdmin(env) {
-  if (!env || !env.SUPABASE_URL || !env.SUPABASE_SERVICE_ROLE_KEY) {
-    throw new AuthError('Serviço indisponível: Supabase não configurado.', 503);
+  // Diz QUAL variável falta: em produção (Cloudflare Pages → Settings →
+  // Variables and secrets) esquecer uma delas derruba toda a /api de uma vez,
+  // e uma mensagem genérica não dava pista nenhuma do motivo.
+  const missing = ['SUPABASE_URL', 'SUPABASE_SERVICE_ROLE_KEY'].filter((name) => !env || !env[name]);
+  if (missing.length) {
+    throw new AuthError(`Serviço indisponível: variável ausente — ${missing.join(', ')}.`, 503);
   }
   const cacheKey = `${env.SUPABASE_URL}::${env.SUPABASE_SERVICE_ROLE_KEY}`;
   if (cachedAdmin && cachedCacheKey === cacheKey) return cachedAdmin;
