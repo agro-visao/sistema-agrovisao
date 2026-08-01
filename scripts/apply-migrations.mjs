@@ -39,10 +39,53 @@ async function runViaManagementApi(sql, token, ref) {
   if (!res.ok) throw new Error(`Management API ${res.status}: ${(await res.text()).slice(0, 500)}`);
 }
 
-async function runViaPostgres(sql, dbUrl) {
-  const { default: pg } = await import('pg');
-  const client = new pg.Client({ connectionString: dbUrl, ssl: { rejectUnauthorized: false } });
+// db.<ref>.supabase.co só resolve em IPv6; em rede sem IPv6 a conexão direta
+// dá ENETUNREACH. Nesse caso caímos no pooler (IPv4), que exige usuário
+// "postgres.<ref>". A região não está na connection string, então testamos as
+// candidatas: a errada responde "Tenant or user not found" na hora.
+const POOLER_REGIONS = [
+  'sa-east-1', 'us-east-1', 'us-east-2', 'us-west-1',
+  'eu-central-1', 'eu-west-1', 'ap-southeast-1',
+];
+const NETWORK_ERRORS = ['ENETUNREACH', 'EHOSTUNREACH', 'ENOTFOUND', 'ETIMEDOUT'];
+
+async function connect(pg, config) {
+  const client = new pg.Client({ ssl: { rejectUnauthorized: false }, connectionTimeoutMillis: 8000, ...config });
   await client.connect();
+  return client;
+}
+
+async function openConnection(pg, dbUrl, ref) {
+  try {
+    return await connect(pg, { connectionString: dbUrl });
+  } catch (e) {
+    if (!NETWORK_ERRORS.some((code) => e.code === code || e.message.includes(code))) throw e;
+    if (!ref) throw e;
+  }
+
+  const url = new URL(dbUrl);
+  const password = decodeURIComponent(url.password);
+  for (const region of POOLER_REGIONS) {
+    for (const port of [6543, 5432]) {
+      try {
+        return await connect(pg, {
+          host: `aws-0-${region}.pooler.supabase.com`,
+          port,
+          user: `postgres.${ref}`,
+          password,
+          database: 'postgres',
+        });
+      } catch {
+        // região/porta errada — segue para a próxima candidata
+      }
+    }
+  }
+  throw new Error('host direto inacessível (IPv6) e nenhum pooler aceitou a conexão.');
+}
+
+async function runViaPostgres(sql, dbUrl, ref) {
+  const { default: pg } = await import('pg');
+  const client = await openConnection(pg, dbUrl, ref);
   try {
     await client.query(sql);
   } finally {
@@ -75,7 +118,7 @@ async function main() {
   for (const file of files) {
     const sql = await readFile(join(MIGRATIONS_DIR, file), 'utf8');
     process.stdout.write(`→ aplicando ${file} … `);
-    if (dbUrl) await runViaPostgres(sql, dbUrl);
+    if (dbUrl) await runViaPostgres(sql, dbUrl, ref);
     else await runViaManagementApi(sql, token, ref);
     console.log('ok');
   }
