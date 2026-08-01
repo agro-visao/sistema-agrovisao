@@ -71,6 +71,50 @@ interface Category {
   label: string
 }
 
+/**
+ * Campo de valor em reais. O conteúdo é sempre reescrito da direita para a
+ * esquerda (os dígitos entram pelos centavos), então o cursor volta para o fim
+ * a cada tecla e o foco seleciona tudo — assim dá para redigitar um valor já
+ * preenchido sem precisar apagar caractere por caractere.
+ */
+function MoneyInput({
+  id,
+  value,
+  onChange,
+  testId,
+}: {
+  id: string
+  value: string
+  onChange: (masked: string) => void
+  testId: string
+}) {
+  const ref = useRef<HTMLInputElement>(null)
+
+  const caretToEnd = () => {
+    const el = ref.current
+    if (el) el.setSelectionRange(el.value.length, el.value.length)
+  }
+
+  return (
+    <input
+      ref={ref}
+      id={id}
+      className={styles.input}
+      type="text"
+      inputMode="numeric"
+      value={value}
+      onChange={(e) => {
+        onChange(maskBRL(e.target.value))
+        requestAnimationFrame(caretToEnd)
+      }}
+      onFocus={(e) => e.currentTarget.select()}
+      onClick={() => { if (ref.current?.selectionStart !== 0) caretToEnd() }}
+      placeholder="R$ 0,00"
+      data-testid={testId}
+    />
+  )
+}
+
 function AdminSalesView() {
   const [categories, setCategories] = useState<Category[]>([])
   const [products, setProducts] = useState<AdminProduct[]>([])
@@ -433,28 +477,20 @@ function AdminSalesView() {
                 </div>
                 <div className={styles.field}>
                   <label className={styles.label} htmlFor="p-price">Valor (R$)</label>
-                  <input
+                  <MoneyInput
                     id="p-price"
-                    className={styles.input}
-                    type="text"
-                    inputMode="numeric"
                     value={form.price}
-                    onChange={(e) => setField('price', maskBRL(e.target.value))}
-                    placeholder="R$ 0,00"
-                    data-testid="f-price"
+                    onChange={(masked) => setField('price', masked)}
+                    testId="f-price"
                   />
                 </div>
                 <div className={styles.field}>
                   <label className={styles.label} htmlFor="p-original-price">Valor original (opcional)</label>
-                  <input
+                  <MoneyInput
                     id="p-original-price"
-                    className={styles.input}
-                    type="text"
-                    inputMode="numeric"
                     value={form.originalPrice}
-                    onChange={(e) => setField('originalPrice', maskBRL(e.target.value))}
-                    placeholder="R$ 0,00"
-                    data-testid="f-original-price"
+                    onChange={(masked) => setField('originalPrice', masked)}
+                    testId="f-original-price"
                   />
                 </div>
               </div>
