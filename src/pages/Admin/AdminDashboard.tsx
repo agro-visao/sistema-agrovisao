@@ -1,45 +1,11 @@
 import { useEffect, useState, useCallback, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { supabase } from '../../lib/supabaseClient'
 import AdminSidebar, { type AdminView } from './AdminSidebar'
 import AdminSalesView from './AdminSalesView'
 import AdminCategoriesView from './AdminCategoriesView'
 import AdminGalleryView from './AdminGalleryView'
 import styles from './Admin.module.css'
-
-async function api(path: string, options?: RequestInit) {
-  try {
-    const controller = new AbortController()
-    const timeout = setTimeout(() => controller.abort(), 10000)
-    const res = await fetch(path, {
-      credentials: 'same-origin',
-      cache: 'no-store',
-      signal: controller.signal,
-      headers: typeof options?.body === 'string' ? { 'Content-Type': 'application/json' } : undefined,
-      ...options,
-    })
-    clearTimeout(timeout)
-    let payload: { data?: unknown; error?: string } | null = null
-    try {
-      payload = await res.json()
-    } catch {}
-    return { ok: res.ok, status: res.status, payload }
-  } catch (error) {
-    console.error('API call failed:', path, error)
-    return { ok: false, status: 0, payload: { error: 'Erro de conexão' } }
-  }
-}
-
-function clearAuthStorage() {
-  const patterns = /(agrovisao|admin|session|token|auth)/i
-  for (const store of [window.localStorage, window.sessionStorage]) {
-    const keys: string[] = []
-    for (let i = 0; i < store.length; i++) {
-      const key = store.key(i)
-      if (key && patterns.test(key)) keys.push(key)
-    }
-    for (const key of keys) store.removeItem(key)
-  }
-}
 
 function AdminDashboard() {
   const navigate = useNavigate()
@@ -55,27 +21,28 @@ function AdminDashboard() {
 
     const checkSession = async () => {
       try {
-        const res = await api('/api/admin/session')
+        const { data } = await supabase.auth.getSession()
         if (!mounted || currentRequestId !== requestIdRef.current || loggingOutRef.current) return
 
-        if (!res.ok) {
-          if (mounted && currentRequestId === requestIdRef.current) {
-            navigate('/admin', { replace: true })
-          }
+        const session = data.session
+        if (!session) {
+          navigate('/admin', { replace: true })
           return
         }
 
-        const user = (res.payload?.data as { user?: { mustChangePassword?: boolean } } | undefined)?.user
-        if (user?.mustChangePassword) {
-          if (mounted && currentRequestId === requestIdRef.current) {
-            navigate('/admin/change-password', { replace: true })
-          }
+        const { data: profile } = await supabase
+          .from('admin_profiles')
+          .select('must_change_password')
+          .eq('user_id', session.user.id)
+          .maybeSingle()
+        if (!mounted || currentRequestId !== requestIdRef.current || loggingOutRef.current) return
+
+        if (profile?.must_change_password) {
+          navigate('/admin/change-password', { replace: true })
           return
         }
 
-        if (mounted && currentRequestId === requestIdRef.current) {
-          setAuthChecked(true)
-        }
+        setAuthChecked(true)
       } catch (error) {
         console.error('Session check error:', error)
         if (mounted && currentRequestId === requestIdRef.current) {
@@ -91,29 +58,36 @@ function AdminDashboard() {
     }
   }, [navigate])
 
+  // Reage a expiração/encerramento de sessão em tempo real (ex.: logout feito
+  // em outra aba, ou token de refresh inválido).
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
+      if (event === 'SIGNED_OUT' && !loggingOutRef.current) {
+        navigate('/admin', { replace: true })
+      }
+    })
+    return () => subscription.unsubscribe()
+  }, [navigate])
+
   const logout = useCallback(async () => {
     if (loggingOutRef.current) return
     loggingOutRef.current = true
     setIsLoggingOut(true)
-    clearAuthStorage()
 
     let logoutCompleted = false
     const timeoutId = window.setTimeout(() => {
       if (!logoutCompleted) {
-        console.warn('[logout] timeout aguardando resposta do servidor')
+        console.warn('[logout] timeout aguardando resposta do Supabase')
         window.location.replace('/admin')
       }
     }, 5000)
 
     try {
-      const res = await api('/api/admin/logout', { method: 'POST' })
+      await supabase.auth.signOut()
       logoutCompleted = true
       window.clearTimeout(timeoutId)
-
-      if (res.ok || res.status === 401 || res.status === 403) {
-        window.location.replace('/admin')
-        return
-      }
+      window.location.replace('/admin')
+      return
     } catch (e) {
       console.error('[logout] erro na requisição:', (e as Error).message)
     }

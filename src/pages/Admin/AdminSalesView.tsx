@@ -9,13 +9,14 @@ interface AdminProduct {
   name: string
   description: string
   image: string
+  /** Os 3 slots de foto na ordem (string vazia = slot livre). */
+  images: string[]
   price: number
   originalPrice: number | null
   category: string
   categoryLabel: string
   stock: number
   featured: boolean
-  isNew: boolean
   active: boolean
   whatsappText: string
 }
@@ -28,7 +29,6 @@ interface FormState {
   description: string
   stock: string
   featured: boolean
-  isNew: boolean
 }
 
 const EMPTY_FORM: FormState = {
@@ -39,11 +39,33 @@ const EMPTY_FORM: FormState = {
   description: '',
   stock: '0',
   featured: false,
-  isNew: false,
 }
 
 const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp']
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024
+
+// ─── Imagens do produto ─────────────────────────────────────────────────────
+// São 3 slots independentes: a principal (que vai para o card da vitrine) e
+// duas complementares, exibidas como miniaturas na página do produto. Cada
+// slot é enviado no campo `field` e limpo com `removeImage<N>`.
+const IMAGE_SLOTS = [
+  { field: 'image', label: 'Imagem principal', hint: 'Aparece no card da vitrine' },
+  { field: 'image2', label: 'Imagem complementar 1', hint: 'Opcional' },
+  { field: 'image3', label: 'Imagem complementar 2', hint: 'Opcional' },
+]
+
+interface ImageSlotState {
+  /** Arquivo novo escolhido agora (ainda não enviado). */
+  file: File | null
+  previewUrl: string | null
+  /** Marca a foto já salva para ser apagada ao salvar. */
+  remove: boolean
+  error: string
+}
+
+function emptySlots(): ImageSlotState[] {
+  return IMAGE_SLOTS.map(() => ({ file: null, previewUrl: null, remove: false, error: '' }))
+}
 
 // ─── Campo monetário (R$ 0,00) ──────────────────────────────────────────────
 // A digitação é livre: o número é interpretado em REAIS e só é formatado
@@ -140,10 +162,8 @@ function AdminSalesView() {
   const [confirmDelete, setConfirmDelete] = useState<AdminProduct | null>(null)
   const [deleting, setDeleting] = useState(false)
   const [toast, setToast] = useState<{ type: 'success' | 'error'; msg: string } | null>(null)
-  const [selectedFile, setSelectedFile] = useState<File | null>(null)
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null)
-  const [imageError, setImageError] = useState('')
-  const previewUrlRef = useRef<string | null>(null)
+  const [slots, setSlots] = useState<ImageSlotState[]>(emptySlots)
+  const previewUrlsRef = useRef<(string | null)[]>(IMAGE_SLOTS.map(() => null))
 
   const categoryLabelFor = useCallback((key: string): string => {
     const found = categories.find((c) => c.key === key)
@@ -155,49 +175,74 @@ function AdminSalesView() {
     window.setTimeout(() => setToast(null), 4000)
   }, [])
 
-  const revokePreview = useCallback(() => {
-    if (previewUrlRef.current) {
-      URL.revokeObjectURL(previewUrlRef.current)
-      previewUrlRef.current = null
+  const revokePreview = useCallback((index: number) => {
+    const url = previewUrlsRef.current[index]
+    if (url) {
+      URL.revokeObjectURL(url)
+      previewUrlsRef.current[index] = null
     }
   }, [])
 
   const resetImageState = useCallback(() => {
-    revokePreview()
-    setSelectedFile(null)
-    setPreviewUrl(null)
-    setImageError('')
+    previewUrlsRef.current.forEach((_, i) => revokePreview(i))
+    setSlots(emptySlots())
   }, [revokePreview])
 
-  useEffect(() => () => revokePreview(), [revokePreview])
+  useEffect(() => () => {
+    previewUrlsRef.current.forEach((url) => { if (url) URL.revokeObjectURL(url) })
+  }, [])
+
+  const patchSlot = useCallback((index: number, patch: Partial<ImageSlotState>) => {
+    setSlots((prev) => prev.map((slot, i) => (i === index ? { ...slot, ...patch } : slot)))
+  }, [])
 
   const handleFileSelect = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0] || null
       e.target.value = ''
-      setImageError('')
-      if (!file) {
-        resetImageState()
-        return
-      }
+      if (!file) return
+
       const extOk = /\.(jpe?g|png|webp)$/i.test(file.name)
       if (!ALLOWED_IMAGE_TYPES.includes(file.type) || !extOk) {
-        setImageError('Formato inválido. Use JPG, PNG ou WEBP.')
-        resetImageState()
+        revokePreview(index)
+        patchSlot(index, { file: null, previewUrl: null, error: 'Formato inválido. Use JPG, PNG ou WEBP.' })
         return
       }
       if (file.size > MAX_IMAGE_BYTES) {
-        setImageError('A imagem deve ter no máximo 5 MB.')
-        resetImageState()
+        revokePreview(index)
+        patchSlot(index, { file: null, previewUrl: null, error: 'A imagem deve ter no máximo 5 MB.' })
         return
       }
-      revokePreview()
+
+      revokePreview(index)
       const url = URL.createObjectURL(file)
-      previewUrlRef.current = url
-      setSelectedFile(file)
-      setPreviewUrl(url)
+      previewUrlsRef.current[index] = url
+      // Escolher um arquivo novo cancela a remoção pendente do slot.
+      patchSlot(index, { file, previewUrl: url, remove: false, error: '' })
     },
-    [revokePreview, resetImageState]
+    [revokePreview, patchSlot]
+  )
+
+  // "Remover" descarta o arquivo recém-escolhido; se não houver, marca a foto
+  // já salva para ser apagada no próximo salvamento (reversível até lá).
+  const clearSlot = useCallback(
+    (index: number, hasSaved: boolean) => {
+      const hadFile = previewUrlsRef.current[index] !== null
+      revokePreview(index)
+      setSlots((prev) =>
+        prev.map((slot, i) =>
+          i === index
+            ? {
+                file: null,
+                previewUrl: null,
+                remove: hadFile ? slot.remove : hasSaved ? !slot.remove : false,
+                error: '',
+              }
+            : slot
+        )
+      )
+    },
+    [revokePreview]
   )
 
   const loadProducts = useCallback(async () => {
@@ -253,7 +298,6 @@ function AdminSalesView() {
       description: p.description || '',
       stock: String(p.stock),
       featured: p.featured,
-      isNew: p.isNew,
     })
     setFormError('')
     resetImageState()
@@ -291,7 +335,6 @@ function AdminSalesView() {
       fd.append('description', form.description.trim())
       fd.append('stock', form.stock)
       fd.append('featured', String(form.featured))
-      fd.append('isNew', String(form.isNew))
 
       const priceCents = parseMoneyToCents(form.price)
       if (priceCents === null || priceCents < 0) {
@@ -305,9 +348,15 @@ function AdminSalesView() {
         fd.append('originalPrice', String(originalCents))
       }
 
-      if (selectedFile) {
-        fd.append('image', selectedFile)
-      }
+      // Cada slot vai separado: arquivo novo substitui, removeImageN apaga e a
+      // ausência dos dois mantém a foto que já está salva.
+      slots.forEach((slot, i) => {
+        if (slot.file) {
+          fd.append(IMAGE_SLOTS[i].field, slot.file)
+        } else if (slot.remove) {
+          fd.append(`removeImage${i + 1}`, 'true')
+        }
+      })
 
       try {
         setSaving(true)
@@ -330,7 +379,7 @@ function AdminSalesView() {
         setSaving(false)
       }
     },
-    [editing, form, selectedFile, categoryLabelFor, loadProducts, closeModal, showToast]
+    [editing, form, slots, categoryLabelFor, loadProducts, closeModal, showToast]
   )
 
   const confirmRemove = useCallback(async () => {
@@ -411,11 +460,15 @@ function AdminSalesView() {
                       </svg>
                     </div>
                   )}
-                  {(p.featured || p.isNew) && (
+                  {p.featured && (
                     <div className={styles.productCardBadges}>
-                      {p.featured && <span className={`${styles.productCardBadge} ${styles.badgeFeatured}`}>Destaque</span>}
-                      {p.isNew && <span className={`${styles.productCardBadge} ${styles.badgeNew}`}>Novo</span>}
+                      <span className={`${styles.productCardBadge} ${styles.badgeFeatured}`}>Destaque</span>
                     </div>
+                  )}
+                  {(p.images || []).filter(Boolean).length > 1 && (
+                    <span className={styles.productCardPhotoCount}>
+                      {(p.images || []).filter(Boolean).length} fotos
+                    </span>
                   )}
                 </div>
                 <div className={styles.productCardBody}>
@@ -519,51 +572,68 @@ function AdminSalesView() {
                 />
               </div>
               <div className={`${styles.field} ${styles.fieldFull}`}>
-                <label className={styles.label} htmlFor="p-image">Imagem do produto</label>
-                <div className={styles.uploadArea}>
-                  {previewUrl || (editing?.image && !selectedFile) ? (
-                    <img
-                      className={styles.uploadPreview}
-                      src={previewUrl || editing!.image}
-                      alt="Pré-visualização"
-                      data-testid="image-preview"
-                    />
-                  ) : (
-                    <div className={styles.uploadPlaceholder}>
-                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden="true">
-                        <rect x="3" y="3" width="18" height="18" rx="2" />
-                        <circle cx="8.5" cy="8.5" r="1.5" />
-                        <path d="M21 15L16 10L5 21" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                      <span>Nenhuma imagem selecionada</span>
-                    </div>
-                  )}
-                  <div className={styles.uploadControls}>
-                    <label className={styles.btnUpload} htmlFor="p-image">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12" />
-                      </svg>
-                      {selectedFile ? 'Trocar imagem' : editing ? 'Enviar nova imagem' : 'Selecionar imagem'}
-                    </label>
-                    <input
-                      id="p-image"
-                      className={styles.fileInput}
-                      type="file"
-                      accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
-                      onChange={handleFileSelect}
-                      data-testid="f-image"
-                    />
-                    {selectedFile && (
-                      <button type="button" className={styles.linkBtn} onClick={resetImageState} data-testid="image-clear">
-                        Remover
-                      </button>
-                    )}
-                  </div>
+                <label className={styles.label}>Imagens do produto</label>
+                <div className={styles.imageSlots}>
+                  {IMAGE_SLOTS.map((meta, i) => {
+                    const slot = slots[i]
+                    const savedImage = editing?.images?.[i] || ''
+                    const shownImage = slot.previewUrl || (slot.remove ? '' : savedImage)
+                    const inputId = `p-${meta.field}`
+                    return (
+                      <div className={styles.imageSlot} key={meta.field}>
+                        <div className={styles.imageSlotTitle}>{meta.label}</div>
+                        {shownImage ? (
+                          <img
+                            className={styles.uploadPreview}
+                            src={shownImage}
+                            alt="Pré-visualização"
+                            data-testid={`image-preview-${i + 1}`}
+                          />
+                        ) : (
+                          <div className={styles.uploadPlaceholder}>
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden="true">
+                              <rect x="3" y="3" width="18" height="18" rx="2" />
+                              <circle cx="8.5" cy="8.5" r="1.5" />
+                              <path d="M21 15L16 10L5 21" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                            <span>{slot.remove ? 'Será removida ao salvar' : 'Nenhuma imagem'}</span>
+                          </div>
+                        )}
+                        <div className={styles.uploadControls}>
+                          <label className={styles.btnUpload} htmlFor={inputId}>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                              <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12" />
+                            </svg>
+                            {shownImage ? 'Trocar' : 'Selecionar'}
+                          </label>
+                          <input
+                            id={inputId}
+                            className={styles.fileInput}
+                            type="file"
+                            accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+                            onChange={(e) => handleFileSelect(i, e)}
+                            data-testid={`f-${meta.field}`}
+                          />
+                          {(slot.file || savedImage) && (
+                            <button
+                              type="button"
+                              className={styles.linkBtn}
+                              onClick={() => clearSlot(i, Boolean(savedImage))}
+                              data-testid={`image-clear-${i + 1}`}
+                            >
+                              {slot.remove ? 'Desfazer' : 'Remover'}
+                            </button>
+                          )}
+                        </div>
+                        <div className={styles.inputHint}>{meta.hint}</div>
+                        {slot.error && (
+                          <div className={styles.fieldError} role="alert" data-testid={`image-error-${i + 1}`}>{slot.error}</div>
+                        )}
+                      </div>
+                    )
+                  })}
                 </div>
-                <div className={styles.inputHint}>JPG, PNG ou WEBP · máximo 5 MB</div>
-                {imageError && (
-                  <div className={styles.fieldError} role="alert" data-testid="image-error">{imageError}</div>
-                )}
+                <div className={styles.inputHint}>JPG, PNG ou WEBP · máximo 5 MB por imagem</div>
               </div>
               <div className={styles.formGrid}>
                 <div className={styles.field}>
@@ -587,16 +657,6 @@ function AdminSalesView() {
                     data-testid="f-featured"
                   />
                   <label className={styles.checkboxLabel} htmlFor="p-featured">Produto em destaque</label>
-                </div>
-                <div className={`${styles.field} ${styles.checkboxRow}`}>
-                  <input
-                    id="p-new"
-                    type="checkbox"
-                    checked={form.isNew}
-                    onChange={(e) => setField('isNew', e.target.checked)}
-                    data-testid="f-new"
-                  />
-                  <label className={styles.checkboxLabel} htmlFor="p-new">Produto novo</label>
                 </div>
               </div>
               <div className={styles.formActions}>

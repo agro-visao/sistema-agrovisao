@@ -26,23 +26,25 @@ export async function onRequest(context) {
     }
 
     if (request.method === 'POST') {
-      const { body, file } = await readProductForm(request);
+      const { body, files } = await readProductForm(request);
       const validated = validateProductInput(body);
       if (!validated.ok) return error(validated.error, 400);
 
-      const { name, description, price, originalPrice, category, categoryLabel, stock, featured, isNew, whatsappText } = validated.data;
+      const { name, description, price, originalPrice, category, categoryLabel, stock, featured, whatsappText } = validated.data;
       const slug = await ensureUniqueSlug(supabase, slugify(name));
 
-      let imagePath = '';
-      if (file) {
-        const fileCheck = await validateImageFile(file);
+      // Slot 0 = imagem principal; 1 e 2 = complementares. Cada um é opcional.
+      const imagePaths = ['', '', ''];
+      for (let i = 0; i < files.length; i++) {
+        if (!files[i]) continue;
+        const fileCheck = await validateImageFile(files[i]);
         if (!fileCheck.ok) return error(fileCheck.error, 400);
         const uploaded = await uploadProductImage(env, {
           bytes: fileCheck.data.bytes,
           mimeType: fileCheck.data.mimeType,
-          path: makeImagePath(slug, fileCheck.data.mimeType),
+          path: makeImagePath(slug, fileCheck.data.mimeType, i),
         });
-        imagePath = uploaded.path;
+        imagePaths[i] = uploaded.path;
       }
 
       const { data: lastRow, error: sortErr } = await supabase
@@ -60,7 +62,9 @@ export async function onRequest(context) {
           slug,
           name,
           description,
-          image_path: imagePath,
+          image_path: imagePaths[0],
+          image_path_2: imagePaths[1],
+          image_path_3: imagePaths[2],
           price_cents: price,
           compare_price_cents: originalPrice,
           whatsapp_text: whatsappText,
@@ -68,7 +72,6 @@ export async function onRequest(context) {
           category_label: categoryLabel,
           stock,
           featured,
-          is_new: isNew,
           sort_order: sortOrder,
         })
         .select('*')

@@ -133,13 +133,7 @@
   border-radius: 100px;
   cursor: pointer;
   letter-spacing: 0.06em;
-  transition: all 0.2s;
   white-space: nowrap;
-}
-
-.filterBtn:hover {
-  border-color: rgba(49, 91, 44, 0.5);
-  background: rgba(49, 91, 44, 0.04);
 }
 
 .filterBtnActive {

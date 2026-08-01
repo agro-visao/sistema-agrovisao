@@ -2,8 +2,7 @@ name = "agrovisao-site"
 compatibility_date = "2025-01-01"
 pages_build_output_dir = "./dist"
 
-# D1 database (produção)
-[[d1_databases]]
-binding = "DB"
-database_name = "agrovisao-db"
-database_id = "a8ddce9f-79b4-4c2c-be15-6bd51dbe7bab"
+# Banco de dados, storage e autenticação agora são Supabase (Postgres + Storage
+# + Auth). As Pages Functions acessam via @supabase/supabase-js com as
+# variáveis SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY (ver .env.example).
+# Sem bindings nativos do Cloudflare a configurar aqui.

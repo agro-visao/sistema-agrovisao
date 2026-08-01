@@ -1,41 +1,7 @@
 import { useEffect, useState, useCallback, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { supabase } from '../../lib/supabaseClient'
 import styles from './Admin.module.css'
-
-async function api(path: string, options?: RequestInit) {
-  try {
-    const controller = new AbortController()
-    const timeout = setTimeout(() => controller.abort(), 10000)
-    const res = await fetch(path, {
-      credentials: 'same-origin',
-      cache: 'no-store',
-      signal: controller.signal,
-      headers: options?.body ? { 'Content-Type': 'application/json' } : undefined,
-      ...options,
-    })
-    clearTimeout(timeout)
-    let payload: { data?: unknown; error?: string } | null = null
-    try {
-      payload = await res.json()
-    } catch {}
-    return { ok: res.ok, status: res.status, payload }
-  } catch (error) {
-    console.error('API call failed:', path, error)
-    return { ok: false, status: 0, payload: { error: 'Erro de conexão' } }
-  }
-}
-
-function clearAuthStorage() {
-  const patterns = /(agrovisao|admin|session|token|auth)/i
-  for (const store of [window.localStorage, window.sessionStorage]) {
-    const keys: string[] = []
-    for (let i = 0; i < store.length; i++) {
-      const key = store.key(i)
-      if (key && patterns.test(key)) keys.push(key)
-    }
-    for (const key of keys) store.removeItem(key)
-  }
-}
 
 function ChangePassword() {
   const navigate = useNavigate()
@@ -55,14 +21,20 @@ function ChangePassword() {
   useEffect(() => {
     let mounted = true
     ;(async () => {
-      const res = await api('/api/admin/session')
+      const { data } = await supabase.auth.getSession()
       if (!mounted || loggingOutRef.current) return
-      if (!res.ok) {
+      const session = data.session
+      if (!session) {
         navigate('/admin', { replace: true })
         return
       }
-      const user = (res.payload?.data as { user?: { mustChangePassword?: boolean } } | undefined)?.user
-      if (user && !user.mustChangePassword) {
+      const { data: profile } = await supabase
+        .from('admin_profiles')
+        .select('must_change_password')
+        .eq('user_id', session.user.id)
+        .maybeSingle()
+      if (!mounted || loggingOutRef.current) return
+      if (!profile?.must_change_password) {
         navigate('/admin/dashboard', { replace: true })
         return
       }
@@ -78,12 +50,10 @@ function ChangePassword() {
     if (loggingOutRef.current) return
     loggingOutRef.current = true
     setIsLoggingOut(true)
-    clearAuthStorage()
     try {
-      await api('/api/admin/logout', { method: 'POST' })
+      await supabase.auth.signOut()
     } catch {
-      // Navega mesmo assim: o servidor revalida a sessão em /admin e o cookie
-      // inválido já é expirado pelo próprio backend em cada 401.
+      // Navega mesmo assim: uma sessão inválida/expirada já não permite acesso ao painel.
     }
     window.location.replace('/admin')
   }, [])
@@ -111,16 +81,36 @@ function ChangePassword() {
       }
       setBusy(true)
       try {
-        const res = await api('/api/admin/change-password', {
-          method: 'POST',
-          body: JSON.stringify({ currentPassword, newPassword }),
-        })
-        if (res.ok) {
-          setInfoMsg('Senha atualizada com sucesso. Acessando o painel…')
-          window.setTimeout(() => navigate('/admin/dashboard', { replace: true }), 600)
-        } else {
-          setErrorMsg(res.payload?.error || 'Não foi possível atualizar a senha.')
+        const { data: userData, error: userError } = await supabase.auth.getUser()
+        if (userError || !userData.user?.email) {
+          setErrorMsg('Sessão expirada. Faça login novamente.')
+          return
         }
+
+        // Reautentica com a senha atual antes de trocar, como camada extra de
+        // segurança (o updateUser do Supabase não exige a senha atual).
+        const { error: reauthError } = await supabase.auth.signInWithPassword({
+          email: userData.user.email,
+          password: currentPassword,
+        })
+        if (reauthError) {
+          setErrorMsg('Senha atual incorreta.')
+          return
+        }
+
+        const { error: updateError } = await supabase.auth.updateUser({ password: newPassword })
+        if (updateError) {
+          setErrorMsg('Não foi possível atualizar a senha.')
+          return
+        }
+
+        await supabase
+          .from('admin_profiles')
+          .update({ must_change_password: false })
+          .eq('user_id', userData.user.id)
+
+        setInfoMsg('Senha atualizada com sucesso. Acessando o painel…')
+        window.setTimeout(() => navigate('/admin/dashboard', { replace: true }), 600)
       } catch {
         setErrorMsg('Erro de conexão. Tente novamente.')
       } finally {

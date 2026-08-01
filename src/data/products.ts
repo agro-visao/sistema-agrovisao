@@ -25,7 +25,6 @@ export interface Product {
   price: number
   stock: number
   featured: boolean
-  isNew: boolean
   technicalInfo?: ProductTechnicalInfo
   whatsappText: string
 }
@@ -61,7 +60,6 @@ export const PRODUCTS: Product[] = [
     ...priceFor('acai-premium'),
     stock: 58,
     featured: true,
-    isNew: false,
     technicalInfo: {
       especie: 'Euterpe oleracea',
       nomeCientifico: 'Euterpe oleracea Mart.',
@@ -90,7 +88,6 @@ export const PRODUCTS: Product[] = [
     ...priceFor('acai-vigorosa'),
     stock: 35,
     featured: true,
-    isNew: true,
     technicalInfo: {
       especie: 'Euterpe oleracea',
       nomeCientifico: 'Euterpe oleracea Mart.',
@@ -119,7 +116,6 @@ export const PRODUCTS: Product[] = [
     ...priceFor('acai-selecionada'),
     stock: 42,
     featured: false,
-    isNew: false,
     technicalInfo: {
       especie: 'Euterpe oleracea',
       nomeCientifico: 'Euterpe oleracea Mart.',
@@ -148,7 +144,6 @@ export const PRODUCTS: Product[] = [
     ...priceFor('acai-paisagismo'),
     stock: 20,
     featured: false,
-    isNew: false,
     technicalInfo: {
       especie: 'Euterpe oleracea',
       nomeCientifico: 'Euterpe oleracea Mart.',
@@ -177,7 +172,6 @@ export const PRODUCTS: Product[] = [
     ...priceFor('acai-concentrada'),
     stock: 15,
     featured: true,
-    isNew: true,
     technicalInfo: {
       especie: 'Euterpe oleracea',
       nomeCientifico: 'Euterpe oleracea Mart.',
@@ -207,7 +201,6 @@ export const PRODUCTS: Product[] = [
     originalPrice: 5500,
     stock: 100,
     featured: false,
-    isNew: true,
     technicalInfo: {
       tamanho: 'Saco 5 kg',
       quantidade: '1 unidade',

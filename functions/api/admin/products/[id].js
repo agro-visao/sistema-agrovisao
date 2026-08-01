@@ -20,24 +20,32 @@ export async function onRequest(context) {
     if (!existing) return error('Produto não encontrado.', 404);
 
     if (request.method === 'PUT') {
-      const { body, file } = await readProductForm(request);
+      const { body, files } = await readProductForm(request);
       const validated = validateProductInput(body);
       if (!validated.ok) return error(validated.error, 400);
 
-      const { name, description, price, originalPrice, category, categoryLabel, stock, featured, isNew, whatsappText } = validated.data;
+      const { name, description, price, originalPrice, category, categoryLabel, stock, featured, removeImages, whatsappText } = validated.data;
       const slug = await ensureUniqueSlug(supabase, slugify(name), id);
 
-      // Sem nova imagem, mantém a referência atual (nunca zera por omissão).
-      let imagePath = existing.imagePath;
-      if (file) {
-        const fileCheck = await validateImageFile(file);
-        if (!fileCheck.ok) return error(fileCheck.error, 400);
-        const uploaded = await uploadProductImage(env, {
-          bytes: fileCheck.data.bytes,
-          mimeType: fileCheck.data.mimeType,
-          path: makeImagePath(slug, fileCheck.data.mimeType),
-        });
-        imagePath = uploaded.path;
+      // Cada slot (principal + 2 complementares) segue independente: arquivo
+      // novo substitui, removeImageN limpa e a omissão mantém o que está lá.
+      const imagePaths = [...existing.imagePaths];
+      const orphanPaths = [];
+      for (let i = 0; i < files.length; i++) {
+        if (files[i]) {
+          const fileCheck = await validateImageFile(files[i]);
+          if (!fileCheck.ok) return error(fileCheck.error, 400);
+          const uploaded = await uploadProductImage(env, {
+            bytes: fileCheck.data.bytes,
+            mimeType: fileCheck.data.mimeType,
+            path: makeImagePath(slug, fileCheck.data.mimeType, i),
+          });
+          if (imagePaths[i]) orphanPaths.push(imagePaths[i]);
+          imagePaths[i] = uploaded.path;
+        } else if (removeImages[i] && imagePaths[i]) {
+          orphanPaths.push(imagePaths[i]);
+          imagePaths[i] = '';
+        }
       }
 
       const { error: updateErr } = await supabase
@@ -46,7 +54,9 @@ export async function onRequest(context) {
           slug,
           name,
           description,
-          image_path: imagePath,
+          image_path: imagePaths[0],
+          image_path_2: imagePaths[1],
+          image_path_3: imagePaths[2],
           price_cents: price,
           compare_price_cents: originalPrice,
           whatsapp_text: whatsappText,
@@ -54,15 +64,14 @@ export async function onRequest(context) {
           category_label: categoryLabel,
           stock,
           featured,
-          is_new: isNew,
           updated_at: new Date().toISOString(),
         })
         .eq('id', id);
       if (updateErr) return error(updateErr.message, 500);
 
-      // Só remove a imagem antiga depois de a nova estar confirmada no banco.
-      if (file && existing.imagePath && existing.imagePath !== imagePath) {
-        await deleteProductImage(env, existing.imagePath);
+      // Só apaga os arquivos antigos depois de o banco já não apontar para eles.
+      for (const path of orphanPaths) {
+        await deleteProductImage(env, path);
       }
 
       const updated = await getProductById(supabase, env, id);
@@ -72,8 +81,8 @@ export async function onRequest(context) {
     if (request.method === 'DELETE') {
       const { error: deleteErr } = await supabase.from('products').delete().eq('id', id);
       if (deleteErr) return error(deleteErr.message, 500);
-      if (existing.imagePath) {
-        await deleteProductImage(env, existing.imagePath);
+      for (const path of existing.imagePaths.filter(Boolean)) {
+        await deleteProductImage(env, path);
       }
       return json({ data: { ok: true } });
     }

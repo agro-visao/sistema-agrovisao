@@ -7,6 +7,12 @@ import type { Product } from '../../data/products'
 import { PRODUCTS, CATEGORIES, formatBRL } from '../../data/products'
 import styles from './Sales.module.css'
 
+interface Category {
+  id?: number
+  key: string
+  label: string
+}
+
 async function fetchProducts(): Promise<Product[] | null> {
   try {
     const res = await fetch('/api/products')
@@ -27,9 +33,24 @@ async function fetchProducts(): Promise<Product[] | null> {
         price: (p.price_cents as number) || 0,
         stock: (p.stock as number) || 0,
         featured: (p.featured as number) === 1,
-        isNew: (p.is_new as number) === 1,
         technicalInfo: undefined,
         whatsappText: (p.whatsapp_text as string) || '',
+      }))
+    }
+  } catch {}
+  return null
+}
+
+async function fetchCategories(): Promise<Category[] | null> {
+  try {
+    const res = await fetch('/api/categories')
+    if (!res.ok) throw new Error('API unavailable')
+    const json = await res.json()
+    if (json.data && json.data.length > 0) {
+      return json.data.map((c: Record<string, unknown>) => ({
+        id: (c.id as number) || 0,
+        key: (c.key as string) || '',
+        label: (c.label as string) || '',
       }))
     }
   } catch {}
@@ -46,6 +67,7 @@ const BENEFITS = [
 function Sales() {
   const navigate = useNavigate()
   const [products, setProducts] = useState<Product[]>([])
+  const [categories, setCategories] = useState<Category[]>([])
   const [loaded, setLoaded] = useState(false)
   const [loadError, setLoadError] = useState(false)
   const [search, setSearch] = useState('')
@@ -56,16 +78,23 @@ function Sales() {
   const [mErrs, setMErrs] = useState<Record<string, string>>({})
 
   useEffect(() => {
-    fetchProducts().then((data) => {
-      if (data && data.length > 0) {
-        setProducts(data)
-        setLoaded(true)
+    Promise.all([fetchProducts(), fetchCategories()]).then(([productsData, categoriesData]) => {
+      if (productsData && productsData.length > 0) {
+        setProducts(productsData)
       } else {
         setProducts(PRODUCTS)
-        setLoaded(true)
       }
+
+      if (categoriesData && categoriesData.length > 0) {
+        setCategories(categoriesData)
+      } else {
+        setCategories(CATEGORIES.filter(c => c.key !== 'todos'))
+      }
+
+      setLoaded(true)
     }).catch(() => {
       setProducts(PRODUCTS)
+      setCategories(CATEGORIES.filter(c => c.key !== 'todos'))
       setLoaded(true)
       setLoadError(true)
     })
@@ -121,15 +150,23 @@ function Sales() {
   const retry = () => {
     setLoadError(false)
     setLoaded(false)
-    fetchProducts().then((data) => {
-      if (data && data.length > 0) {
-        setProducts(data)
+    Promise.all([fetchProducts(), fetchCategories()]).then(([productsData, categoriesData]) => {
+      if (productsData && productsData.length > 0) {
+        setProducts(productsData)
       } else {
         setProducts(PRODUCTS)
       }
+
+      if (categoriesData && categoriesData.length > 0) {
+        setCategories(categoriesData)
+      } else {
+        setCategories(CATEGORIES.filter(c => c.key !== 'todos'))
+      }
+
       setLoaded(true)
     }).catch(() => {
       setProducts(PRODUCTS)
+      setCategories(CATEGORIES.filter(c => c.key !== 'todos'))
       setLoaded(true)
       setLoadError(true)
     })
@@ -168,7 +205,13 @@ function Sales() {
               className={styles.searchInput}
             />
             <div className={styles.filterGroup}>
-              {CATEGORIES.map((cat) => (
+              <button
+                onClick={() => setActiveCat('todos')}
+                className={`${styles.filterBtn} ${activeCat === 'todos' ? styles.filterBtnActive : ''}`}
+              >
+                Todos
+              </button>
+              {categories.map((cat) => (
                 <button
                   key={cat.key}
                   onClick={() => setActiveCat(cat.key)}
@@ -239,10 +282,7 @@ function Sales() {
                     style={{ cursor: 'pointer' }}
                   >
                     <div className={styles.cardImageWrap}>
-                      {p.isNew && (
-                        <span className={`${styles.cardBadge} ${styles.badgeNew}`}>Novo</span>
-                      )}
-                      {p.originalPrice !== null && !p.isNew && (
+                      {p.originalPrice !== null && (
                         <span className={`${styles.cardBadge} ${styles.badgeOffer}`}>Oferta</span>
                       )}
                       {p.image ? (

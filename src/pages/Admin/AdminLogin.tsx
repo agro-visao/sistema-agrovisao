@@ -1,30 +1,44 @@
-import { useEffect, useState, useCallback } from 'react'
-import { useNavigate, Link, useSearchParams } from 'react-router-dom'
+import { useEffect, useState, useCallback, useRef } from 'react'
+import { useNavigate, Link } from 'react-router-dom'
+import { supabase } from '../../lib/supabaseClient'
 import styles from './Admin.module.css'
 
 type View = 'login' | 'recover' | 'reset' | 'resetDone'
 
-async function api(path: string, options?: RequestInit) {
-  const res = await fetch(path, {
-    credentials: 'same-origin',
-    cache: 'no-store',
-    headers: options?.body ? { 'Content-Type': 'application/json' } : undefined,
-    ...options,
-  })
-  let payload: { data?: unknown; error?: string } | null = null
-  try {
-    payload = await res.json()
-  } catch {}
-  return { ok: res.ok, status: res.status, payload }
+/**
+ * Detecta se a URL atual corresponde a um link de recuperação de senha
+ * vindo do e-mail do Supabase. Pode chegar como `?code=...` (fluxo PKCE)
+ * ou como `#access_token=...&type=recovery` (fluxo implícito). Em ambos os
+ * casos o client (`detectSessionInUrl: true`) processa a URL sozinho e
+ * dispara o evento `PASSWORD_RECOVERY`; aqui só usamos isso como um sinal
+ * inicial (síncrono) para já renderizar o formulário certo sem esperar o
+ * evento assíncrono.
+ */
+function isRecoveryUrl(): boolean {
+  if (typeof window === 'undefined') return false
+  const query = new URLSearchParams(window.location.search)
+  if (query.has('code')) return true
+  const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ''))
+  return hashParams.get('type') === 'recovery'
+}
+
+function mapLoginError(message: string): string {
+  const normalized = message.toLowerCase()
+  if (normalized.includes('invalid login credentials')) {
+    return 'E-mail ou senha inválidos.'
+  }
+  if (normalized.includes('email not confirmed')) {
+    return 'E-mail ainda não confirmado. Verifique sua caixa de entrada.'
+  }
+  return 'Falha ao entrar. Tente novamente.'
 }
 
 function AdminLogin() {
   const navigate = useNavigate()
-  const [searchParams, setSearchParams] = useSearchParams()
-  const resetToken = searchParams.get('resetToken') || ''
+  const initialRecovery = useRef(isRecoveryUrl()).current
 
-  const [view, setView] = useState<View>(resetToken ? 'reset' : 'login')
-  const [checking, setChecking] = useState(true)
+  const [view, setView] = useState<View>(initialRecovery ? 'reset' : 'login')
+  const [checking, setChecking] = useState(!initialRecovery)
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -34,25 +48,58 @@ function AdminLogin() {
   const [infoMsg, setInfoMsg] = useState('')
   const [busy, setBusy] = useState(false)
 
+  // Remove o token/hash de recuperação da URL assim que detectado, para não
+  // deixá-lo exposto na barra de endereço nem reaproveitável via histórico.
+  useEffect(() => {
+    if (initialRecovery) {
+      window.history.replaceState({}, '', '/admin')
+    }
+  }, [initialRecovery])
+
+  // Fonte de verdade assíncrona: o Supabase dispara PASSWORD_RECOVERY depois
+  // de processar o link do e-mail. Serve como reforço/fallback do heurístico
+  // síncrono acima.
   useEffect(() => {
     let mounted = true
-    let requestId = Math.random()
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
+      if (!mounted) return
+      if (event === 'PASSWORD_RECOVERY') {
+        setErrorMsg('')
+        setInfoMsg('')
+        setView('reset')
+        setChecking(false)
+      }
+    })
+
+    return () => {
+      mounted = false
+      subscription.unsubscribe()
+    }
+  }, [])
+
+  useEffect(() => {
+    if (initialRecovery) return
+    let mounted = true
 
     const checkSession = async () => {
-      const currentRequestId = requestId
       try {
-        const res = await api('/api/admin/session')
-        if (!mounted || currentRequestId !== requestId) return
-        if (res.ok) {
-          const user = (res.payload?.data as { user?: { mustChangePassword?: boolean } } | undefined)?.user
-          navigate(user?.mustChangePassword ? '/admin/change-password' : '/admin/dashboard', { replace: true })
+        const { data } = await supabase.auth.getSession()
+        if (!mounted) return
+        const session = data.session
+        if (!session) {
+          setChecking(false)
           return
         }
+        const { data: profile } = await supabase
+          .from('admin_profiles')
+          .select('must_change_password')
+          .eq('user_id', session.user.id)
+          .maybeSingle()
+        if (!mounted) return
+        navigate(profile?.must_change_password ? '/admin/change-password' : '/admin/dashboard', { replace: true })
       } catch (e) {
         console.error('[login] erro ao verificar sessão:', (e as Error).message)
-      }
-      if (mounted && currentRequestId === requestId) {
-        setChecking(false)
+        if (mounted) setChecking(false)
       }
     }
 
@@ -60,9 +107,8 @@ function AdminLogin() {
 
     return () => {
       mounted = false
-      requestId = -1
     }
-  }, [navigate])
+  }, [navigate, initialRecovery])
 
   const submitLogin = useCallback(
     async (e: React.FormEvent) => {
@@ -75,16 +121,25 @@ function AdminLogin() {
       }
       setBusy(true)
       try {
-        const res = await api('/api/admin/login', {
-          method: 'POST',
-          body: JSON.stringify({ email: email.trim(), password }),
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email: email.trim(),
+          password,
         })
-        if (res.ok) {
-          const user = (res.payload?.data as { user?: { mustChangePassword?: boolean } } | undefined)?.user
-          navigate(user?.mustChangePassword ? '/admin/change-password' : '/admin/dashboard', { replace: true })
+        if (error) {
+          setErrorMsg(mapLoginError(error.message))
           return
         }
-        setErrorMsg(res.payload?.error || 'Falha ao entrar. Tente novamente.')
+        const userId = data.user?.id
+        let mustChangePassword = false
+        if (userId) {
+          const { data: profile } = await supabase
+            .from('admin_profiles')
+            .select('must_change_password')
+            .eq('user_id', userId)
+            .maybeSingle()
+          mustChangePassword = Boolean(profile?.must_change_password)
+        }
+        navigate(mustChangePassword ? '/admin/change-password' : '/admin/dashboard', { replace: true })
       } catch {
         setErrorMsg('Erro de conexão. Tente novamente.')
       } finally {
@@ -105,19 +160,15 @@ function AdminLogin() {
       }
       setBusy(true)
       try {
-        const res = await api('/api/admin/forgot-password', {
-          method: 'POST',
-          body: JSON.stringify({ email: email.trim() }),
+        const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+          redirectTo: `${window.location.origin}/admin`,
         })
-        if (res.ok) {
-          setInfoMsg(
-            (res.payload?.data as { message?: string } | undefined)?.message ||
-              'Se o e-mail estiver cadastrado, você receberá um link de recuperação.'
-          )
-          setView('login')
-        } else {
-          setErrorMsg(res.payload?.error || 'Falha ao solicitar recuperação.')
+        if (error) {
+          setErrorMsg('Falha ao solicitar recuperação. Tente novamente.')
+          return
         }
+        setInfoMsg('Se o e-mail estiver cadastrado, você receberá um link de recuperação.')
+        setView('login')
       } catch {
         setErrorMsg('Erro de conexão. Tente novamente.')
       } finally {
@@ -141,25 +192,22 @@ function AdminLogin() {
       }
       setBusy(true)
       try {
-        const res = await api('/api/admin/reset-password', {
-          method: 'POST',
-          body: JSON.stringify({ token: resetToken, password }),
-        })
-        if (res.ok) {
-          setSearchParams({}, { replace: true })
-          setPassword('')
-          setConfirm('')
-          setView('resetDone')
-        } else {
-          setErrorMsg(res.payload?.error || 'Não foi possível redefinir a senha.')
+        const { error } = await supabase.auth.updateUser({ password })
+        if (error) {
+          setErrorMsg('Não foi possível redefinir a senha.')
+          return
         }
+        setPassword('')
+        setConfirm('')
+        setView('resetDone')
+        window.setTimeout(() => navigate('/admin/dashboard', { replace: true }), 900)
       } catch {
         setErrorMsg('Erro de conexão. Tente novamente.')
       } finally {
         setBusy(false)
       }
     },
-    [resetToken, password, confirm, setSearchParams]
+    [password, confirm, navigate]
   )
 
   if (checking) {
@@ -344,10 +392,14 @@ function AdminLogin() {
           <>
             <h1 className={styles.loginTitle}>Senha atualizada</h1>
             <p className={styles.loginSubtitle}>
-              Sua senha foi redefinida com sucesso. Já é possível entrar com a nova senha.
+              Sua senha foi redefinida com sucesso. Você já está conectado.
             </p>
-            <button className={styles.btnPrimary} onClick={() => setView('login')} data-testid="reset-done">
-              Entrar
+            <button
+              className={styles.btnPrimary}
+              onClick={() => navigate('/admin/dashboard', { replace: true })}
+              data-testid="reset-done"
+            >
+              Acessar painel
             </button>
           </>
         )}

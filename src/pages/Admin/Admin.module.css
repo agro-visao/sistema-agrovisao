@@ -694,6 +694,47 @@
   gap: 14px;
 }
 
+/* Os 3 slots de foto do produto (principal + 2 complementares), lado a lado. */
+.imageSlots {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.imageSlot {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid var(--border-green-08);
+  border-radius: var(--radius-sm);
+  background: #FFFFFF;
+}
+
+.imageSlotTitle {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--clr-primary);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.imageSlot .uploadPreview,
+.imageSlot .uploadPlaceholder {
+  max-width: 100%;
+}
+
+.imageSlot .inputHint {
+  margin-top: auto;
+}
+
+@media (max-width: 720px) {
+  .imageSlots {
+    grid-template-columns: 1fr;
+  }
+}
+
 .uploadPreview {
   width: 100%;
   max-width: 320px;
@@ -987,10 +1028,12 @@
   box-shadow: 2px 0 8px rgba(8, 18, 6, 0.06);
 }
 
+/* Logo em cima, "AgroVisão / Admin" logo abaixo dele. */
 .sidebarHeader {
   display: flex;
-  align-items: center;
-  gap: 12px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
   padding: 0 18px;
   margin-bottom: 32px;
   color: var(--clr-primary);
@@ -999,13 +1042,13 @@
 .sidebarLogo {
   flex-shrink: 0;
   width: auto;
-  height: 32px;
+  height: 40px;
   max-width: 100%;
   object-fit: contain;
 }
 
 .sidebarBrand {
-  flex: 1;
+  width: 100%;
   min-width: 0;
 }
 
@@ -1197,6 +1240,22 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
+}
+
+/* Quantas fotos o produto tem (só aparece quando há complementares). */
+.productCardPhotoCount {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  padding: 3px 8px;
+  background: rgba(26, 26, 24, 0.62);
+  color: #FFFFFF;
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: var(--radius-sm);
 }
 
 .productCardBadge {

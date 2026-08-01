@@ -34,9 +34,15 @@ export function buildWhatsappText(name) {
   return `Olá! Tenho interesse em comprar ${name}. Gostaria de receber mais informações.`;
 }
 
+// Os três slots de imagem do produto, na ordem: principal + 2 complementares.
+// O índice do slot é a posição no array em todo o CRUD (form, upload, banco).
+export const IMAGE_FIELDS = ['image', 'image2', 'image3'];
+export const IMAGE_COLUMNS_BY_SLOT = ['image_path', 'image_path_2', 'image_path_3'];
+
 // Lê o corpo do formulário de produto aceitando multipart/form-data (upload de
-// imagem) ou JSON. No multipart, os campos de texto são strings; a imagem fica
-// no campo "image" como File (ou null quando o produto não tem imagem).
+// imagem) ou JSON. No multipart, os campos de texto são strings; as imagens
+// vêm nos campos "image", "image2" e "image3" como File — cada slot pode estar
+// vazio (null) quando não há foto nova para ele.
 export async function readProductForm(request) {
   const contentType = request.headers.get('Content-Type') || '';
   if (contentType.includes('multipart/form-data')) {
@@ -44,27 +50,40 @@ export async function readProductForm(request) {
     const body = {};
     for (const key of [
       'name', 'category', 'categoryLabel', 'price', 'originalPrice', 'description',
-      'stock', 'featured', 'isNew', 'whatsappText',
+      'stock', 'featured', 'whatsappText',
+      'removeImage1', 'removeImage2', 'removeImage3',
     ]) {
       const value = fd.get(key);
       if (typeof value === 'string') body[key] = value;
     }
-    const file = fd.get('image');
-    return { body, file: file && typeof file.size === 'number' ? file : null };
+    const files = IMAGE_FIELDS.map((field) => {
+      const file = fd.get(field);
+      return file && typeof file.size === 'number' ? file : null;
+    });
+    return { body, files };
   }
-  return { body: await readJson(request), file: null };
+  return { body: await readJson(request), files: [null, null, null] };
 }
 
 // Recebe a env para poder resolver a URL pública da imagem no Supabase Storage
 // (row.image_path -> URL). Antes a imagem era servida via proxy do backend.
 export function serializeProduct(row, env) {
+  // Os 3 slots sempre saem no payload (string vazia = slot sem foto), para o
+  // painel saber qual posição está livre. `gallery` traz só as que existem,
+  // que é o que a página pública usa nas miniaturas.
+  const imagePaths = IMAGE_COLUMNS_BY_SLOT.map((column) => row[column] || '');
+  const images = imagePaths.map((path) => (path ? getPublicImageUrl(env, path) : ''));
+
   return {
     id: row.id,
     slug: row.slug,
     name: row.name,
     description: row.description || '',
-    image: row.image_path ? getPublicImageUrl(env, row.image_path) : '',
-    imagePath: row.image_path || '',
+    image: images[0],
+    imagePath: imagePaths[0],
+    images,
+    imagePaths,
+    gallery: images.filter(Boolean),
     price: row.price_cents,
     originalPrice: row.compare_price_cents !== null && row.compare_price_cents !== undefined ? row.compare_price_cents : null,
     categoryId: row.category_id,
@@ -72,7 +91,6 @@ export function serializeProduct(row, env) {
     categoryLabel: row.category_label,
     stock: row.stock,
     featured: Boolean(row.featured),
-    isNew: Boolean(row.is_new),
     active: Boolean(row.active),
     whatsappText: row.whatsapp_text || '',
     createdAt: row.created_at,
@@ -81,9 +99,9 @@ export function serializeProduct(row, env) {
 }
 
 const PRODUCT_COLUMNS =
-  'id, slug, name, description, image_path, ' +
+  'id, slug, name, description, image_path, image_path_2, image_path_3, ' +
   'price_cents, compare_price_cents, ' +
-  'whatsapp_phone, whatsapp_text, category, category_label, category_id, stock, featured, is_new, active, ' +
+  'whatsapp_phone, whatsapp_text, category, category_label, category_id, stock, featured, active, ' +
   'created_at, updated_at';
 
 export async function getProducts(supabase, env) {
@@ -130,7 +148,7 @@ export async function ensureUniqueSlug(supabase, baseSlug, excludeId = null) {
 }
 
 // Valida e normaliza o payload do formulário do painel.
-// Preços chegam em reais (ex.: "35,00" ou 35) e são convertidos para centavos.
+// Preços chegam já em centavos (ex.: "3500" = R$ 35,00), como o banco guarda.
 export function validateProductInput(body) {
   const name = typeof body.name === 'string' ? body.name.trim() : '';
   if (!name) return { ok: false, error: 'Informe o nome do produto.' };
@@ -150,26 +168,32 @@ export function validateProductInput(body) {
   }
 
   const stock = Math.max(0, parseInt(body.stock, 10) || 0);
-  const image = typeof body.image === 'string' ? body.image.trim() : '';
   const description = typeof body.description === 'string' ? body.description.trim() : '';
   const whatsappText = typeof body.whatsappText === 'string' && body.whatsappText.trim()
     ? body.whatsappText.trim()
     : buildWhatsappText(name);
+
+  // Um slot só é limpo quando o painel pede explicitamente (removeImageN);
+  // a omissão sempre preserva a foto que já está no produto.
+  const removeImages = [1, 2, 3].map((n) => isTrue(body[`removeImage${n}`]));
 
   return {
     ok: true,
     data: {
       name,
       description,
-      image,
       price,
       originalPrice,
       category,
       categoryLabel,
       stock,
-      featured: body.featured === true || body.featured === 1 || body.featured === '1' || body.featured === 'true',
-      isNew: body.isNew === true || body.isNew === 1 || body.isNew === '1' || body.isNew === 'true',
+      featured: isTrue(body.featured),
+      removeImages,
       whatsappText,
     },
   };
+}
+
+function isTrue(value) {
+  return value === true || value === 1 || value === '1' || value === 'true';
 }

@@ -25,12 +25,12 @@ async function fetchProductBySlug(slug: string): Promise<Product | null> {
         category: p.category || 'mudas',
         categoryLabel: p.category_label || 'Mudas',
         image: p.image_url || '',
-        gallery: [],
+        // Principal + complementares, na ordem em que foram cadastradas.
+        gallery: Array.isArray(p.gallery) ? p.gallery.filter(Boolean) : [],
         originalPrice: p.compare_price_cents || null,
         price: p.price_cents || 0,
         stock: p.stock || 0,
         featured: p.featured === 1,
-        isNew: p.is_new === 1,
         technicalInfo: undefined,
         whatsappText: p.whatsapp_text || '',
       }

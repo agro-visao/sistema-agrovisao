@@ -61,9 +61,13 @@ function sniffImageType(bytes) {
 
 const MIME_EXT = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp' };
 
-export function makeImagePath(slug, mimeType) {
+// Um mesmo salvamento pode enviar as 3 fotos do produto de uma vez, então o
+// índice do slot + sufixo aleatório evitam colisão entre arquivos criados no
+// mesmo milissegundo.
+export function makeImagePath(slug, mimeType, index = 0) {
   const ext = MIME_EXT[mimeType] || 'jpg';
-  return `products/${slug}-${Date.now()}.${ext}`;
+  const rand = Math.random().toString(36).slice(2, 8);
+  return `products/${slug}-${Date.now()}-${index}-${rand}.${ext}`;
 }
 
 // Caminho das imagens da galeria (project_images). Como um mesmo envio pode

@@ -34,6 +34,11 @@ breve descrição + fotos complementares + descrição completa": a linha com
 `parent_id` nulo é o registro e as linhas que apontam para ela são as fotos
 complementares (só com a breve descrição própria, opcional).
 
+Já `supabase/migrations/0004_product_extra_images.sql` acrescenta
+`image_path_2` e `image_path_3` em `products`: o produto passa a aceitar até 3
+fotos (a principal, que vai para o card da vitrine, mais duas complementares
+exibidas como miniaturas na página do produto). String vazia = slot sem foto.
+
 Atalho para aplicar tudo de uma vez, sem abrir o painel:
 
 ```bash

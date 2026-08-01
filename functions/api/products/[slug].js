@@ -11,9 +11,9 @@ export async function onRequest(context) {
     const supabase = getSupabaseAdmin(env);
 
     const PRODUCT_SELECT =
-      'id, slug, name, description, image_path, ' +
+      'id, slug, name, description, image_path, image_path_2, image_path_3, ' +
       'price_cents, compare_price_cents, ' +
-      'whatsapp_phone, whatsapp_text, category, category_label, stock, featured, is_new, active, ' +
+      'whatsapp_phone, whatsapp_text, category, category_label, stock, featured, active, ' +
       'created_at, updated_at';
 
     const { data: product, error: dbError } = await supabase
