@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback, useRef } from 'react'
 import { formatBRL } from '../../data/products'
+import { adminApi as api } from '../../lib/adminApi'
 import styles from './Admin.module.css'
 
 interface AdminProduct {
@@ -44,31 +45,25 @@ const EMPTY_FORM: FormState = {
 const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp']
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024
 
-async function api(path: string, options?: RequestInit) {
-  try {
-    const controller = new AbortController()
-    const timeout = setTimeout(() => controller.abort(), 10000)
-    const res = await fetch(path, {
-      credentials: 'same-origin',
-      cache: 'no-store',
-      signal: controller.signal,
-      headers: typeof options?.body === 'string' ? { 'Content-Type': 'application/json' } : undefined,
-      ...options,
-    })
-    clearTimeout(timeout)
-    let payload: { data?: unknown; error?: string } | null = null
-    try {
-      payload = await res.json()
-    } catch {}
-    return { ok: res.ok, status: res.status, payload }
-  } catch (error) {
-    console.error('API call failed:', path, error)
-    return { ok: false, status: 0, payload: { error: 'Erro de conexão' } }
-  }
-}
+// ─── Máscara monetária (R$ 0,00) ────────────────────────────────────────────
+// O campo sempre exibe o valor formatado: só os dígitos digitados contam e o
+// valor vai sendo preenchido da direita para a esquerda (centavos primeiro).
 
 function centsToInput(cents: number): string {
-  return (cents / 100).toFixed(2).replace('.', ',')
+  return formatBRL(cents)
+}
+
+/** Reformata o que foi digitado; ignora tudo que não é dígito. */
+function maskBRL(value: string): string {
+  const digits = value.replace(/\D/g, '').replace(/^0+(?=\d)/, '').slice(0, 11)
+  if (!digits) return ''
+  return formatBRL(parseInt(digits, 10))
+}
+
+/** Valor do campo em centavos; null quando está vazio. */
+function inputToCents(value: string): number | null {
+  const digits = value.replace(/\D/g, '')
+  return digits ? parseInt(digits, 10) : null
 }
 
 interface Category {
@@ -242,18 +237,16 @@ function AdminSalesView() {
       fd.append('featured', String(form.featured))
       fd.append('isNew', String(form.isNew))
 
-      const priceNum = parseFloat(form.price.replace(',', '.'))
-      if (Number.isNaN(priceNum) || priceNum < 0) {
+      const priceCents = inputToCents(form.price)
+      if (priceCents === null || priceCents < 0) {
         setFormError('Valor inválido.')
         return
       }
-      fd.append('price', String(Math.round(priceNum * 100)))
+      fd.append('price', String(priceCents))
 
-      if (form.originalPrice.trim()) {
-        const origNum = parseFloat(form.originalPrice.replace(',', '.'))
-        if (!Number.isNaN(origNum) && origNum > 0) {
-          fd.append('originalPrice', String(Math.round(origNum * 100)))
-        }
+      const originalCents = inputToCents(form.originalPrice)
+      if (originalCents !== null && originalCents > 0) {
+        fd.append('originalPrice', String(originalCents))
       }
 
       if (selectedFile) {
@@ -441,10 +434,10 @@ function AdminSalesView() {
                     id="p-price"
                     className={styles.input}
                     type="text"
-                    inputMode="decimal"
+                    inputMode="numeric"
                     value={form.price}
-                    onChange={(e) => setField('price', e.target.value)}
-                    placeholder="35,00"
+                    onChange={(e) => setField('price', maskBRL(e.target.value))}
+                    placeholder="R$ 0,00"
                     data-testid="f-price"
                   />
                 </div>
@@ -454,10 +447,10 @@ function AdminSalesView() {
                     id="p-original-price"
                     className={styles.input}
                     type="text"
-                    inputMode="decimal"
+                    inputMode="numeric"
                     value={form.originalPrice}
-                    onChange={(e) => setField('originalPrice', e.target.value)}
-                    placeholder="45,00"
+                    onChange={(e) => setField('originalPrice', maskBRL(e.target.value))}
+                    placeholder="R$ 0,00"
                     data-testid="f-original-price"
                   />
                 </div>

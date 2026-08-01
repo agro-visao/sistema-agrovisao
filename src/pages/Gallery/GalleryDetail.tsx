@@ -62,6 +62,9 @@ function GalleryDetail() {
   const [project, setProject] = useState<any>(null)
   const [loaded, setLoaded] = useState(false)
   const [selectedImage, setSelectedImage] = useState<ProjectImage | null>(null)
+  // Registros antigos podem apontar para um arquivo que não existe mais no
+  // Storage. Em vez de mostrar o quadro quebrado, a foto sai da galeria.
+  const [brokenIds, setBrokenIds] = useState<number[]>([])
 
   useEffect(() => {
     if (slug) {
@@ -77,6 +80,17 @@ function GalleryDetail() {
       })
     }
   }, [slug])
+
+  // Só entram na galeria as fotos cujo arquivo realmente carregou.
+  const visibleImages = images.filter((img) => !brokenIds.includes(img.id))
+  const markBroken = (id: number) =>
+    setBrokenIds((prev) => (prev.includes(id) ? prev : [...prev, id]))
+
+  useEffect(() => {
+    if (selectedImage && brokenIds.includes(selectedImage.id)) {
+      setSelectedImage(visibleImages[0] || null)
+    }
+  }, [brokenIds, selectedImage, visibleImages])
 
   // A foto complementar herda os textos do registro: a breve descrição dela é
   // opcional e a descrição completa é sempre a do registro.
@@ -117,7 +131,7 @@ function GalleryDetail() {
                 <div style={{ width: '40px', height: '40px', border: '2px solid rgba(49,91,44,0.15)', borderTopColor: '#315B2C', borderRadius: '50%', margin: '0 auto 20px', animation: 'spin 0.8s linear infinite' }} />
                 <p style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', color: '#888882' }}>Carregando galeria...</p>
               </div>
-            ) : images.length === 0 ? (
+            ) : visibleImages.length === 0 ? (
               <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '100px 0' }}>
                 <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: '22px', fontWeight: 500, color: '#1a1a18', marginBottom: '8px' }}>Nenhuma imagem encontrada</div>
                 <p style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', color: '#777772', marginBottom: '24px' }}>Este projeto não possui imagens registradas.</p>
@@ -140,6 +154,7 @@ function GalleryDetail() {
                         <img
                           src={selectedImage.url}
                           alt={selectedImage.alt}
+                          onError={() => markBroken(selectedImage.id)}
                           style={{ width: '100%', height: 'auto', display: 'block' }}
                         />
                       </div>
@@ -153,7 +168,7 @@ function GalleryDetail() {
                           </p>
                         )}
                         <p style={{ fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 400, color: '#888882', lineHeight: 1.8, marginBottom: '28px' }}>
-                          Imagem {images.indexOf(selectedImage) + 1} de {images.length} • {project?.name}
+                          Imagem {visibleImages.indexOf(selectedImage) + 1} de {visibleImages.length} • {project?.name}
                         </p>
                         <button
                           onClick={() => navigate('/galeria')}
@@ -172,7 +187,7 @@ function GalleryDetail() {
                 <div style={{ gridColumn: '1 / -1' }}>
                   <div style={{ marginBottom: '24px' }}>
                     <div style={{ fontFamily: 'var(--font-sans)', fontSize: '11px', fontWeight: 600, color: '#6F8F3A', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '16px' }}>
-                      Todas as imagens ({images.length})
+                      Todas as imagens ({visibleImages.length})
                     </div>
                   </div>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '16px' }}>
@@ -181,6 +196,10 @@ function GalleryDetail() {
                         key={img.id}
                         onClick={() => setSelectedImage(img)}
                         style={{
+                          // A miniatura quebrada continua no DOM (é o onError
+                          // dela que denuncia o arquivo ausente), mas não ocupa
+                          // espaço na grade.
+                          display: brokenIds.includes(img.id) ? 'none' : 'block',
                           overflow: 'hidden',
                           borderRadius: '10px',
                           cursor: 'pointer',
@@ -202,6 +221,7 @@ function GalleryDetail() {
                         <img
                           src={img.url}
                           alt={img.alt}
+                          onError={() => markBroken(img.id)}
                           style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
                         />
                       </div>

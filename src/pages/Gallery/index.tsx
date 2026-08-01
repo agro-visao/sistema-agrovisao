@@ -12,6 +12,8 @@ interface ProjectGallery {
   category: string
   categoryLabel: string
   firstImage: string
+  /** Breve descrição da capa, exibida abaixo do nome do projeto no card. */
+  brief: string
   imageCount: number
 }
 
@@ -45,6 +47,7 @@ async function fetchProjectGalleries(): Promise<ProjectGallery[] | null> {
           category: g.project.category,
           categoryLabel: g.project.categoryLabel,
           firstImage: cover?.url || '',
+          brief: cover?.alt || '',
           imageCount: g.images.length,
         }
       })
@@ -66,6 +69,9 @@ function Gallery() {
   const [loaded, setLoaded] = useState(false)
   const [search, setSearch] = useState('')
   const [loadError, setLoadError] = useState(false)
+  // Capas cujo arquivo não existe mais no Storage: cai no placeholder em vez
+  // de mostrar o quadro de imagem quebrada.
+  const [brokenCovers, setBrokenCovers] = useState<number[]>([])
 
   useEffect(() => {
     fetchProjectGalleries().then((data) => {
@@ -170,8 +176,15 @@ function Gallery() {
                     style={{ cursor: 'pointer' }}
                   >
                     <div className={styles.cardImageWrap}>
-                      {g.firstImage ? (
-                        <img src={g.firstImage} alt={g.name} className={styles.cardImage} />
+                      {g.firstImage && !brokenCovers.includes(g.id) ? (
+                        <img
+                          src={g.firstImage}
+                          alt={g.name}
+                          className={styles.cardImage}
+                          onError={() =>
+                            setBrokenCovers((prev) => (prev.includes(g.id) ? prev : [...prev, g.id]))
+                          }
+                        />
                       ) : (
                         <div className={styles.cardImagePlaceholder}>
                           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4">
@@ -188,14 +201,17 @@ function Gallery() {
                     <div className={styles.cardBody}>
                       <div className={styles.cardCategory}>{g.categoryLabel}</div>
                       <div className={styles.cardTitle}>{g.name}</div>
+                      {g.brief && (
+                        <p style={{ fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 400, color: '#777772', lineHeight: 1.7, marginTop: '8px' }}>
+                          {g.brief}
+                        </p>
+                      )}
                       <div style={{ marginTop: '14px' }}>
-                        <button
-                          style={{ display: 'inline-block', padding: '8px 16px', background: 'rgba(49,91,44,0.08)', color: '#315B2C', fontFamily: 'var(--font-sans)', fontSize: '10px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '4px', border: '1px solid rgba(49,91,44,0.2)', cursor: 'pointer', transition: 'all 0.2s' }}
-                          onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(49,91,44,0.12)' }}
-                          onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(49,91,44,0.08)' }}
+                        <span
+                          style={{ fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 500, color: '#315B2C', textDecoration: 'underline', textUnderlineOffset: '3px', cursor: 'pointer' }}
                         >
-                          Ver Galeria
-                        </button>
+                          Veja mais..
+                        </span>
                       </div>
                     </div>
                   </div>
