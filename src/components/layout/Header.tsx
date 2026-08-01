@@ -105,6 +105,9 @@ function Header({ onOpenModal }: HeaderProps) {
             <a href="/projetos" style={navLinkStyle(isActivePrefix('/projetos'))}>
               Projetos
             </a>
+            <a href="/galeria" style={navLinkStyle(isActive('/galeria'))}>
+              Galeria
+            </a>
             <a href="/vendas" style={navLinkStyle(isActivePrefix('/vendas'))}>
               Vendas
             </a>
@@ -168,6 +171,7 @@ function Header({ onOpenModal }: HeaderProps) {
           <a href="/sobre" className={`drawer-link${isActive('/sobre') ? ' drawer-link--active' : ''}`} onClick={closeDrawer}>Sobre</a>
           <a href="/servicos" className={`drawer-link${isActive('/servicos') ? ' drawer-link--active' : ''}`} onClick={closeDrawer}>Serviços</a>
           <a href="/projetos" className={`drawer-link${isActivePrefix('/projetos') ? ' drawer-link--active' : ''}`} onClick={closeDrawer}>Projetos</a>
+          <a href="/galeria" className={`drawer-link${isActive('/galeria') ? ' drawer-link--active' : ''}`} onClick={closeDrawer}>Galeria</a>
           <a href="/vendas" className={`drawer-link${isActivePrefix('/vendas') ? ' drawer-link--active' : ''}`} onClick={closeDrawer}>Vendas</a>
           <a href="/contato" className={`drawer-link${isActive('/contato') ? ' drawer-link--active' : ''}`} onClick={closeDrawer}>Contato</a>
         </nav>

@@ -5,6 +5,7 @@ import Services from './pages/Services'
 import Contact from './pages/Contact'
 import Projects from './pages/Projects'
 import ProjectDetail from './pages/Projects/ProjectDetail'
+import Gallery from './pages/Gallery'
 import Sales from './pages/Sales'
 import ProductDetail from './pages/Sales/ProductDetail'
 import AdminLogin from './pages/Admin/AdminLogin'
@@ -20,6 +21,7 @@ function App() {
       <Route path="/contato" element={<Contact />} />
       <Route path="/projetos" element={<Projects />} />
       <Route path="/projetos/:slug" element={<ProjectDetail />} />
+      <Route path="/galeria" element={<Gallery />} />
       <Route path="/vendas" element={<Sales />} />
       <Route path="/vendas/:slug" element={<ProductDetail />} />
       <Route path="/admin" element={<AdminLogin />} />
