@@ -3,6 +3,13 @@ import { useNavigate } from 'react-router-dom'
 import Header from '../../components/layout/Header'
 import Footer from '../../components/layout/Footer'
 import WhatsAppButton from '../../components/shared/WhatsAppButton'
+import { projectCategoryIconSvg } from '../../data/projectCategoryIcons'
+
+interface ProjectCategoryCard {
+  key: string
+  label: string
+  icon: string
+}
 
 interface ProjectItem {
   slug: string
@@ -51,6 +58,37 @@ const FALLBACK_PROJECTS: ProjectItem[] = [
   { slug:'projeto-renda-para', name:"Projeto Renda Pará", cat:'familiar', catLabel:"Agricultura Familiar", inst:"Governo do Estado do Pará", desc:"Iniciativa de geração de renda no campo, estruturando cadeias produtivas da agricultura familiar paraense.", services:["Consultoria PRONAF","Captação de Recursos","Gestão de Projetos"], logo:"/assets/logos/projetos/projeto-renda-para.png" },
 ]
 
+// Cards da seção "Categorias de Projetos". Vêm do painel; esta lista só cobre
+// o caso de a API não responder (mesmo conteúdo do seed da migration 0006).
+const FALLBACK_PROJECT_CATEGORIES: ProjectCategoryCard[] = [
+  { key: 'projetos-agropecuarios', label: 'Projetos Agropecuários', icon: 'agropecuario' },
+  { key: 'projetos-ambientais', label: 'Projetos Ambientais', icon: 'ambiental' },
+  { key: 'projetos-sociais', label: 'Projetos Sociais', icon: 'social' },
+  { key: 'projetos-culturais', label: 'Projetos Culturais', icon: 'cultural' },
+  { key: 'projetos-esportivos', label: 'Projetos Esportivos', icon: 'esportivo' },
+  { key: 'projetos-para-mulheres', label: 'Projetos para Mulheres', icon: 'mulheres' },
+  { key: 'agricultura-familiar', label: 'Agricultura Familiar', icon: 'familiar' },
+  { key: 'capacitacoes', label: 'Capacitações', icon: 'capacitacao' },
+  { key: 'bioeconomia', label: 'Bioeconomia', icon: 'bioeconomia' },
+  { key: 'desenvolvimento-sustentavel', label: 'Desenv. Sustentável', icon: 'sustentavel' },
+]
+
+async function fetchProjectCategories(): Promise<ProjectCategoryCard[] | null> {
+  try {
+    const res = await fetch('/api/project-categories')
+    if (!res.ok) throw new Error('API unavailable')
+    const json = await res.json()
+    if (json.data && json.data.length > 0) {
+      return json.data.map((c: Record<string, unknown>) => ({
+        key: String(c.key || ''),
+        label: String(c.label || ''),
+        icon: String(c.icon || 'projeto'),
+      }))
+    }
+  } catch (_) {}
+  return null
+}
+
 async function fetchProjects(): Promise<ProjectItem[] | null> {
   try {
     const res = await fetch('/api/projects')
@@ -77,6 +115,7 @@ function Projects() {
   const [entered, setEntered] = useState(false)
   const [activeCat, setActiveCat] = useState('todos')
   const [projects, setProjects] = useState<ProjectItem[]>([])
+  const [projectCategories, setProjectCategories] = useState<ProjectCategoryCard[]>(FALLBACK_PROJECT_CATEGORIES)
   const [loaded, setLoaded] = useState(false)
   const [mOpen, setMOpen] = useState(false)
   const [mSts, setMSts] = useState<'idle' | 'sending' | 'success'>('idle')
@@ -95,6 +134,12 @@ function Projects() {
         setProjects(FALLBACK_PROJECTS)
       }
       setLoaded(true)
+    })
+  }, [])
+
+  useEffect(() => {
+    fetchProjectCategories().then((data) => {
+      if (data) setProjectCategories(data)
     })
   }, [])
 
@@ -400,24 +445,14 @@ function Projects() {
             <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(38px, 4.2vw, 58px)', fontWeight: 400, color: '#1a1a18', lineHeight: 1.1, letterSpacing: '-0.018em', marginBottom: '18px' }}>Categorias de Projetos</h2>
             <p style={{ fontFamily: 'var(--font-sans)', fontSize: '15px', fontWeight: 400, color: '#666660', lineHeight: 1.8, maxWidth: '520px', margin: '0 auto' }}>Atuamos em múltiplas frentes do desenvolvimento sustentável, social e econômico para a Amazônia Legal.</p>
           </div>
+          {/* Cards cadastrados no painel (Dashboard → Cat. de Projetos). */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '14px' }} data-animate data-d="1">
-            {[
-              { icon: '<path d="M3 20C3 20 7 13 13 11C19 13 23 20 23 20" stroke="#315B2C" stroke-width="1.3" stroke-linecap="round" fill="none"></path><path d="M13 20V7" stroke="#315B2C" stroke-width="1.3" stroke-linecap="round"></path><circle cx="13" cy="5" r="1.8" fill="#6F8F3A"></circle>', title: 'Projetos Agropecuários' },
-              { icon: '<path d="M6 24C6 19.029 10.029 15 15 15C15 10.029 19.029 6 24 6" stroke="#315B2C" stroke-width="1.3" stroke-linecap="round" fill="none"></path><path d="M2 20C2 11.163 9.163 4 18 4" stroke="#6F8F3A" stroke-width="1" stroke-linecap="round" opacity="0.5"></path>', title: 'Projetos Ambientais' },
-              { icon: '<circle cx="9" cy="8" r="3.5" stroke="#315B2C" stroke-width="1.3" fill="none"></circle><circle cx="17" cy="8" r="3.5" stroke="#6F8F3A" stroke-width="1" fill="none"></circle><path d="M3 21C3 17.686 5.686 15 9 15H13" stroke="#315B2C" stroke-width="1.3" stroke-linecap="round"></path><path d="M19 15C21.209 15 23 16.791 23 19V21" stroke="#6F8F3A" stroke-width="1" stroke-linecap="round"></path>', title: 'Projetos Sociais' },
-              { icon: '<path d="M13 3L4 12H22L13 3Z" stroke="#315B2C" stroke-width="1.3" fill="none"></path><rect x="7" y="12" width="12" height="11" rx="1" stroke="#315B2C" stroke-width="1.3" fill="none"></rect>', title: 'Projetos Culturais' },
-              { icon: '<path d="M13 3L15 9H21L16 13L18 19L13 15L8 19L10 13L5 9H11L13 3Z" stroke="#315B2C" stroke-width="1.3" fill="none" stroke-linejoin="round"></path>', title: 'Projetos Esportivos' },
-              { dark: true, icon: '<circle cx="13" cy="10" r="4" stroke="#F6F4EF" stroke-width="1.3" fill="none"></circle><path d="M13 14V22M9 21H17" stroke="#F6F4EF" stroke-width="1.3" stroke-linecap="round"></path>', title: 'Projetos para Mulheres' },
-              { icon: '<rect x="4" y="13" width="4" height="9" rx="1" stroke="#315B2C" stroke-width="1.3" fill="none"></rect><rect x="11" y="8" width="4" height="14" rx="1" stroke="#315B2C" stroke-width="1.3" fill="none"></rect><rect x="18" y="4" width="4" height="18" rx="1" stroke="#315B2C" stroke-width="1.3" fill="none"></rect>', title: 'Agricultura Familiar' },
-              { icon: '<path d="M5 23V10C5 9.448 5.448 9 6 9H20C20.552 9 21 9.448 21 10V23" stroke="#315B2C" stroke-width="1.3" fill="none"></path><path d="M13 9V4" stroke="#315B2C" stroke-width="1.3" stroke-linecap="round"></path><circle cx="13" cy="3.5" r="1.5" fill="#6F8F3A"></circle><path d="M3 23H23" stroke="#315B2C" stroke-width="1.3" stroke-linecap="round"></path>', title: 'Capacitações' },
-              { icon: '<circle cx="13" cy="13" r="8" stroke="#315B2C" stroke-width="1.3" fill="none"></circle><path d="M9 13C9 10.791 10.791 9 13 9C15.209 9 17 10.791 17 13" stroke="#6F8F3A" stroke-width="1" fill="none" stroke-linecap="round"></path><circle cx="13" cy="13" r="2" fill="#315B2C" opacity="0.4"></circle>', title: 'Bioeconomia' },
-              { icon: '<path d="M13 3L3 9V23H9V15H17V23H23V9L13 3Z" stroke="#315B2C" stroke-width="1.3" fill="none" stroke-linejoin="round"></path>', title: 'Desenv. Sustentável' },
-            ].map((cat, idx) => (
-              <div key={idx} style={{ background: (cat as { dark?: boolean }).dark ? '#315B2C' : '#FFFFFF', border: `1px solid ${(cat as { dark?: boolean }).dark ? '#315B2C' : 'rgba(49,91,44,0.12)'}`, borderRadius: '14px', padding: '30px 20px', textAlign: 'center', boxShadow: '0 2px 10px rgba(0,0,0,0.04)' }}>
-                <div style={{ width: '52px', height: '52px', background: (cat as { dark?: boolean }).dark ? 'rgba(246,244,239,0.12)' : 'rgba(49,91,44,0.07)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 18px' }}>
-                  <svg width="26" height="26" viewBox="0 0 26 26" fill="none" dangerouslySetInnerHTML={{ __html: cat.icon }} />
+            {projectCategories.map((cat) => (
+              <div key={cat.key} style={{ background: '#FFFFFF', border: '1px solid rgba(49,91,44,0.12)', borderRadius: '14px', padding: '30px 20px', textAlign: 'center', boxShadow: '0 2px 10px rgba(0,0,0,0.04)' }}>
+                <div style={{ width: '52px', height: '52px', background: 'rgba(49,91,44,0.07)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 18px', color: '#315B2C' }}>
+                  <svg width="26" height="26" viewBox="0 0 26 26" fill="none" dangerouslySetInnerHTML={{ __html: projectCategoryIconSvg(cat.icon) }} />
                 </div>
-                <h3 style={{ fontFamily: "'Barlow', sans-serif", fontSize: '17px', fontWeight: 500, color: (cat as { dark?: boolean }).dark ? '#F6F4EF' : '#1a1a18', lineHeight: 1.3, marginBottom: '8px' }}>{cat.title}</h3>
+                <h3 style={{ fontFamily: "'Barlow', sans-serif", fontSize: '17px', fontWeight: 500, color: '#1a1a18', lineHeight: 1.3, marginBottom: '8px' }}>{cat.label}</h3>
                 <div style={{ width: '18px', height: '2px', background: '#B8D48A', margin: '0 auto' }} />
               </div>
             ))}

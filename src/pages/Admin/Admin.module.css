@@ -36,7 +36,7 @@
 .brandLogo {
   display: block;
   width: auto;
-  height: 56px;
+  height: 76px;
   max-width: 100%;
   object-fit: contain;
 }
@@ -1240,6 +1240,139 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
+}
+
+.dashboardSubtitle {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--clr-text-muted);
+  margin-top: 6px;
+}
+
+/* ─── Categorias de projetos (cards + seletor de ícone) ───────────────── */
+.projectCatGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 16px;
+}
+
+.projectCatCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 22px 16px 16px;
+  text-align: center;
+  background: #FFFFFF;
+  border: 1px solid var(--border-green-08);
+  border-radius: var(--radius-md);
+}
+
+.projectCatIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: var(--clr-bg-green-light);
+  color: var(--clr-primary);
+}
+
+.projectCatName {
+  font-family: var(--font-serif);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--clr-text);
+  line-height: 1.35;
+}
+
+.iconPicker {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(52px, 1fr));
+  gap: 8px;
+}
+
+.iconOption {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  background: #FFFFFF;
+  color: var(--clr-primary);
+  border: 1px solid var(--border-green-08);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: border-color var(--transition-fast), background var(--transition-fast);
+}
+
+.iconOption:hover {
+  border-color: rgba(49, 91, 44, 0.45);
+  background: var(--clr-bg-green-light);
+}
+
+.iconOptionOn {
+  border-color: var(--clr-primary);
+  background: var(--clr-bg-green-light);
+  box-shadow: 0 0 0 2px rgba(49, 91, 44, 0.14);
+}
+
+/* ─── Tabela simples (usuários) ───────────────────────────────────────── */
+.tableWrap {
+  overflow-x: auto;
+  border: 1px solid var(--border-green-08);
+  border-radius: var(--radius-md);
+  background: #FFFFFF;
+}
+
+.dataTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--clr-text-body);
+}
+
+.dataTable th {
+  text-align: left;
+  padding: 14px 18px;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--clr-primary);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: var(--clr-bg-green-light);
+  border-bottom: 1px solid var(--border-green-08);
+  white-space: nowrap;
+}
+
+.dataTable td {
+  padding: 14px 18px;
+  border-bottom: 1px solid rgba(49, 91, 44, 0.06);
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.dataTable tr:last-child td {
+  border-bottom: none;
+}
+
+.tableStrong {
+  font-weight: 600;
+  color: var(--clr-text);
+}
+
+.tableTag {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 8px;
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--clr-text-muted);
+  background: rgba(136, 136, 130, 0.12);
+  border-radius: var(--radius-sm);
 }
 
 /* Quantas fotos o produto tem (só aparece quando há complementares). */

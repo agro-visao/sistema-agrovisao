@@ -39,6 +39,16 @@ Já `supabase/migrations/0004_product_extra_images.sql` acrescenta
 fotos (a principal, que vai para o card da vitrine, mais duas complementares
 exibidas como miniaturas na página do produto). String vazia = slot sem foto.
 
+`supabase/migrations/0005_seed_projects.sql` carrega os 19 projetos do
+portfólio institucional (/projetos) em `projects`. Eles viviam no D1, que foi
+apagado na migração — sem essa migration a API devolve só os projetos de
+galeria e a grade de cards com as logos some do site.
+
+`supabase/migrations/0006_project_categories.sql` cria `project_categories`,
+que alimenta a seção "Categorias de Projetos" da mesma página. A coluna `icon`
+guarda apenas a CHAVE do ícone; o SVG fica em `src/data/projectCategoryIcons.ts`
+(o painel escolhe entre os ícones existentes, nunca envia markup).
+
 Atalho para aplicar tudo de uma vez, sem abrir o painel:
 
 ```bash

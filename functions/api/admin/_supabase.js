@@ -88,27 +88,33 @@ export async function requireAdmin(context) {
     throw new AuthError('Não autenticado.', 401);
   }
 
-  if (env.ADMIN_EMAIL && String(authUser.email || '').toLowerCase() !== String(env.ADMIN_EMAIL).toLowerCase()) {
-    throw new AuthError('Não autorizado.', 403);
-  }
-
-  let mustChangePassword = false;
+  // Quem pode entrar no painel: a conta dona (ADMIN_EMAIL) e qualquer usuário
+  // com linha em admin_profiles — é essa tabela que /api/admin/users mantém.
+  // Sem ela, só o ADMIN_EMAIL entraria e criar usuários não serviria de nada.
+  let profile = null;
   try {
-    const { data: profile, error: profileErr } = await supabase
+    const { data, error: profileErr } = await supabase
       .from('admin_profiles')
       .select('must_change_password')
       .eq('user_id', authUser.id)
       .maybeSingle();
-    if (!profileErr && profile) {
-      mustChangePassword = Boolean(profile.must_change_password);
-    }
+    if (!profileErr) profile = data || null;
   } catch {
-    // Linha ausente/tabela indisponível: trata como "não precisa trocar senha".
-    mustChangePassword = false;
+    profile = null;
   }
 
+  const isOwner =
+    Boolean(env.ADMIN_EMAIL) &&
+    String(authUser.email || '').toLowerCase() === String(env.ADMIN_EMAIL).toLowerCase();
+  if (!isOwner && !profile) throw new AuthError('Não autorizado.', 403);
+
   return {
-    user: { id: authUser.id, email: authUser.email, mustChangePassword },
+    user: {
+      id: authUser.id,
+      email: authUser.email,
+      isOwner,
+      mustChangePassword: Boolean(profile && profile.must_change_password),
+    },
     supabase,
   };
 }

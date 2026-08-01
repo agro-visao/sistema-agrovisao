@@ -5,6 +5,8 @@ import AdminSidebar, { type AdminView } from './AdminSidebar'
 import AdminSalesView from './AdminSalesView'
 import AdminCategoriesView from './AdminCategoriesView'
 import AdminGalleryView from './AdminGalleryView'
+import AdminProjectCategoriesView from './AdminProjectCategoriesView'
+import AdminUsersView from './AdminUsersView'
 import styles from './Admin.module.css'
 
 function AdminDashboard() {
@@ -118,6 +120,8 @@ function AdminDashboard() {
         {currentView === 'sales' && <AdminSalesView />}
         {currentView === 'categories' && <AdminCategoriesView />}
         {currentView === 'gallery' && <AdminGalleryView />}
+        {currentView === 'projectCategories' && <AdminProjectCategoriesView />}
+        {currentView === 'users' && <AdminUsersView />}
       </div>
     </div>
   )
