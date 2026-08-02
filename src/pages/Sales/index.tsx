@@ -29,8 +29,10 @@ async function fetchProducts(): Promise<Product[] | null> {
         categoryLabel: (p.category_label as string) || 'Mudas',
         image: (p.image_url as string) || '',
         gallery: [],
-        originalPrice: (p.compare_price_cents as number) || null,
-        price: (p.price_cents as number) || 0,
+        // A API serializa os preços em camelCase (price / originalPrice), já em
+        // centavos — ler price_cents/compare_price_cents deixava tudo R$ 0,00.
+        originalPrice: (p.originalPrice as number) || null,
+        price: (p.price as number) || 0,
         stock: (p.stock as number) || 0,
         featured: (p.featured as number) === 1,
         technicalInfo: undefined,

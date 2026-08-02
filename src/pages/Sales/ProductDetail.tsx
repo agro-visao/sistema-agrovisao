@@ -27,8 +27,9 @@ async function fetchProductBySlug(slug: string): Promise<Product | null> {
         image: p.image_url || '',
         // Principal + complementares, na ordem em que foram cadastradas.
         gallery: Array.isArray(p.gallery) ? p.gallery.filter(Boolean) : [],
-        originalPrice: p.compare_price_cents || null,
-        price: p.price_cents || 0,
+        // Mesmos campos camelCase do /api/products (valores em centavos).
+        originalPrice: p.originalPrice || null,
+        price: p.price || 0,
         stock: p.stock || 0,
         featured: p.featured === 1,
         technicalInfo: undefined,
