@@ -155,14 +155,14 @@ function About() {
             <div style={up(0.4)}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '18px', marginBottom: '28px' }}>
                 <div style={{ width: '36px', height: '1px', background: '#B8D48A' }} />
-                <span style={{ fontFamily: 'var(--font-sans)', fontSize: '13.5px', fontWeight: 500, color: '#B8D48A', letterSpacing: '0.32em', textTransform: 'uppercase' }}>A Empresa · Belém, Pará</span>
+                <span style={{ fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 500, color: '#B8D48A', letterSpacing: '0.32em', textTransform: 'uppercase' }}>A Empresa · Belém, Pará</span>
               </div>
             </div>
             <div style={up(0.62)}>
-              <h1 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(51px, calc(6vw + 3px), 87px)', fontWeight: 300, color: '#F6F4EF', lineHeight: 1.06, letterSpacing: '-0.02em', marginBottom: '28px' }}>Sobre a<br />AgroVisão</h1>
+              <h1 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(49px, calc(6vw + 1px), 85px)', fontWeight: 300, color: '#F6F4EF', lineHeight: 1.06, letterSpacing: '-0.02em', marginBottom: '28px' }}>Sobre a<br />AgroVisão</h1>
             </div>
             <div style={up(0.84)}>
-              <p style={{ fontFamily: 'var(--font-sans)', fontSize: '20px', fontWeight: 500, color: 'rgba(246,244,239,0.78)', lineHeight: 1.75, maxWidth: '560px' }}>Transformando conhecimento técnico em desenvolvimento sustentável para a agricultura amazônica.</p>
+              <p style={{ fontFamily: 'var(--font-sans)', fontSize: '18px', fontWeight: 500, color: 'rgba(246,244,239,0.78)', lineHeight: 1.75, maxWidth: '560px' }}>Transformando conhecimento técnico em desenvolvimento sustentável para a agricultura amazônica.</p>
             </div>
           </div>
         </div>
@@ -184,24 +184,24 @@ function About() {
             </div>
             <div>
               <div style={{ width: '34px', height: '1px', background: '#315B2C', marginBottom: '18px' }} />
-              <span style={{ fontFamily: 'var(--font-sans)', fontSize: '13.5px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.24em', textTransform: 'uppercase', display: 'block', marginBottom: '30px' }}>Quem Somos</span>
-              <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(39px, calc(3.6vw + 3px), 55px)', fontWeight: 400, color: '#1a1a18', lineHeight: 1.2, letterSpacing: '-0.015em', marginBottom: '32px', textWrap: 'pretty' }}>Uma consultoria dedicada ao desenvolvimento sustentável da Amazônia</h2>
-              <p style={{ fontFamily: 'var(--font-sans)', fontSize: '18px', fontWeight: 400, color: '#4a4a44', lineHeight: 1.92, marginBottom: '22px' }}>A AgroVisão é uma consultoria técnica especializada em desenvolvimento rural, regularização fundiária e gestão ambiental na Amazônia Legal. Atuamos ao lado de produtores rurais, associações, cooperativas, ONGs e instituições públicas, oferecendo soluções completas e alinhadas às exigências legais vigentes.</p>
-              <p style={{ fontFamily: 'var(--font-sans)', fontSize: '18px', fontWeight: 400, color: '#4a4a44', lineHeight: 1.92, marginBottom: '48px' }}>Nossa equipe multidisciplinar combina formação técnica de excelência com profundo conhecimento do território amazônico e das políticas públicas voltadas ao desenvolvimento da agricultura familiar e empresarial.</p>
+              <span style={{ fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.24em', textTransform: 'uppercase', display: 'block', marginBottom: '30px' }}>Quem Somos</span>
+              <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(37px, calc(3.6vw + 1px), 53px)', fontWeight: 400, color: '#1a1a18', lineHeight: 1.2, letterSpacing: '-0.015em', marginBottom: '32px', textWrap: 'pretty' }}>Uma consultoria dedicada ao desenvolvimento sustentável da Amazônia</h2>
+              <p style={{ fontFamily: 'var(--font-sans)', fontSize: '16px', fontWeight: 400, color: '#4a4a44', lineHeight: 1.92, marginBottom: '22px' }}>A AgroVisão é uma consultoria técnica especializada em desenvolvimento rural, regularização fundiária e gestão ambiental na Amazônia Legal. Atuamos ao lado de produtores rurais, associações, cooperativas, ONGs e instituições públicas, oferecendo soluções completas e alinhadas às exigências legais vigentes.</p>
+              <p style={{ fontFamily: 'var(--font-sans)', fontSize: '16px', fontWeight: 400, color: '#4a4a44', lineHeight: 1.92, marginBottom: '48px' }}>Nossa equipe multidisciplinar combina formação técnica de excelência com profundo conhecimento do território amazônico e das políticas públicas voltadas ao desenvolvimento da agricultura familiar e empresarial.</p>
               <div className="stats-row" style={{ display: 'flex', gap: '48px' }}>
                 <div>
-                  <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: '51px', fontWeight: 300, color: '#315B2C', lineHeight: 1, marginBottom: '8px' }}>15<span style={{ fontSize: '31px', color: '#6F8F3A' }}>+</span></div>
-                  <div style={{ fontFamily: 'var(--font-sans)', fontSize: '13.5px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.18em', textTransform: 'uppercase', lineHeight: 1.5 }}>Anos de<br />Experiência</div>
+                  <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: '49px', fontWeight: 300, color: '#315B2C', lineHeight: 1, marginBottom: '8px' }}>15<span style={{ fontSize: '29px', color: '#6F8F3A' }}>+</span></div>
+                  <div style={{ fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.18em', textTransform: 'uppercase', lineHeight: 1.5 }}>Anos de<br />Experiência</div>
                 </div>
                 <div style={{ width: '1px', background: 'rgba(49,91,44,0.12)' }} />
                 <div>
-                  <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: '51px', fontWeight: 300, color: '#315B2C', lineHeight: 1, marginBottom: '8px' }}>500<span style={{ fontSize: '31px', color: '#6F8F3A' }}>+</span></div>
-                  <div style={{ fontFamily: 'var(--font-sans)', fontSize: '13.5px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.18em', textTransform: 'uppercase', lineHeight: 1.5 }}>Projetos<br />Concluídos</div>
+                  <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: '49px', fontWeight: 300, color: '#315B2C', lineHeight: 1, marginBottom: '8px' }}>500<span style={{ fontSize: '29px', color: '#6F8F3A' }}>+</span></div>
+                  <div style={{ fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.18em', textTransform: 'uppercase', lineHeight: 1.5 }}>Projetos<br />Concluídos</div>
                 </div>
                 <div style={{ width: '1px', background: 'rgba(49,91,44,0.12)' }} />
                 <div>
-                  <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: '51px', fontWeight: 300, color: '#315B2C', lineHeight: 1, marginBottom: '8px' }}>12</div>
-                  <div style={{ fontFamily: 'var(--font-sans)', fontSize: '13.5px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.18em', textTransform: 'uppercase', lineHeight: 1.5 }}>Estados<br />Atendidos</div>
+                  <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: '49px', fontWeight: 300, color: '#315B2C', lineHeight: 1, marginBottom: '8px' }}>12</div>
+                  <div style={{ fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.18em', textTransform: 'uppercase', lineHeight: 1.5 }}>Estados<br />Atendidos</div>
                 </div>
               </div>
             </div>
@@ -213,10 +213,10 @@ function About() {
       <section className="section-mission" style={{ background: '#F5F8F3', padding: '128px 0', borderTop: '1px solid rgba(49,91,44,0.08)', borderBottom: '1px solid rgba(49,91,44,0.08)' }}>
         <div className="container" style={{ maxWidth: '960px', margin: '0 auto', padding: '0 84px', textAlign: 'center' }}>
           <div style={{ width: '34px', height: '1px', background: '#315B2C', margin: '0 auto 24px' }} />
-          <span style={{ fontFamily: 'var(--font-sans)', fontSize: '13.5px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.24em', textTransform: 'uppercase', display: 'block', marginBottom: '48px' }}>Nossa Missão</span>
-          <div style={{ fontFamily: 'var(--font-sans)', fontSize: 'clamp(35px, calc(4vw + 3px), 57px)', fontWeight: 500, color: '#1a1a18', lineHeight: 1.25, letterSpacing: '-0.01em', marginBottom: '40px', textWrap: 'pretty' }}>&ldquo;Elaborando sonhos no presente,<br />construindo o amanhã<br />a partir da melhor Visão.&rdquo;</div>
+          <span style={{ fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.24em', textTransform: 'uppercase', display: 'block', marginBottom: '48px' }}>Nossa Missão</span>
+          <div style={{ fontFamily: 'var(--font-sans)', fontSize: 'clamp(33px, calc(4vw + 1px), 55px)', fontWeight: 500, color: '#1a1a18', lineHeight: 1.25, letterSpacing: '-0.01em', marginBottom: '40px', textWrap: 'pretty' }}>&ldquo;Elaborando sonhos no presente,<br />construindo o amanhã<br />a partir da melhor Visão.&rdquo;</div>
           <div style={{ width: '40px', height: '1px', background: '#6F8F3A', margin: '0 auto 20px' }} />
-          <span style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.22em', textTransform: 'uppercase' }}>AgroVisão — Consultoria Agrícola</span>
+          <span style={{ fontFamily: 'var(--font-sans)', fontSize: '12px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.22em', textTransform: 'uppercase' }}>AgroVisão — Consultoria Agrícola</span>
         </div>
       </section>
 
@@ -225,10 +225,10 @@ function About() {
         <div className="container" style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 84px' }}>
           <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: '72px' }}>
             <div>
-              <span style={{ fontFamily: 'var(--font-sans)', fontSize: '13.5px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.24em', textTransform: 'uppercase', display: 'block', marginBottom: '16px' }}>Serviços</span>
-              <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(41px, calc(4.5vw + 3px), 63px)', fontWeight: 400, color: '#1a1a18', lineHeight: 1.08, letterSpacing: '-0.02em' }}>O Que<br />Fazemos</h2>
+              <span style={{ fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.24em', textTransform: 'uppercase', display: 'block', marginBottom: '16px' }}>Serviços</span>
+              <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(39px, calc(4.5vw + 1px), 61px)', fontWeight: 400, color: '#1a1a18', lineHeight: 1.08, letterSpacing: '-0.02em' }}>O Que<br />Fazemos</h2>
             </div>
-            <p style={{ fontFamily: 'var(--font-sans)', fontSize: '17.5px', fontWeight: 400, color: '#555550', lineHeight: 1.8, maxWidth: '380px', marginBottom: '6px' }}>Soluções técnicas integradas para o desenvolvimento rural sustentável em toda a Amazônia Legal.</p>
+            <p style={{ fontFamily: 'var(--font-sans)', fontSize: '15.5px', fontWeight: 400, color: '#555550', lineHeight: 1.8, maxWidth: '380px', marginBottom: '6px' }}>Soluções técnicas integradas para o desenvolvimento rural sustentável em toda a Amazônia Legal.</p>
           </div>
           <div className="services-grid-4" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px' }}>
             {SERVICES.map((svc, idx) => (
@@ -249,9 +249,9 @@ function About() {
                 onMouseLeave={() => setSvcHover(null)}
               >
                 <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style={{ marginBottom: '20px', color: '#315B2C' }} dangerouslySetInnerHTML={{ __html: svc.icon }} />
-                <h3 style={{ fontFamily: "'Barlow', sans-serif", fontSize: '25px', fontWeight: 500, color: '#1a1a18', lineHeight: 1.25, marginBottom: '12px' }}>{svc.title}</h3>
-                <p style={{ fontFamily: 'var(--font-sans)', fontSize: '16px', fontWeight: 400, color: '#666660', lineHeight: 1.78, flex: 1, marginBottom: '20px' }}>{svc.desc}</p>
-                <a href="/" style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', fontWeight: 600, color: '#315B2C', textDecoration: 'none', letterSpacing: '0.1em', textTransform: 'uppercase', display: 'inline-flex', alignItems: 'center', gap: '6px', opacity: 0.85 }}>
+                <h3 style={{ fontFamily: "'Barlow', sans-serif", fontSize: '23px', fontWeight: 500, color: '#1a1a18', lineHeight: 1.25, marginBottom: '12px' }}>{svc.title}</h3>
+                <p style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', fontWeight: 400, color: '#666660', lineHeight: 1.78, flex: 1, marginBottom: '20px' }}>{svc.desc}</p>
+                <a href="/" style={{ fontFamily: 'var(--font-sans)', fontSize: '12px', fontWeight: 600, color: '#315B2C', textDecoration: 'none', letterSpacing: '0.1em', textTransform: 'uppercase', display: 'inline-flex', alignItems: 'center', gap: '6px', opacity: 0.85 }}>
                   Saiba mais
                   <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6H10M7 3L10 6L7 9" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round" /></svg>
                 </a>
@@ -265,16 +265,16 @@ function About() {
       <section className="section-process" style={{ background: '#F8F7F3', padding: '128px 0', borderTop: '1px solid rgba(49,91,44,0.08)' }}>
         <div className="container" style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 84px' }}>
           <div style={{ marginBottom: '80px' }}>
-            <span style={{ fontFamily: 'var(--font-sans)', fontSize: '13.5px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.24em', textTransform: 'uppercase', display: 'block', marginBottom: '16px' }}>Metodologia</span>
-            <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(41px, calc(4.5vw + 3px), 63px)', fontWeight: 400, color: '#1a1a18', lineHeight: 1.08, letterSpacing: '-0.02em' }}>Como Trabalhamos</h2>
+            <span style={{ fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.24em', textTransform: 'uppercase', display: 'block', marginBottom: '16px' }}>Metodologia</span>
+            <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(39px, calc(4.5vw + 1px), 61px)', fontWeight: 400, color: '#1a1a18', lineHeight: 1.08, letterSpacing: '-0.02em' }}>Como Trabalhamos</h2>
           </div>
           <div className="process-steps" style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: '24px' }}>
             {PROCESS_STEPS.map((step) => (
               <div key={step.num} style={{ borderTop: '1.5px solid #B8D48A', paddingTop: '24px', position: 'relative' }}>
                 <div style={{ position: 'absolute', top: '-5px', left: 0, width: '8px', height: '8px', background: step.accent ? '#DD8758' : '#315B2C', borderRadius: '50%' }} />
-                <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: '43px', fontWeight: 300, color: '#315B2C', lineHeight: 1, marginBottom: '14px' }}>{step.num}</div>
-                <h3 style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', fontWeight: 700, color: '#1a1a18', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '10px' }}>{step.title}</h3>
-                <p style={{ fontFamily: 'var(--font-sans)', fontSize: '15.5px', fontWeight: 400, color: '#666660', lineHeight: 1.72 }}>{step.desc}</p>
+                <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: '41px', fontWeight: 300, color: '#315B2C', lineHeight: 1, marginBottom: '14px' }}>{step.num}</div>
+                <h3 style={{ fontFamily: 'var(--font-sans)', fontSize: '12px', fontWeight: 700, color: '#1a1a18', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '10px' }}>{step.title}</h3>
+                <p style={{ fontFamily: 'var(--font-sans)', fontSize: '13.5px', fontWeight: 400, color: '#666660', lineHeight: 1.72 }}>{step.desc}</p>
               </div>
             ))}
           </div>
@@ -287,9 +287,9 @@ function About() {
           <div className="diff-sticky-grid" style={{ display: 'grid', gridTemplateColumns: '360px 1fr', gap: '108px', alignItems: 'start' }}>
             <div style={{ position: 'sticky', top: '120px' }}>
               <div style={{ width: '34px', height: '1px', background: '#315B2C', marginBottom: '18px' }} />
-              <span style={{ fontFamily: 'var(--font-sans)', fontSize: '13.5px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.24em', textTransform: 'uppercase', display: 'block', marginBottom: '28px' }}>Nossos Diferenciais</span>
-              <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(41px, calc(4vw + 3px), 59px)', fontWeight: 400, color: '#1a1a18', lineHeight: 1.12, letterSpacing: '-0.015em', marginBottom: '28px' }}>Por que escolher a AgroVisão</h2>
-              <p style={{ fontFamily: 'var(--font-sans)', fontSize: '17.5px', fontWeight: 400, color: '#4a4a44', lineHeight: 1.88 }}>Mais de 15 anos consolidando nossa presença no setor agropecuário da Amazônia com resultados técnicos comprovados.</p>
+              <span style={{ fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.24em', textTransform: 'uppercase', display: 'block', marginBottom: '28px' }}>Nossos Diferenciais</span>
+              <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(39px, calc(4vw + 1px), 57px)', fontWeight: 400, color: '#1a1a18', lineHeight: 1.12, letterSpacing: '-0.015em', marginBottom: '28px' }}>Por que escolher a AgroVisão</h2>
+              <p style={{ fontFamily: 'var(--font-sans)', fontSize: '15.5px', fontWeight: 400, color: '#4a4a44', lineHeight: 1.88 }}>Mais de 15 anos consolidando nossa presença no setor agropecuário da Amazônia com resultados técnicos comprovados.</p>
             </div>
             <div className="diff-grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 0 }}>
               {DIFFERENTIALS.map((diff, idx) => {
@@ -304,9 +304,9 @@ function About() {
                       borderRight: isEven ? '1px solid rgba(49,91,44,0.1)' : 'none',
                     }}
                   >
-                    <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: '16px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: '14px' }}>{diff.num}</div>
-                    <h3 style={{ fontFamily: "'Barlow', sans-serif", fontSize: '29px', fontWeight: 400, color: '#1a1a18', lineHeight: 1.25, marginBottom: '12px' }}>{diff.title}</h3>
-                    <p style={{ fontFamily: 'var(--font-sans)', fontSize: '16.5px', fontWeight: 400, color: '#666660', lineHeight: 1.78 }}>{diff.desc}</p>
+                    <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: '14px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: '14px' }}>{diff.num}</div>
+                    <h3 style={{ fontFamily: "'Barlow', sans-serif", fontSize: '27px', fontWeight: 400, color: '#1a1a18', lineHeight: 1.25, marginBottom: '12px' }}>{diff.title}</h3>
+                    <p style={{ fontFamily: 'var(--font-sans)', fontSize: '14.5px', fontWeight: 400, color: '#666660', lineHeight: 1.78 }}>{diff.desc}</p>
                   </div>
                 )
               })}
@@ -320,10 +320,10 @@ function About() {
         <div className="container" style={{ maxWidth: '1280px', margin: '0 auto', padding: '128px 84px 0' }}>
           <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: '56px' }}>
             <div>
-              <span style={{ fontFamily: 'var(--font-sans)', fontSize: '13.5px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.24em', textTransform: 'uppercase', display: 'block', marginBottom: '16px' }}>Campo</span>
-              <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(41px, calc(4.5vw + 3px), 61px)', fontWeight: 400, color: '#1a1a18', lineHeight: 1.08, letterSpacing: '-0.02em' }}>Nossa Experiência<br />em Campo</h2>
+              <span style={{ fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.24em', textTransform: 'uppercase', display: 'block', marginBottom: '16px' }}>Campo</span>
+              <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(39px, calc(4.5vw + 1px), 59px)', fontWeight: 400, color: '#1a1a18', lineHeight: 1.08, letterSpacing: '-0.02em' }}>Nossa Experiência<br />em Campo</h2>
             </div>
-            <p style={{ fontFamily: 'var(--font-sans)', fontSize: '17px', fontWeight: 400, color: '#555550', lineHeight: 1.8, maxWidth: '360px', marginBottom: '8px' }}>Atuamos em toda a extensão da Amazônia Legal, de comunidades rurais a grandes propriedades agropecuárias.</p>
+            <p style={{ fontFamily: 'var(--font-sans)', fontSize: '15px', fontWeight: 400, color: '#555550', lineHeight: 1.8, maxWidth: '360px', marginBottom: '8px' }}>Atuamos em toda a extensão da Amazônia Legal, de comunidades rurais a grandes propriedades agropecuárias.</p>
           </div>
         </div>
         <div className="container" style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 84px 128px' }}>
@@ -383,14 +383,14 @@ function About() {
         <div className="cta-grid container" style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 84px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'center' }}>
           <div>
             <div style={{ width: '34px', height: '1px', background: '#315B2C', marginBottom: '18px' }} />
-            <span style={{ fontFamily: 'var(--font-sans)', fontSize: '13.5px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.24em', textTransform: 'uppercase', display: 'block', marginBottom: '32px' }}>Próximo Passo</span>
-            <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(41px, calc(4.5vw + 3px), 65px)', fontWeight: 300, color: '#1a1a18', lineHeight: 1.1, letterSpacing: '-0.02em', textWrap: 'pretty' }}>
+            <span style={{ fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.24em', textTransform: 'uppercase', display: 'block', marginBottom: '32px' }}>Próximo Passo</span>
+            <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(39px, calc(4.5vw + 1px), 63px)', fontWeight: 300, color: '#1a1a18', lineHeight: 1.1, letterSpacing: '-0.02em', textWrap: 'pretty' }}>
               Vamos construir seu<br />próximo projeto<br />
-              <span style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 600, fontSize: 'clamp(36px, calc(3.9vw + 3px), 56px)', fontStyle: 'normal' }}>juntos</span>.
+              <span style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 600, fontSize: 'clamp(34px, calc(3.9vw + 1px), 54px)', fontStyle: 'normal' }}>juntos</span>.
             </h2>
           </div>
           <div>
-            <p style={{ fontFamily: 'var(--font-sans)', fontSize: '18px', fontWeight: 400, color: '#4a4a44', lineHeight: 1.88, marginBottom: '48px' }}>Nossa equipe está pronta para avaliar seu projeto sem custo e indicar o melhor caminho técnico para regularizar, licenciar e desenvolver sua propriedade na Amazônia Legal.</p>
+            <p style={{ fontFamily: 'var(--font-sans)', fontSize: '16px', fontWeight: 400, color: '#4a4a44', lineHeight: 1.88, marginBottom: '48px' }}>Nossa equipe está pronta para avaliar seu projeto sem custo e indicar o melhor caminho técnico para regularizar, licenciar e desenvolver sua propriedade na Amazônia Legal.</p>
             <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap', marginBottom: '48px' }}>
               <a
                 href="/"
@@ -400,7 +400,7 @@ function About() {
                   background: '#315B2C',
                   color: '#F6F4EF',
                   fontFamily: 'var(--font-sans)',
-                  fontSize: '14.5px',
+                  fontSize: '12.5px',
                   fontWeight: 600,
                   letterSpacing: '0.16em',
                   textTransform: 'uppercase',
@@ -421,7 +421,7 @@ function About() {
                   padding: '15px 42px',
                   color: '#315B2C',
                   fontFamily: 'var(--font-sans)',
-                  fontSize: '14.5px',
+                  fontSize: '12.5px',
                   fontWeight: 500,
                   letterSpacing: '0.16em',
                   textTransform: 'uppercase',
@@ -462,10 +462,10 @@ function About() {
           <div className="modal" style={{ background: '#FFFFFF', borderRadius: '14px', width: 'min(720px, 100%)', maxHeight: '88vh', overflowY: 'auto', boxShadow: '0 32px 100px rgba(0,0,0,0.25)' }}>
             <div style={{ padding: '36px 44px 24px', borderBottom: '1px solid rgba(49,91,44,0.08)', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', position: 'sticky', top: 0, background: '#FFFFFF', zIndex: 1, borderRadius: '14px 14px 0 0' }}>
               <div>
-                <div style={{ fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 600, color: '#6F8F3A', letterSpacing: '0.24em', textTransform: 'uppercase', marginBottom: '10px' }}>
+                <div style={{ fontFamily: 'var(--font-sans)', fontSize: '11px', fontWeight: 600, color: '#6F8F3A', letterSpacing: '0.24em', textTransform: 'uppercase', marginBottom: '10px' }}>
                   Consultoria Gratuita
                 </div>
-                <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: '33px', fontWeight: 400, color: '#1a1a18', lineHeight: 1.2 }}>
+                <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: '31px', fontWeight: 400, color: '#1a1a18', lineHeight: 1.2 }}>
                   Solicite um Atendimento
                 </h2>
               </div>
@@ -483,7 +483,7 @@ function About() {
               <form onSubmit={submitForm} style={{ padding: '32px 44px 44px' }}>
                 <div className="form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '20px' }}>
                   <div>
-                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>
+                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '11px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>
                       Nome Completo <span style={{ color: '#DD8758' }}>*</span>
                     </label>
                     <input
@@ -491,12 +491,12 @@ function About() {
                       value={mData.name}
                       onChange={ch('name')}
                       placeholder="Seu nome completo"
-                      style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '17px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }}
+                      style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '15px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }}
                     />
-                    {mErrs.name && <span style={{ fontFamily: 'var(--font-sans)', fontSize: '14.5px', color: '#c0392b', marginTop: '5px', display: 'block' }}>{mErrs.name}</span>}
+                    {mErrs.name && <span style={{ fontFamily: 'var(--font-sans)', fontSize: '12.5px', color: '#c0392b', marginTop: '5px', display: 'block' }}>{mErrs.name}</span>}
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>
+                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '11px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>
                       Empresa
                     </label>
                     <input
@@ -504,13 +504,13 @@ function About() {
                       value={mData.company}
                       onChange={ch('company')}
                       placeholder="Nome da empresa"
-                      style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '17px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }}
+                      style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '15px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }}
                     />
                   </div>
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '20px' }}>
                   <div>
-                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>
+                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '11px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>
                       Telefone <span style={{ color: '#DD8758' }}>*</span>
                     </label>
                     <input
@@ -518,12 +518,12 @@ function About() {
                       value={mData.phone}
                       onChange={ch('phone')}
                       placeholder="(91) 9 9999-9999"
-                      style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '17px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }}
+                      style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '15px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }}
                     />
-                    {mErrs.phone && <span style={{ fontFamily: 'var(--font-sans)', fontSize: '14.5px', color: '#c0392b', marginTop: '5px', display: 'block' }}>{mErrs.phone}</span>}
+                    {mErrs.phone && <span style={{ fontFamily: 'var(--font-sans)', fontSize: '12.5px', color: '#c0392b', marginTop: '5px', display: 'block' }}>{mErrs.phone}</span>}
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>
+                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '11px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>
                       Email <span style={{ color: '#DD8758' }}>*</span>
                     </label>
                     <input
@@ -531,14 +531,14 @@ function About() {
                       value={mData.email}
                       onChange={ch('email')}
                       placeholder="seu@email.com.br"
-                      style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '17px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }}
+                      style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '15px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }}
                     />
-                    {mErrs.email && <span style={{ fontFamily: 'var(--font-sans)', fontSize: '14.5px', color: '#c0392b', marginTop: '5px', display: 'block' }}>{mErrs.email}</span>}
+                    {mErrs.email && <span style={{ fontFamily: 'var(--font-sans)', fontSize: '12.5px', color: '#c0392b', marginTop: '5px', display: 'block' }}>{mErrs.email}</span>}
                   </div>
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '20px' }}>
                   <div>
-                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>
+                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '11px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>
                       Município
                     </label>
                     <input
@@ -546,17 +546,17 @@ function About() {
                       value={mData.city}
                       onChange={ch('city')}
                       placeholder="Sua cidade"
-                      style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '17px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }}
+                      style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '15px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }}
                     />
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>
+                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '11px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>
                       Estado
                     </label>
                     <select
                       value={mData.st}
                       onChange={ch('st')}
-                      style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '17px', color: '#1a1a18', background: '#FAFAF9', outline: 'none', appearance: 'none', cursor: 'pointer' }}
+                      style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '15px', color: '#1a1a18', background: '#FAFAF9', outline: 'none', appearance: 'none', cursor: 'pointer' }}
                     >
                       <option value="">Selecione</option>
                       {UFS.map((uf) => (
@@ -566,13 +566,13 @@ function About() {
                   </div>
                 </div>
                 <div style={{ marginBottom: '20px' }}>
-                  <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>
+                  <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '11px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>
                     Serviço de Interesse
                   </label>
                   <select
                     value={mData.svc}
                     onChange={ch('svc')}
-                    style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '17px', color: '#1a1a18', background: '#FAFAF9', outline: 'none', appearance: 'none', cursor: 'pointer' }}
+                    style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '15px', color: '#1a1a18', background: '#FAFAF9', outline: 'none', appearance: 'none', cursor: 'pointer' }}
                   >
                     <option value="">Selecione o serviço</option>
                     <option value="regularizacao">Regularização Fundiária</option>
@@ -587,7 +587,7 @@ function About() {
                   </select>
                 </div>
                 <div style={{ marginBottom: '24px' }}>
-                  <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>
+                  <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '11px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>
                     Mensagem <span style={{ color: '#DD8758' }}>*</span>
                   </label>
                   <textarea
@@ -595,9 +595,9 @@ function About() {
                     onChange={ch('msg')}
                     rows={4}
                     placeholder="Descreva brevemente seu projeto ou necessidade…"
-                    style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '17px', color: '#1a1a18', background: '#FAFAF9', outline: 'none', resize: 'vertical', minHeight: '110px', lineHeight: 1.65 }}
+                    style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '15px', color: '#1a1a18', background: '#FAFAF9', outline: 'none', resize: 'vertical', minHeight: '110px', lineHeight: 1.65 }}
                   />
-                  {mErrs.msg && <span style={{ fontFamily: 'var(--font-sans)', fontSize: '14.5px', color: '#c0392b', marginTop: '5px', display: 'block' }}>{mErrs.msg}</span>}
+                  {mErrs.msg && <span style={{ fontFamily: 'var(--font-sans)', fontSize: '12.5px', color: '#c0392b', marginTop: '5px', display: 'block' }}>{mErrs.msg}</span>}
                 </div>
                 <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', padding: '16px', background: '#F8F7F3', borderRadius: '8px', marginBottom: '28px' }}>
                   <input
@@ -607,9 +607,9 @@ function About() {
                     onChange={ch('ok')}
                     style={{ width: '18px', height: '18px', accentColor: '#315B2C', marginTop: '2px', cursor: 'pointer', flexShrink: 0 }}
                   />
-                  <label htmlFor="a-prv" style={{ fontFamily: 'var(--font-sans)', fontSize: '16px', fontWeight: 400, color: '#555550', lineHeight: 1.65, cursor: 'pointer' }}>
+                  <label htmlFor="a-prv" style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', fontWeight: 400, color: '#555550', lineHeight: 1.65, cursor: 'pointer' }}>
                     Li e concordo com a <a href="#" style={{ color: '#315B2C', textDecoration: 'underline' }}>Política de Privacidade</a> da AgroVisão.
-                    {mErrs.ok && <span style={{ display: 'block', fontSize: '14.5px', color: '#c0392b', marginTop: '4px' }}>{mErrs.ok}</span>}
+                    {mErrs.ok && <span style={{ display: 'block', fontSize: '12.5px', color: '#c0392b', marginTop: '4px' }}>{mErrs.ok}</span>}
                   </label>
                 </div>
                 <button
@@ -621,7 +621,7 @@ function About() {
                     background: '#315B2C',
                     color: '#F6F4EF',
                     fontFamily: 'var(--font-sans)',
-                    fontSize: '14.5px',
+                    fontSize: '12.5px',
                     fontWeight: 600,
                     letterSpacing: '0.18em',
                     textTransform: 'uppercase',
@@ -642,10 +642,10 @@ function About() {
                     <path d="M5 14L11 20L23 8" stroke="#315B2C" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </div>
-                <h3 style={{ fontFamily: "'Barlow', sans-serif", fontSize: '37px', fontWeight: 400, color: '#1a1a18', marginBottom: '16px' }}>
+                <h3 style={{ fontFamily: "'Barlow', sans-serif", fontSize: '35px', fontWeight: 400, color: '#1a1a18', marginBottom: '16px' }}>
                   Solicitação Enviada!
                 </h3>
-                <p style={{ fontFamily: 'var(--font-sans)', fontSize: '18px', color: '#555550', lineHeight: 1.75, maxWidth: '380px', margin: '0 auto 40px' }}>
+                <p style={{ fontFamily: 'var(--font-sans)', fontSize: '16px', color: '#555550', lineHeight: 1.75, maxWidth: '380px', margin: '0 auto 40px' }}>
                   Nossa equipe entrará em contato em até <strong style={{ color: '#315B2C' }}>24 horas úteis</strong>.
                 </p>
                 <button
@@ -655,7 +655,7 @@ function About() {
                     background: '#315B2C',
                     color: '#F6F4EF',
                     fontFamily: 'var(--font-sans)',
-                    fontSize: '14.5px',
+                    fontSize: '12.5px',
                     fontWeight: 600,
                     letterSpacing: '0.16em',
                     textTransform: 'uppercase',
