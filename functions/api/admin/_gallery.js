@@ -4,7 +4,7 @@
 // produtos — o admin de galeria é totalmente independente do admin de vendas.
 
 import { readJson } from './_supabase.js';
-import { getPublicImageUrl } from './_storage.js';
+import { storage } from './_storage.js';
 
 export const MAX_IMAGES_PER_UPLOAD = 12;
 
@@ -29,7 +29,7 @@ export function serializeGalleryImage(row, env) {
     // Registro da galeria (parentId null) x foto complementar dele (parentId
     // apontando para o registro). A foto complementar só tem breve descrição.
     parentId: row.parent_id || null,
-    url: isAbsoluteUrl(raw) ? raw : getPublicImageUrl(env, raw),
+    url: isAbsoluteUrl(raw) ? raw : storage.getUrl(env, raw),
     // Vazio quando a imagem é uma URL externa (não há objeto para remover).
     imagePath: isAbsoluteUrl(raw) ? '' : raw,
     // alt = breve descrição (ao lado da foto); description = texto completo
@@ -37,6 +37,11 @@ export function serializeGalleryImage(row, env) {
     alt: row.alt || '',
     description: row.description || '',
     featured: Boolean(row.featured),
+    // Metadados do arquivo processado (WEBP) gravado no Storage.
+    mimeType: row.mime_type || '',
+    sizeBytes: row.size_bytes || 0,
+    width: row.width || 0,
+    height: row.height || 0,
     sortOrder: row.sort_order,
     createdAt: row.created_at,
     projectName: project ? project.name : '',

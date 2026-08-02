@@ -1,6 +1,6 @@
 import { json, error } from './_lib.js';
 import { getSupabaseAdmin, AuthError } from './admin/_supabase.js';
-import { getPublicImageUrl } from './admin/_storage.js';
+import { storage } from './admin/_storage.js';
 
 export async function onRequest(context) {
   const { request, env } = context;
@@ -31,7 +31,7 @@ export async function onRequest(context) {
 
     const result = (data || []).map((img) => ({
       id: img.id,
-      url: /^https?:\/\//.test(img.url) ? img.url : getPublicImageUrl(env, img.url),
+      url: /^https?:\/\//.test(img.url) ? img.url : storage.getUrl(env, img.url),
       // alt = breve descrição (ao lado da foto principal);
       // description = texto completo, exibido abaixo das fotos.
       alt: img.alt,

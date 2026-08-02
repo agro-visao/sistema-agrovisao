@@ -12,7 +12,8 @@ import {
   setFeaturedImage,
   MAX_IMAGES_PER_UPLOAD,
 } from './_gallery.js';
-import { validateImageFile, uploadProductImage, makeGalleryImagePath } from './_storage.js';
+import { storage } from './_storage.js';
+import { validateProcessedImage, makeGalleryImagePath, GALLERY_IMAGE } from './_image.js';
 
 // Um registro da galeria = imagem de capa + breve descrição + fotos
 // complementares + descrição completa.
@@ -64,7 +65,7 @@ export async function onRequest(context) {
       // órfãs no Storage caso a última do lote seja inválida.
       const checked = [];
       for (let i = 0; i < files.length; i++) {
-        const fileCheck = await validateImageFile(files[i]);
+        const fileCheck = await validateProcessedImage(files[i], GALLERY_IMAGE);
         if (!fileCheck.ok) return error(`Imagem ${i + 1}: ${fileCheck.error}`, 400);
         checked.push({ ...fileCheck.data, alt: readAlt(body, i) });
       }
@@ -74,12 +75,20 @@ export async function onRequest(context) {
       try {
         for (let i = 0; i < checked.length; i++) {
           const item = checked[i];
-          const stored = await uploadProductImage(env, {
+          const stored = await storage.upload(env, {
             bytes: item.bytes,
             mimeType: item.mimeType,
-            path: makeGalleryImagePath(project.slug, item.mimeType, i),
+            path: makeGalleryImagePath(project.slug, i),
           });
-          uploaded.push({ path: stored.path, alt: item.alt, sortOrder: sortOrder++ });
+          uploaded.push({
+            path: stored.path,
+            alt: item.alt,
+            sortOrder: sortOrder++,
+            mimeType: item.mimeType,
+            size: item.size,
+            width: item.width,
+            height: item.height,
+          });
         }
       } catch (uploadErr) {
         return error(uploadErr.message, 500);
@@ -105,6 +114,10 @@ export async function onRequest(context) {
             alt: cover.alt,
             description,
             sort_order: cover.sortOrder,
+            mime_type: cover.mimeType,
+            size_bytes: cover.size,
+            width: cover.width,
+            height: cover.height,
           })
           .select('*')
           .single();
@@ -125,6 +138,10 @@ export async function onRequest(context) {
               alt: item.alt,
               description: '',
               sort_order: item.sortOrder,
+              mime_type: item.mimeType,
+              size_bytes: item.size,
+              width: item.width,
+              height: item.height,
             }))
           )
           .select('*');
