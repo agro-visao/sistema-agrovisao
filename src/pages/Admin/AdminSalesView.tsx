@@ -1,6 +1,12 @@
 import { useEffect, useState, useCallback, useRef } from 'react'
 import { formatBRL } from '../../data/products'
 import { adminApi as api } from '../../lib/adminApi'
+import {
+  processImage,
+  ImageProcessingError,
+  PRODUCT_IMAGE_PROFILE,
+  type ProcessedImage,
+} from '../../lib/imageProcessor'
 import styles from './Admin.module.css'
 
 interface AdminProduct {
@@ -41,13 +47,13 @@ const EMPTY_FORM: FormState = {
   featured: false,
 }
 
-const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp']
-const MAX_IMAGE_BYTES = 5 * 1024 * 1024
-
 // ─── Imagens do produto ─────────────────────────────────────────────────────
 // São 3 slots independentes: a principal (que vai para o card da vitrine) e
 // duas complementares, exibidas como miniaturas na página do produto. Cada
 // slot é enviado no campo `field` e limpo com `removeImage<N>`.
+//
+// Ao escolher o arquivo, ele é redimensionado e convertido para WEBP aqui no
+// navegador; o que vai para a API já é o resultado final.
 const IMAGE_SLOTS = [
   { field: 'image', label: 'Imagem principal', hint: 'Aparece no card da vitrine' },
   { field: 'image2', label: 'Imagem complementar 1', hint: 'Opcional' },
@@ -55,16 +61,32 @@ const IMAGE_SLOTS = [
 ]
 
 interface ImageSlotState {
-  /** Arquivo novo escolhido agora (ainda não enviado). */
+  /** Arquivo já processado (WEBP), ainda não enviado. */
   file: File | null
   previewUrl: string | null
+  /** Dimensões e peso do arquivo processado, mostrados como confirmação. */
+  info: Pick<ProcessedImage, 'width' | 'height' | 'size'> | null
   /** Marca a foto já salva para ser apagada ao salvar. */
   remove: boolean
+  processing: boolean
   error: string
 }
 
+const EMPTY_SLOT: ImageSlotState = {
+  file: null,
+  previewUrl: null,
+  info: null,
+  remove: false,
+  processing: false,
+  error: '',
+}
+
 function emptySlots(): ImageSlotState[] {
-  return IMAGE_SLOTS.map(() => ({ file: null, previewUrl: null, remove: false, error: '' }))
+  return IMAGE_SLOTS.map(() => ({ ...EMPTY_SLOT }))
+}
+
+function formatKB(bytes: number): string {
+  return `${Math.round(bytes / 1024)} KB`
 }
 
 // ─── Campo monetário (R$ 0,00) ──────────────────────────────────────────────
@@ -197,28 +219,32 @@ function AdminSalesView() {
   }, [])
 
   const handleFileSelect = useCallback(
-    (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
-      const file = e.target.files?.[0] || null
+    async (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
+      const picked = e.target.files?.[0] || null
       e.target.value = ''
-      if (!file) return
-
-      const extOk = /\.(jpe?g|png|webp)$/i.test(file.name)
-      if (!ALLOWED_IMAGE_TYPES.includes(file.type) || !extOk) {
-        revokePreview(index)
-        patchSlot(index, { file: null, previewUrl: null, error: 'Formato inválido. Use JPG, PNG ou WEBP.' })
-        return
-      }
-      if (file.size > MAX_IMAGE_BYTES) {
-        revokePreview(index)
-        patchSlot(index, { file: null, previewUrl: null, error: 'A imagem deve ter no máximo 5 MB.' })
-        return
-      }
+      if (!picked) return
 
       revokePreview(index)
-      const url = URL.createObjectURL(file)
-      previewUrlsRef.current[index] = url
-      // Escolher um arquivo novo cancela a remoção pendente do slot.
-      patchSlot(index, { file, previewUrl: url, remove: false, error: '' })
+      patchSlot(index, { ...EMPTY_SLOT, processing: true })
+
+      try {
+        const processed = await processImage(picked, PRODUCT_IMAGE_PROFILE)
+        const url = URL.createObjectURL(processed.file)
+        previewUrlsRef.current[index] = url
+        // Escolher um arquivo novo cancela a remoção pendente do slot.
+        patchSlot(index, {
+          file: processed.file,
+          previewUrl: url,
+          info: { width: processed.width, height: processed.height, size: processed.size },
+          remove: false,
+          processing: false,
+          error: '',
+        })
+      } catch (err) {
+        const message =
+          err instanceof ImageProcessingError ? err.message : 'Não foi possível processar a imagem.'
+        patchSlot(index, { ...EMPTY_SLOT, error: message })
+      }
     },
     [revokePreview, patchSlot]
   )
@@ -232,12 +258,7 @@ function AdminSalesView() {
       setSlots((prev) =>
         prev.map((slot, i) =>
           i === index
-            ? {
-                file: null,
-                previewUrl: null,
-                remove: hadFile ? slot.remove : hasSaved ? !slot.remove : false,
-                error: '',
-              }
+            ? { ...EMPTY_SLOT, remove: hadFile ? slot.remove : hasSaved ? !slot.remove : false }
             : slot
         )
       )
@@ -326,6 +347,10 @@ function AdminSalesView() {
       }
       if (!form.price.trim()) {
         setFormError('Informe o valor do produto.')
+        return
+      }
+      if (slots.some((slot) => slot.processing)) {
+        setFormError('Aguarde o processamento das imagens.')
         return
       }
       const fd = new FormData()
@@ -596,7 +621,13 @@ function AdminSalesView() {
                               <circle cx="8.5" cy="8.5" r="1.5" />
                               <path d="M21 15L16 10L5 21" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
-                            <span>{slot.remove ? 'Será removida ao salvar' : 'Nenhuma imagem'}</span>
+                            <span>
+                              {slot.processing
+                                ? 'Convertendo para WEBP…'
+                                : slot.remove
+                                  ? 'Será removida ao salvar'
+                                  : 'Nenhuma imagem'}
+                            </span>
                           </div>
                         )}
                         <div className={styles.uploadControls}>
@@ -626,6 +657,11 @@ function AdminSalesView() {
                           )}
                         </div>
                         <div className={styles.inputHint}>{meta.hint}</div>
+                        {slot.info && (
+                          <div className={styles.inputHint} data-testid={`image-info-${i + 1}`}>
+                            WEBP · {slot.info.width}×{slot.info.height} px · {formatKB(slot.info.size)}
+                          </div>
+                        )}
                         {slot.error && (
                           <div className={styles.fieldError} role="alert" data-testid={`image-error-${i + 1}`}>{slot.error}</div>
                         )}
@@ -633,7 +669,9 @@ function AdminSalesView() {
                     )
                   })}
                 </div>
-                <div className={styles.inputHint}>JPG, PNG ou WEBP · máximo 5 MB por imagem</div>
+                <div className={styles.inputHint}>
+                  JPG, PNG ou WEBP · máximo 5 MB por imagem · convertidas automaticamente para WEBP (até 1600 px)
+                </div>
               </div>
               <div className={styles.formGrid}>
                 <div className={styles.field}>

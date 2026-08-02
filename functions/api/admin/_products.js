@@ -1,6 +1,6 @@
 // ─── Helpers compartilhados do CRUD de produtos (painel admin) ───────────────
 import { readJson } from './_supabase.js';
-import { getPublicImageUrl } from './_storage.js';
+import { storage } from './_storage.js';
 
 const CATEGORY_LABELS = {
   mudas: 'Mudas',
@@ -58,7 +58,7 @@ export async function readProductForm(request) {
     }
     const files = IMAGE_FIELDS.map((field) => {
       const file = fd.get(field);
-      return file && typeof file.size === 'number' ? file : null;
+      return file && typeof file.size === 'number' && file.size > 0 ? file : null;
     });
     return { body, files };
   }
@@ -68,11 +68,10 @@ export async function readProductForm(request) {
 // Recebe a env para poder resolver a URL pública da imagem no Supabase Storage
 // (row.image_path -> URL). Antes a imagem era servida via proxy do backend.
 export function serializeProduct(row, env) {
-  // Os 3 slots sempre saem no payload (string vazia = slot sem foto), para o
-  // painel saber qual posição está livre. `gallery` traz só as que existem,
-  // que é o que a página pública usa nas miniaturas.
+  // Os 3 slots saem no payload na ordem fixa; `gallery` traz só as que
+  // existem, que é o que a página pública usa nas miniaturas.
   const imagePaths = IMAGE_COLUMNS_BY_SLOT.map((column) => row[column] || '');
-  const images = imagePaths.map((path) => (path ? getPublicImageUrl(env, path) : ''));
+  const images = imagePaths.map((path) => storage.getUrl(env, path));
 
   return {
     id: row.id,
@@ -84,6 +83,13 @@ export function serializeProduct(row, env) {
     images,
     imagePaths,
     gallery: images.filter(Boolean),
+    // Metadados do arquivo processado que está na imagem principal. Ficam
+    // vazios nos produtos cadastrados antes desta mudança (nada é reprocessado
+    // retroativamente) e são preenchidos no primeiro upload novo do slot 1.
+    imageMimeType: row.image_mime_type || '',
+    imageSize: row.image_size || 0,
+    imageWidth: row.image_width || 0,
+    imageHeight: row.image_height || 0,
     price: row.price_cents,
     originalPrice: row.compare_price_cents !== null && row.compare_price_cents !== undefined ? row.compare_price_cents : null,
     categoryId: row.category_id,
@@ -100,6 +106,7 @@ export function serializeProduct(row, env) {
 
 const PRODUCT_COLUMNS =
   'id, slug, name, description, image_path, image_path_2, image_path_3, ' +
+  'image_mime_type, image_size, image_width, image_height, ' +
   'price_cents, compare_price_cents, ' +
   'whatsapp_phone, whatsapp_text, category, category_label, category_id, stock, featured, active, ' +
   'created_at, updated_at';
@@ -173,9 +180,13 @@ export function validateProductInput(body) {
     ? body.whatsappText.trim()
     : buildWhatsappText(name);
 
-  // Um slot só é limpo quando o painel pede explicitamente (removeImageN);
-  // a omissão sempre preserva a foto que já está no produto.
-  const removeImages = [1, 2, 3].map((n) => isTrue(body[`removeImage${n}`]));
+  // Cada slot só é limpo quando o painel pede explicitamente (removeImageN);
+  // a omissão sempre preserva a foto que já está no slot.
+  const removeImages = [
+    isTrue(body.removeImage1),
+    isTrue(body.removeImage2),
+    isTrue(body.removeImage3),
+  ];
 
   return {
     ok: true,
