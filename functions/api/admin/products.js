@@ -27,26 +27,29 @@ export async function onRequest(context) {
     }
 
     if (request.method === 'POST') {
-      const { body, file } = await readProductForm(request);
+      const { body, files } = await readProductForm(request);
       const validated = validateProductInput(body);
       if (!validated.ok) return error(validated.error, 400);
 
       const { name, description, price, originalPrice, category, categoryLabel, stock, featured, whatsappText } = validated.data;
       const slug = await ensureUniqueSlug(supabase, slugify(name));
 
-      // Imagem única e opcional, já convertida para WEBP pelo painel.
-      let imagePath = '';
+      // Slot 0 = imagem principal; 1 e 2 = complementares. Cada um é opcional
+      // e chega aqui já convertido para WEBP pelo painel.
+      const imagePaths = ['', '', ''];
       let imageMeta = { mimeType: '', size: 0, width: 0, height: 0 };
-      if (file) {
-        const fileCheck = await validateProcessedImage(file, PRODUCT_IMAGE);
+      for (let i = 0; i < files.length; i++) {
+        if (!files[i]) continue;
+        const fileCheck = await validateProcessedImage(files[i], PRODUCT_IMAGE);
         if (!fileCheck.ok) return error(fileCheck.error, 400);
         const uploaded = await storage.upload(env, {
           bytes: fileCheck.data.bytes,
           mimeType: fileCheck.data.mimeType,
-          path: makeImagePath(slug),
+          path: makeImagePath(slug, i),
         });
-        imagePath = uploaded.path;
-        imageMeta = fileCheck.data;
+        imagePaths[i] = uploaded.path;
+        // Os metadados gravados são os da imagem principal.
+        if (i === 0) imageMeta = fileCheck.data;
       }
 
       const { data: lastRow, error: sortErr } = await supabase
@@ -64,7 +67,9 @@ export async function onRequest(context) {
           slug,
           name,
           description,
-          image_path: imagePath,
+          image_path: imagePaths[0],
+          image_path_2: imagePaths[1],
+          image_path_3: imagePaths[2],
           image_mime_type: imageMeta.mimeType,
           image_size: imageMeta.size,
           image_width: imageMeta.width,

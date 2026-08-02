@@ -8,9 +8,13 @@
 -- Os valores são medidos no servidor a partir dos bytes recebidos (cabeçalho
 -- RIFF/VP8), nunca a partir do que o navegador declara.
 --
--- image_path_2 / image_path_3 continuam existindo por compatibilidade com os
--- produtos já cadastrados, mas o painel não envia mais nada para esses slots:
--- todo produto novo usa somente image_path.
+-- O produto continua com os 3 slots (image_path, image_path_2, image_path_3).
+-- Estas colunas descrevem a imagem PRINCIPAL (image_path).
+--
+-- Migration puramente aditiva: todas as colunas têm default, nenhuma linha
+-- existente é alterada. As imagens já cadastradas ficam com os metadados
+-- zerados até que o slot seja substituído por um upload novo — nada é
+-- reprocessado retroativamente.
 -- ─────────────────────────────────────────────────────────────────────────
 
 alter table products

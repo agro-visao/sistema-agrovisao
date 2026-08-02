@@ -34,14 +34,15 @@ export function buildWhatsappText(name) {
   return `Olá! Tenho interesse em comprar ${name}. Gostaria de receber mais informações.`;
 }
 
-// O produto passa a ter UMA imagem: só image_path é gravado. image_path_2 e
-// image_path_3 continuam sendo lidos para não sumir com a foto dos produtos
-// cadastrados antes desta mudança, mas nenhum upload novo chega neles.
+// Os três slots de imagem do produto, na ordem: principal + 2 complementares.
+// O índice do slot é a posição no array em todo o CRUD (form, upload, banco).
+export const IMAGE_FIELDS = ['image', 'image2', 'image3'];
 export const IMAGE_COLUMNS_BY_SLOT = ['image_path', 'image_path_2', 'image_path_3'];
 
 // Lê o corpo do formulário de produto aceitando multipart/form-data (upload de
-// imagem) ou JSON. No multipart, os campos de texto são strings e a imagem vem
-// no campo "image" como File (null quando não há foto nova).
+// imagem) ou JSON. No multipart, os campos de texto são strings; as imagens
+// vêm nos campos "image", "image2" e "image3" como File — cada slot pode estar
+// vazio (null) quando não há foto nova para ele.
 export async function readProductForm(request) {
   const contentType = request.headers.get('Content-Type') || '';
   if (contentType.includes('multipart/form-data')) {
@@ -49,24 +50,26 @@ export async function readProductForm(request) {
     const body = {};
     for (const key of [
       'name', 'category', 'categoryLabel', 'price', 'originalPrice', 'description',
-      'stock', 'featured', 'whatsappText', 'removeImage1',
+      'stock', 'featured', 'whatsappText',
+      'removeImage1', 'removeImage2', 'removeImage3',
     ]) {
       const value = fd.get(key);
       if (typeof value === 'string') body[key] = value;
     }
-    const candidate = fd.get('image');
-    const file = candidate && typeof candidate.size === 'number' && candidate.size > 0 ? candidate : null;
-    return { body, file };
+    const files = IMAGE_FIELDS.map((field) => {
+      const file = fd.get(field);
+      return file && typeof file.size === 'number' && file.size > 0 ? file : null;
+    });
+    return { body, files };
   }
-  return { body: await readJson(request), file: null };
+  return { body: await readJson(request), files: [null, null, null] };
 }
 
 // Recebe a env para poder resolver a URL pública da imagem no Supabase Storage
 // (row.image_path -> URL). Antes a imagem era servida via proxy do backend.
 export function serializeProduct(row, env) {
-  // Os 3 slots continuam saindo no payload por causa dos produtos antigos que
-  // ainda têm foto em image_path_2/3. `gallery` traz só as que existem, que é
-  // o que a página pública usa nas miniaturas.
+  // Os 3 slots saem no payload na ordem fixa; `gallery` traz só as que
+  // existem, que é o que a página pública usa nas miniaturas.
   const imagePaths = IMAGE_COLUMNS_BY_SLOT.map((column) => row[column] || '');
   const images = imagePaths.map((path) => storage.getUrl(env, path));
 
@@ -80,7 +83,9 @@ export function serializeProduct(row, env) {
     images,
     imagePaths,
     gallery: images.filter(Boolean),
-    // Metadados do arquivo já processado (WEBP) que está no Storage.
+    // Metadados do arquivo processado que está na imagem principal. Ficam
+    // vazios nos produtos cadastrados antes desta mudança (nada é reprocessado
+    // retroativamente) e são preenchidos no primeiro upload novo do slot 1.
     imageMimeType: row.image_mime_type || '',
     imageSize: row.image_size || 0,
     imageWidth: row.image_width || 0,
@@ -175,9 +180,13 @@ export function validateProductInput(body) {
     ? body.whatsappText.trim()
     : buildWhatsappText(name);
 
-  // A imagem só é limpa quando o painel pede explicitamente (removeImage1);
-  // a omissão sempre preserva a foto que já está no produto.
-  const removeImage = isTrue(body.removeImage1);
+  // Cada slot só é limpo quando o painel pede explicitamente (removeImageN);
+  // a omissão sempre preserva a foto que já está no slot.
+  const removeImages = [
+    isTrue(body.removeImage1),
+    isTrue(body.removeImage2),
+    isTrue(body.removeImage3),
+  ];
 
   return {
     ok: true,
@@ -190,7 +199,7 @@ export function validateProductInput(body) {
       categoryLabel,
       stock,
       featured: isTrue(body.featured),
-      removeImage,
+      removeImages,
       whatsappText,
     },
   };

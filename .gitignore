@@ -15,6 +15,9 @@ dist-ssr
 # Wrangler / Cloudflare local state
 .wrangler
 
+# Diretório de bundle das Functions (sempre regenerável, nunca commitar)
+.functions-bundle
+
 # Secrets / variáveis locais (nunca commitar valores reais)
 .dev.vars
 .dev.vars.*
