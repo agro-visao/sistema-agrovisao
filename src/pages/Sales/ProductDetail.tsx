@@ -27,8 +27,9 @@ async function fetchProductBySlug(slug: string): Promise<Product | null> {
         image: p.image_url || '',
         // Principal + complementares, na ordem em que foram cadastradas.
         gallery: Array.isArray(p.gallery) ? p.gallery.filter(Boolean) : [],
-        originalPrice: p.compare_price_cents || null,
-        price: p.price_cents || 0,
+        // Mesmos campos camelCase do /api/products (valores em centavos).
+        originalPrice: p.originalPrice || null,
+        price: p.price || 0,
         stock: p.stock || 0,
         featured: p.featured === 1,
         technicalInfo: undefined,
@@ -431,8 +432,8 @@ function ProductDetail() {
           <div className="modal" style={{ background: '#FFFFFF', borderRadius: '14px', width: 'min(720px, 100%)', maxHeight: '88vh', overflowY: 'auto', boxShadow: '0 32px 100px rgba(0,0,0,0.25)' }}>
             <div style={{ padding: '36px 44px 24px', borderBottom: '1px solid rgba(49,91,44,0.08)', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', position: 'sticky', top: 0, background: '#FFFFFF', zIndex: 1, borderRadius: '14px 14px 0 0' }}>
               <div>
-                <div style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', fontWeight: 600, color: '#6F8F3A', letterSpacing: '0.24em', textTransform: 'uppercase', marginBottom: '10px' }}>Consultoria Gratuita</div>
-                <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: '30px', fontWeight: 400, color: '#1a1a18', lineHeight: 1.2 }}>Solicite um Atendimento</h2>
+                <div style={{ fontFamily: 'var(--font-sans)', fontSize: '11px', fontWeight: 600, color: '#6F8F3A', letterSpacing: '0.24em', textTransform: 'uppercase', marginBottom: '10px' }}>Consultoria Gratuita</div>
+                <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: '31px', fontWeight: 400, color: '#1a1a18', lineHeight: 1.2 }}>Solicite um Atendimento</h2>
               </div>
               <button onClick={closeModal} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '8px', color: '#999994', borderRadius: '6px' }}>
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 4L16 16M16 4L4 16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg>
@@ -442,43 +443,43 @@ function ProductDetail() {
               <form onSubmit={submitForm} style={{ padding: '32px 44px 44px' }}>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '20px' }}>
                   <div>
-                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '10px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Nome Completo <span style={{ color: '#DD8758' }}>*</span></label>
-                    <input type="text" value={mData.name} onChange={ch('name')} placeholder="Seu nome completo" style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '14px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }} />
-                    {mErrs.name && <span style={{ fontFamily: 'var(--font-sans)', fontSize: '11.5px', color: '#c0392b', marginTop: '5px', display: 'block' }}>{mErrs.name}</span>}
+                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '11px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Nome Completo <span style={{ color: '#DD8758' }}>*</span></label>
+                    <input type="text" value={mData.name} onChange={ch('name')} placeholder="Seu nome completo" style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '15px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }} />
+                    {mErrs.name && <span style={{ fontFamily: 'var(--font-sans)', fontSize: '12.5px', color: '#c0392b', marginTop: '5px', display: 'block' }}>{mErrs.name}</span>}
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '10px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Empresa</label>
-                    <input type="text" value={mData.company} onChange={ch('company')} placeholder="Nome da empresa" style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '14px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }} />
-                  </div>
-                </div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '20px' }}>
-                  <div>
-                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '10px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Telefone <span style={{ color: '#DD8758' }}>*</span></label>
-                    <input type="tel" value={mData.phone} onChange={ch('phone')} placeholder="(91) 9 9999-9999" style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '14px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }} />
-                    {mErrs.phone && <span style={{ fontFamily: 'var(--font-sans)', fontSize: '11.5px', color: '#c0392b', marginTop: '5px', display: 'block' }}>{mErrs.phone}</span>}
-                  </div>
-                  <div>
-                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '10px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Email <span style={{ color: '#DD8758' }}>*</span></label>
-                    <input type="email" value={mData.email} onChange={ch('email')} placeholder="seu@email.com.br" style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '14px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }} />
-                    {mErrs.email && <span style={{ fontFamily: 'var(--font-sans)', fontSize: '11.5px', color: '#c0392b', marginTop: '5px', display: 'block' }}>{mErrs.email}</span>}
+                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '11px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Empresa</label>
+                    <input type="text" value={mData.company} onChange={ch('company')} placeholder="Nome da empresa" style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '15px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }} />
                   </div>
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '20px' }}>
                   <div>
-                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '10px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Município</label>
-                    <input type="text" value={mData.city} onChange={ch('city')} placeholder="Sua cidade" style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '14px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }} />
+                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '11px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Telefone <span style={{ color: '#DD8758' }}>*</span></label>
+                    <input type="tel" value={mData.phone} onChange={ch('phone')} placeholder="(91) 9 9999-9999" style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '15px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }} />
+                    {mErrs.phone && <span style={{ fontFamily: 'var(--font-sans)', fontSize: '12.5px', color: '#c0392b', marginTop: '5px', display: 'block' }}>{mErrs.phone}</span>}
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '10px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Estado</label>
-                    <select value={mData.st} onChange={ch('st')} style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '14px', color: '#1a1a18', background: '#FAFAF9', outline: 'none', appearance: 'none', cursor: 'pointer' }}>
+                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '11px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Email <span style={{ color: '#DD8758' }}>*</span></label>
+                    <input type="email" value={mData.email} onChange={ch('email')} placeholder="seu@email.com.br" style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '15px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }} />
+                    {mErrs.email && <span style={{ fontFamily: 'var(--font-sans)', fontSize: '12.5px', color: '#c0392b', marginTop: '5px', display: 'block' }}>{mErrs.email}</span>}
+                  </div>
+                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '20px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '11px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Município</label>
+                    <input type="text" value={mData.city} onChange={ch('city')} placeholder="Sua cidade" style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '15px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }} />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '11px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Estado</label>
+                    <select value={mData.st} onChange={ch('st')} style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '15px', color: '#1a1a18', background: '#FAFAF9', outline: 'none', appearance: 'none', cursor: 'pointer' }}>
                       <option value="">Selecione</option>
                       {['AC','AL','AM','AP','BA','CE','DF','ES','GO','MA','MG','MS','MT','PA','PB','PE','PI','PR','RJ','RN','RO','RR','RS','SC','SE','SP','TO','outro'].map((uf) => (<option key={uf} value={uf}>{uf === 'outro' ? 'Outro' : uf}</option>))}
                     </select>
                   </div>
                 </div>
                 <div style={{ marginBottom: '20px' }}>
-                  <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '10px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Serviço de Interesse</label>
-                  <select value={mData.svc} onChange={ch('svc')} style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '14px', color: '#1a1a18', background: '#FAFAF9', outline: 'none', appearance: 'none', cursor: 'pointer' }}>
+                  <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '11px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Serviço de Interesse</label>
+                  <select value={mData.svc} onChange={ch('svc')} style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '15px', color: '#1a1a18', background: '#FAFAF9', outline: 'none', appearance: 'none', cursor: 'pointer' }}>
                     <option value="">Selecione o serviço</option>
                     <option value="regularizacao">Regularização Fundiária</option>
                     <option value="licenciamento">Licenciamento Ambiental</option>
@@ -492,21 +493,21 @@ function ProductDetail() {
                   </select>
                 </div>
                 <div style={{ marginBottom: '24px' }}>
-                  <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '10px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Mensagem <span style={{ color: '#DD8758' }}>*</span></label>
-                  <textarea value={mData.msg} onChange={ch('msg')} rows={4} placeholder="Descreva brevemente seu projeto ou necessidade…" style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '14px', color: '#1a1a18', background: '#FAFAF9', outline: 'none', resize: 'vertical', minHeight: '110px', lineHeight: 1.65 }} />
-                  {mErrs.msg && <span style={{ fontFamily: 'var(--font-sans)', fontSize: '11.5px', color: '#c0392b', marginTop: '5px', display: 'block' }}>{mErrs.msg}</span>}
+                  <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '11px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Mensagem <span style={{ color: '#DD8758' }}>*</span></label>
+                  <textarea value={mData.msg} onChange={ch('msg')} rows={4} placeholder="Descreva brevemente seu projeto ou necessidade…" style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '15px', color: '#1a1a18', background: '#FAFAF9', outline: 'none', resize: 'vertical', minHeight: '110px', lineHeight: 1.65 }} />
+                  {mErrs.msg && <span style={{ fontFamily: 'var(--font-sans)', fontSize: '12.5px', color: '#c0392b', marginTop: '5px', display: 'block' }}>{mErrs.msg}</span>}
                 </div>
                 <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', padding: '16px', background: '#F8F7F3', borderRadius: '8px', marginBottom: '28px' }}>
                   <input type="checkbox" id="pd-prv" checked={mData.ok} onChange={ch('ok')} style={{ width: '18px', height: '18px', accentColor: '#315B2C', marginTop: '2px', cursor: 'pointer', flexShrink: 0 }} />
-                  <label htmlFor="pd-prv" style={{ fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 400, color: '#555550', lineHeight: 1.65, cursor: 'pointer' }}>
+                  <label htmlFor="pd-prv" style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', fontWeight: 400, color: '#555550', lineHeight: 1.65, cursor: 'pointer' }}>
                     Li e concordo com a <a href="#" style={{ color: '#315B2C', textDecoration: 'underline' }}>Política de Privacidade</a> da AgroVisão.
-                    {mErrs.ok && <span style={{ display: 'block', fontSize: '11.5px', color: '#c0392b', marginTop: '4px' }}>{mErrs.ok}</span>}
+                    {mErrs.ok && <span style={{ display: 'block', fontSize: '12.5px', color: '#c0392b', marginTop: '4px' }}>{mErrs.ok}</span>}
                   </label>
                 </div>
                 <button
                   type="submit"
                   disabled={mSts === 'sending'}
-                  style={{ width: '100%', padding: '16px', background: '#315B2C', color: '#F6F4EF', fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 600, letterSpacing: '0.18em', textTransform: 'uppercase', border: 'none', borderRadius: '8px', cursor: mSts === 'sending' ? 'not-allowed' : 'pointer', opacity: mSts === 'sending' ? 0.7 : 1, transition: 'background 0.22s' }}
+                  style={{ width: '100%', padding: '16px', background: '#315B2C', color: '#F6F4EF', fontFamily: 'var(--font-sans)', fontSize: '12.5px', fontWeight: 600, letterSpacing: '0.18em', textTransform: 'uppercase', border: 'none', borderRadius: '8px', cursor: mSts === 'sending' ? 'not-allowed' : 'pointer', opacity: mSts === 'sending' ? 0.7 : 1, transition: 'background 0.22s' }}
                 >
                   {mSts === 'sending' ? 'Enviando…' : 'Enviar Solicitação'}
                 </button>
@@ -516,11 +517,11 @@ function ProductDetail() {
                 <div style={{ width: '64px', height: '64px', background: '#F5F8F3', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px', border: '1.5px solid rgba(49,91,44,0.15)' }}>
                   <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M5 14L11 20L23 8" stroke="#315B2C" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
                 </div>
-                <h3 style={{ fontFamily: "'Barlow', sans-serif", fontSize: '34px', fontWeight: 400, color: '#1a1a18', marginBottom: '16px' }}>Solicitação Enviada!</h3>
-                <p style={{ fontFamily: 'var(--font-sans)', fontSize: '15px', color: '#555550', lineHeight: 1.75, maxWidth: '380px', margin: '0 auto 40px' }}>
+                <h3 style={{ fontFamily: "'Barlow', sans-serif", fontSize: '35px', fontWeight: 400, color: '#1a1a18', marginBottom: '16px' }}>Solicitação Enviada!</h3>
+                <p style={{ fontFamily: 'var(--font-sans)', fontSize: '16px', color: '#555550', lineHeight: 1.75, maxWidth: '380px', margin: '0 auto 40px' }}>
                   Nossa equipe entrará em contato em até <strong style={{ color: '#315B2C' }}>24 horas úteis</strong>.
                 </p>
-                <button onClick={closeModal} style={{ padding: '14px 44px', background: '#315B2C', color: '#F6F4EF', fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', border: 'none', borderRadius: '8px', cursor: 'pointer', transition: 'background 0.22s' }}>Fechar</button>
+                <button onClick={closeModal} style={{ padding: '14px 44px', background: '#315B2C', color: '#F6F4EF', fontFamily: 'var(--font-sans)', fontSize: '12.5px', fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', border: 'none', borderRadius: '8px', cursor: 'pointer', transition: 'background 0.22s' }}>Fechar</button>
               </div>
             )}
           </div>

@@ -186,23 +186,23 @@ function Services() {
             <div style={up(0.45)}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '18px', marginBottom: '28px' }}>
                 <div style={{ width: '36px', height: '1px', background: '#B8D48A' }} />
-                <span style={{ fontFamily: 'var(--font-sans)', fontSize: '10.5px', fontWeight: 600, color: '#B8D48A', letterSpacing: '0.32em', textTransform: 'uppercase', textShadow: '0 1px 2px rgba(0,0,0,0.4)' }}>Nossos Serviços</span>
+                <span style={{ fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 600, color: '#B8D48A', letterSpacing: '0.32em', textTransform: 'uppercase', textShadow: '0 1px 2px rgba(0,0,0,0.4)' }}>Nossos Serviços</span>
               </div>
             </div>
             <div style={up(0.65)}>
-              <h1 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(46px, 6vw, 80px)', fontWeight: 400, color: '#F6F4EF', lineHeight: 1.08, letterSpacing: '-0.02em', marginBottom: '28px', textShadow: '0 2px 6px rgba(0,0,0,0.35)' }}>
+              <h1 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(47px, calc(6vw + 1px), 81px)', fontWeight: 400, color: '#F6F4EF', lineHeight: 1.08, letterSpacing: '-0.02em', marginBottom: '28px', textShadow: '0 2px 6px rgba(0,0,0,0.35)' }}>
                 Soluções Técnicas<br />para a Amazônia.
               </h1>
             </div>
             <div style={up(0.82)}>
-              <p style={{ fontFamily: 'var(--font-sans)', fontSize: '16px', fontWeight: 400, color: 'rgba(246,244,239,0.85)', lineHeight: 1.85, maxWidth: '560px', marginBottom: '48px', textShadow: '0 1px 2px rgba(0,0,0,0.35)' }}>
+              <p style={{ fontFamily: 'var(--font-sans)', fontSize: '17px', fontWeight: 500, color: 'rgba(246,244,239,0.85)', lineHeight: 1.85, maxWidth: '560px', marginBottom: '48px', textShadow: '0 1px 2px rgba(0,0,0,0.35)' }}>
                 Regularização fundiária, licenciamento ambiental, georreferenciamento e gestão de projetos rurais para produtores, empresas e instituições.
               </p>
             </div>
             <div style={up(1.0)}>
               <a
                 href="#regularizacao-fundiaria"
-                style={{ display: 'inline-block', padding: '15px 40px', background: '#315B2C', color: '#F6F4EF', fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '8px', transition: 'background 0.25s' }}
+                style={{ display: 'inline-block', padding: '15px 40px', background: '#315B2C', color: '#F6F4EF', fontFamily: 'var(--font-sans)', fontSize: '12.5px', fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '8px', transition: 'background 0.25s' }}
                 onMouseEnter={(e) => { e.currentTarget.style.background = '#254822' }}
                 onMouseLeave={(e) => { e.currentTarget.style.background = '#315B2C' }}
               >
@@ -230,7 +230,7 @@ function Services() {
                   flexShrink: 0,
                   padding: '10px 20px',
                   fontFamily: 'var(--font-sans)',
-                  fontSize: '13px',
+                  fontSize: '14px',
                   fontWeight: idx === 0 ? 600 : 500,
                   color: idx === 0 ? '#315B2C' : '#999994',
                   textDecoration: 'none',
@@ -274,21 +274,21 @@ function Services() {
                           <svg width="20" height="20" viewBox="0 0 24 24" fill="#F6F4EF"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" /></svg>
                         </div>
                         <div>
-                          <h3 style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', fontWeight: 700, color: '#1a1a18', marginBottom: '6px' }}>{item.title}</h3>
-                          <p style={{ fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 400, color: '#666660', lineHeight: 1.6 }}>{item.desc}</p>
+                          <h3 style={{ fontFamily: 'var(--font-sans)', fontSize: '15px', fontWeight: 700, color: '#1a1a18', marginBottom: '6px' }}>{item.title}</h3>
+                          <p style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', fontWeight: 400, color: '#666660', lineHeight: 1.6 }}>{item.desc}</p>
                         </div>
                       </div>
                     ))}
                   </div>
                   <div>
                     <div style={{ width: '34px', height: '1px', background: '#315B2C', marginBottom: '18px' }} />
-                    <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: '42px', fontWeight: 400, color: '#1a1a18', lineHeight: 1.15, letterSpacing: '-0.015em', marginBottom: '24px' }} dangerouslySetInnerHTML={{ __html: svc.title }} />
-                    <p style={{ fontFamily: 'var(--font-sans)', fontSize: '15px', fontWeight: 400, color: '#555550', lineHeight: 1.85, marginBottom: '32px' }}>{svc.desc}</p>
+                    <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: '43px', fontWeight: 400, color: '#1a1a18', lineHeight: 1.15, letterSpacing: '-0.015em', marginBottom: '24px' }} dangerouslySetInnerHTML={{ __html: svc.title }} />
+                    <p style={{ fontFamily: 'var(--font-sans)', fontSize: '16px', fontWeight: 400, color: '#555550', lineHeight: 1.85, marginBottom: '32px' }}>{svc.desc}</p>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                       <a
                         href="#"
                         onClick={(e) => { e.preventDefault(); openModal() }}
-                        style={{ display: 'inline-block', padding: '14px 32px', background: '#315B2C', color: '#F6F4EF', fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '8px', transition: 'background 0.25s', textAlign: 'center' }}
+                        style={{ display: 'inline-block', padding: '14px 32px', background: '#315B2C', color: '#F6F4EF', fontFamily: 'var(--font-sans)', fontSize: '12.5px', fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '8px', transition: 'background 0.25s', textAlign: 'center' }}
                         onMouseEnter={(e) => { e.currentTarget.style.background = '#254822' }}
                         onMouseLeave={(e) => { e.currentTarget.style.background = '#315B2C' }}
                       >
@@ -298,7 +298,7 @@ function Services() {
                         href="https://api.whatsapp.com/send?phone=5591982064340"
                         target="_blank"
                         rel="noopener noreferrer"
-                        style={{ display: 'inline-block', padding: '13px 32px', color: '#315B2C', fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '8px', border: '1px solid rgba(49,91,44,0.28)', transition: 'border-color 0.25s', textAlign: 'center' }}
+                        style={{ display: 'inline-block', padding: '13px 32px', color: '#315B2C', fontFamily: 'var(--font-sans)', fontSize: '12.5px', fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '8px', border: '1px solid rgba(49,91,44,0.28)', transition: 'border-color 0.25s', textAlign: 'center' }}
                         onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'rgba(49,91,44,0.6)' }}
                         onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(49,91,44,0.28)' }}
                       >
@@ -311,13 +311,13 @@ function Services() {
                 <>
                   <div>
                     <div style={{ width: '34px', height: '1px', background: '#315B2C', marginBottom: '18px' }} />
-                    <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: '42px', fontWeight: 400, color: '#1a1a18', lineHeight: 1.15, letterSpacing: '-0.015em', marginBottom: '24px' }} dangerouslySetInnerHTML={{ __html: svc.title }} />
-                    <p style={{ fontFamily: 'var(--font-sans)', fontSize: '15px', fontWeight: 400, color: '#555550', lineHeight: 1.85, marginBottom: '32px' }}>{svc.desc}</p>
+                    <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: '43px', fontWeight: 400, color: '#1a1a18', lineHeight: 1.15, letterSpacing: '-0.015em', marginBottom: '24px' }} dangerouslySetInnerHTML={{ __html: svc.title }} />
+                    <p style={{ fontFamily: 'var(--font-sans)', fontSize: '16px', fontWeight: 400, color: '#555550', lineHeight: 1.85, marginBottom: '32px' }}>{svc.desc}</p>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                       <a
                         href="#"
                         onClick={(e) => { e.preventDefault(); openModal() }}
-                        style={{ display: 'inline-block', padding: '14px 32px', background: '#315B2C', color: '#F6F4EF', fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '8px', transition: 'background 0.25s', textAlign: 'center' }}
+                        style={{ display: 'inline-block', padding: '14px 32px', background: '#315B2C', color: '#F6F4EF', fontFamily: 'var(--font-sans)', fontSize: '12.5px', fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '8px', transition: 'background 0.25s', textAlign: 'center' }}
                         onMouseEnter={(e) => { e.currentTarget.style.background = '#254822' }}
                         onMouseLeave={(e) => { e.currentTarget.style.background = '#315B2C' }}
                       >
@@ -327,7 +327,7 @@ function Services() {
                         href="https://api.whatsapp.com/send?phone=5591982064340"
                         target="_blank"
                         rel="noopener noreferrer"
-                        style={{ display: 'inline-block', padding: '13px 32px', color: '#315B2C', fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '8px', border: '1px solid rgba(49,91,44,0.28)', transition: 'border-color 0.25s', textAlign: 'center' }}
+                        style={{ display: 'inline-block', padding: '13px 32px', color: '#315B2C', fontFamily: 'var(--font-sans)', fontSize: '12.5px', fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '8px', border: '1px solid rgba(49,91,44,0.28)', transition: 'border-color 0.25s', textAlign: 'center' }}
                         onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'rgba(49,91,44,0.6)' }}
                         onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(49,91,44,0.28)' }}
                       >
@@ -342,8 +342,8 @@ function Services() {
                           <svg width="20" height="20" viewBox="0 0 24 24" fill="#F6F4EF"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" /></svg>
                         </div>
                         <div>
-                          <h3 style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', fontWeight: 700, color: '#1a1a18', marginBottom: '6px' }}>{item.title}</h3>
-                          <p style={{ fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 400, color: '#666660', lineHeight: 1.6 }}>{item.desc}</p>
+                          <h3 style={{ fontFamily: 'var(--font-sans)', fontSize: '15px', fontWeight: 700, color: '#1a1a18', marginBottom: '6px' }}>{item.title}</h3>
+                          <p style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', fontWeight: 400, color: '#666660', lineHeight: 1.6 }}>{item.desc}</p>
                         </div>
                       </div>
                     ))}
@@ -359,21 +359,21 @@ function Services() {
       <section style={{ background: '#315B2C', padding: '128px 0' }}>
         <div style={{ maxWidth: '900px', margin: '0 auto', padding: '0 84px', textAlign: 'center' }}>
           <div style={{ width: '34px', height: '1px', background: '#B8D48A', margin: '0 auto 18px' }} />
-          <span style={{ fontFamily: 'var(--font-sans)', fontSize: '10.5px', fontWeight: 500, color: '#B8D48A', letterSpacing: '0.24em', textTransform: 'uppercase', display: 'block', marginBottom: '28px' }}>
+          <span style={{ fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 500, color: '#B8D48A', letterSpacing: '0.24em', textTransform: 'uppercase', display: 'block', marginBottom: '28px' }}>
             Pronto para começar?
           </span>
-          <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(38px, 4.5vw, 62px)', fontWeight: 300, color: '#F6F4EF', lineHeight: 1.1, letterSpacing: '-0.02em', marginBottom: '24px', textWrap: 'pretty' }}>
+          <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(39px, calc(4.5vw + 1px), 63px)', fontWeight: 300, color: '#F6F4EF', lineHeight: 1.1, letterSpacing: '-0.02em', marginBottom: '24px', textWrap: 'pretty' }}>
             Encontre a solução<br />ideal para seu<br />
-            <span style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 600, fontSize: 'clamp(33px, 3.9vw, 53px)', fontStyle: 'normal' }}>projeto</span>.
+            <span style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 600, fontSize: 'clamp(34px, calc(3.9vw + 1px), 54px)', fontStyle: 'normal' }}>projeto</span>.
           </h2>
-          <p style={{ fontFamily: 'var(--font-sans)', fontSize: '15px', fontWeight: 400, color: 'rgba(246,244,239,0.75)', lineHeight: 1.85, marginBottom: '52px', maxWidth: '560px', marginLeft: 'auto', marginRight: 'auto' }}>
+          <p style={{ fontFamily: 'var(--font-sans)', fontSize: '16px', fontWeight: 500, color: 'rgba(246,244,239,0.75)', lineHeight: 1.85, marginBottom: '52px', maxWidth: '560px', marginLeft: 'auto', marginRight: 'auto' }}>
             Conversamos sobre sua necessidade e apresentamos a melhor proposta técnica e comercial.
           </p>
           <div style={{ display: 'flex', gap: '14px', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap' }}>
             <a
               href="#"
               onClick={(e) => { e.preventDefault(); openModal() }}
-              style={{ display: 'inline-block', padding: '16px 44px', background: '#F6F4EF', color: '#315B2C', fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '8px', transition: 'background 0.25s' }}
+              style={{ display: 'inline-block', padding: '16px 44px', background: '#F6F4EF', color: '#315B2C', fontFamily: 'var(--font-sans)', fontSize: '12.5px', fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '8px', transition: 'background 0.25s' }}
               onMouseEnter={(e) => { e.currentTarget.style.background = '#ede9e2' }}
               onMouseLeave={(e) => { e.currentTarget.style.background = '#F6F4EF' }}
             >
@@ -383,7 +383,7 @@ function Services() {
               href="https://api.whatsapp.com/send?phone=5591982064340"
               target="_blank"
               rel="noopener noreferrer"
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', padding: '15px 40px', color: '#F6F4EF', fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 500, letterSpacing: '0.16em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '8px', border: '1px solid rgba(246,244,239,0.4)', transition: 'border-color 0.25s' }}
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', padding: '15px 40px', color: '#F6F4EF', fontFamily: 'var(--font-sans)', fontSize: '12.5px', fontWeight: 500, letterSpacing: '0.16em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '8px', border: '1px solid rgba(246,244,239,0.4)', transition: 'border-color 0.25s' }}
               onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'rgba(246,244,239,0.72)' }}
               onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(246,244,239,0.4)' }}
             >
@@ -415,8 +415,8 @@ function Services() {
           <div className="modal" style={{ background: '#FFFFFF', borderRadius: '12px', width: 'min(720px, 100%)', maxHeight: '88vh', overflowY: 'auto', boxShadow: '0 32px 100px rgba(0,0,0,0.28)' }}>
             <div style={{ padding: '36px 44px 24px', borderBottom: '1px solid rgba(49,91,44,0.08)', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', position: 'sticky', top: 0, background: '#FFFFFF', zIndex: 1, borderRadius: '12px 12px 0 0' }}>
               <div>
-                <div style={{ fontFamily: 'var(--font-sans)', fontSize: '10.5px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.24em', textTransform: 'uppercase', marginBottom: '10px' }}>Consultoria Gratuita</div>
-                <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: '30px', fontWeight: 400, color: '#1a1a18', lineHeight: 1.2 }}>Solicite um Atendimento</h2>
+                <div style={{ fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.24em', textTransform: 'uppercase', marginBottom: '10px' }}>Consultoria Gratuita</div>
+                <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: '31px', fontWeight: 400, color: '#1a1a18', lineHeight: 1.2 }}>Solicite um Atendimento</h2>
               </div>
               <button
                 onClick={closeModal}
@@ -432,38 +432,38 @@ function Services() {
               <form onSubmit={submitForm} style={{ padding: '32px 44px 44px' }}>
                 <div className="form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '20px' }}>
                   <div>
-                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '10.5px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Nome Completo <span style={{ color: '#DD8758' }}>*</span></label>
-                    <input type="text" value={mData.name} onChange={ch('name')} placeholder="Seu nome completo" style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '14px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }} />
-                    {mErrs.name && <span style={{ fontFamily: 'var(--font-sans)', fontSize: '11.5px', color: '#c0392b', marginTop: '5px', display: 'block' }}>{mErrs.name}</span>}
+                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Nome Completo <span style={{ color: '#DD8758' }}>*</span></label>
+                    <input type="text" value={mData.name} onChange={ch('name')} placeholder="Seu nome completo" style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '15px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }} />
+                    {mErrs.name && <span style={{ fontFamily: 'var(--font-sans)', fontSize: '12.5px', color: '#c0392b', marginTop: '5px', display: 'block' }}>{mErrs.name}</span>}
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '10.5px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Empresa</label>
-                    <input type="text" value={mData.company} onChange={ch('company')} placeholder="Nome da empresa (opcional)" style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '14px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }} />
+                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Empresa</label>
+                    <input type="text" value={mData.company} onChange={ch('company')} placeholder="Nome da empresa (opcional)" style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '15px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }} />
                   </div>
                 </div>
                 <div className="form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '20px' }}>
                   <div>
-                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '10.5px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Telefone <span style={{ color: '#DD8758' }}>*</span></label>
-                    <input type="tel" value={mData.phone} onChange={ch('phone')} placeholder="(91) 9 9999-9999" style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '14px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }} />
-                    {mErrs.phone && <span style={{ fontFamily: 'var(--font-sans)', fontSize: '11.5px', color: '#c0392b', marginTop: '5px', display: 'block' }}>{mErrs.phone}</span>}
+                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Telefone <span style={{ color: '#DD8758' }}>*</span></label>
+                    <input type="tel" value={mData.phone} onChange={ch('phone')} placeholder="(91) 9 9999-9999" style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '15px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }} />
+                    {mErrs.phone && <span style={{ fontFamily: 'var(--font-sans)', fontSize: '12.5px', color: '#c0392b', marginTop: '5px', display: 'block' }}>{mErrs.phone}</span>}
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '10.5px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Email <span style={{ color: '#DD8758' }}>*</span></label>
-                    <input type="email" value={mData.email} onChange={ch('email')} placeholder="seu@email.com.br" style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '14px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }} />
-                    {mErrs.email && <span style={{ fontFamily: 'var(--font-sans)', fontSize: '11.5px', color: '#c0392b', marginTop: '5px', display: 'block' }}>{mErrs.email}</span>}
+                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Email <span style={{ color: '#DD8758' }}>*</span></label>
+                    <input type="email" value={mData.email} onChange={ch('email')} placeholder="seu@email.com.br" style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '15px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }} />
+                    {mErrs.email && <span style={{ fontFamily: 'var(--font-sans)', fontSize: '12.5px', color: '#c0392b', marginTop: '5px', display: 'block' }}>{mErrs.email}</span>}
                   </div>
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '20px' }}>
                   <div>
-                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '10.5px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Município</label>
-                    <input type="text" value={mData.city} onChange={ch('city')} placeholder="Sua cidade" style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '14px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }} />
+                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Município</label>
+                    <input type="text" value={mData.city} onChange={ch('city')} placeholder="Sua cidade" style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '15px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }} />
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '10.5px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Estado</label>
+                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Estado</label>
                     <select
                       value={mData.st}
                       onChange={ch('st')}
-                      style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '14px', color: '#1a1a18', background: '#FAFAF9', outline: 'none', appearance: 'none', cursor: 'pointer' }}
+                      style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '15px', color: '#1a1a18', background: '#FAFAF9', outline: 'none', appearance: 'none', cursor: 'pointer' }}
                     >
                       <option value="">Selecione o estado</option>
                       {UFS.map((uf) => (
@@ -473,11 +473,11 @@ function Services() {
                   </div>
                 </div>
                 <div style={{ marginBottom: '20px' }}>
-                  <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '10.5px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Serviço de Interesse</label>
+                  <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Serviço de Interesse</label>
                   <select
                     value={mData.svc}
                     onChange={ch('svc')}
-                    style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '14px', color: '#1a1a18', background: '#FAFAF9', outline: 'none', appearance: 'none', cursor: 'pointer' }}
+                    style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '15px', color: '#1a1a18', background: '#FAFAF9', outline: 'none', appearance: 'none', cursor: 'pointer' }}
                   >
                     <option value="">Selecione o serviço</option>
                     <option value="regularizacao">Regularização Fundiária</option>
@@ -492,15 +492,15 @@ function Services() {
                   </select>
                 </div>
                 <div style={{ marginBottom: '24px' }}>
-                  <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '10.5px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Mensagem <span style={{ color: '#DD8758' }}>*</span></label>
+                  <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Mensagem <span style={{ color: '#DD8758' }}>*</span></label>
                   <textarea
                     value={mData.msg}
                     onChange={ch('msg')}
                     rows={4}
                     placeholder="Descreva brevemente seu projeto ou necessidade…"
-                    style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '14px', color: '#1a1a18', background: '#FAFAF9', outline: 'none', resize: 'vertical', minHeight: '110px', lineHeight: 1.65 }}
+                    style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '15px', color: '#1a1a18', background: '#FAFAF9', outline: 'none', resize: 'vertical', minHeight: '110px', lineHeight: 1.65 }}
                   />
-                  {mErrs.msg && <span style={{ fontFamily: 'var(--font-sans)', fontSize: '11.5px', color: '#c0392b', marginTop: '5px', display: 'block' }}>{mErrs.msg}</span>}
+                  {mErrs.msg && <span style={{ fontFamily: 'var(--font-sans)', fontSize: '12.5px', color: '#c0392b', marginTop: '5px', display: 'block' }}>{mErrs.msg}</span>}
                 </div>
                 <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', padding: '16px', background: '#F8F7F3', borderRadius: '8px', marginBottom: '28px' }}>
                   <input
@@ -510,9 +510,9 @@ function Services() {
                     onChange={ch('ok')}
                     style={{ width: '18px', height: '18px', accentColor: '#315B2C', marginTop: '2px', cursor: 'pointer', flexShrink: 0 }}
                   />
-                  <label htmlFor="s-prv" style={{ fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 400, color: '#555550', lineHeight: 1.65, cursor: 'pointer' }}>
+                  <label htmlFor="s-prv" style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', fontWeight: 400, color: '#555550', lineHeight: 1.65, cursor: 'pointer' }}>
                     Li e concordo com a <a href="#" style={{ color: '#315B2C', textDecoration: 'underline' }}>Política de Privacidade</a> da AgroVisão.
-                    {mErrs.ok && <span style={{ display: 'block', fontSize: '11.5px', color: '#c0392b', marginTop: '4px' }}>{mErrs.ok}</span>}
+                    {mErrs.ok && <span style={{ display: 'block', fontSize: '12.5px', color: '#c0392b', marginTop: '4px' }}>{mErrs.ok}</span>}
                   </label>
                 </div>
                 <button
@@ -524,7 +524,7 @@ function Services() {
                     background: '#315B2C',
                     color: '#F6F4EF',
                     fontFamily: 'var(--font-sans)',
-                    fontSize: '11.5px',
+                    fontSize: '12.5px',
                     fontWeight: 600,
                     letterSpacing: '0.18em',
                     textTransform: 'uppercase',
@@ -545,8 +545,8 @@ function Services() {
                     <path d="M5 14L11 20L23 8" stroke="#315B2C" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </div>
-                <h3 style={{ fontFamily: "'Barlow', sans-serif", fontSize: '34px', fontWeight: 400, color: '#1a1a18', marginBottom: '16px' }}>Solicitação Enviada!</h3>
-                <p style={{ fontFamily: 'var(--font-sans)', fontSize: '15px', color: '#555550', lineHeight: 1.75, maxWidth: '380px', margin: '0 auto 40px' }}>
+                <h3 style={{ fontFamily: "'Barlow', sans-serif", fontSize: '35px', fontWeight: 400, color: '#1a1a18', marginBottom: '16px' }}>Solicitação Enviada!</h3>
+                <p style={{ fontFamily: 'var(--font-sans)', fontSize: '16px', color: '#555550', lineHeight: 1.75, maxWidth: '380px', margin: '0 auto 40px' }}>
                   Nossa equipe entrará em contato em até <strong style={{ color: '#315B2C' }}>24 horas úteis</strong>. Obrigado pelo interesse na AgroVisão.
                 </p>
                 <button
@@ -556,7 +556,7 @@ function Services() {
                     background: '#315B2C',
                     color: '#F6F4EF',
                     fontFamily: 'var(--font-sans)',
-                    fontSize: '11.5px',
+                    fontSize: '12.5px',
                     fontWeight: 600,
                     letterSpacing: '0.16em',
                     textTransform: 'uppercase',

@@ -11,7 +11,8 @@ import {
   parseBoolean,
   setFeaturedImage,
 } from '../_gallery.js';
-import { validateImageFile, uploadProductImage, deleteProductImage, makeGalleryImagePath } from '../_storage.js';
+import { storage } from '../_storage.js';
+import { validateProcessedImage, makeGalleryImagePath, GALLERY_IMAGE } from '../_image.js';
 
 export async function onRequest(context) {
   const { request, params, env } = context;
@@ -51,19 +52,21 @@ export async function onRequest(context) {
       const featured = isChild ? false : parseBoolean(body.featured);
 
       // Sem novo arquivo, mantém a imagem atual (nunca zera por omissão).
+      // Só a primeira é usada: cada item da galeria guarda uma imagem.
       let imagePath = existing.imagePath;
-      let replaced = false;
+      let imageMeta = null;
       if (files.length > 0) {
-        const fileCheck = await validateImageFile(files[0]);
+        const fileCheck = await validateProcessedImage(files[0], GALLERY_IMAGE);
         if (!fileCheck.ok) return error(fileCheck.error, 400);
-        const uploaded = await uploadProductImage(env, {
+        const uploaded = await storage.upload(env, {
           bytes: fileCheck.data.bytes,
           mimeType: fileCheck.data.mimeType,
-          path: makeGalleryImagePath(project.slug, fileCheck.data.mimeType, 0),
+          path: makeGalleryImagePath(project.slug, 0),
         });
         imagePath = uploaded.path;
-        replaced = true;
+        imageMeta = fileCheck.data;
       }
+      const replaced = imageMeta !== null;
 
       // Ao mudar de projeto, o registro vai para o fim da galeria de destino.
       const patch = {
@@ -72,6 +75,12 @@ export async function onRequest(context) {
         description,
         url: replaced ? imagePath : existing.imagePath || existing.url,
       };
+      if (imageMeta) {
+        patch.mime_type = imageMeta.mimeType;
+        patch.size_bytes = imageMeta.size;
+        patch.width = imageMeta.width;
+        patch.height = imageMeta.height;
+      }
       const movedProject = projectId !== existing.projectId;
       if (movedProject) {
         patch.sort_order = await nextSortOrder(supabase, projectId);
@@ -102,7 +111,7 @@ export async function onRequest(context) {
 
       // Só remove o arquivo antigo depois de a troca estar confirmada no banco.
       if (replaced && existing.imagePath && existing.imagePath !== imagePath) {
-        await deleteProductImage(env, existing.imagePath);
+        await storage.delete(env, existing.imagePath);
       }
 
       const updated = await getGalleryImageById(supabase, env, id);
@@ -118,7 +127,7 @@ export async function onRequest(context) {
       if (deleteErr) return error(deleteErr.message, 500);
 
       for (const item of [existing, ...children]) {
-        if (item.imagePath) await deleteProductImage(env, item.imagePath);
+        await storage.delete(env, item.imagePath);
       }
       return json({ data: { ok: true, removed: 1 + children.length } });
     }

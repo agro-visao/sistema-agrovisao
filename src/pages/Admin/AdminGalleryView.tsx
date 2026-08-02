@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback, useRef, useMemo } from 'react'
 import { adminApi as api } from '../../lib/adminApi'
+import { processImage, ImageProcessingError, GALLERY_IMAGE_PROFILE } from '../../lib/imageProcessor'
 import styles from './Admin.module.css'
 
 /**
@@ -44,8 +45,6 @@ interface PendingImage {
   alt: string
 }
 
-const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp']
-const MAX_IMAGE_BYTES = 5 * 1024 * 1024
 const MAX_IMAGES_PER_UPLOAD = 12
 const NEW_PROJECT = '__new__'
 
@@ -250,6 +249,8 @@ function AdminGalleryView() {
   const [createExtras, setCreateExtras] = useState<PendingImage[]>([])
   const [formError, setFormError] = useState('')
   const [saving, setSaving] = useState(false)
+  // Conversões em andamento — o salvamento espera todas terminarem.
+  const [processing, setProcessing] = useState(0)
 
   // ─── Edição de um registro ─────────────────────────────────────────────────
   const [editing, setEditing] = useState<GalleryImage | null>(null)
@@ -328,54 +329,63 @@ function AdminGalleryView() {
     setProjects((prev) => (prev.some((p) => p.id === project.id) ? prev : [...prev, project]))
   }, [])
 
-  const validateFile = useCallback((file: File): string => {
-    const extOk = /\.(jpe?g|png|webp)$/i.test(file.name)
-    if (!ALLOWED_IMAGE_TYPES.includes(file.type) || !extOk) {
-      return `${file.name}: formato inválido. Use JPG, PNG ou WEBP.`
-    }
-    if (file.size > MAX_IMAGE_BYTES) {
-      return `${file.name}: a imagem deve ter no máximo 5 MB.`
-    }
-    return ''
-  }, [])
-
+  // Redimensiona e converte para WEBP antes de virar item pendente: o que fica
+  // no estado (e vai para a API) já é o arquivo final.
   const toPending = useCallback(
-    (file: File): PendingImage => ({ file, previewUrl: trackUrl(URL.createObjectURL(file)), alt: '' }),
+    async (file: File): Promise<PendingImage> => {
+      const processed = await processImage(file, GALLERY_IMAGE_PROFILE)
+      return {
+        file: processed.file,
+        previewUrl: trackUrl(URL.createObjectURL(processed.file)),
+        alt: '',
+      }
+    },
     [trackUrl]
   )
 
+  const describeError = useCallback((file: File, err: unknown): string => {
+    const detail = err instanceof ImageProcessingError ? err.message : 'falha ao processar a imagem.'
+    return `${file.name}: ${detail}`
+  }, [])
+
   // ─── Seleção de arquivos ───────────────────────────────────────────────────
   const handleCoverSelect = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    async (e: React.ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0] || null
       e.target.value = ''
       if (!file) return
-      const err = validateFile(file)
-      if (err) {
-        setFormError(err)
-        return
-      }
       setFormError('')
-      setCreateCover(toPending(file))
+      setProcessing((n) => n + 1)
+      try {
+        setCreateCover(await toPending(file))
+      } catch (err) {
+        setFormError(describeError(file, err))
+      } finally {
+        setProcessing((n) => n - 1)
+      }
     },
-    [validateFile, toPending]
+    [toPending, describeError]
   )
 
   const handleExtrasSelect = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>, target: 'create' | 'edit') => {
+    async (e: React.ChangeEvent<HTMLInputElement>, target: 'create' | 'edit') => {
       const files = Array.from(e.target.files || [])
       e.target.value = ''
       if (files.length === 0) return
 
       setFormError('')
+      setProcessing((n) => n + 1)
       const accepted: PendingImage[] = []
-      for (const file of files) {
-        const err = validateFile(file)
-        if (err) {
-          setFormError(err)
-          continue
+      try {
+        for (const file of files) {
+          try {
+            accepted.push(await toPending(file))
+          } catch (err) {
+            setFormError(describeError(file, err))
+          }
         }
-        accepted.push(toPending(file))
+      } finally {
+        setProcessing((n) => n - 1)
       }
       if (accepted.length === 0) return
 
@@ -389,7 +399,7 @@ function AdminGalleryView() {
         return next
       })
     },
-    [validateFile, toPending]
+    [toPending, describeError]
   )
 
   const setExtraAlt = useCallback((target: 'create' | 'edit', index: number, alt: string) => {
@@ -427,6 +437,10 @@ function AdminGalleryView() {
     async (e: React.FormEvent) => {
       e.preventDefault()
       setFormError('')
+      if (processing > 0) {
+        setFormError('Aguarde a conversão das imagens.')
+        return
+      }
       if (!createProjectId) {
         setFormError('Selecione o projeto da galeria.')
         return
@@ -470,7 +484,7 @@ function AdminGalleryView() {
         setSaving(false)
       }
     },
-    [createProjectId, createCover, createAlt, createExtras, createDescription, createFeatured, loadImages, closeCreate, showToast]
+    [processing, createProjectId, createCover, createAlt, createExtras, createDescription, createFeatured, loadImages, closeCreate, showToast]
   )
 
   // ─── Edição ────────────────────────────────────────────────────────────────
@@ -504,20 +518,23 @@ function AdminGalleryView() {
   }, [saving, revokeAllUrls])
 
   const handleReplaceSelect = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    async (e: React.ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0] || null
       e.target.value = ''
       if (!file) return
-      const err = validateFile(file)
-      if (err) {
-        setFormError(err)
-        return
-      }
       setFormError('')
-      setEditFile(file)
-      setEditPreview(trackUrl(URL.createObjectURL(file)))
+      setProcessing((n) => n + 1)
+      try {
+        const processed = await processImage(file, GALLERY_IMAGE_PROFILE)
+        setEditFile(processed.file)
+        setEditPreview(trackUrl(URL.createObjectURL(processed.file)))
+      } catch (err) {
+        setFormError(describeError(file, err))
+      } finally {
+        setProcessing((n) => n - 1)
+      }
     },
-    [validateFile, trackUrl]
+    [trackUrl, describeError]
   )
 
   const submitEdit = useCallback(
@@ -525,6 +542,10 @@ function AdminGalleryView() {
       e.preventDefault()
       if (!editing) return
       setFormError('')
+      if (processing > 0) {
+        setFormError('Aguarde a conversão das imagens.')
+        return
+      }
 
       const original = new Map(editExtras.map((item) => [item.id, item.alt]))
 
@@ -589,7 +610,7 @@ function AdminGalleryView() {
         setSaving(false)
       }
     },
-    [editing, editProjectId, editAlt, editDescription, editFeatured, editFile, editExtras, removedExtras, newExtras, loadImages, closeEdit, showToast]
+    [processing, editing, editProjectId, editAlt, editDescription, editFeatured, editFile, editExtras, removedExtras, newExtras, loadImages, closeEdit, showToast]
   )
 
   // ─── Exclusão ──────────────────────────────────────────────────────────────
@@ -878,7 +899,7 @@ function AdminGalleryView() {
                   </div>
                 </div>
                 <div className={styles.inputHint}>
-                  JPG, PNG ou WEBP · máximo 5 MB. Marque “Definir como capa” sobre a foto para este
+                  JPG, PNG ou WEBP · máximo 5 MB · convertida automaticamente para WEBP (até 1800 px). Marque “Definir como capa” sobre a foto para este
                   registro virar a capa do projeto na página Galeria.
                 </div>
               </div>

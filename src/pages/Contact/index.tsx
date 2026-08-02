@@ -78,16 +78,16 @@ function Contact() {
             <div style={up(0.45)}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '18px', marginBottom: '28px' }}>
                 <div style={{ width: '36px', height: '1px', background: '#B8D48A' }} />
-                <span style={{ fontFamily: 'var(--font-sans)', fontSize: '10.5px', fontWeight: 600, color: '#B8D48A', letterSpacing: '0.32em', textTransform: 'uppercase', textShadow: '0 1px 2px rgba(0,0,0,0.4)' }}>Fale Conosco · Ananindeua, Pará</span>
+                <span style={{ fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 600, color: '#B8D48A', letterSpacing: '0.32em', textTransform: 'uppercase', textShadow: '0 1px 2px rgba(0,0,0,0.4)' }}>Fale Conosco · Ananindeua, Pará</span>
               </div>
             </div>
             <div style={up(0.65)}>
-              <h1 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(46px, 6vw, 80px)', fontWeight: 400, color: '#F6F4EF', lineHeight: 1.08, letterSpacing: '-0.02em', marginBottom: '28px', textShadow: '0 2px 6px rgba(0,0,0,0.35)' }}>
-                Vamos conversar<br />sobre seu <span style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 600, fontSize: 'clamp(41px, 5.1vw, 68px)', fontStyle: 'normal' }}>projeto</span>.
+              <h1 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(47px, calc(6vw + 1px), 81px)', fontWeight: 400, color: '#F6F4EF', lineHeight: 1.08, letterSpacing: '-0.02em', marginBottom: '28px', textShadow: '0 2px 6px rgba(0,0,0,0.35)' }}>
+                Vamos conversar<br />sobre seu <span style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 600, fontSize: 'clamp(42px, calc(5.1vw + 1px), 69px)', fontStyle: 'normal' }}>projeto</span>.
               </h1>
             </div>
             <div style={up(0.82)}>
-              <p style={{ fontFamily: 'var(--font-sans)', fontSize: '16px', fontWeight: 400, color: 'rgba(246,244,239,0.85)', lineHeight: 1.85, maxWidth: '560px', marginBottom: '48px', textShadow: '0 1px 2px rgba(0,0,0,0.35)' }}>
+              <p style={{ fontFamily: 'var(--font-sans)', fontSize: '17px', fontWeight: 500, color: 'rgba(246,244,239,0.85)', lineHeight: 1.85, maxWidth: '560px', marginBottom: '48px', textShadow: '0 1px 2px rgba(0,0,0,0.35)' }}>
                 Nossa equipe está pronta para orientar você em regularização fundiária, licenciamento ambiental, projetos rurais e desenvolvimento sustentável.
               </p>
             </div>
@@ -96,7 +96,7 @@ function Contact() {
                 <a
                   href="#"
                   onClick={(e) => { e.preventDefault(); openModal() }}
-                  style={{ display: 'inline-block', padding: '15px 40px', background: '#315B2C', color: '#F6F4EF', fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '8px', transition: 'background 0.25s' }}
+                  style={{ display: 'inline-block', padding: '15px 40px', background: '#315B2C', color: '#F6F4EF', fontFamily: 'var(--font-sans)', fontSize: '12.5px', fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '8px', transition: 'background 0.25s' }}
                   onMouseEnter={(e) => { e.currentTarget.style.background = '#254822' }}
                   onMouseLeave={(e) => { e.currentTarget.style.background = '#315B2C' }}
                 >
@@ -106,7 +106,7 @@ function Contact() {
                   href="https://api.whatsapp.com/send?phone=5591982064340"
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', padding: '14px 36px', color: '#F6F4EF', fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 500, letterSpacing: '0.16em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '8px', border: '1px solid rgba(246,244,239,0.4)', transition: 'border-color 0.25s' }}
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', padding: '14px 36px', color: '#F6F4EF', fontFamily: 'var(--font-sans)', fontSize: '12.5px', fontWeight: 500, letterSpacing: '0.16em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '8px', border: '1px solid rgba(246,244,239,0.4)', transition: 'border-color 0.25s' }}
                   onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'rgba(246,244,239,0.72)' }}
                   onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(246,244,239,0.4)' }}
                 >
@@ -129,8 +129,8 @@ function Contact() {
         <div className="container" style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 84px' }}>
           <div style={{ textAlign: 'center', marginBottom: '64px' }}>
             <div style={{ width: '34px', height: '1px', background: '#315B2C', margin: '0 auto 18px' }} />
-            <span style={{ fontFamily: 'var(--font-sans)', fontSize: '10.5px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.24em', textTransform: 'uppercase', display: 'block', marginBottom: '16px' }}>Informações</span>
-            <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(36px, 4vw, 52px)', fontWeight: 400, color: '#1a1a18', lineHeight: 1.1, letterSpacing: '-0.015em' }}>Como nos encontrar</h2>
+            <span style={{ fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.24em', textTransform: 'uppercase', display: 'block', marginBottom: '16px' }}>Informações</span>
+            <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(37px, calc(4vw + 1px), 53px)', fontWeight: 400, color: '#1a1a18', lineHeight: 1.1, letterSpacing: '-0.015em' }}>Como nos encontrar</h2>
           </div>
           <div className="contact-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px' }}>
             {/* Address card */}
@@ -145,8 +145,8 @@ function Contact() {
                   <circle cx="12" cy="9" r="2.5" stroke="currentColor" strokeWidth="1.4" fill="none" />
                 </svg>
               </div>
-              <div style={{ fontFamily: 'var(--font-sans)', fontSize: '10.5px', fontWeight: 700, color: '#6F8F3A', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '14px' }}>Endereço</div>
-              <div style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', fontWeight: 400, color: '#444440', lineHeight: 1.8 }}>
+              <div style={{ fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 700, color: '#6F8F3A', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '14px' }}>Endereço</div>
+              <div style={{ fontFamily: 'var(--font-sans)', fontSize: '15px', fontWeight: 400, color: '#444440', lineHeight: 1.8 }}>
                 ROD BR 316, 1762<br />
                 Edifício Living Next Office<br />
                 Bairro Atalaia<br />
@@ -167,9 +167,9 @@ function Contact() {
               <div style={{ width: '48px', height: '48px', background: '#F5F8F3', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '22px' }}>
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="#315B2C"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" /></svg>
               </div>
-              <div style={{ fontFamily: 'var(--font-sans)', fontSize: '10.5px', fontWeight: 700, color: '#6F8F3A', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '14px' }}>WhatsApp</div>
-              <div style={{ fontFamily: 'var(--font-sans)', fontSize: '18px', fontWeight: 500, color: '#315B2C', lineHeight: 1.4, marginBottom: '8px' }}>(91) 98206-4340</div>
-              <div style={{ fontFamily: 'var(--font-sans)', fontSize: '12.5px', fontWeight: 400, color: '#888882' }}>Clique para conversar</div>
+              <div style={{ fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 700, color: '#6F8F3A', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '14px' }}>WhatsApp</div>
+              <div style={{ fontFamily: 'var(--font-sans)', fontSize: '19px', fontWeight: 500, color: '#315B2C', lineHeight: 1.4, marginBottom: '8px' }}>(91) 98206-4340</div>
+              <div style={{ fontFamily: 'var(--font-sans)', fontSize: '13.5px', fontWeight: 400, color: '#888882' }}>Clique para conversar</div>
             </a>
 
             {/* Email card */}
@@ -185,9 +185,9 @@ function Contact() {
                   <path d="M2 8L12 14L22 8" stroke="#315B2C" strokeWidth="1.4" strokeLinecap="round" />
                 </svg>
               </div>
-              <div style={{ fontFamily: 'var(--font-sans)', fontSize: '10.5px', fontWeight: 700, color: '#6F8F3A', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '14px' }}>Email</div>
-              <div style={{ fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 500, color: '#315B2C', lineHeight: 1.5, wordBreak: 'break-all', marginBottom: '8px' }}>contato@agrovisaopara.com.br</div>
-              <div style={{ fontFamily: 'var(--font-sans)', fontSize: '12.5px', fontWeight: 400, color: '#888882' }}>Resposta em até 24h</div>
+              <div style={{ fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 700, color: '#6F8F3A', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '14px' }}>Email</div>
+              <div style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', fontWeight: 500, color: '#315B2C', lineHeight: 1.5, wordBreak: 'break-all', marginBottom: '8px' }}>contato@agrovisaopara.com.br</div>
+              <div style={{ fontFamily: 'var(--font-sans)', fontSize: '13.5px', fontWeight: 400, color: '#888882' }}>Resposta em até 24h</div>
             </a>
 
             {/* Hours card */}
@@ -202,10 +202,10 @@ function Contact() {
                   <path d="M12 7V12L15.5 14.5" stroke="#315B2C" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </div>
-              <div style={{ fontFamily: 'var(--font-sans)', fontSize: '10.5px', fontWeight: 700, color: '#6F8F3A', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '14px' }}>Atendimento</div>
-              <div style={{ fontFamily: 'var(--font-sans)', fontSize: '15px', fontWeight: 600, color: '#1a1a18', marginBottom: '6px' }}>Segunda a Sexta</div>
-              <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: '28px', fontWeight: 300, color: '#315B2C', lineHeight: 1.1, marginBottom: '4px' }}>08h – 18h</div>
-              <div style={{ fontFamily: 'var(--font-sans)', fontSize: '12.5px', fontWeight: 400, color: '#888882' }}>Horário de Brasília</div>
+              <div style={{ fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 700, color: '#6F8F3A', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '14px' }}>Atendimento</div>
+              <div style={{ fontFamily: 'var(--font-sans)', fontSize: '16px', fontWeight: 600, color: '#1a1a18', marginBottom: '6px' }}>Segunda a Sexta</div>
+              <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: '29px', fontWeight: 300, color: '#315B2C', lineHeight: 1.1, marginBottom: '4px' }}>08h – 18h</div>
+              <div style={{ fontFamily: 'var(--font-sans)', fontSize: '13.5px', fontWeight: 400, color: '#888882' }}>Horário de Brasília</div>
             </div>
           </div>
         </div>
@@ -216,8 +216,8 @@ function Contact() {
         <div className="container" style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 84px' }}>
           <div style={{ textAlign: 'center', marginBottom: '64px' }}>
             <div style={{ width: '34px', height: '1px', background: '#315B2C', margin: '0 auto 18px' }} />
-            <span style={{ fontFamily: 'var(--font-sans)', fontSize: '10.5px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.24em', textTransform: 'uppercase', display: 'block', marginBottom: '16px' }}>Redes Sociais</span>
-            <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(36px, 4vw, 52px)', fontWeight: 400, color: '#1a1a18', lineHeight: 1.1, letterSpacing: '-0.015em' }}>Acompanhe a AgroVisão</h2>
+            <span style={{ fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.24em', textTransform: 'uppercase', display: 'block', marginBottom: '16px' }}>Redes Sociais</span>
+            <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(37px, calc(4vw + 1px), 53px)', fontWeight: 400, color: '#1a1a18', lineHeight: 1.1, letterSpacing: '-0.015em' }}>Acompanhe a AgroVisão</h2>
           </div>
 
           <div className="social-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '20px' }}>
@@ -238,8 +238,8 @@ function Contact() {
                 </svg>
               </div>
               <div>
-                <div style={{ fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 700, color: '#1a1a18', marginBottom: '4px' }}>Instagram</div>
-                <div style={{ fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 400, color: '#888882' }}>@visaogestaodeprojetos</div>
+                <div style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', fontWeight: 700, color: '#1a1a18', marginBottom: '4px' }}>Instagram</div>
+                <div style={{ fontFamily: 'var(--font-sans)', fontSize: '12.5px', fontWeight: 400, color: '#888882' }}>@visaogestaodeprojetos</div>
               </div>
             </a>
           </div>
@@ -252,10 +252,10 @@ function Contact() {
           <div className="map-grid" style={{ display: 'grid', gridTemplateColumns: '400px 1fr', gap: '60px', alignItems: 'start' }}>
             {/* Left panel */}
             <div>
-              <span style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', fontWeight: 700, color: '#6F8F3A', letterSpacing: '0.26em', textTransform: 'uppercase', display: 'block', marginBottom: '10px' }}>Localização</span>
-              <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: '46px', fontWeight: 600, color: '#1a1a18', lineHeight: 1.1, marginBottom: '12px' }}>Onde estamos</h2>
+              <span style={{ fontFamily: 'var(--font-sans)', fontSize: '11px', fontWeight: 700, color: '#6F8F3A', letterSpacing: '0.26em', textTransform: 'uppercase', display: 'block', marginBottom: '10px' }}>Localização</span>
+              <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: '47px', fontWeight: 600, color: '#1a1a18', lineHeight: 1.1, marginBottom: '12px' }}>Onde estamos</h2>
               <div style={{ width: '40px', height: '3px', background: '#315B2C', borderRadius: '2px', marginBottom: '22px' }} />
-              <p style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', fontWeight: 400, color: '#555550', lineHeight: 1.82, marginBottom: '36px' }}>
+              <p style={{ fontFamily: 'var(--font-sans)', fontSize: '15px', fontWeight: 400, color: '#555550', lineHeight: 1.82, marginBottom: '36px' }}>
                 Estamos estrategicamente localizados na Rodovia BR-316, próximos à Castanheira, no coração de Ananindeua, facilitando o atendimento em toda Amazônia Legal.
               </p>
 
@@ -268,8 +268,8 @@ function Contact() {
                   </svg>
                 </div>
                 <div>
-                  <span style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', fontWeight: 700, color: '#6F8F3A', letterSpacing: '0.2em', textTransform: 'uppercase', display: 'block', marginBottom: '6px' }}>Endereço</span>
-                  <div style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', fontWeight: 600, color: '#1a1a18', lineHeight: 1.7 }}>
+                  <span style={{ fontFamily: 'var(--font-sans)', fontSize: '11px', fontWeight: 700, color: '#6F8F3A', letterSpacing: '0.2em', textTransform: 'uppercase', display: 'block', marginBottom: '6px' }}>Endereço</span>
+                  <div style={{ fontFamily: 'var(--font-sans)', fontSize: '15px', fontWeight: 600, color: '#1a1a18', lineHeight: 1.7 }}>
                     Sala Comercial 206 Next Office<br />BR 316, próximo à Castanheira<br />Ananindeua - PA
                   </div>
                 </div>
@@ -286,8 +286,8 @@ function Contact() {
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="#F6F4EF"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" /></svg>
                 </div>
                 <div>
-                  <span style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', fontWeight: 700, color: '#6F8F3A', letterSpacing: '0.2em', textTransform: 'uppercase', display: 'block', marginBottom: '4px' }}>WhatsApp</span>
-                  <div style={{ fontFamily: 'var(--font-sans)', fontSize: '20px', fontWeight: 700, color: '#1a1a18', lineHeight: 1.45 }}>
+                  <span style={{ fontFamily: 'var(--font-sans)', fontSize: '11px', fontWeight: 700, color: '#6F8F3A', letterSpacing: '0.2em', textTransform: 'uppercase', display: 'block', marginBottom: '4px' }}>WhatsApp</span>
+                  <div style={{ fontFamily: 'var(--font-sans)', fontSize: '21px', fontWeight: 700, color: '#1a1a18', lineHeight: 1.45 }}>
                     (91) 98206-4340<br />(91) 98719-0993
                   </div>
                 </div>
@@ -302,8 +302,8 @@ function Contact() {
                   </svg>
                 </div>
                 <div>
-                  <span style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', fontWeight: 700, color: '#6F8F3A', letterSpacing: '0.2em', textTransform: 'uppercase', display: 'block', marginBottom: '6px' }}>Atendimento</span>
-                  <div style={{ fontFamily: 'var(--font-sans)', fontSize: '15px', fontWeight: 600, color: '#1a1a18', lineHeight: 1.6 }}>
+                  <span style={{ fontFamily: 'var(--font-sans)', fontSize: '11px', fontWeight: 700, color: '#6F8F3A', letterSpacing: '0.2em', textTransform: 'uppercase', display: 'block', marginBottom: '6px' }}>Atendimento</span>
+                  <div style={{ fontFamily: 'var(--font-sans)', fontSize: '16px', fontWeight: 600, color: '#1a1a18', lineHeight: 1.6 }}>
                     Segunda a Sexta<br />08:00 às 18:00
                   </div>
                 </div>
@@ -320,15 +320,15 @@ function Contact() {
                       <circle cx="15" cy="11" r="0.8" fill="#B8D48A" />
                     </svg>
                   </div>
-                  <h3 style={{ fontFamily: "'Barlow', sans-serif", fontSize: '22px', fontWeight: 600, color: '#F6F4EF', lineHeight: 1.3 }}>Vamos conversar sobre seu projeto?</h3>
+                  <h3 style={{ fontFamily: "'Barlow', sans-serif", fontSize: '23px', fontWeight: 600, color: '#F6F4EF', lineHeight: 1.3 }}>Vamos conversar sobre seu projeto?</h3>
                 </div>
-                <p style={{ fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 400, color: 'rgba(246,244,239,0.65)', lineHeight: 1.65, marginBottom: '22px' }}>
+                <p style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', fontWeight: 500, color: 'rgba(246,244,239,0.65)', lineHeight: 1.65, marginBottom: '22px' }}>
                   Nossa equipe está pronta para atender você.
                 </p>
                 <a
                   href="#"
                   onClick={(e) => { e.preventDefault(); openModal() }}
-                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', width: '100%', padding: '14px 24px', background: '#315B2C', color: '#F6F4EF', fontFamily: 'var(--font-sans)', fontSize: '12px', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '10px', transition: 'background 0.25s' }}
+                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', width: '100%', padding: '14px 24px', background: '#315B2C', color: '#F6F4EF', fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '10px', transition: 'background 0.25s' }}
                   onMouseEnter={(e) => { e.currentTarget.style.background = '#3d7036' }}
                   onMouseLeave={(e) => { e.currentTarget.style.background = '#315B2C' }}
                 >
@@ -355,8 +355,8 @@ function Contact() {
         <div className="container" style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 84px' }}>
           <div style={{ textAlign: 'center', marginBottom: '72px' }}>
             <div style={{ width: '34px', height: '1px', background: '#315B2C', margin: '0 auto 18px' }} />
-            <span style={{ fontFamily: 'var(--font-sans)', fontSize: '10.5px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.24em', textTransform: 'uppercase', display: 'block', marginBottom: '16px' }}>Diferenciais</span>
-            <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(36px, 4vw, 52px)', fontWeight: 400, color: '#1a1a18', lineHeight: 1.1, letterSpacing: '-0.015em' }}>Por que nos contatar</h2>
+            <span style={{ fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.24em', textTransform: 'uppercase', display: 'block', marginBottom: '16px' }}>Diferenciais</span>
+            <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(37px, calc(4vw + 1px), 53px)', fontWeight: 400, color: '#1a1a18', lineHeight: 1.1, letterSpacing: '-0.015em' }}>Por que nos contatar</h2>
           </div>
           <div className="reasons-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '32px' }}>
             <div style={{ background: '#FFFFFF', borderRadius: '14px', padding: '36px 32px', border: '1px solid rgba(49,91,44,0.08)' }}>
@@ -364,9 +364,9 @@ function Contact() {
                 <div style={{ width: '32px', height: '32px', background: '#315B2C', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7L5.5 10.5L12 3.5" stroke="#F6F4EF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
                 </div>
-                <h3 style={{ fontFamily: "'Barlow', sans-serif", fontSize: '22px', fontWeight: 500, color: '#1a1a18', lineHeight: 1.2 }}>Atendimento Especializado</h3>
+                <h3 style={{ fontFamily: "'Barlow', sans-serif", fontSize: '23px', fontWeight: 500, color: '#1a1a18', lineHeight: 1.2 }}>Atendimento Especializado</h3>
               </div>
-              <p style={{ fontFamily: 'var(--font-sans)', fontSize: '13.5px', fontWeight: 400, color: '#666660', lineHeight: 1.78 }}>Profissionais altamente qualificados com foco exclusivo em soluções agrícolas e fundiárias.</p>
+              <p style={{ fontFamily: 'var(--font-sans)', fontSize: '14.5px', fontWeight: 400, color: '#666660', lineHeight: 1.78 }}>Profissionais altamente qualificados com foco exclusivo em soluções agrícolas e fundiárias.</p>
             </div>
 
             <div style={{ background: '#FFFFFF', borderRadius: '14px', padding: '36px 32px', border: '1px solid rgba(49,91,44,0.08)' }}>
@@ -374,9 +374,9 @@ function Contact() {
                 <div style={{ width: '32px', height: '32px', background: '#315B2C', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7L5.5 10.5L12 3.5" stroke="#F6F4EF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
                 </div>
-                <h3 style={{ fontFamily: "'Barlow', sans-serif", fontSize: '22px', fontWeight: 500, color: '#1a1a18', lineHeight: 1.2 }}>Equipe Técnica</h3>
+                <h3 style={{ fontFamily: "'Barlow', sans-serif", fontSize: '23px', fontWeight: 500, color: '#1a1a18', lineHeight: 1.2 }}>Equipe Técnica</h3>
               </div>
-              <p style={{ fontFamily: 'var(--font-sans)', fontSize: '13.5px', fontWeight: 400, color: '#666660', lineHeight: 1.78 }}>Engenheiros agrônomos, ambientais, geógrafos e advogados especializados em direito agrário.</p>
+              <p style={{ fontFamily: 'var(--font-sans)', fontSize: '14.5px', fontWeight: 400, color: '#666660', lineHeight: 1.78 }}>Engenheiros agrônomos, ambientais, geógrafos e advogados especializados em direito agrário.</p>
             </div>
 
             <div style={{ background: '#FFFFFF', borderRadius: '14px', padding: '36px 32px', border: '1px solid rgba(49,91,44,0.08)' }}>
@@ -384,9 +384,9 @@ function Contact() {
                 <div style={{ width: '32px', height: '32px', background: '#315B2C', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7L5.5 10.5L12 3.5" stroke="#F6F4EF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
                 </div>
-                <h3 style={{ fontFamily: "'Barlow', sans-serif", fontSize: '22px', fontWeight: 500, color: '#1a1a18', lineHeight: 1.2 }}>Consultoria Personalizada</h3>
+                <h3 style={{ fontFamily: "'Barlow', sans-serif", fontSize: '23px', fontWeight: 500, color: '#1a1a18', lineHeight: 1.2 }}>Consultoria Personalizada</h3>
               </div>
-              <p style={{ fontFamily: 'var(--font-sans)', fontSize: '13.5px', fontWeight: 400, color: '#666660', lineHeight: 1.78 }}>Cada projeto é único. Desenvolvemos soluções sob medida para a sua realidade e necessidade.</p>
+              <p style={{ fontFamily: 'var(--font-sans)', fontSize: '14.5px', fontWeight: 400, color: '#666660', lineHeight: 1.78 }}>Cada projeto é único. Desenvolvemos soluções sob medida para a sua realidade e necessidade.</p>
             </div>
           </div>
         </div>
@@ -396,18 +396,18 @@ function Contact() {
       <section style={{ background: '#315B2C', padding: '128px 0' }}>
         <div style={{ maxWidth: '900px', margin: '0 auto', padding: '0 84px', textAlign: 'center' }}>
           <div style={{ width: '34px', height: '1px', background: '#B8D48A', margin: '0 auto 18px' }} />
-          <span style={{ fontFamily: 'var(--font-sans)', fontSize: '10.5px', fontWeight: 500, color: '#B8D48A', letterSpacing: '0.24em', textTransform: 'uppercase', display: 'block', marginBottom: '28px' }}>Próximo Passo</span>
-          <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(38px, 4.5vw, 62px)', fontWeight: 300, color: '#F6F4EF', lineHeight: 1.1, letterSpacing: '-0.02em', marginBottom: '24px', textWrap: 'pretty' }}>
-            Vamos construir seu próximo<br />projeto <span style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 600, fontSize: 'clamp(33px, 3.9vw, 53px)', fontStyle: 'normal' }}>juntos</span>.
+          <span style={{ fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 500, color: '#B8D48A', letterSpacing: '0.24em', textTransform: 'uppercase', display: 'block', marginBottom: '28px' }}>Próximo Passo</span>
+          <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(39px, calc(4.5vw + 1px), 63px)', fontWeight: 300, color: '#F6F4EF', lineHeight: 1.1, letterSpacing: '-0.02em', marginBottom: '24px', textWrap: 'pretty' }}>
+            Vamos construir seu próximo<br />projeto <span style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 600, fontSize: 'clamp(34px, calc(3.9vw + 1px), 54px)', fontStyle: 'normal' }}>juntos</span>.
           </h2>
-          <p style={{ fontFamily: 'var(--font-sans)', fontSize: '15px', fontWeight: 400, color: 'rgba(246,244,239,0.75)', lineHeight: 1.85, marginBottom: '52px', maxWidth: '560px', marginLeft: 'auto', marginRight: 'auto' }}>
+          <p style={{ fontFamily: 'var(--font-sans)', fontSize: '16px', fontWeight: 500, color: 'rgba(246,244,239,0.75)', lineHeight: 1.85, marginBottom: '52px', maxWidth: '560px', marginLeft: 'auto', marginRight: 'auto' }}>
             Preencha o formulário de contato ou fale diretamente pelo WhatsApp. Nossa equipe especializada está pronta para orientar você.
           </p>
           <div style={{ display: 'flex', gap: '14px', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap' }}>
             <a
               href="#"
               onClick={(e) => { e.preventDefault(); openModal() }}
-              style={{ display: 'inline-block', padding: '16px 44px', background: '#F6F4EF', color: '#315B2C', fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '8px', transition: 'background 0.25s' }}
+              style={{ display: 'inline-block', padding: '16px 44px', background: '#F6F4EF', color: '#315B2C', fontFamily: 'var(--font-sans)', fontSize: '12.5px', fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '8px', transition: 'background 0.25s' }}
               onMouseEnter={(e) => { e.currentTarget.style.background = '#ede9e2' }}
               onMouseLeave={(e) => { e.currentTarget.style.background = '#F6F4EF' }}
             >
@@ -417,7 +417,7 @@ function Contact() {
               href="https://api.whatsapp.com/send?phone=5591982064340"
               target="_blank"
               rel="noopener noreferrer"
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', padding: '15px 40px', color: '#F6F4EF', fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 500, letterSpacing: '0.16em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '8px', border: '1px solid rgba(246,244,239,0.4)', transition: 'border-color 0.25s' }}
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', padding: '15px 40px', color: '#F6F4EF', fontFamily: 'var(--font-sans)', fontSize: '12.5px', fontWeight: 500, letterSpacing: '0.16em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '8px', border: '1px solid rgba(246,244,239,0.4)', transition: 'border-color 0.25s' }}
               onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'rgba(246,244,239,0.72)' }}
               onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(246,244,239,0.4)' }}
             >
@@ -449,8 +449,8 @@ function Contact() {
           <div className="modal" style={{ background: '#FFFFFF', borderRadius: '12px', width: 'min(720px, 100%)', maxHeight: '88vh', overflowY: 'auto', boxShadow: '0 32px 100px rgba(0,0,0,0.28)' }}>
             <div style={{ padding: '36px 44px 24px', borderBottom: '1px solid rgba(49,91,44,0.08)', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', position: 'sticky', top: 0, background: '#FFFFFF', zIndex: 1, borderRadius: '12px 12px 0 0' }}>
               <div>
-                <div style={{ fontFamily: 'var(--font-sans)', fontSize: '10.5px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.24em', textTransform: 'uppercase', marginBottom: '10px' }}>Consultoria Gratuita</div>
-                <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: '30px', fontWeight: 400, color: '#1a1a18', lineHeight: 1.2 }}>Solicite um Atendimento</h2>
+                <div style={{ fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.24em', textTransform: 'uppercase', marginBottom: '10px' }}>Consultoria Gratuita</div>
+                <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: '31px', fontWeight: 400, color: '#1a1a18', lineHeight: 1.2 }}>Solicite um Atendimento</h2>
               </div>
               <button
                 onClick={closeModal}
@@ -466,38 +466,38 @@ function Contact() {
               <form onSubmit={submitForm} style={{ padding: '32px 44px 44px' }}>
                 <div className="form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '20px' }}>
                   <div>
-                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '10.5px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Nome Completo <span style={{ color: '#DD8758' }}>*</span></label>
-                    <input type="text" value={mData.name} onChange={ch('name')} placeholder="Seu nome completo" style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '14px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }} />
-                    {mErrs.name && <span style={{ fontFamily: 'var(--font-sans)', fontSize: '11.5px', color: '#c0392b', marginTop: '5px', display: 'block' }}>{mErrs.name}</span>}
+                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Nome Completo <span style={{ color: '#DD8758' }}>*</span></label>
+                    <input type="text" value={mData.name} onChange={ch('name')} placeholder="Seu nome completo" style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '15px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }} />
+                    {mErrs.name && <span style={{ fontFamily: 'var(--font-sans)', fontSize: '12.5px', color: '#c0392b', marginTop: '5px', display: 'block' }}>{mErrs.name}</span>}
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '10.5px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Empresa</label>
-                    <input type="text" value={mData.company} onChange={ch('company')} placeholder="Nome da empresa (opcional)" style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '14px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }} />
+                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Empresa</label>
+                    <input type="text" value={mData.company} onChange={ch('company')} placeholder="Nome da empresa (opcional)" style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '15px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }} />
                   </div>
                 </div>
                 <div className="form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '20px' }}>
                   <div>
-                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '10.5px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Telefone <span style={{ color: '#DD8758' }}>*</span></label>
-                    <input type="tel" value={mData.phone} onChange={ch('phone')} placeholder="(91) 9 9999-9999" style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '14px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }} />
-                    {mErrs.phone && <span style={{ fontFamily: 'var(--font-sans)', fontSize: '11.5px', color: '#c0392b', marginTop: '5px', display: 'block' }}>{mErrs.phone}</span>}
+                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Telefone <span style={{ color: '#DD8758' }}>*</span></label>
+                    <input type="tel" value={mData.phone} onChange={ch('phone')} placeholder="(91) 9 9999-9999" style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '15px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }} />
+                    {mErrs.phone && <span style={{ fontFamily: 'var(--font-sans)', fontSize: '12.5px', color: '#c0392b', marginTop: '5px', display: 'block' }}>{mErrs.phone}</span>}
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '10.5px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Email <span style={{ color: '#DD8758' }}>*</span></label>
-                    <input type="email" value={mData.email} onChange={ch('email')} placeholder="seu@email.com.br" style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '14px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }} />
-                    {mErrs.email && <span style={{ fontFamily: 'var(--font-sans)', fontSize: '11.5px', color: '#c0392b', marginTop: '5px', display: 'block' }}>{mErrs.email}</span>}
+                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Email <span style={{ color: '#DD8758' }}>*</span></label>
+                    <input type="email" value={mData.email} onChange={ch('email')} placeholder="seu@email.com.br" style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '15px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }} />
+                    {mErrs.email && <span style={{ fontFamily: 'var(--font-sans)', fontSize: '12.5px', color: '#c0392b', marginTop: '5px', display: 'block' }}>{mErrs.email}</span>}
                   </div>
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '20px' }}>
                   <div>
-                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '10.5px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Município</label>
-                    <input type="text" value={mData.city} onChange={ch('city')} placeholder="Sua cidade" style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '14px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }} />
+                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Município</label>
+                    <input type="text" value={mData.city} onChange={ch('city')} placeholder="Sua cidade" style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '15px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }} />
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '10.5px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Estado</label>
+                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Estado</label>
                     <select
                       value={mData.st}
                       onChange={ch('st')}
-                      style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '14px', color: '#1a1a18', background: '#FAFAF9', outline: 'none', appearance: 'none', cursor: 'pointer' }}
+                      style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '15px', color: '#1a1a18', background: '#FAFAF9', outline: 'none', appearance: 'none', cursor: 'pointer' }}
                     >
                       <option value="">Selecione o estado</option>
                       {UFS.map((uf) => (
@@ -507,11 +507,11 @@ function Contact() {
                   </div>
                 </div>
                 <div style={{ marginBottom: '20px' }}>
-                  <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '10.5px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Serviço de Interesse</label>
+                  <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Serviço de Interesse</label>
                   <select
                     value={mData.svc}
                     onChange={ch('svc')}
-                    style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '14px', color: '#1a1a18', background: '#FAFAF9', outline: 'none', appearance: 'none', cursor: 'pointer' }}
+                    style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '15px', color: '#1a1a18', background: '#FAFAF9', outline: 'none', appearance: 'none', cursor: 'pointer' }}
                   >
                     <option value="">Selecione o serviço</option>
                     <option value="regularizacao">Regularização Fundiária</option>
@@ -526,15 +526,15 @@ function Contact() {
                   </select>
                 </div>
                 <div style={{ marginBottom: '24px' }}>
-                  <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '10.5px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Mensagem <span style={{ color: '#DD8758' }}>*</span></label>
+                  <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Mensagem <span style={{ color: '#DD8758' }}>*</span></label>
                   <textarea
                     value={mData.msg}
                     onChange={ch('msg')}
                     rows={4}
                     placeholder="Descreva brevemente seu projeto ou necessidade…"
-                    style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '14px', color: '#1a1a18', background: '#FAFAF9', outline: 'none', resize: 'vertical', minHeight: '110px', lineHeight: 1.65 }}
+                    style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '15px', color: '#1a1a18', background: '#FAFAF9', outline: 'none', resize: 'vertical', minHeight: '110px', lineHeight: 1.65 }}
                   />
-                  {mErrs.msg && <span style={{ fontFamily: 'var(--font-sans)', fontSize: '11.5px', color: '#c0392b', marginTop: '5px', display: 'block' }}>{mErrs.msg}</span>}
+                  {mErrs.msg && <span style={{ fontFamily: 'var(--font-sans)', fontSize: '12.5px', color: '#c0392b', marginTop: '5px', display: 'block' }}>{mErrs.msg}</span>}
                 </div>
                 <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', padding: '16px', background: '#F8F7F3', borderRadius: '8px', marginBottom: '28px' }}>
                   <input
@@ -544,9 +544,9 @@ function Contact() {
                     onChange={ch('ok')}
                     style={{ width: '18px', height: '18px', accentColor: '#315B2C', marginTop: '2px', cursor: 'pointer', flexShrink: 0 }}
                   />
-                  <label htmlFor="c-prv" style={{ fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 400, color: '#555550', lineHeight: 1.65, cursor: 'pointer' }}>
+                  <label htmlFor="c-prv" style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', fontWeight: 400, color: '#555550', lineHeight: 1.65, cursor: 'pointer' }}>
                     Li e concordo com a <a href="#" style={{ color: '#315B2C', textDecoration: 'underline' }}>Política de Privacidade</a> da AgroVisão.
-                    {mErrs.ok && <span style={{ display: 'block', fontSize: '11.5px', color: '#c0392b', marginTop: '4px' }}>{mErrs.ok}</span>}
+                    {mErrs.ok && <span style={{ display: 'block', fontSize: '12.5px', color: '#c0392b', marginTop: '4px' }}>{mErrs.ok}</span>}
                   </label>
                 </div>
                 <button
@@ -558,7 +558,7 @@ function Contact() {
                     background: '#315B2C',
                     color: '#F6F4EF',
                     fontFamily: 'var(--font-sans)',
-                    fontSize: '11.5px',
+                    fontSize: '12.5px',
                     fontWeight: 600,
                     letterSpacing: '0.18em',
                     textTransform: 'uppercase',
@@ -579,8 +579,8 @@ function Contact() {
                     <path d="M5 14L11 20L23 8" stroke="#315B2C" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </div>
-                <h3 style={{ fontFamily: "'Barlow', sans-serif", fontSize: '34px', fontWeight: 400, color: '#1a1a18', marginBottom: '16px' }}>Solicitação Enviada!</h3>
-                <p style={{ fontFamily: 'var(--font-sans)', fontSize: '15px', color: '#555550', lineHeight: 1.75, maxWidth: '380px', margin: '0 auto 40px' }}>
+                <h3 style={{ fontFamily: "'Barlow', sans-serif", fontSize: '35px', fontWeight: 400, color: '#1a1a18', marginBottom: '16px' }}>Solicitação Enviada!</h3>
+                <p style={{ fontFamily: 'var(--font-sans)', fontSize: '16px', color: '#555550', lineHeight: 1.75, maxWidth: '380px', margin: '0 auto 40px' }}>
                   Nossa equipe entrará em contato em até <strong style={{ color: '#315B2C' }}>24 horas úteis</strong>. Obrigado pelo interesse na AgroVisão.
                 </p>
                 <button
@@ -590,7 +590,7 @@ function Contact() {
                     background: '#315B2C',
                     color: '#F6F4EF',
                     fontFamily: 'var(--font-sans)',
-                    fontSize: '11.5px',
+                    fontSize: '12.5px',
                     fontWeight: 600,
                     letterSpacing: '0.16em',
                     textTransform: 'uppercase',

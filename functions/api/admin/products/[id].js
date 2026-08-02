@@ -1,6 +1,7 @@
 import { json, error, requireAdmin, AuthError, authError } from '../_supabase.js';
 import { getProductById, validateProductInput, slugify, ensureUniqueSlug, readProductForm } from '../_products.js';
-import { validateImageFile, uploadProductImage, deleteProductImage, makeImagePath } from '../_storage.js';
+import { storage } from '../_storage.js';
+import { validateProcessedImage, makeImagePath, PRODUCT_IMAGE } from '../_image.js';
 
 export async function onRequest(context) {
   const { request, params, env } = context;
@@ -28,23 +29,35 @@ export async function onRequest(context) {
       const slug = await ensureUniqueSlug(supabase, slugify(name), id);
 
       // Cada slot (principal + 2 complementares) segue independente: arquivo
-      // novo substitui, removeImageN limpa e a omissão mantém o que está lá.
+      // novo substitui, removeImageN limpa e a omissão mantém o que está lá —
+      // inclusive as fotos antigas, que nunca são reprocessadas.
       const imagePaths = [...existing.imagePaths];
       const orphanPaths = [];
+      // Metadados acompanham só a imagem principal; sem upload novo no slot 1,
+      // os valores atuais do produto seguem intactos.
+      let imageMeta = {
+        mimeType: existing.imageMimeType,
+        size: existing.imageSize,
+        width: existing.imageWidth,
+        height: existing.imageHeight,
+      };
+
       for (let i = 0; i < files.length; i++) {
         if (files[i]) {
-          const fileCheck = await validateImageFile(files[i]);
+          const fileCheck = await validateProcessedImage(files[i], PRODUCT_IMAGE);
           if (!fileCheck.ok) return error(fileCheck.error, 400);
-          const uploaded = await uploadProductImage(env, {
+          const uploaded = await storage.upload(env, {
             bytes: fileCheck.data.bytes,
             mimeType: fileCheck.data.mimeType,
-            path: makeImagePath(slug, fileCheck.data.mimeType, i),
+            path: makeImagePath(slug, i),
           });
           if (imagePaths[i]) orphanPaths.push(imagePaths[i]);
           imagePaths[i] = uploaded.path;
+          if (i === 0) imageMeta = fileCheck.data;
         } else if (removeImages[i] && imagePaths[i]) {
           orphanPaths.push(imagePaths[i]);
           imagePaths[i] = '';
+          if (i === 0) imageMeta = { mimeType: '', size: 0, width: 0, height: 0 };
         }
       }
 
@@ -57,6 +70,10 @@ export async function onRequest(context) {
           image_path: imagePaths[0],
           image_path_2: imagePaths[1],
           image_path_3: imagePaths[2],
+          image_mime_type: imageMeta.mimeType,
+          image_size: imageMeta.size,
+          image_width: imageMeta.width,
+          image_height: imageMeta.height,
           price_cents: price,
           compare_price_cents: originalPrice,
           whatsapp_text: whatsappText,
@@ -71,7 +88,7 @@ export async function onRequest(context) {
 
       // Só apaga os arquivos antigos depois de o banco já não apontar para eles.
       for (const path of orphanPaths) {
-        await deleteProductImage(env, path);
+        await storage.delete(env, path);
       }
 
       const updated = await getProductById(supabase, env, id);
@@ -81,8 +98,9 @@ export async function onRequest(context) {
     if (request.method === 'DELETE') {
       const { error: deleteErr } = await supabase.from('products').delete().eq('id', id);
       if (deleteErr) return error(deleteErr.message, 500);
+      // Remove os arquivos dos 3 slots para não deixar órfão no bucket.
       for (const path of existing.imagePaths.filter(Boolean)) {
-        await deleteProductImage(env, path);
+        await storage.delete(env, path);
       }
       return json({ data: { ok: true } });
     }
