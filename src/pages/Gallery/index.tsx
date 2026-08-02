@@ -146,15 +146,15 @@ function Gallery() {
             {!loaded ? (
               <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '100px 0' }}>
                 <div style={{ width: '40px', height: '40px', border: '2px solid rgba(49,91,44,0.15)', borderTopColor: '#315B2C', borderRadius: '50%', margin: '0 auto 20px', animation: 'spin 0.8s linear infinite' }} />
-                <p style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', color: '#888882' }}>Carregando galeria...</p>
+                <p style={{ fontFamily: 'var(--font-sans)', fontSize: '17px', color: '#888882' }}>Carregando galeria...</p>
               </div>
             ) : loadError ? (
               <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '100px 0' }}>
-                <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: '22px', fontWeight: 500, color: '#DD8758', marginBottom: '8px' }}>Erro ao carregar</div>
-                <p style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', color: '#777772', marginBottom: '24px' }}>Não foi possível carregar a galeria. Tente novamente em instantes.</p>
+                <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: '25px', fontWeight: 500, color: '#DD8758', marginBottom: '8px' }}>Erro ao carregar</div>
+                <p style={{ fontFamily: 'var(--font-sans)', fontSize: '17px', color: '#777772', marginBottom: '24px' }}>Não foi possível carregar a galeria. Tente novamente em instantes.</p>
                 <button
                   onClick={retry}
-                  style={{ display: 'inline-block', padding: '12px 28px', background: '#315B2C', color: '#F6F4EF', fontFamily: 'var(--font-sans)', fontSize: '11px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '8px', border: 'none', cursor: 'pointer', transition: 'background 0.22s' }}
+                  style={{ display: 'inline-block', padding: '12px 28px', background: '#315B2C', color: '#F6F4EF', fontFamily: 'var(--font-sans)', fontSize: '14px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '8px', border: 'none', cursor: 'pointer', transition: 'background 0.22s' }}
                   onMouseEnter={(e) => { e.currentTarget.style.background = '#254822' }}
                   onMouseLeave={(e) => { e.currentTarget.style.background = '#315B2C' }}
                 >
@@ -163,8 +163,8 @@ function Gallery() {
               </div>
             ) : filtered.length === 0 ? (
               <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '100px 0' }}>
-                <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: '22px', fontWeight: 500, color: '#1a1a18', marginBottom: '8px' }}>Nenhum projeto encontrado</div>
-                <p style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', color: '#777772' }}>Tente ajustar sua busca.</p>
+                <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: '25px', fontWeight: 500, color: '#1a1a18', marginBottom: '8px' }}>Nenhum projeto encontrado</div>
+                <p style={{ fontFamily: 'var(--font-sans)', fontSize: '17px', color: '#777772' }}>Tente ajustar sua busca.</p>
               </div>
             ) : (
               <div className={styles.productGrid}>
@@ -194,7 +194,7 @@ function Gallery() {
                           </svg>
                         </div>
                       )}
-                      <div style={{ position: 'absolute', top: '10px', left: '10px', background: '#315B2C', color: '#F6F4EF', padding: '4px 10px', borderRadius: '4px', fontFamily: 'var(--font-sans)', fontSize: '9.5px', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', zIndex: 1 }}>
+                      <div style={{ position: 'absolute', top: '10px', left: '10px', background: '#315B2C', color: '#F6F4EF', padding: '4px 10px', borderRadius: '4px', fontFamily: 'var(--font-sans)', fontSize: '12.5px', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', zIndex: 1 }}>
                         {g.imageCount} {g.imageCount === 1 ? 'imagem' : 'imagens'}
                       </div>
                     </div>
@@ -202,13 +202,13 @@ function Gallery() {
                       <div className={styles.cardCategory}>{g.categoryLabel}</div>
                       <div className={styles.cardTitle}>{g.name}</div>
                       {g.brief && (
-                        <p style={{ fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 400, color: '#777772', lineHeight: 1.7, marginTop: '8px' }}>
+                        <p style={{ fontFamily: 'var(--font-sans)', fontSize: '16px', fontWeight: 400, color: '#777772', lineHeight: 1.7, marginTop: '8px' }}>
                           {g.brief}
                         </p>
                       )}
                       <div style={{ marginTop: '14px' }}>
                         <span
-                          style={{ fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 500, color: '#315B2C', textDecoration: 'underline', textUnderlineOffset: '3px', cursor: 'pointer' }}
+                          style={{ fontFamily: 'var(--font-sans)', fontSize: '16px', fontWeight: 500, color: '#315B2C', textDecoration: 'underline', textUnderlineOffset: '3px', cursor: 'pointer' }}
                         >
                           Veja mais..
                         </span>

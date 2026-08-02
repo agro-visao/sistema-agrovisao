@@ -278,16 +278,16 @@ function Projects() {
             <div style={up(0.4)}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '18px', marginBottom: '32px' }}>
                 <div style={{ width: '36px', height: '1px', background: '#B8D48A' }} />
-                <span style={{ fontFamily: 'var(--font-sans)', fontSize: '10.5px', fontWeight: 500, color: '#B8D48A', letterSpacing: '0.32em', textTransform: 'uppercase' }}>Portfólio · +100 Projetos Elaborados</span>
+                <span style={{ fontFamily: 'var(--font-sans)', fontSize: '13.5px', fontWeight: 500, color: '#B8D48A', letterSpacing: '0.32em', textTransform: 'uppercase' }}>Portfólio · +100 Projetos Elaborados</span>
               </div>
             </div>
             <div style={up(0.62)}>
-              <h1 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(42px, 5.6vw, 76px)', fontWeight: 300, color: '#F6F4EF', lineHeight: 1.06, letterSpacing: '-0.022em', marginBottom: '28px', textWrap: 'pretty' }}>
-                Transformando Ideias em<br /><span style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 600, fontSize: 'clamp(36px, 4.8vw, 65px)', fontStyle: 'normal' }}>Projetos que Geram Impacto.</span>
+              <h1 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(45px, calc(5.6vw + 3px), 79px)', fontWeight: 300, color: '#F6F4EF', lineHeight: 1.06, letterSpacing: '-0.022em', marginBottom: '28px', textWrap: 'pretty' }}>
+                Transformando Ideias em<br /><span style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 600, fontSize: 'clamp(39px, calc(4.8vw + 3px), 68px)', fontStyle: 'normal' }}>Projetos que Geram Impacto.</span>
               </h1>
             </div>
             <div style={up(0.84)}>
-              <p style={{ fontFamily: 'var(--font-sans)', fontSize: '16px', fontWeight: 400, color: 'rgba(246,244,239,0.80)', lineHeight: 1.80, maxWidth: '580px', marginBottom: '52px' }}>
+              <p style={{ fontFamily: 'var(--font-sans)', fontSize: '19px', fontWeight: 500, color: 'rgba(246,244,239,0.80)', lineHeight: 1.80, maxWidth: '580px', marginBottom: '52px' }}>
                 Mais de 100 projetos elaborados, estruturados e acompanhados para instituições públicas, privadas, organizações sociais e produtores rurais.
               </p>
             </div>
@@ -296,7 +296,7 @@ function Projects() {
                 <a
                   href="#projetos-logos"
                   onClick={(e) => { e.preventDefault(); document.getElementById('projetos-logos')?.scrollIntoView({ behavior: 'smooth' }) }}
-                  style={{ display: 'inline-block', padding: '15px 40px', background: '#315B2C', color: '#F6F4EF', fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '8px', transition: 'background 0.25s' }}
+                  style={{ display: 'inline-block', padding: '15px 40px', background: '#315B2C', color: '#F6F4EF', fontFamily: 'var(--font-sans)', fontSize: '14.5px', fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '8px', transition: 'background 0.25s' }}
                   onMouseEnter={(e) => { e.currentTarget.style.background = '#254822' }}
                   onMouseLeave={(e) => { e.currentTarget.style.background = '#315B2C' }}
                 >
@@ -305,7 +305,7 @@ function Projects() {
                 <a
                   href="#"
                   onClick={(e) => { e.preventDefault(); openModal() }}
-                  style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', padding: '14px 36px', color: '#F6F4EF', fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 500, letterSpacing: '0.16em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '8px', border: '1px solid rgba(246,244,239,0.40)', transition: 'border-color 0.25s' }}
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', padding: '14px 36px', color: '#F6F4EF', fontFamily: 'var(--font-sans)', fontSize: '14.5px', fontWeight: 500, letterSpacing: '0.16em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '8px', border: '1px solid rgba(246,244,239,0.40)', transition: 'border-color 0.25s' }}
                   onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'rgba(246,244,239,0.75)' }}
                   onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(246,244,239,0.40)' }}
                 >
@@ -327,27 +327,27 @@ function Projects() {
         <div className="container" style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 84px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '72px' }} data-animate>
             <div style={{ width: '34px', height: '1px', background: '#315B2C' }} />
-            <span style={{ fontFamily: 'var(--font-sans)', fontSize: '10.5px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.24em', textTransform: 'uppercase' }}>Credenciais e Números</span>
+            <span style={{ fontFamily: 'var(--font-sans)', fontSize: '13.5px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.24em', textTransform: 'uppercase' }}>Credenciais e Números</span>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', border: '1px solid rgba(49,91,44,0.10)', borderRadius: '16px', overflow: 'hidden', marginBottom: '32px' }} data-animate data-d="1">
             <div style={{ padding: '52px 44px', borderRight: '1px solid rgba(49,91,44,0.10)' }}>
-              <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: '76px', fontWeight: 300, color: '#315B2C', lineHeight: 1, marginBottom: '10px' }}>+100</div>
-              <div style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', fontWeight: 600, color: '#6F8F3A', letterSpacing: '0.22em', textTransform: 'uppercase', lineHeight: 1.55, marginBottom: '14px' }}>Projetos<br />Elaborados</div>
+              <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: '79px', fontWeight: 300, color: '#315B2C', lineHeight: 1, marginBottom: '10px' }}>+100</div>
+              <div style={{ fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 600, color: '#6F8F3A', letterSpacing: '0.22em', textTransform: 'uppercase', lineHeight: 1.55, marginBottom: '14px' }}>Projetos<br />Elaborados</div>
               <div style={{ width: '24px', height: '2px', background: '#B8D48A' }} />
             </div>
             <div style={{ padding: '52px 44px', borderRight: '1px solid rgba(49,91,44,0.10)' }}>
-              <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: '76px', fontWeight: 300, color: '#315B2C', lineHeight: 1, marginBottom: '10px' }}>15+</div>
-              <div style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', fontWeight: 600, color: '#6F8F3A', letterSpacing: '0.22em', textTransform: 'uppercase', lineHeight: 1.55, marginBottom: '14px' }}>Áreas de<br />Atuação</div>
+              <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: '79px', fontWeight: 300, color: '#315B2C', lineHeight: 1, marginBottom: '10px' }}>15+</div>
+              <div style={{ fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 600, color: '#6F8F3A', letterSpacing: '0.22em', textTransform: 'uppercase', lineHeight: 1.55, marginBottom: '14px' }}>Áreas de<br />Atuação</div>
               <div style={{ width: '24px', height: '2px', background: '#B8D48A' }} />
             </div>
             <div style={{ padding: '52px 44px', borderRight: '1px solid rgba(49,91,44,0.10)' }}>
-              <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: '76px', fontWeight: 300, color: '#315B2C', lineHeight: 1, marginBottom: '10px' }}>∞</div>
-              <div style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', fontWeight: 600, color: '#6F8F3A', letterSpacing: '0.22em', textTransform: 'uppercase', lineHeight: 1.55, marginBottom: '14px' }}>Municípios<br />Atendidos</div>
+              <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: '79px', fontWeight: 300, color: '#315B2C', lineHeight: 1, marginBottom: '10px' }}>∞</div>
+              <div style={{ fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 600, color: '#6F8F3A', letterSpacing: '0.22em', textTransform: 'uppercase', lineHeight: 1.55, marginBottom: '14px' }}>Municípios<br />Atendidos</div>
               <div style={{ width: '24px', height: '2px', background: '#B8D48A' }} />
             </div>
             <div style={{ padding: '52px 44px', background: '#315B2C' }}>
-              <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: '76px', fontWeight: 300, color: '#F6F4EF', lineHeight: 1, marginBottom: '10px' }}>10+</div>
-              <div style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', fontWeight: 600, color: '#B8D48A', letterSpacing: '0.22em', textTransform: 'uppercase', lineHeight: 1.55, marginBottom: '14px' }}>Anos de<br />Experiência</div>
+              <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: '79px', fontWeight: 300, color: '#F6F4EF', lineHeight: 1, marginBottom: '10px' }}>10+</div>
+              <div style={{ fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 600, color: '#B8D48A', letterSpacing: '0.22em', textTransform: 'uppercase', lineHeight: 1.55, marginBottom: '14px' }}>Anos de<br />Experiência</div>
               <div style={{ width: '24px', height: '2px', background: 'rgba(184,212,138,0.5)' }} />
             </div>
           </div>
@@ -357,8 +357,8 @@ function Projects() {
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="3" width="16" height="14" rx="2" stroke="#F6F4EF" strokeWidth="1.3" fill="none" /><path d="M6 7H14M6 10H11" stroke="#F6F4EF" strokeWidth="1.2" strokeLinecap="round" /></svg>
               </div>
               <div>
-                <div style={{ fontFamily: 'var(--font-sans)', fontSize: '9px', fontWeight: 600, color: '#6F8F3A', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '4px' }}>Empresa Registrada</div>
-                <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: '18px', fontWeight: 400, color: '#1a1a18', letterSpacing: '0.04em' }}>CNPJ: 55.818.360/0001-33</div>
+                <div style={{ fontFamily: 'var(--font-sans)', fontSize: '12px', fontWeight: 600, color: '#6F8F3A', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '4px' }}>Empresa Registrada</div>
+                <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: '21px', fontWeight: 400, color: '#1a1a18', letterSpacing: '0.04em' }}>CNPJ: 55.818.360/0001-33</div>
               </div>
             </div>
             <div style={{ width: '1px', height: '44px', background: 'rgba(49,91,44,0.12)' }} />
@@ -367,8 +367,8 @@ function Projects() {
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="white" strokeWidth="1.5" fill="none" /><circle cx="12" cy="12" r="4.5" stroke="white" strokeWidth="1.5" fill="none" /><circle cx="17.5" cy="6.5" r="1" fill="white" /></svg>
               </div>
               <div>
-                <div style={{ fontFamily: 'var(--font-sans)', fontSize: '9px', fontWeight: 600, color: '#6F8F3A', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '4px' }}>Instagram Oficial</div>
-                <a href="https://www.instagram.com/visaogestaodeprojetos/" target="_blank" rel="noopener noreferrer" style={{ fontFamily: "'Barlow', sans-serif", fontSize: '18px', fontWeight: 400, color: '#1a1a18', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={(e) => { e.currentTarget.style.color = '#315B2C' }} onMouseLeave={(e) => { e.currentTarget.style.color = '#1a1a18' }}>@visaogestaodeprojetos</a>
+                <div style={{ fontFamily: 'var(--font-sans)', fontSize: '12px', fontWeight: 600, color: '#6F8F3A', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '4px' }}>Instagram Oficial</div>
+                <a href="https://www.instagram.com/visaogestaodeprojetos/" target="_blank" rel="noopener noreferrer" style={{ fontFamily: "'Barlow', sans-serif", fontSize: '21px', fontWeight: 400, color: '#1a1a18', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={(e) => { e.currentTarget.style.color = '#315B2C' }} onMouseLeave={(e) => { e.currentTarget.style.color = '#1a1a18' }}>@visaogestaodeprojetos</a>
               </div>
             </div>
             <div style={{ width: '1px', height: '44px', background: 'rgba(49,91,44,0.12)' }} />
@@ -377,8 +377,8 @@ function Projects() {
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" /></svg>
               </div>
               <div>
-                <div style={{ fontFamily: 'var(--font-sans)', fontSize: '9px', fontWeight: 600, color: '#6F8F3A', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '4px' }}>Consultoria Técnica</div>
-                <a href="https://api.whatsapp.com/send?phone=5591982064340" target="_blank" rel="noopener noreferrer" style={{ fontFamily: "'Barlow', sans-serif", fontSize: '18px', fontWeight: 400, color: '#1a1a18', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={(e) => { e.currentTarget.style.color = '#315B2C' }} onMouseLeave={(e) => { e.currentTarget.style.color = '#1a1a18' }}>(91) 98206-4340</a>
+                <div style={{ fontFamily: 'var(--font-sans)', fontSize: '12px', fontWeight: 600, color: '#6F8F3A', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '4px' }}>Consultoria Técnica</div>
+                <a href="https://api.whatsapp.com/send?phone=5591982064340" target="_blank" rel="noopener noreferrer" style={{ fontFamily: "'Barlow', sans-serif", fontSize: '21px', fontWeight: 400, color: '#1a1a18', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={(e) => { e.currentTarget.style.color = '#315B2C' }} onMouseLeave={(e) => { e.currentTarget.style.color = '#1a1a18' }}>(91) 98206-4340</a>
               </div>
             </div>
           </div>
@@ -392,12 +392,12 @@ function Projects() {
             <div data-animate>
               <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '22px' }}>
                 <div style={{ width: '34px', height: '1px', background: '#315B2C' }} />
-                <span style={{ fontFamily: 'var(--font-sans)', fontSize: '10.5px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.24em', textTransform: 'uppercase' }}>Nossa Experiência</span>
+                <span style={{ fontFamily: 'var(--font-sans)', fontSize: '13.5px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.24em', textTransform: 'uppercase' }}>Nossa Experiência</span>
               </div>
-              <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(36px, 3.8vw, 54px)', fontWeight: 400, color: '#1a1a18', lineHeight: 1.1, letterSpacing: '-0.018em', marginBottom: '26px', textWrap: 'pretty' }}>
-                Do planejamento<br />à execução<br /><span style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 600, fontSize: 'clamp(31px, 3.3vw, 46px)', color: '#315B2C', fontStyle: 'normal' }}>completa</span>.
+              <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(39px, calc(3.8vw + 3px), 57px)', fontWeight: 400, color: '#1a1a18', lineHeight: 1.1, letterSpacing: '-0.018em', marginBottom: '26px', textWrap: 'pretty' }}>
+                Do planejamento<br />à execução<br /><span style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 600, fontSize: 'clamp(34px, calc(3.3vw + 3px), 49px)', color: '#315B2C', fontStyle: 'normal' }}>completa</span>.
               </h2>
-              <p style={{ fontFamily: 'var(--font-sans)', fontSize: '14.5px', fontWeight: 400, color: '#4a4a44', lineHeight: 1.9, marginBottom: '44px', maxWidth: '460px' }}>
+              <p style={{ fontFamily: 'var(--font-sans)', fontSize: '17.5px', fontWeight: 400, color: '#4a4a44', lineHeight: 1.9, marginBottom: '44px', maxWidth: '460px' }}>
                 A AgroVisão desenvolve projetos integrais — do diagnóstico inicial até a prestação de contas final — garantindo resultados sustentáveis e alinhados às exigências legais.
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
@@ -410,11 +410,11 @@ function Projects() {
                 ].map((s) => (
                   <div key={s.num} style={{ display: 'flex', alignItems: 'flex-start', gap: '18px', padding: '18px 0', borderBottom: s.num === '5' ? 'none' : '1px solid rgba(49,91,44,0.09)' }}>
                     <div style={{ width: '30px', height: '30px', border: '1.5px solid #315B2C', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '2px' }}>
-                      <span style={{ fontFamily: "'Barlow', sans-serif", fontSize: '13px', fontWeight: 500, color: '#315B2C' }}>{s.num}</span>
+                      <span style={{ fontFamily: "'Barlow', sans-serif", fontSize: '16px', fontWeight: 500, color: '#315B2C' }}>{s.num}</span>
                     </div>
                     <div>
-                      <div style={{ fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 700, color: '#315B2C', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '4px' }}>{s.title}</div>
-                      <div style={{ fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 400, color: '#666660', lineHeight: 1.7 }}>{s.desc}</div>
+                      <div style={{ fontFamily: 'var(--font-sans)', fontSize: '14.5px', fontWeight: 700, color: '#315B2C', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '4px' }}>{s.title}</div>
+                      <div style={{ fontFamily: 'var(--font-sans)', fontSize: '16px', fontWeight: 400, color: '#666660', lineHeight: 1.7 }}>{s.desc}</div>
                     </div>
                   </div>
                 ))}
@@ -425,8 +425,8 @@ function Projects() {
                 <img src="https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=900&q=88&fm=jpg&fit=crop" alt="Equipe em campo" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
               </div>
               <div style={{ position: 'absolute', bottom: '-28px', left: '-28px', background: '#315B2C', borderRadius: '14px', padding: '24px 30px', boxShadow: '0 16px 48px rgba(0,0,0,0.2)' }}>
-                <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: '40px', fontWeight: 300, color: '#F6F4EF', lineHeight: 1, marginBottom: '6px' }}>100<span style={{ fontSize: '22px', color: '#B8D48A' }}>+</span></div>
-                <div style={{ fontFamily: 'var(--font-sans)', fontSize: '9.5px', fontWeight: 600, color: '#B8D48A', letterSpacing: '0.2em', textTransform: 'uppercase' }}>Projetos Aprovados</div>
+                <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: '43px', fontWeight: 300, color: '#F6F4EF', lineHeight: 1, marginBottom: '6px' }}>100<span style={{ fontSize: '25px', color: '#B8D48A' }}>+</span></div>
+                <div style={{ fontFamily: 'var(--font-sans)', fontSize: '12.5px', fontWeight: 600, color: '#B8D48A', letterSpacing: '0.2em', textTransform: 'uppercase' }}>Projetos Aprovados</div>
               </div>
             </div>
           </div>
@@ -439,11 +439,11 @@ function Projects() {
           <div style={{ textAlign: 'center', marginBottom: '72px' }} data-animate>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px', marginBottom: '22px' }}>
               <div style={{ width: '34px', height: '1px', background: '#315B2C' }} />
-              <span style={{ fontFamily: 'var(--font-sans)', fontSize: '10.5px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.24em', textTransform: 'uppercase' }}>Áreas de Atuação</span>
+              <span style={{ fontFamily: 'var(--font-sans)', fontSize: '13.5px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.24em', textTransform: 'uppercase' }}>Áreas de Atuação</span>
               <div style={{ width: '34px', height: '1px', background: '#315B2C' }} />
             </div>
-            <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(38px, 4.2vw, 58px)', fontWeight: 400, color: '#1a1a18', lineHeight: 1.1, letterSpacing: '-0.018em', marginBottom: '18px' }}>Categorias de Projetos</h2>
-            <p style={{ fontFamily: 'var(--font-sans)', fontSize: '15px', fontWeight: 400, color: '#666660', lineHeight: 1.8, maxWidth: '520px', margin: '0 auto' }}>Atuamos em múltiplas frentes do desenvolvimento sustentável, social e econômico para a Amazônia Legal.</p>
+            <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(41px, calc(4.2vw + 3px), 61px)', fontWeight: 400, color: '#1a1a18', lineHeight: 1.1, letterSpacing: '-0.018em', marginBottom: '18px' }}>Categorias de Projetos</h2>
+            <p style={{ fontFamily: 'var(--font-sans)', fontSize: '18px', fontWeight: 400, color: '#666660', lineHeight: 1.8, maxWidth: '520px', margin: '0 auto' }}>Atuamos em múltiplas frentes do desenvolvimento sustentável, social e econômico para a Amazônia Legal.</p>
           </div>
           {/* Cards cadastrados no painel (Dashboard → Cat. de Projetos). */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '14px' }} data-animate data-d="1">
@@ -452,7 +452,7 @@ function Projects() {
                 <div style={{ width: '52px', height: '52px', background: 'rgba(49,91,44,0.07)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 18px', color: '#315B2C' }}>
                   <svg width="26" height="26" viewBox="0 0 26 26" fill="none" dangerouslySetInnerHTML={{ __html: projectCategoryIconSvg(cat.icon) }} />
                 </div>
-                <h3 style={{ fontFamily: "'Barlow', sans-serif", fontSize: '17px', fontWeight: 500, color: '#1a1a18', lineHeight: 1.3, marginBottom: '8px' }}>{cat.label}</h3>
+                <h3 style={{ fontFamily: "'Barlow', sans-serif", fontSize: '20px', fontWeight: 500, color: '#1a1a18', lineHeight: 1.3, marginBottom: '8px' }}>{cat.label}</h3>
                 <div style={{ width: '18px', height: '2px', background: '#B8D48A', margin: '0 auto' }} />
               </div>
             ))}
@@ -465,7 +465,7 @@ function Projects() {
         <div className="container" style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 84px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '80px' }} data-animate>
             <div style={{ width: '34px', height: '1px', background: '#315B2C' }} />
-            <span style={{ fontFamily: 'var(--font-sans)', fontSize: '10.5px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.24em', textTransform: 'uppercase' }}>Projetos em Destaque</span>
+            <span style={{ fontFamily: 'var(--font-sans)', fontSize: '13.5px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.24em', textTransform: 'uppercase' }}>Projetos em Destaque</span>
           </div>
           {highlightProjects.map((h, idx) => (
             <div key={idx} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'center', marginBottom: idx < highlightProjects.length - 1 ? '120px' : '0' }} data-animate>
@@ -475,21 +475,21 @@ function Projects() {
                     <img src={h.img} alt={h.title} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', transition: 'transform 0.6s ease' }} onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.04)' }} onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)' }} />
                   </div>
                   <div>
-                    <span style={{ display: 'inline-block', fontFamily: 'var(--font-sans)', fontSize: '9.5px', fontWeight: 700, color: '#315B2C', letterSpacing: '0.22em', textTransform: 'uppercase', background: 'rgba(49,91,44,0.08)', padding: '6px 14px', borderRadius: '4px', marginBottom: '26px' }}>{h.tag}</span>
-                    <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(30px, 3.2vw, 44px)', fontWeight: 400, color: '#1a1a18', lineHeight: 1.12, letterSpacing: '-0.015em', marginBottom: '18px', textWrap: 'pretty' }}>{h.title}</h2>
-                    <p style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', fontWeight: 400, color: '#4a4a44', lineHeight: 1.85, marginBottom: '28px' }}>{h.desc}</p>
+                    <span style={{ display: 'inline-block', fontFamily: 'var(--font-sans)', fontSize: '12.5px', fontWeight: 700, color: '#315B2C', letterSpacing: '0.22em', textTransform: 'uppercase', background: 'rgba(49,91,44,0.08)', padding: '6px 14px', borderRadius: '4px', marginBottom: '26px' }}>{h.tag}</span>
+                    <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(33px, calc(3.2vw + 3px), 47px)', fontWeight: 400, color: '#1a1a18', lineHeight: 1.12, letterSpacing: '-0.015em', marginBottom: '18px', textWrap: 'pretty' }}>{h.title}</h2>
+                    <p style={{ fontFamily: 'var(--font-sans)', fontSize: '17px', fontWeight: 400, color: '#4a4a44', lineHeight: 1.85, marginBottom: '28px' }}>{h.desc}</p>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '32px' }}>
                       {h.items.map((item, i) => (
                         <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
                           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0, marginTop: '3px' }}><path d="M2 8L6 12L14 4" stroke="#315B2C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                          <span style={{ fontFamily: 'var(--font-sans)', fontSize: '13.5px', fontWeight: 400, color: '#555550', lineHeight: 1.65 }}>{item}</span>
+                          <span style={{ fontFamily: 'var(--font-sans)', fontSize: '16.5px', fontWeight: 400, color: '#555550', lineHeight: 1.65 }}>{item}</span>
                         </div>
                       ))}
                     </div>
                     <a
                       href="#"
                       onClick={(e) => { e.preventDefault(); openModal() }}
-                      style={{ display: 'inline-block', padding: '13px 32px', background: '#315B2C', color: '#F6F4EF', fontFamily: 'var(--font-sans)', fontSize: '10.5px', fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '8px', transition: 'background 0.25s' }}
+                      style={{ display: 'inline-block', padding: '13px 32px', background: '#315B2C', color: '#F6F4EF', fontFamily: 'var(--font-sans)', fontSize: '13.5px', fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '8px', transition: 'background 0.25s' }}
                       onMouseEnter={(e) => { e.currentTarget.style.background = '#254822' }}
                       onMouseLeave={(e) => { e.currentTarget.style.background = '#315B2C' }}
                     >
@@ -500,21 +500,21 @@ function Projects() {
               ) : (
                 <>
                   <div>
-                    <span style={{ display: 'inline-block', fontFamily: 'var(--font-sans)', fontSize: '9.5px', fontWeight: 700, color: '#315B2C', letterSpacing: '0.22em', textTransform: 'uppercase', background: 'rgba(49,91,44,0.08)', padding: '6px 14px', borderRadius: '4px', marginBottom: '26px' }}>{h.tag}</span>
-                    <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(30px, 3.2vw, 44px)', fontWeight: 400, color: '#1a1a18', lineHeight: 1.12, letterSpacing: '-0.015em', marginBottom: '18px', textWrap: 'pretty' }}>{h.title}</h2>
-                    <p style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', fontWeight: 400, color: '#4a4a44', lineHeight: 1.85, marginBottom: '28px' }}>{h.desc}</p>
+                    <span style={{ display: 'inline-block', fontFamily: 'var(--font-sans)', fontSize: '12.5px', fontWeight: 700, color: '#315B2C', letterSpacing: '0.22em', textTransform: 'uppercase', background: 'rgba(49,91,44,0.08)', padding: '6px 14px', borderRadius: '4px', marginBottom: '26px' }}>{h.tag}</span>
+                    <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(33px, calc(3.2vw + 3px), 47px)', fontWeight: 400, color: '#1a1a18', lineHeight: 1.12, letterSpacing: '-0.015em', marginBottom: '18px', textWrap: 'pretty' }}>{h.title}</h2>
+                    <p style={{ fontFamily: 'var(--font-sans)', fontSize: '17px', fontWeight: 400, color: '#4a4a44', lineHeight: 1.85, marginBottom: '28px' }}>{h.desc}</p>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '32px' }}>
                       {h.items.map((item, i) => (
                         <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
                           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0, marginTop: '3px' }}><path d="M2 8L6 12L14 4" stroke="#315B2C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                          <span style={{ fontFamily: 'var(--font-sans)', fontSize: '13.5px', fontWeight: 400, color: '#555550', lineHeight: 1.65 }}>{item}</span>
+                          <span style={{ fontFamily: 'var(--font-sans)', fontSize: '16.5px', fontWeight: 400, color: '#555550', lineHeight: 1.65 }}>{item}</span>
                         </div>
                       ))}
                     </div>
                     <a
                       href="#"
                       onClick={(e) => { e.preventDefault(); openModal() }}
-                      style={{ display: 'inline-block', padding: '13px 32px', background: '#315B2C', color: '#F6F4EF', fontFamily: 'var(--font-sans)', fontSize: '10.5px', fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '8px', transition: 'background 0.25s' }}
+                      style={{ display: 'inline-block', padding: '13px 32px', background: '#315B2C', color: '#F6F4EF', fontFamily: 'var(--font-sans)', fontSize: '13.5px', fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '8px', transition: 'background 0.25s' }}
                       onMouseEnter={(e) => { e.currentTarget.style.background = '#254822' }}
                       onMouseLeave={(e) => { e.currentTarget.style.background = '#315B2C' }}
                     >
@@ -537,11 +537,11 @@ function Projects() {
           <div style={{ textAlign: 'center', marginBottom: '56px' }} data-animate>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px', marginBottom: '22px' }}>
               <div style={{ width: '34px', height: '1px', background: '#315B2C' }} />
-              <span style={{ fontFamily: 'var(--font-sans)', fontSize: '10.5px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.24em', textTransform: 'uppercase' }}>Portfólio Institucional</span>
+              <span style={{ fontFamily: 'var(--font-sans)', fontSize: '13.5px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.24em', textTransform: 'uppercase' }}>Portfólio Institucional</span>
               <div style={{ width: '34px', height: '1px', background: '#315B2C' }} />
             </div>
-            <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(38px, 4.2vw, 58px)', fontWeight: 400, color: '#1a1a18', lineHeight: 1.1, letterSpacing: '-0.018em', marginBottom: '18px' }}>Projetos Desenvolvidos</h2>
-            <p style={{ fontFamily: 'var(--font-sans)', fontSize: '15px', fontWeight: 400, color: '#666660', lineHeight: 1.8, maxWidth: '520px', margin: '0 auto' }}>Filtre por categoria e clique em um projeto para conhecer os detalhes. Mais de vinte iniciativas realizadas na Amazônia Legal.</p>
+            <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(41px, calc(4.2vw + 3px), 61px)', fontWeight: 400, color: '#1a1a18', lineHeight: 1.1, letterSpacing: '-0.018em', marginBottom: '18px' }}>Projetos Desenvolvidos</h2>
+            <p style={{ fontFamily: 'var(--font-sans)', fontSize: '18px', fontWeight: 400, color: '#666660', lineHeight: 1.8, maxWidth: '520px', margin: '0 auto' }}>Filtre por categoria e clique em um projeto para conhecer os detalhes. Mais de vinte iniciativas realizadas na Amazônia Legal.</p>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', flexWrap: 'wrap', marginBottom: '44px' }} data-animate data-d="1">
             {CATEGORY_ORDER.map(([key, label]) => (
@@ -551,7 +551,7 @@ function Projects() {
                 style={{
                   padding: '10px 22px',
                   fontFamily: 'var(--font-sans)',
-                  fontSize: '12px',
+                  fontSize: '15px',
                   fontWeight: activeCat === key ? 700 : 500,
                   color: activeCat === key ? '#F6F4EF' : '#315B2C',
                   background: activeCat === key ? '#315B2C' : 'transparent',
@@ -590,20 +590,20 @@ function Projects() {
                       )}
                     </div>
                     <div style={{ textAlign: 'center' }}>
-                      <div style={{ fontFamily: 'var(--font-sans)', fontSize: '12px', fontWeight: 600, color: '#1a1a18', lineHeight: 1.3 }}>{p.name}</div>
-                      <div style={{ fontFamily: 'var(--font-sans)', fontSize: '9px', fontWeight: 600, color: '#6F8F3A', letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: '4px' }}>{p.catLabel}</div>
+                      <div style={{ fontFamily: 'var(--font-sans)', fontSize: '15px', fontWeight: 600, color: '#1a1a18', lineHeight: 1.3 }}>{p.name}</div>
+                      <div style={{ fontFamily: 'var(--font-sans)', fontSize: '12px', fontWeight: 600, color: '#6F8F3A', letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: '4px' }}>{p.catLabel}</div>
                     </div>
                   </div>
                 ))
               ) : (
                 <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '60px 0' }}>
-                  <p style={{ fontFamily: 'var(--font-sans)', fontSize: '16px', color: '#888882' }}>Nenhum projeto encontrado nesta categoria.</p>
+                  <p style={{ fontFamily: 'var(--font-sans)', fontSize: '19px', color: '#888882' }}>Nenhum projeto encontrado nesta categoria.</p>
                 </div>
               )
             ) : (
               <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '60px 0' }}>
                 <div style={{ width: '40px', height: '40px', border: '2px solid rgba(49,91,44,0.15)', borderTopColor: '#315B2C', borderRadius: '50%', margin: '0 auto 20px', animation: 'spin 0.8s linear infinite' }} />
-                <p style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', color: '#888882' }}>Carregando projetos...</p>
+                <p style={{ fontFamily: 'var(--font-sans)', fontSize: '17px', color: '#888882' }}>Carregando projetos...</p>
               </div>
             )}
           </div>
@@ -617,11 +617,11 @@ function Projects() {
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '20px' }}>
                 <div style={{ width: '34px', height: '1px', background: '#315B2C' }} />
-                <span style={{ fontFamily: 'var(--font-sans)', fontSize: '10.5px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.24em', textTransform: 'uppercase' }}>Atividades de Campo</span>
+                <span style={{ fontFamily: 'var(--font-sans)', fontSize: '13.5px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.24em', textTransform: 'uppercase' }}>Atividades de Campo</span>
               </div>
-              <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(38px, 4.2vw, 56px)', fontWeight: 400, color: '#1a1a18', lineHeight: 1.1, letterSpacing: '-0.018em' }}>Projetos em Ação</h2>
+              <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(41px, calc(4.2vw + 3px), 59px)', fontWeight: 400, color: '#1a1a18', lineHeight: 1.1, letterSpacing: '-0.018em' }}>Projetos em Ação</h2>
             </div>
-            <p style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', fontWeight: 400, color: '#666660', lineHeight: 1.8, maxWidth: '340px', marginBottom: '6px' }}>Visitas técnicas, capacitações, construções e atividades comunitárias desenvolvidas em campo pela equipe AgroVisão.</p>
+            <p style={{ fontFamily: 'var(--font-sans)', fontSize: '17px', fontWeight: 400, color: '#666660', lineHeight: 1.8, maxWidth: '340px', marginBottom: '6px' }}>Visitas técnicas, capacitações, construções e atividades comunitárias desenvolvidas em campo pela equipe AgroVisão.</p>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gridTemplateRows: 'auto', gap: '12px' }} data-animate data-d="1">
             {galleryItems.map((g, idx) => {
@@ -638,7 +638,7 @@ function Projects() {
                 >
                   <img src={g.img} alt={g.label} style={{ width: '100%', height: g.span === 'row-span-2' ? '480px' : '230px', objectFit: 'cover', display: 'block', transition: 'transform 0.6s ease' }} />
                   <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(0deg, rgba(6,14,4,0.4) 0%, rgba(6,14,4,0.05) 60%, transparent 100%)', display: 'flex', alignItems: 'flex-end', padding: '18px' }}>
-                    <span style={{ fontFamily: 'var(--font-sans)', fontSize: '11px', fontWeight: 600, color: '#F6F4EF', letterSpacing: '0.14em', textTransform: 'uppercase' }}>{g.label}</span>
+                    <span style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', fontWeight: 600, color: '#F6F4EF', letterSpacing: '0.14em', textTransform: 'uppercase' }}>{g.label}</span>
                   </div>
                 </div>
               )
@@ -653,11 +653,11 @@ function Projects() {
           <div style={{ textAlign: 'center', marginBottom: '80px' }} data-animate>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px', marginBottom: '22px' }}>
               <div style={{ width: '34px', height: '1px', background: '#B8D48A' }} />
-              <span style={{ fontFamily: 'var(--font-sans)', fontSize: '10.5px', fontWeight: 500, color: '#B8D48A', letterSpacing: '0.24em', textTransform: 'uppercase' }}>Nossa Metodologia</span>
+              <span style={{ fontFamily: 'var(--font-sans)', fontSize: '13.5px', fontWeight: 500, color: '#B8D48A', letterSpacing: '0.24em', textTransform: 'uppercase' }}>Nossa Metodologia</span>
               <div style={{ width: '34px', height: '1px', background: '#B8D48A' }} />
             </div>
-            <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(36px, 4.2vw, 56px)', fontWeight: 300, color: '#F6F4EF', lineHeight: 1.1, letterSpacing: '-0.018em' }}>
-              Como desenvolvemos<br /><span style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 600, fontSize: 'clamp(31px, 3.6vw, 48px)', color: '#B8D48A', fontStyle: 'normal' }}>cada projeto</span>
+            <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(39px, calc(4.2vw + 3px), 59px)', fontWeight: 300, color: '#F6F4EF', lineHeight: 1.1, letterSpacing: '-0.018em' }}>
+              Como desenvolvemos<br /><span style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 600, fontSize: 'clamp(34px, calc(3.6vw + 3px), 51px)', color: '#B8D48A', fontStyle: 'normal' }}>cada projeto</span>
             </h2>
           </div>
           <div style={{ position: 'relative' }} data-animate data-d="1">
@@ -682,11 +682,11 @@ function Projects() {
                     {step.check ? (
                       <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 10L8 15L17 5" stroke="#F6F4EF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
                     ) : (
-                      <span style={{ fontFamily: "'Barlow', sans-serif", fontSize: '20px', fontWeight: 400, color: '#F6F4EF' }}>{step.num}</span>
+                      <span style={{ fontFamily: "'Barlow', sans-serif", fontSize: '23px', fontWeight: 400, color: '#F6F4EF' }}>{step.num}</span>
                     )}
                   </div>
-                  <div style={{ fontFamily: 'var(--font-sans)', fontSize: '10.5px', fontWeight: 700, color: '#B8D48A', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: '8px' }}>{step.title}</div>
-                  <div style={{ fontFamily: 'var(--font-sans)', fontSize: '12px', fontWeight: 400, color: 'rgba(246,244,239,0.55)', lineHeight: 1.6 }}>{step.desc}</div>
+                  <div style={{ fontFamily: 'var(--font-sans)', fontSize: '13.5px', fontWeight: 700, color: '#B8D48A', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: '8px' }}>{step.title}</div>
+                  <div style={{ fontFamily: 'var(--font-sans)', fontSize: '15px', fontWeight: 500, color: 'rgba(246,244,239,0.55)', lineHeight: 1.6 }}>{step.desc}</div>
                 </div>
               ))}
             </div>
@@ -701,16 +701,16 @@ function Projects() {
             <div data-animate>
               <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '22px' }}>
                 <div style={{ width: '34px', height: '1px', background: '#315B2C' }} />
-                <span style={{ fontFamily: 'var(--font-sans)', fontSize: '10.5px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.24em', textTransform: 'uppercase' }}>Diferenciais</span>
+                <span style={{ fontFamily: 'var(--font-sans)', fontSize: '13.5px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.24em', textTransform: 'uppercase' }}>Diferenciais</span>
               </div>
-              <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(36px, 3.8vw, 52px)', fontWeight: 400, color: '#1a1a18', lineHeight: 1.1, letterSpacing: '-0.018em', marginBottom: '26px', textWrap: 'pretty' }}>
-                Por que escolher<br />a <span style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 600, fontSize: 'clamp(31px, 3.3vw, 44px)', color: '#315B2C', fontStyle: 'normal' }}>AgroVisão</span>?
+              <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(39px, calc(3.8vw + 3px), 55px)', fontWeight: 400, color: '#1a1a18', lineHeight: 1.1, letterSpacing: '-0.018em', marginBottom: '26px', textWrap: 'pretty' }}>
+                Por que escolher<br />a <span style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 600, fontSize: 'clamp(34px, calc(3.3vw + 3px), 47px)', color: '#315B2C', fontStyle: 'normal' }}>AgroVisão</span>?
               </h2>
-              <p style={{ fontFamily: 'var(--font-sans)', fontSize: '15px', fontWeight: 400, color: '#4a4a44', lineHeight: 1.9, marginBottom: '44px', maxWidth: '420px' }}>Equipe multidisciplinar com profundo conhecimento do território amazônico, das políticas públicas e das exigências legais vigentes.</p>
+              <p style={{ fontFamily: 'var(--font-sans)', fontSize: '18px', fontWeight: 400, color: '#4a4a44', lineHeight: 1.9, marginBottom: '44px', maxWidth: '420px' }}>Equipe multidisciplinar com profundo conhecimento do território amazônico, das políticas públicas e das exigências legais vigentes.</p>
               <a
                 href="#"
                 onClick={(e) => { e.preventDefault(); openModal() }}
-                style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', padding: '15px 36px', background: '#315B2C', color: '#F6F4EF', fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '8px', transition: 'background 0.25s' }}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', padding: '15px 36px', background: '#315B2C', color: '#F6F4EF', fontFamily: 'var(--font-sans)', fontSize: '14.5px', fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '8px', transition: 'background 0.25s' }}
                 onMouseEnter={(e) => { e.currentTarget.style.background = '#254822' }}
                 onMouseLeave={(e) => { e.currentTarget.style.background = '#315B2C' }}
               >
@@ -722,9 +722,9 @@ function Projects() {
                 <div key={idx} style={{ padding: '26px 22px', background: d.dark ? '#315B2C' : '#FAFAF8', border: `1px solid ${d.dark ? '#315B2C' : 'rgba(49,91,44,0.08)'}` }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8L6 12L14 4" stroke={d.dark ? '#B8D48A' : '#315B2C'} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                    <h4 style={{ fontFamily: 'var(--font-sans)', fontSize: '11px', fontWeight: 700, color: d.dark ? '#F6F4EF' : '#1a1a18', letterSpacing: '0.08em', textTransform: 'uppercase' }}>{d.title}</h4>
+                    <h4 style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', fontWeight: 700, color: d.dark ? '#F6F4EF' : '#1a1a18', letterSpacing: '0.08em', textTransform: 'uppercase' }}>{d.title}</h4>
                   </div>
-                  <p style={{ fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 400, color: d.dark ? 'rgba(246,244,239,0.75)' : '#666660', lineHeight: 1.65 }}>{d.desc}</p>
+                  <p style={{ fontFamily: 'var(--font-sans)', fontSize: '16px', fontWeight: 400, color: d.dark ? 'rgba(246,244,239,0.75)' : '#666660', lineHeight: 1.65 }}>{d.desc}</p>
                 </div>
               ))}
             </div>
@@ -737,18 +737,18 @@ function Projects() {
         <div style={{ maxWidth: '800px', margin: '0 auto', padding: '0 84px', textAlign: 'center' }} data-animate>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px', marginBottom: '22px' }}>
             <div style={{ width: '34px', height: '1px', background: '#315B2C' }} />
-            <span style={{ fontFamily: 'var(--font-sans)', fontSize: '10.5px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.24em', textTransform: 'uppercase' }}>Vamos Conversar</span>
+            <span style={{ fontFamily: 'var(--font-sans)', fontSize: '13.5px', fontWeight: 500, color: '#6F8F3A', letterSpacing: '0.24em', textTransform: 'uppercase' }}>Vamos Conversar</span>
             <div style={{ width: '34px', height: '1px', background: '#315B2C' }} />
           </div>
-          <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(40px, 4.8vw, 66px)', fontWeight: 300, color: '#1a1a18', lineHeight: 1.08, letterSpacing: '-0.02em', marginBottom: '22px', textWrap: 'pretty' }}>
-            Vamos transformar sua ideia em um<br /><span style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 600, fontSize: 'clamp(34px, 4.1vw, 56px)', color: '#315B2C', fontStyle: 'normal' }}>projeto de sucesso</span>.
+          <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(43px, calc(4.8vw + 3px), 69px)', fontWeight: 300, color: '#1a1a18', lineHeight: 1.08, letterSpacing: '-0.02em', marginBottom: '22px', textWrap: 'pretty' }}>
+            Vamos transformar sua ideia em um<br /><span style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 600, fontSize: 'clamp(37px, calc(4.1vw + 3px), 59px)', color: '#315B2C', fontStyle: 'normal' }}>projeto de sucesso</span>.
           </h2>
-          <p style={{ fontFamily: 'var(--font-sans)', fontSize: '15px', fontWeight: 400, color: '#4a4a44', lineHeight: 1.85, marginBottom: '52px', maxWidth: '500px', marginLeft: 'auto', marginRight: 'auto' }}>Nossa equipe técnica está pronta para analisar seu contexto e estruturar a solução ideal para o seu projeto rural ou ambiental.</p>
+          <p style={{ fontFamily: 'var(--font-sans)', fontSize: '18px', fontWeight: 400, color: '#4a4a44', lineHeight: 1.85, marginBottom: '52px', maxWidth: '500px', marginLeft: 'auto', marginRight: 'auto' }}>Nossa equipe técnica está pronta para analisar seu contexto e estruturar a solução ideal para o seu projeto rural ou ambiental.</p>
           <div style={{ display: 'flex', gap: '14px', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap' }}>
             <a
               href="#"
               onClick={(e) => { e.preventDefault(); openModal() }}
-              style={{ display: 'inline-block', padding: '16px 44px', background: '#315B2C', color: '#F6F4EF', fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '8px', transition: 'background 0.25s' }}
+              style={{ display: 'inline-block', padding: '16px 44px', background: '#315B2C', color: '#F6F4EF', fontFamily: 'var(--font-sans)', fontSize: '14.5px', fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '8px', transition: 'background 0.25s' }}
               onMouseEnter={(e) => { e.currentTarget.style.background = '#254822' }}
               onMouseLeave={(e) => { e.currentTarget.style.background = '#315B2C' }}
             >
@@ -758,7 +758,7 @@ function Projects() {
               href="https://api.whatsapp.com/send?phone=5591982064340"
               target="_blank"
               rel="noopener noreferrer"
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', padding: '15px 40px', color: '#315B2C', fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 500, letterSpacing: '0.16em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '8px', border: '1.5px solid rgba(49,91,44,0.28)', transition: 'border-color 0.25s, background 0.25s' }}
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', padding: '15px 40px', color: '#315B2C', fontFamily: 'var(--font-sans)', fontSize: '14.5px', fontWeight: 500, letterSpacing: '0.16em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '8px', border: '1.5px solid rgba(49,91,44,0.28)', transition: 'border-color 0.25s, background 0.25s' }}
               onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#315B2C'; e.currentTarget.style.background = 'rgba(49,91,44,0.04)' }}
               onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(49,91,44,0.28)'; e.currentTarget.style.background = 'transparent' }}
             >
@@ -779,8 +779,8 @@ function Projects() {
           <div className="modal" style={{ background: '#FFFFFF', borderRadius: '14px', width: 'min(720px, 100%)', maxHeight: '88vh', overflowY: 'auto', boxShadow: '0 32px 100px rgba(0,0,0,0.25)' }}>
             <div style={{ padding: '36px 44px 24px', borderBottom: '1px solid rgba(49,91,44,0.08)', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', position: 'sticky', top: 0, background: '#FFFFFF', zIndex: 1, borderRadius: '14px 14px 0 0' }}>
               <div>
-                <div style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', fontWeight: 600, color: '#6F8F3A', letterSpacing: '0.24em', textTransform: 'uppercase', marginBottom: '10px' }}>Consultoria Gratuita</div>
-                <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: '30px', fontWeight: 400, color: '#1a1a18', lineHeight: 1.2 }}>Solicite um Atendimento</h2>
+                <div style={{ fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 600, color: '#6F8F3A', letterSpacing: '0.24em', textTransform: 'uppercase', marginBottom: '10px' }}>Consultoria Gratuita</div>
+                <h2 style={{ fontFamily: "'Barlow', sans-serif", fontSize: '33px', fontWeight: 400, color: '#1a1a18', lineHeight: 1.2 }}>Solicite um Atendimento</h2>
               </div>
               <button onClick={closeModal} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '8px', color: '#999994', borderRadius: '6px' }}>
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 4L16 16M16 4L4 16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg>
@@ -790,43 +790,43 @@ function Projects() {
               <form onSubmit={submitForm} style={{ padding: '32px 44px 44px' }}>
                 <div className="form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '20px' }}>
                   <div>
-                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '10px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Nome Completo <span style={{ color: '#DD8758' }}>*</span></label>
-                    <input type="text" value={mData.name} onChange={ch('name')} placeholder="Seu nome completo" style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '14px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }} />
-                    {mErrs.name && <span style={{ fontFamily: 'var(--font-sans)', fontSize: '11.5px', color: '#c0392b', marginTop: '5px', display: 'block' }}>{mErrs.name}</span>}
+                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Nome Completo <span style={{ color: '#DD8758' }}>*</span></label>
+                    <input type="text" value={mData.name} onChange={ch('name')} placeholder="Seu nome completo" style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '17px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }} />
+                    {mErrs.name && <span style={{ fontFamily: 'var(--font-sans)', fontSize: '14.5px', color: '#c0392b', marginTop: '5px', display: 'block' }}>{mErrs.name}</span>}
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '10px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Empresa</label>
-                    <input type="text" value={mData.company} onChange={ch('company')} placeholder="Nome da empresa" style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '14px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }} />
-                  </div>
-                </div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '20px' }}>
-                  <div>
-                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '10px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Telefone <span style={{ color: '#DD8758' }}>*</span></label>
-                    <input type="tel" value={mData.phone} onChange={ch('phone')} placeholder="(91) 9 9999-9999" style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '14px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }} />
-                    {mErrs.phone && <span style={{ fontFamily: 'var(--font-sans)', fontSize: '11.5px', color: '#c0392b', marginTop: '5px', display: 'block' }}>{mErrs.phone}</span>}
-                  </div>
-                  <div>
-                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '10px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Email <span style={{ color: '#DD8758' }}>*</span></label>
-                    <input type="email" value={mData.email} onChange={ch('email')} placeholder="seu@email.com.br" style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '14px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }} />
-                    {mErrs.email && <span style={{ fontFamily: 'var(--font-sans)', fontSize: '11.5px', color: '#c0392b', marginTop: '5px', display: 'block' }}>{mErrs.email}</span>}
+                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Empresa</label>
+                    <input type="text" value={mData.company} onChange={ch('company')} placeholder="Nome da empresa" style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '17px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }} />
                   </div>
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '20px' }}>
                   <div>
-                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '10px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Município</label>
-                    <input type="text" value={mData.city} onChange={ch('city')} placeholder="Sua cidade" style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '14px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }} />
+                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Telefone <span style={{ color: '#DD8758' }}>*</span></label>
+                    <input type="tel" value={mData.phone} onChange={ch('phone')} placeholder="(91) 9 9999-9999" style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '17px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }} />
+                    {mErrs.phone && <span style={{ fontFamily: 'var(--font-sans)', fontSize: '14.5px', color: '#c0392b', marginTop: '5px', display: 'block' }}>{mErrs.phone}</span>}
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '10px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Estado</label>
-                    <select value={mData.st} onChange={ch('st')} style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '14px', color: '#1a1a18', background: '#FAFAF9', outline: 'none', appearance: 'none', cursor: 'pointer' }}>
+                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Email <span style={{ color: '#DD8758' }}>*</span></label>
+                    <input type="email" value={mData.email} onChange={ch('email')} placeholder="seu@email.com.br" style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '17px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }} />
+                    {mErrs.email && <span style={{ fontFamily: 'var(--font-sans)', fontSize: '14.5px', color: '#c0392b', marginTop: '5px', display: 'block' }}>{mErrs.email}</span>}
+                  </div>
+                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '20px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Município</label>
+                    <input type="text" value={mData.city} onChange={ch('city')} placeholder="Sua cidade" style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '17px', color: '#1a1a18', background: '#FAFAF9', outline: 'none' }} />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Estado</label>
+                    <select value={mData.st} onChange={ch('st')} style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '17px', color: '#1a1a18', background: '#FAFAF9', outline: 'none', appearance: 'none', cursor: 'pointer' }}>
                       <option value="">Selecione</option>
                       {UFS.map((uf) => (<option key={uf} value={uf}>{uf === 'outro' ? 'Outro' : uf}</option>))}
                     </select>
                   </div>
                 </div>
                 <div style={{ marginBottom: '20px' }}>
-                  <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '10px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Serviço de Interesse</label>
-                  <select value={mData.svc} onChange={ch('svc')} style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '14px', color: '#1a1a18', background: '#FAFAF9', outline: 'none', appearance: 'none', cursor: 'pointer' }}>
+                  <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Serviço de Interesse</label>
+                  <select value={mData.svc} onChange={ch('svc')} style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '17px', color: '#1a1a18', background: '#FAFAF9', outline: 'none', appearance: 'none', cursor: 'pointer' }}>
                     <option value="">Selecione o serviço</option>
                     <option value="regularizacao">Regularização Fundiária</option>
                     <option value="licenciamento">Licenciamento Ambiental</option>
@@ -840,21 +840,21 @@ function Projects() {
                   </select>
                 </div>
                 <div style={{ marginBottom: '24px' }}>
-                  <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '10px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Mensagem <span style={{ color: '#DD8758' }}>*</span></label>
-                  <textarea value={mData.msg} onChange={ch('msg')} rows={4} placeholder="Descreva brevemente seu projeto ou necessidade…" style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '14px', color: '#1a1a18', background: '#FAFAF9', outline: 'none', resize: 'vertical', minHeight: '110px', lineHeight: 1.65 }} />
-                  {mErrs.msg && <span style={{ fontFamily: 'var(--font-sans)', fontSize: '11.5px', color: '#c0392b', marginTop: '5px', display: 'block' }}>{mErrs.msg}</span>}
+                  <label style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 600, color: '#555550', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Mensagem <span style={{ color: '#DD8758' }}>*</span></label>
+                  <textarea value={mData.msg} onChange={ch('msg')} rows={4} placeholder="Descreva brevemente seu projeto ou necessidade…" style={{ width: '100%', padding: '12px 14px', border: '1px solid rgba(49,91,44,0.2)', borderRadius: '8px', fontFamily: 'var(--font-sans)', fontSize: '17px', color: '#1a1a18', background: '#FAFAF9', outline: 'none', resize: 'vertical', minHeight: '110px', lineHeight: 1.65 }} />
+                  {mErrs.msg && <span style={{ fontFamily: 'var(--font-sans)', fontSize: '14.5px', color: '#c0392b', marginTop: '5px', display: 'block' }}>{mErrs.msg}</span>}
                 </div>
                 <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', padding: '16px', background: '#F8F7F3', borderRadius: '8px', marginBottom: '28px' }}>
                   <input type="checkbox" id="p-prv" checked={mData.ok} onChange={ch('ok')} style={{ width: '18px', height: '18px', accentColor: '#315B2C', marginTop: '2px', cursor: 'pointer', flexShrink: 0 }} />
-                  <label htmlFor="p-prv" style={{ fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 400, color: '#555550', lineHeight: 1.65, cursor: 'pointer' }}>
+                  <label htmlFor="p-prv" style={{ fontFamily: 'var(--font-sans)', fontSize: '16px', fontWeight: 400, color: '#555550', lineHeight: 1.65, cursor: 'pointer' }}>
                     Li e concordo com a <a href="#" style={{ color: '#315B2C', textDecoration: 'underline' }}>Política de Privacidade</a> da AgroVisão.
-                    {mErrs.ok && <span style={{ display: 'block', fontSize: '11.5px', color: '#c0392b', marginTop: '4px' }}>{mErrs.ok}</span>}
+                    {mErrs.ok && <span style={{ display: 'block', fontSize: '14.5px', color: '#c0392b', marginTop: '4px' }}>{mErrs.ok}</span>}
                   </label>
                 </div>
                 <button
                   type="submit"
                   disabled={mSts === 'sending'}
-                  style={{ width: '100%', padding: '16px', background: '#315B2C', color: '#F6F4EF', fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 600, letterSpacing: '0.18em', textTransform: 'uppercase', border: 'none', borderRadius: '8px', cursor: mSts === 'sending' ? 'not-allowed' : 'pointer', opacity: mSts === 'sending' ? 0.7 : 1, transition: 'background 0.22s' }}
+                  style={{ width: '100%', padding: '16px', background: '#315B2C', color: '#F6F4EF', fontFamily: 'var(--font-sans)', fontSize: '14.5px', fontWeight: 600, letterSpacing: '0.18em', textTransform: 'uppercase', border: 'none', borderRadius: '8px', cursor: mSts === 'sending' ? 'not-allowed' : 'pointer', opacity: mSts === 'sending' ? 0.7 : 1, transition: 'background 0.22s' }}
                 >
                   {mSts === 'sending' ? 'Enviando…' : 'Enviar Solicitação'}
                 </button>
@@ -864,11 +864,11 @@ function Projects() {
                 <div style={{ width: '64px', height: '64px', background: '#F5F8F3', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px', border: '1.5px solid rgba(49,91,44,0.15)' }}>
                   <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M5 14L11 20L23 8" stroke="#315B2C" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
                 </div>
-                <h3 style={{ fontFamily: "'Barlow', sans-serif", fontSize: '34px', fontWeight: 400, color: '#1a1a18', marginBottom: '16px' }}>Solicitação Enviada!</h3>
-                <p style={{ fontFamily: 'var(--font-sans)', fontSize: '15px', color: '#555550', lineHeight: 1.75, maxWidth: '380px', margin: '0 auto 40px' }}>
+                <h3 style={{ fontFamily: "'Barlow', sans-serif", fontSize: '37px', fontWeight: 400, color: '#1a1a18', marginBottom: '16px' }}>Solicitação Enviada!</h3>
+                <p style={{ fontFamily: 'var(--font-sans)', fontSize: '18px', color: '#555550', lineHeight: 1.75, maxWidth: '380px', margin: '0 auto 40px' }}>
                   Nossa equipe entrará em contato em até <strong style={{ color: '#315B2C' }}>24 horas úteis</strong>.
                 </p>
-                <button onClick={closeModal} style={{ padding: '14px 44px', background: '#315B2C', color: '#F6F4EF', fontFamily: 'var(--font-sans)', fontSize: '11.5px', fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', border: 'none', borderRadius: '8px', cursor: 'pointer', transition: 'background 0.22s' }}>Fechar</button>
+                <button onClick={closeModal} style={{ padding: '14px 44px', background: '#315B2C', color: '#F6F4EF', fontFamily: 'var(--font-sans)', fontSize: '14.5px', fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', border: 'none', borderRadius: '8px', cursor: 'pointer', transition: 'background 0.22s' }}>Fechar</button>
               </div>
             )}
           </div>

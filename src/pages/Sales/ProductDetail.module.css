@@ -14,7 +14,7 @@
   gap: 6px;
   flex-wrap: wrap;
   font-family: var(--font-sans);
-  font-size: 12px;
+  font-size: 15px;
   color: #888882;
 }
 
@@ -30,7 +30,7 @@
 
 .breadcrumbSeparator {
   color: #cccccc;
-  font-size: 11px;
+  font-size: 14px;
 }
 
 .breadcrumbCurrent {
@@ -132,7 +132,7 @@
 .category {
   display: inline-block;
   font-family: var(--font-sans);
-  font-size: 9.5px;
+  font-size: 12.5px;
   font-weight: 700;
   color: #6F8F3A;
   letter-spacing: 0.18em;
@@ -145,7 +145,7 @@
 
 .productName {
   font-family: 'Barlow', sans-serif;
-  font-size: clamp(28px, 2.8vw, 38px);
+  font-size: clamp(31px, calc(2.8vw + 3px), 41px);
   font-weight: 400;
   color: #1a1a18;
   line-height: 1.12;
@@ -161,7 +161,7 @@
 
 .originalPrice {
   font-family: var(--font-sans);
-  font-size: 14px;
+  font-size: 17px;
   font-weight: 400;
   color: #aaaaaa;
   text-decoration: line-through;
@@ -169,14 +169,14 @@
 
 .currentPrice {
   font-family: 'Barlow', sans-serif;
-  font-size: 28px;
+  font-size: 31px;
   font-weight: 600;
   color: #315B2C;
 }
 
 .stock {
   font-family: var(--font-sans);
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 500;
 }
 
@@ -200,7 +200,7 @@
 
 .qtyLabel {
   font-family: var(--font-sans);
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 600;
   color: #555550;
   letter-spacing: 0.06em;
@@ -225,7 +225,7 @@
   border: none;
   cursor: pointer;
   font-family: var(--font-sans);
-  font-size: 16px;
+  font-size: 19px;
   font-weight: 500;
   color: #315B2C;
   transition: background 0.2s;
@@ -239,7 +239,7 @@
   width: 44px;
   text-align: center;
   font-family: var(--font-sans);
-  font-size: 14px;
+  font-size: 17px;
   font-weight: 600;
   color: #1a1a18;
   border: none;
@@ -267,7 +267,7 @@
   background: #25D366;
   color: #FFFFFF;
   font-family: var(--font-sans);
-  font-size: 11.5px;
+  font-size: 14.5px;
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -292,7 +292,7 @@
   background: transparent;
   color: #315B2C;
   font-family: var(--font-sans);
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -319,7 +319,7 @@
 
 .descTitle {
   font-family: var(--font-sans);
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 700;
   color: #6F8F3A;
   letter-spacing: 0.2em;
@@ -329,7 +329,7 @@
 
 .descText {
   font-family: var(--font-sans);
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 400;
   color: #4a4a44;
   line-height: 1.9;
@@ -350,7 +350,7 @@
 
 .techTitle {
   font-family: var(--font-sans);
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 700;
   color: #6F8F3A;
   letter-spacing: 0.2em;
@@ -376,7 +376,7 @@
 
 .techLabel {
   font-family: var(--font-sans);
-  font-size: 10.5px;
+  font-size: 13.5px;
   font-weight: 600;
   color: #6F8F3A;
   letter-spacing: 0.06em;
@@ -387,7 +387,7 @@
 
 .techValue {
   font-family: var(--font-sans);
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 400;
   color: #4a4a44;
   line-height: 1.5;
@@ -406,7 +406,7 @@
 
 .benefitsTitle {
   font-family: 'Barlow', sans-serif;
-  font-size: clamp(24px, 2.4vw, 32px);
+  font-size: clamp(27px, calc(2.4vw + 3px), 35px);
   font-weight: 400;
   color: #1a1a18;
   line-height: 1.15;
@@ -441,7 +441,7 @@
 
 .benefitCardTitle {
   font-family: 'Barlow', sans-serif;
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 500;
   color: #1a1a18;
   margin-bottom: 4px;
@@ -449,7 +449,7 @@
 
 .benefitCardDesc {
   font-family: var(--font-sans);
-  font-size: 11.5px;
+  font-size: 14.5px;
   font-weight: 400;
   color: #777772;
   line-height: 1.6;
@@ -469,7 +469,7 @@
 
 .relatedTitle {
   font-family: var(--font-sans);
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 700;
   color: #6F8F3A;
   letter-spacing: 0.2em;
@@ -516,7 +516,7 @@
 
 .relatedCardCat {
   font-family: var(--font-sans);
-  font-size: 8.5px;
+  font-size: 11.5px;
   font-weight: 600;
   color: #6F8F3A;
   letter-spacing: 0.12em;
@@ -525,7 +525,7 @@
 
 .relatedCardName {
   font-family: 'Barlow', sans-serif;
-  font-size: 14px;
+  font-size: 17px;
   font-weight: 500;
   color: #1a1a18;
   line-height: 1.25;
@@ -534,7 +534,7 @@
 
 .relatedCardPrice {
   font-family: 'Barlow', sans-serif;
-  font-size: 14px;
+  font-size: 17px;
   font-weight: 600;
   color: #315B2C;
 }
@@ -548,7 +548,7 @@
 
 .notFoundTitle {
   font-family: 'Barlow', sans-serif;
-  font-size: clamp(32px, 3.6vw, 48px);
+  font-size: clamp(35px, calc(3.6vw + 3px), 51px);
   font-weight: 400;
   color: #1a1a18;
   margin-bottom: 16px;
@@ -556,7 +556,7 @@
 
 .notFoundDesc {
   font-family: var(--font-sans);
-  font-size: 15px;
+  font-size: 18px;
   color: #666660;
   line-height: 1.8;
   margin-bottom: 32px;
@@ -571,7 +571,7 @@
   background: #315B2C;
   color: #F6F4EF;
   font-family: var(--font-sans);
-  font-size: 11.5px;
+  font-size: 14.5px;
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -609,7 +609,7 @@
 
 .loadingText {
   font-family: var(--font-sans);
-  font-size: 14px;
+  font-size: 17px;
   color: #888882;
 }
 

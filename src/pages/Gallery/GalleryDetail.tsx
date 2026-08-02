@@ -129,15 +129,15 @@ function GalleryDetail() {
             {!loaded ? (
               <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '100px 0' }}>
                 <div style={{ width: '40px', height: '40px', border: '2px solid rgba(49,91,44,0.15)', borderTopColor: '#315B2C', borderRadius: '50%', margin: '0 auto 20px', animation: 'spin 0.8s linear infinite' }} />
-                <p style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', color: '#888882' }}>Carregando galeria...</p>
+                <p style={{ fontFamily: 'var(--font-sans)', fontSize: '17px', color: '#888882' }}>Carregando galeria...</p>
               </div>
             ) : visibleImages.length === 0 ? (
               <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '100px 0' }}>
-                <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: '22px', fontWeight: 500, color: '#1a1a18', marginBottom: '8px' }}>Nenhuma imagem encontrada</div>
-                <p style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', color: '#777772', marginBottom: '24px' }}>Este projeto não possui imagens registradas.</p>
+                <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: '25px', fontWeight: 500, color: '#1a1a18', marginBottom: '8px' }}>Nenhuma imagem encontrada</div>
+                <p style={{ fontFamily: 'var(--font-sans)', fontSize: '17px', color: '#777772', marginBottom: '24px' }}>Este projeto não possui imagens registradas.</p>
                 <button
                   onClick={() => navigate('/galeria')}
-                  style={{ display: 'inline-block', padding: '12px 28px', background: '#315B2C', color: '#F6F4EF', fontFamily: 'var(--font-sans)', fontSize: '11px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '8px', border: 'none', cursor: 'pointer', transition: 'background 0.22s' }}
+                  style={{ display: 'inline-block', padding: '12px 28px', background: '#315B2C', color: '#F6F4EF', fontFamily: 'var(--font-sans)', fontSize: '14px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '8px', border: 'none', cursor: 'pointer', transition: 'background 0.22s' }}
                   onMouseEnter={(e) => { e.currentTarget.style.background = '#254822' }}
                   onMouseLeave={(e) => { e.currentTarget.style.background = '#315B2C' }}
                 >
@@ -159,20 +159,20 @@ function GalleryDetail() {
                         />
                       </div>
                       <div>
-                        <div style={{ fontFamily: 'var(--font-sans)', fontSize: '9.5px', fontWeight: 600, color: '#6F8F3A', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: '12px' }}>
+                        <div style={{ fontFamily: 'var(--font-sans)', fontSize: '12.5px', fontWeight: 600, color: '#6F8F3A', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: '12px' }}>
                           {project?.categoryLabel}
                         </div>
                         {briefDescription && (
-                          <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: '19px', fontWeight: 400, color: '#1a1a18', lineHeight: 1.55, marginBottom: '16px', letterSpacing: '-0.005em' }}>
+                          <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: '22px', fontWeight: 400, color: '#1a1a18', lineHeight: 1.55, marginBottom: '16px', letterSpacing: '-0.005em' }}>
                             {briefDescription}
                           </p>
                         )}
-                        <p style={{ fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 400, color: '#888882', lineHeight: 1.8, marginBottom: '28px' }}>
+                        <p style={{ fontFamily: 'var(--font-sans)', fontSize: '16px', fontWeight: 400, color: '#888882', lineHeight: 1.8, marginBottom: '28px' }}>
                           Imagem {visibleImages.indexOf(selectedImage) + 1} de {visibleImages.length} • {project?.name}
                         </p>
                         <button
                           onClick={() => navigate('/galeria')}
-                          style={{ display: 'inline-block', padding: '12px 28px', background: '#315B2C', color: '#F6F4EF', fontFamily: 'var(--font-sans)', fontSize: '11px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '8px', border: 'none', cursor: 'pointer', transition: 'background 0.22s' }}
+                          style={{ display: 'inline-block', padding: '12px 28px', background: '#315B2C', color: '#F6F4EF', fontFamily: 'var(--font-sans)', fontSize: '14px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: '8px', border: 'none', cursor: 'pointer', transition: 'background 0.22s' }}
                           onMouseEnter={(e) => { e.currentTarget.style.background = '#254822' }}
                           onMouseLeave={(e) => { e.currentTarget.style.background = '#315B2C' }}
                         >
@@ -186,7 +186,7 @@ function GalleryDetail() {
                 {/* Thumbnails Grid */}
                 <div style={{ gridColumn: '1 / -1' }}>
                   <div style={{ marginBottom: '24px' }}>
-                    <div style={{ fontFamily: 'var(--font-sans)', fontSize: '11px', fontWeight: 600, color: '#6F8F3A', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '16px' }}>
+                    <div style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', fontWeight: 600, color: '#6F8F3A', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '16px' }}>
                       Todas as imagens ({visibleImages.length})
                     </div>
                   </div>
@@ -232,13 +232,13 @@ function GalleryDetail() {
                 {/* Descrição completa do registro selecionado, abaixo das fotos */}
                 {fullDescription && (
                   <div style={{ gridColumn: '1 / -1', marginTop: '48px', maxWidth: '780px' }}>
-                    <div style={{ fontFamily: 'var(--font-sans)', fontSize: '11px', fontWeight: 600, color: '#6F8F3A', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '16px' }}>
+                    <div style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', fontWeight: 600, color: '#6F8F3A', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '16px' }}>
                       Descrição
                     </div>
                     {fullDescription.split(/\n{2,}/).map((paragraph, i) => (
                       <p
                         key={i}
-                        style={{ fontFamily: 'var(--font-sans)', fontSize: '15px', fontWeight: 400, color: '#555550', lineHeight: 1.9, marginBottom: '16px', whiteSpace: 'pre-line' }}
+                        style={{ fontFamily: 'var(--font-sans)', fontSize: '18px', fontWeight: 400, color: '#555550', lineHeight: 1.9, marginBottom: '16px', whiteSpace: 'pre-line' }}
                       >
                         {paragraph}
                       </p>
