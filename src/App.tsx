@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import Home from './pages/Home'
 import About from './pages/About'
 import Services from './pages/Services'
@@ -12,6 +12,20 @@ import ProductDetail from './pages/Sales/ProductDetail'
 import AdminLogin from './pages/Admin/AdminLogin'
 import AdminDashboard from './pages/Admin/AdminDashboard'
 import ChangePassword from './pages/Admin/ChangePassword'
+
+/**
+ * Qualquer rota desconhecida. As URLs do site estático antigo (/vendas.html,
+ * /sobre.html…) continuam vindo de buscadores e favoritos; sem isso o React
+ * não casa nenhuma rota e a página fica totalmente em branco.
+ */
+function LegacyRedirect() {
+  const { pathname, search } = useLocation()
+  if (/\.html$/i.test(pathname)) {
+    const stripped = pathname.replace(/\.html$/i, '')
+    return <Navigate to={stripped === '/index' ? '/' : stripped + search} replace />
+  }
+  return <Navigate to="/" replace />
+}
 
 function App() {
   return (
@@ -29,6 +43,7 @@ function App() {
       <Route path="/admin" element={<AdminLogin />} />
       <Route path="/admin/change-password" element={<ChangePassword />} />
       <Route path="/admin/dashboard" element={<AdminDashboard />} />
+      <Route path="*" element={<LegacyRedirect />} />
     </Routes>
   )
 }
