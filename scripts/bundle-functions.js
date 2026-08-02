@@ -25,6 +25,7 @@ try {
     bundle: true,
     external: ['@supabase/supabase-js', 'node:*'],
     minify: true,
+    allowOverwrite: true,
     logLevel: 'info',
   });
   console.log('✓ Functions bundled com sucesso');
