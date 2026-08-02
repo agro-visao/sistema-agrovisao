@@ -47,12 +47,20 @@ const EMPTY_FORM: FormState = {
   featured: false,
 }
 
-// ─── Imagem do produto ──────────────────────────────────────────────────────
-// O produto tem uma única imagem. Ao escolher o arquivo, ele é redimensionado
-// e convertido para WEBP aqui no navegador; o que vai para a API já é o
-// resultado final. Enviada em `image`, limpa com `removeImage1`.
+// ─── Imagens do produto ─────────────────────────────────────────────────────
+// São 3 slots independentes: a principal (que vai para o card da vitrine) e
+// duas complementares, exibidas como miniaturas na página do produto. Cada
+// slot é enviado no campo `field` e limpo com `removeImage<N>`.
+//
+// Ao escolher o arquivo, ele é redimensionado e convertido para WEBP aqui no
+// navegador; o que vai para a API já é o resultado final.
+const IMAGE_SLOTS = [
+  { field: 'image', label: 'Imagem principal', hint: 'Aparece no card da vitrine' },
+  { field: 'image2', label: 'Imagem complementar 1', hint: 'Opcional' },
+  { field: 'image3', label: 'Imagem complementar 2', hint: 'Opcional' },
+]
 
-interface ImageState {
+interface ImageSlotState {
   /** Arquivo já processado (WEBP), ainda não enviado. */
   file: File | null
   previewUrl: string | null
@@ -64,13 +72,17 @@ interface ImageState {
   error: string
 }
 
-const EMPTY_IMAGE: ImageState = {
+const EMPTY_SLOT: ImageSlotState = {
   file: null,
   previewUrl: null,
   info: null,
   remove: false,
   processing: false,
   error: '',
+}
+
+function emptySlots(): ImageSlotState[] {
+  return IMAGE_SLOTS.map(() => ({ ...EMPTY_SLOT }))
 }
 
 function formatKB(bytes: number): string {
