@@ -38,19 +38,19 @@ const SERVICES = [
   {
     slug: 'licenciamento',
     title: 'Licenciamento Ambiental',
-    desc: 'EIA/RIMA, licenças e acompanhamento junto a SEMAS e IBAMA.',
+    desc: 'EIA/RIMA, licenças e acompanhamento ambiental.',
     icon: '<path d="M6 20C6 14.477 10.477 10 16 10C16 4.477 20.477 0 26 0" stroke="#315B2C" stroke-width="1.3" stroke-linecap="round" fill="none" transform="scale(0.72) translate(1,1)"></path><path d="M3 18C3 12 7 8 11 7C11 2 15 2 19 3" stroke="#315B2C" stroke-width="1.3" stroke-linecap="round" fill="none"></path><circle cx="11" cy="11" r="8" stroke="#315B2C" stroke-width="1.3" fill="none"></circle><path d="M8 11C8 9.343 9.343 8 11 8C12.657 8 14 9.343 14 11" stroke="#315B2C" stroke-width="1" fill="none"></path>',
   },
   {
     slug: 'pronaf',
     title: 'Projetos Rurais',
-    desc: 'Elaboração e gestão de projetos agropecuários e sociais.',
+    desc: 'Elaboração e gestão de projetos agropecuários.',
     icon: '<path d="M11 3V19M3 11H19" stroke="#315B2C" stroke-width="1.3" stroke-linecap="round"></path><circle cx="11" cy="11" r="9" stroke="#315B2C" stroke-width="1.3" fill="none"></circle>',
   },
   {
     slug: 'pronaf',
     title: 'Consultoria PRONAF',
-    desc: 'Crédito rural, DAP, planos e acompanhamento bancário.',
+    desc: 'Crédito rural, DAP e acompanhamento bancário.',
     icon: '<path d="M3 16L7 12L10 15L14 9L19 16" stroke="#315B2C" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none"></path><rect x="2" y="2" width="18" height="18" rx="2" stroke="#315B2C" stroke-width="1.3" fill="none"></rect>',
   },
   {
@@ -62,7 +62,7 @@ const SERVICES = [
   {
     slug: 'gestao',
     title: 'Gestão de Projetos',
-    desc: 'Coordenação completa do planejamento à prestação de contas.',
+    desc: 'Coordenação de projetos do planejamento à execução.',
     icon: '<path d="M4 18V12M8 18V8M12 18V10M16 18V5M20 18V2" stroke="#315B2C" stroke-width="1.3" stroke-linecap="round"></path>',
   },
 ]
