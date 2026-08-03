@@ -259,7 +259,7 @@ function Contact() {
                 Estamos estrategicamente localizados na Rodovia BR-316, próximos à Castanheira, no coração de Ananindeua, facilitando o atendimento em toda Amazônia Legal.
               </p>
 
-              {/* Endereço */}
+              {/* Escritório */}
               <div style={{ display: 'flex', alignItems: 'flex-start', gap: '16px', marginBottom: '26px' }}>
                 <div style={{ width: '44px', height: '44px', background: '#315B2C', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
@@ -268,9 +268,25 @@ function Contact() {
                   </svg>
                 </div>
                 <div>
-                  <span style={{ fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 700, color: '#6F8F3A', letterSpacing: '0.2em', textTransform: 'uppercase', display: 'block', marginBottom: '6px' }}>Endereço</span>
+                  <span style={{ fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 700, color: '#6F8F3A', letterSpacing: '0.2em', textTransform: 'uppercase', display: 'block', marginBottom: '6px' }}>Escritório</span>
                   <div style={{ fontFamily: 'var(--font-sans)', fontSize: '17px', fontWeight: 600, color: '#1a1a18', lineHeight: 1.7 }}>
                     Sala Comercial 206 Next Office<br />BR 316, próximo à Castanheira<br />Ananindeua - PA
+                  </div>
+                </div>
+              </div>
+
+              {/* Fazenda */}
+              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '16px', marginBottom: '26px' }}>
+                <div style={{ width: '44px', height: '44px', background: '#315B2C', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="#F6F4EF" strokeWidth="1.6" fill="none" />
+                    <circle cx="12" cy="9" r="2.5" stroke="#F6F4EF" strokeWidth="1.6" fill="none" />
+                  </svg>
+                </div>
+                <div>
+                  <span style={{ fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 700, color: '#6F8F3A', letterSpacing: '0.2em', textTransform: 'uppercase', display: 'block', marginBottom: '6px' }}>Fazenda</span>
+                  <div style={{ fontFamily: 'var(--font-sans)', fontSize: '17px', fontWeight: 600, color: '#1a1a18', lineHeight: 1.7 }}>
+                    Fazendinha de Jesus<br />Pau d'Arco - Santa Bárbara do Pará
                   </div>
                 </div>
               </div>
