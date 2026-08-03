@@ -1,6 +1,6 @@
 import styles from './Admin.module.css'
 
-export type AdminView = 'sales' | 'gallery' | 'categories' | 'projectCategories' | 'users'
+export type AdminView = 'sales' | 'projects' | 'categories' | 'projectCategories' | 'users'
 
 interface AdminSidebarProps {
   currentView: AdminView
@@ -21,15 +21,15 @@ function AdminSidebar({ currentView, onNavigate, onLogout, isLoggingOut }: Admin
 
       <nav className={styles.sidebarNav}>
         <button
-          className={`${styles.sidebarItem} ${currentView === 'gallery' ? styles.sidebarItemActive : ''}`}
-          onClick={() => onNavigate('gallery')}
+          className={`${styles.sidebarItem} ${currentView === 'projects' ? styles.sidebarItemActive : ''}`}
+          onClick={() => onNavigate('projects')}
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <rect x="3" y="3" width="18" height="18" rx="2" />
             <circle cx="8.5" cy="8.5" r="1.5" />
             <path d="M21 15L16 10L5 21" />
           </svg>
-          <span>Galeria</span>
+          <span>Projetos</span>
         </button>
 
         <button

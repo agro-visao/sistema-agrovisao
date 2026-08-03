@@ -23,6 +23,11 @@ export const GALLERY_IMAGE_PROFILE: ImageProfile = {
   targetBytes: 1024 * 1024,
 }
 
+export const PROJECT_LOGO_PROFILE: ImageProfile = {
+  maxDimension: 1000,
+  targetBytes: 300 * 1024,
+}
+
 export interface ProcessedImage {
   file: File
   width: number

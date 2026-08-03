@@ -22,6 +22,13 @@ export const GALLERY_IMAGE = {
   hardMaxBytes: 3 * 1024 * 1024,
 };
 
+export const PROJECT_LOGO = {
+  label: 'logo do projeto',
+  maxDimension: 1000,
+  maxBytes: 300 * 1024,
+  hardMaxBytes: 2 * 1024 * 1024,
+};
+
 export async function validateProcessedImage(file, profile) {
   if (!file || typeof file.size !== 'number' || file.size <= 0) {
     return { ok: false, error: 'Selecione um arquivo de imagem.' };
@@ -112,14 +119,22 @@ export function makeImagePath(slug, index = 0) {
   return `products/${slug}-${Date.now()}-${index}-${rand}.webp`;
 }
 
-export function makeGalleryImagePath(projectSlug, index = 0) {
-  const safeSlug = String(projectSlug || 'projeto')
+function safeSlugPart(value) {
+  return String(value || 'projeto')
     .toLowerCase()
     .normalize('NFD')
     .replace(new RegExp('[\\u0300-\\u036f]', 'g'), '')
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '')
     .slice(0, 60) || 'projeto';
+}
+
+export function makeGalleryImagePath(projectSlug, index = 0) {
   const rand = Math.random().toString(36).slice(2, 8);
-  return `project-images/${safeSlug}-${Date.now()}-${index}-${rand}.webp`;
+  return `project-images/${safeSlugPart(projectSlug)}-${Date.now()}-${index}-${rand}.webp`;
+}
+
+export function makeProjectLogoPath(projectSlug) {
+  const rand = Math.random().toString(36).slice(2, 8);
+  return `project-logos/${safeSlugPart(projectSlug)}-${Date.now()}-${rand}.webp`;
 }

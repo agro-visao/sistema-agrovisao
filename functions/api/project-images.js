@@ -21,10 +21,12 @@ export async function onRequest(context) {
           category,
           category_label,
           active,
+          show_in_gallery,
           sort_order
         )
       `)
       .eq('projects.active', true)
+      .eq('projects.show_in_gallery', true)
       .order('sort_order', { ascending: true });
 
     if (dbError) return error(dbError.message, 500);
