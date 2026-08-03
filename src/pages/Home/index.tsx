@@ -339,9 +339,9 @@ function Home() {
               Serviços especializados para<br />o desenvolvimento rural
             </h2>
           </div>
-          <div className="services-grid" style={{ display: 'flex', gap: '16px' }} data-animate data-d="1">
+          <div className="services-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }} data-animate data-d="1">
             {SERVICES.map((svc) => (
-              <a key={svc.title} href={`/servicos#${svc.slug}`} className="svc-card" style={{ textDecoration: 'none' }}>
+              <a key={svc.title} href={`/servicos#${svc.slug}`} className="svc-card" style={{ textDecoration: 'none', padding: '24px', background: '#FFFFFF', border: '1px solid rgba(49,91,44,0.08)', borderRadius: '12px', transition: 'box-shadow 0.25s, transform 0.25s', cursor: 'pointer' }} onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 8px 32px rgba(49,91,44,0.1)'; e.currentTarget.style.transform = 'translateY(-3px)' }} onMouseLeave={(e) => { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.transform = 'none' }}>
                 <div style={{ width: '44px', height: '44px', background: 'rgba(49,91,44,0.08)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '18px' }}>
                   <svg width="22" height="22" viewBox="0 0 22 22" fill="none" dangerouslySetInnerHTML={{ __html: svc.icon }} />
                 </div>
